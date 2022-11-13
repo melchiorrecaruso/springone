@@ -1,0 +1,521 @@
+object GeometryForm: TGeometryForm
+  Left = 542
+  Height = 360
+  Top = 144
+  Width = 420
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Geometry & working length'
+  ClientHeight = 360
+  ClientWidth = 420
+  OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '2.3.0.0'
+  object WireDiameterLabel: TLabel
+    AnchorSideTop.Control = WireDiameter
+    AnchorSideRight.Control = WireDiameter
+    AnchorSideBottom.Control = WireDiameter
+    AnchorSideBottom.Side = asrBottom
+    Left = 102
+    Height = 23
+    Top = 12
+    Width = 82
+    Anchors = [akTop, akRight, akBottom]
+    BidiMode = bdRightToLeft
+    BorderSpacing.Right = 10
+    Caption = 'wire diameter d'
+    Layout = tlCenter
+    ParentBidiMode = False
+  end
+  object WireDiameter: TFloatSpinEdit
+    AnchorSideLeft.Control = CoilDiameter
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = WireDiameterUnit
+    Left = 194
+    Height = 23
+    Top = 12
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 10
+    Increment = 0.05
+    OnChange = WireDiameterChange
+    TabOrder = 0
+  end
+  object WireDiameterUnit: TComboBox
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 338
+    Height = 23
+    Top = 12
+    Width = 70
+    Anchors = [akTop, akRight]
+    BidiMode = bdRightToLeftReadingOnly
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 12
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'mm'
+      'inch'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 1
+    Text = 'mm'
+  end
+  object CoilDiameterUnit: TComboBox
+    AnchorSideLeft.Control = WireDiameterUnit
+    AnchorSideTop.Control = WireDiameterUnit
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = WireDiameterUnit
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 338
+    Height = 23
+    Top = 43
+    Width = 70
+    Anchors = [akTop, akLeft, akRight]
+    BidiMode = bdRightToLeftReadingOnly
+    BorderSpacing.Top = 8
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'mm'
+      'inch'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 4
+    Text = 'mm'
+  end
+  object CoilDiameter: TFloatSpinEdit
+    AnchorSideLeft.Control = CoilDiameterIndex
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = CoilDiameterUnit
+    AnchorSideRight.Control = CoilDiameterUnit
+    AnchorSideBottom.Control = CoilDiameterUnit
+    AnchorSideBottom.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 43
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Increment = 0.01
+    OnChange = WireDiameterChange
+    TabOrder = 3
+  end
+  object CoilDiameterIndex: TComboBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = CoilDiameter
+    AnchorSideBottom.Control = CoilDiameter
+    AnchorSideBottom.Side = asrBottom
+    Left = 12
+    Height = 23
+    Top = 43
+    Width = 172
+    Anchors = [akTop, akLeft, akBottom]
+    BorderSpacing.Left = 12
+    ItemHeight = 15
+    ItemIndex = 2
+    Items.Strings = (
+      'internal coil diameter Di'
+      'medium coil diameter Dm'
+      'external coil diameter De'
+      ''
+    )
+    ParentBidiMode = False
+    Style = csDropDownList
+    TabOrder = 2
+    Text = 'external coil diameter De'
+  end
+  object ActiveCoilLabel: TLabel
+    AnchorSideTop.Control = ActiveCoil
+    AnchorSideRight.Control = ActiveCoil
+    AnchorSideBottom.Control = ActiveCoil
+    AnchorSideBottom.Side = asrBottom
+    Left = 62
+    Height = 23
+    Top = 74
+    Width = 122
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Caption = 'number of active coil n'
+    Layout = tlCenter
+  end
+  object InactiveCoil1: TFloatSpinEdit
+    AnchorSideLeft.Control = ActiveCoil
+    AnchorSideTop.Control = ActiveCoil
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = ActiveCoil
+    AnchorSideRight.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 101
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 4
+    Increment = 0.1
+    OnChange = WireDiameterChange
+    TabOrder = 6
+  end
+  object InactiveCoil1Label: TLabel
+    AnchorSideTop.Control = InactiveCoil1
+    AnchorSideRight.Control = InactiveCoil1
+    AnchorSideBottom.Control = InactiveCoil1
+    AnchorSideBottom.Side = asrBottom
+    Left = 47
+    Height = 23
+    Top = 101
+    Width = 137
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Caption = 'inactive end coil 1 (upper)'
+    Layout = tlCenter
+  end
+  object InactiveCoil2Label: TLabel
+    AnchorSideTop.Control = InactiveCoil2
+    AnchorSideRight.Control = InactiveCoil2
+    AnchorSideBottom.Control = InactiveCoil2
+    AnchorSideBottom.Side = asrBottom
+    Left = 49
+    Height = 23
+    Top = 132
+    Width = 135
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Caption = 'inactive end coil 2 (lower)'
+    Layout = tlCenter
+  end
+  object InactiveCoil2: TFloatSpinEdit
+    AnchorSideLeft.Control = InactiveCoil1
+    AnchorSideTop.Control = InactiveCoil1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = InactiveCoil1
+    AnchorSideRight.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 132
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    Increment = 0.1
+    OnChange = WireDiameterChange
+    TabOrder = 7
+  end
+  object EndCoilType: TComboBox
+    AnchorSideLeft.Control = LengthL2
+    AnchorSideTop.Control = LengthL2
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 256
+    Width = 214
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 12
+    ItemHeight = 15
+    ItemIndex = 1
+    Items.Strings = (
+      'Closed and squared'
+      'Closed and ground'
+      'Open end'
+    )
+    Style = csDropDownList
+    TabOrder = 14
+    Text = 'Closed and ground'
+  end
+  object EndCoilTypeLabel: TLabel
+    AnchorSideTop.Control = EndCoilType
+    AnchorSideRight.Control = EndCoilType
+    AnchorSideBottom.Control = EndCoilType
+    AnchorSideBottom.Side = asrBottom
+    Left = 116
+    Height = 23
+    Top = 256
+    Width = 68
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Caption = 'end coil type'
+    Layout = tlCenter
+  end
+  object LengthL0Label: TLabel
+    AnchorSideTop.Control = LengthL0
+    AnchorSideRight.Control = LengthL0
+    AnchorSideBottom.Control = LengthL0
+    AnchorSideBottom.Side = asrBottom
+    Left = 46
+    Height = 23
+    Top = 163
+    Width = 138
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Caption = 'unloaded spring length L0'
+    Layout = tlCenter
+  end
+  object LengthL0: TFloatSpinEdit
+    AnchorSideLeft.Control = InactiveCoil2
+    AnchorSideTop.Control = InactiveCoil2
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = InactiveCoil2
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 163
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    OnChange = WireDiameterChange
+    TabOrder = 8
+  end
+  object LengthL0Unit: TComboBox
+    AnchorSideLeft.Control = CoilDiameterUnit
+    AnchorSideTop.Control = LengthL0
+    AnchorSideRight.Control = CoilDiameterUnit
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = LengthL0
+    AnchorSideBottom.Side = asrBottom
+    Left = 338
+    Height = 23
+    Top = 163
+    Width = 70
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BidiMode = bdRightToLeftReadingOnly
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'mm'
+      'inch'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 9
+    Text = 'mm'
+  end
+  object ActiveCoil: TFloatSpinEdit
+    AnchorSideLeft.Control = CoilDiameter
+    AnchorSideTop.Control = CoilDiameterUnit
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = CoilDiameter
+    AnchorSideRight.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 74
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    Increment = 0.1
+    OnChange = WireDiameterChange
+    TabOrder = 5
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = OkBtn
+    Left = 6
+    Height = 2
+    Top = 306
+    Width = 408
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Left = 6
+    BorderSpacing.Right = 6
+    BorderSpacing.Bottom = 12
+    Constraints.MaxHeight = 2
+    Constraints.MinHeight = 2
+  end
+  object OkBtn: TBitBtn
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 308
+    Height = 28
+    Top = 320
+    Width = 100
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 12
+    BorderSpacing.Bottom = 12
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 17
+  end
+  object CancelBtn: TBitBtn
+    AnchorSideTop.Control = OkBtn
+    AnchorSideRight.Control = OkBtn
+    AnchorSideBottom.Control = OkBtn
+    AnchorSideBottom.Side = asrBottom
+    Left = 198
+    Height = 28
+    Top = 320
+    Width = 100
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 16
+  end
+  object LengthL1Label: TLabel
+    AnchorSideTop.Control = LengthL1
+    AnchorSideRight.Control = LengthL1
+    AnchorSideBottom.Control = LengthL1
+    AnchorSideBottom.Side = asrBottom
+    Left = 135
+    Height = 23
+    Top = 194
+    Width = 49
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Caption = 'length L1'
+    Layout = tlCenter
+  end
+  object LengthL1: TFloatSpinEdit
+    AnchorSideLeft.Control = LengthL0
+    AnchorSideTop.Control = LengthL0
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = LengthL0
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = LengthL1Unit
+    AnchorSideBottom.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 194
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    OnChange = WireDiameterChange
+    TabOrder = 10
+  end
+  object LengthL1Unit: TComboBox
+    AnchorSideLeft.Control = LengthL0Unit
+    AnchorSideTop.Control = LengthL1
+    AnchorSideRight.Control = LengthL0Unit
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = LengthL1
+    AnchorSideBottom.Side = asrBottom
+    Left = 338
+    Height = 23
+    Top = 194
+    Width = 70
+    Anchors = [akTop, akLeft, akRight]
+    BidiMode = bdRightToLeftReadingOnly
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'mm'
+      'inch'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 11
+    Text = 'mm'
+  end
+  object LengthL2Unit: TComboBox
+    AnchorSideLeft.Control = LengthL1Unit
+    AnchorSideTop.Control = LengthL2
+    AnchorSideRight.Control = LengthL1Unit
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = LengthL2
+    AnchorSideBottom.Side = asrBottom
+    Left = 338
+    Height = 23
+    Top = 225
+    Width = 70
+    Anchors = [akTop, akLeft, akRight]
+    BidiMode = bdRightToLeftReadingOnly
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'mm'
+      'inch'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 13
+    Text = 'mm'
+  end
+  object LengthL2: TFloatSpinEdit
+    AnchorSideLeft.Control = LengthL1
+    AnchorSideTop.Control = LengthL1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = LengthL1
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 194
+    Height = 23
+    Top = 225
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    OnChange = WireDiameterChange
+    TabOrder = 12
+  end
+  object LengthL2Label: TLabel
+    AnchorSideTop.Control = LengthL2
+    AnchorSideRight.Control = LengthL2
+    AnchorSideBottom.Control = LengthL2
+    AnchorSideBottom.Side = asrBottom
+    Left = 135
+    Height = 23
+    Top = 225
+    Width = 49
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    Caption = 'length L2'
+    Layout = tlCenter
+  end
+  object ApplyBtn: TBitBtn
+    AnchorSideTop.Control = CancelBtn
+    AnchorSideRight.Control = CancelBtn
+    AnchorSideBottom.Control = CancelBtn
+    AnchorSideBottom.Side = asrBottom
+    Left = 88
+    Height = 28
+    Top = 320
+    Width = 100
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = '&Apply'
+    OnClick = ApplyBtnClick
+    TabOrder = 15
+  end
+end
