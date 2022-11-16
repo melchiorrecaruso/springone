@@ -36,12 +36,15 @@ function GetCelsiusDeg (const Value: double; ValueUnit: longint): double;
 function TryFormatFloatSumDiv(const S1, S2 :string; const A0, A1, A2: double): string;
 function TryFormatFloatDiv(const S1, S2 :string; const A1, A2: double): string;
 function TryFormatFloat(const S1, S2 :string; const A1: double): string;
-function TryTextToFloat(S: string): double;
+
 function TryFormatInt (const S1, S2 :string; Value: longint): string;
 function TryFormatText(const S1, S2 :string; const Value: string): string;
 function TryFormatBool(const S1, S2: string; Value: boolean): string;
 function TryFloatToText(const Value: double): string;
 function TryFloatToText(const Value: double; Precision, Digits: longint): string;
+
+function TryTextToFloat(S: string): double;
+function TryTextToInt(S: string): longint;
 
 const
   ApplicationVer = 'SpringONE v0.24';
@@ -143,11 +146,15 @@ begin
       S[i] := DefaultFormatSettings.DecimalSeparator;
     end;
 
-  Result := 0;
-  if Length(S) > 0 then
+  if not TryStrToFloat(S, Result) then
   begin
-    Result := StrToFloat(S);
+    Result := 0;
   end;
+end;
+
+function TryTextToInt(S: string): longint;
+begin
+  Result := Trunc(TryTextToFloat(S));
 end;
 
 function TryFormatBool(const S1, S2: string; Value: boolean): string;

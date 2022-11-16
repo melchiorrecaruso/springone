@@ -31,8 +31,7 @@ uses
   {$ENDIF}
   Interfaces, Forms,  UtilsBase, ApplicationFrm, DrawingFrm, DrawingTextFrm, EN10270,
   EN13906_1, EN15800, AboutFrm, GeometryFrm, GraphBase, MainFrm, MaterialFrm,
-  ProductionFrm, QualityFrm, ReportFrm,  LazControls, printer4lazarus,
-  SysUtils;
+  ProductionFrm, QualityFrm, ReportFrm,  LazControls, SysUtils;
 
 {$R *.res}
 

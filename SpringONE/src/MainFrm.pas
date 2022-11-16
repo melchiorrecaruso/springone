@@ -277,7 +277,10 @@ end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 var
+  PaperName: string;
+  {$ifopt D+}
   Logo: TBGRABitmap;
+  {$endif}
 begin
   Caption     := ApplicationVer;
   ClientFile  := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
@@ -286,32 +289,32 @@ begin
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
 
   Clear;
-  ScreenImage          := TBGRABitmap.Create;
-  ScreenImageWidth     := Screen.Width  - (Width  - VirtualScreen.Width);
-  ScreenImageHeight    := Screen.Height - (Height - VirtualScreen.Height + LCLIntf.GetSystemMetrics(SM_CYCAPTION));
+  ScreenImage       := TBGRABitmap.Create;
+  ScreenImageWidth  := Screen.Width  - (Width  - VirtualScreen.Width);
+  ScreenImageHeight := Screen.Height - (Height - VirtualScreen.Height + LCLIntf.GetSystemMetrics(SM_CYCAPTION));
   ScreenColor.FromString(ClientFile.ReadString('Custom', 'Background Color', 'White'));
-  begin
-    Printer.PaperSize.PaperName  :=                     ClientFile.ReadString ('Printer', 'Page.Name',     'A4');
-    Printer.Orientation          := TPrinterOrientation(ClientFile.ReadInteger('Printer', 'Page.Orientation', 0));
-    PageSetupDialog.MarginTop    := ClientFile.ReadInteger('Printer', 'Page.MarginTop',    0);
-    PageSetupDialog.MarginLeft   := ClientFile.ReadInteger('Printer', 'Page.MarginLeft',   0);
-    PageSetupDialog.MarginRight  := ClientFile.ReadInteger('Printer', 'Page.MarginRight',  0);
-    PageSetupDialog.MarginBottom := ClientFile.ReadInteger('Printer', 'Page.MarginBottom', 0);
-  end;
   VirtualScreen.Color := ScreenColor;
 
-  if not FileExists(ExtractFilePath(ParamStr(0)) + 'logo.png') then
+  PaperName := ClientFile.ReadString ('Printer', 'Page.Name', '');
+  if PaperName <> '' then
   begin
-    Logo := TBGRABitmap.Create;
-    Logo.SetSize(
-      ScreenImageWidth,
-      ScreenImageHeight);
-    DrawLogo2(Logo.Canvas, Logo.Width, Logo.Height);
-    Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'logo.png');
-    Logo.Destroy;
+    Printer.PaperSize.PaperName  := PaperName;
+    Printer.Orientation          := TPrinterOrientation(ClientFile.ReadInteger('Printer', 'Page.Orientation',  0 ));
+    PageSetupDialog.MarginTop    := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginTop',    '0'));
+    PageSetupDialog.MarginLeft   := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginLeft',   '0'));
+    PageSetupDialog.MarginRight  := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginRight',  '0'));
+    PageSetupDialog.MarginBottom := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginBottom', '0'));
   end;
   WindowState := wsMaximized;
   FormPaint(nil);
+
+  {$ifopt D+}
+  Logo := TBGRABitmap.Create;
+  Logo.SetSize(2560, 2048);
+  DrawLogo2(Logo.Canvas, Logo.Width, Logo.Height);
+  Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'BACKGROUND.png');
+  Logo.Destroy;
+  {$endif}
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -1083,7 +1086,7 @@ begin
   if SaveDialog.Execute then
   begin
     SVG := TBGRASVG.Create;
-    SVG.LoadFromResource('A4');
+    SVG.LoadFromResource('TEMPLATE');
     SVG.AsUTF8String := ProductionDrawing(SVG.AsUTF8String, PrinterFile);
     SVG.SaveToFile(SaveDialog.FileName);
     SVG.Destroy;
@@ -1368,7 +1371,7 @@ begin
     Bit[0].SetSize(aScreen.Width, aScreen.Height);
     begin
       SVG := TBGRASVG.Create;
-      SVG.LoadFromResource('A4');
+      SVG.LoadFromResource('TEMPLATE');
       SVG.AsUTF8String := ProductionDrawing(SVG.AsUTF8String, aSetting);
       SVG.StretchDraw(Bit[0].Canvas2D, taLeftJustify, tlCenter, 0, 0, Bit[0].Width, Bit[0].Height, False);
       SVG.Destroy;
@@ -1701,8 +1704,8 @@ end;
 
 procedure TMainForm.FormPaint(Sender: TObject);
 var
-  Check: boolean;
   i: longint;
+  Check: boolean;
 begin
   FormWindowStateChange(Sender);
 
@@ -1720,7 +1723,7 @@ begin
     PaintTo(ScreenImage, ScreenColor ,ScreenScale, ClientFile);
   end else
   begin
-    ScreenImage.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'logo.png');
+    ScreenImage.LoadFromResource('BACKGROUND');
     VirtualScreen.RedrawBitmap;
   end;
 

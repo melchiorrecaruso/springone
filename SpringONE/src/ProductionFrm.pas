@@ -74,7 +74,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math;
+  Math, UtilsBase;
 
 { TProductionForm }
 
@@ -103,16 +103,16 @@ end;
 
 procedure TProductionForm.Load(IniFile: TIniFile);
 begin
-  DirectionCoils.ItemIndex := IniFile.ReadInteger('TProductionForm', 'DirectionCoilsIndex', 0);
-  BurringEnds   .ItemIndex := IniFile.ReadInteger('TProductionForm', 'BurringEndsIndex',    0);
-  WireSurface   .ItemIndex := IniFile.ReadInteger('TProductionForm', 'WireSurfaceIndex',    0);
-  LengthLsUnit  .ItemIndex := IniFile.ReadInteger('TProductionForm', 'LengthLsIndex',       0);
-  LengthLs      .Value     := IniFile.ReadFloat  ('TProductionForm', 'LengthLs',            0);
-  L0            .Checked   := IniFile.ReadBool   ('TProductionForm', 'L0',               True);
-  nAndd         .Checked   := IniFile.ReadBool   ('TProductionForm', 'nAndd',           False);
-  nAndDeDi      .Checked   := IniFile.ReadBool   ('TProductionForm', 'nAndDeDi',        False);
-  L0nAndd       .Checked   := IniFile.ReadBool   ('TProductionForm', 'L0nAndd',         False);
-  L0nAndDeDi    .Checked   := IniFile.ReadBool   ('TProductionForm', 'L0nAndDeDi',      False);
+  DirectionCoils.ItemIndex := TryTextToInt  (IniFile.ReadString('TProductionForm', 'DirectionCoilsIndex', '0'));
+  BurringEnds   .ItemIndex := TryTextToInt  (IniFile.ReadString('TProductionForm', 'BurringEndsIndex',    '0'));
+  WireSurface   .ItemIndex := TryTextToInt  (IniFile.ReadString('TProductionForm', 'WireSurfaceIndex',    '0'));
+  LengthLsUnit  .ItemIndex := TryTextToInt  (IniFile.ReadString('TProductionForm', 'LengthLsIndex',       '0'));
+  LengthLs      .Value     := TryTextToFloat(IniFile.ReadString('TProductionForm', 'LengthLs',            '0'));
+  L0            .Checked   :=                IniFile.ReadBool  ('TProductionForm', 'L0',                  True);
+  nAndd         .Checked   :=                IniFile.ReadBool  ('TProductionForm', 'nAndd',              False);
+  nAndDeDi      .Checked   :=                IniFile.ReadBool  ('TProductionForm', 'nAndDeDi',           False);
+  L0nAndd       .Checked   :=                IniFile.ReadBool  ('TProductionForm', 'L0nAndd',            False);
+  L0nAndDeDi    .Checked   :=                IniFile.ReadBool  ('TProductionForm', 'L0nAndDeDi',         False);
 end;
 
 procedure TProductionForm.Save(IniFile: TIniFile);

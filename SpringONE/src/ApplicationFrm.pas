@@ -26,7 +26,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Spin, ExtCtrls, Menus,
-  Buttons, ComCtrls, EN13906_1, EN10270, EN15800, IniFiles, UtilsBase;
+  Buttons, ComCtrls, EN13906_1, EN10270, EN15800, IniFiles;
 
 type
 
@@ -34,9 +34,10 @@ type
 
   TApplicationForm = class(TForm)
     Bevel: TBevel;
-    CycleFrequencyLabel: TLabel;
-    Temperature: TFloatSpinEdit;
     CycleFrequency: TFloatSpinEdit;
+    CycleFrequencyLabel: TLabel;
+    CycleFrequencyUnit: TComboBox;
+    Temperature: TFloatSpinEdit;
     TemperatureLabel: TLabel;
     LoadType: TComboBox;
     LoadTypeLabel: TLabel;
@@ -45,7 +46,6 @@ type
     SeatingCoefficentLabel: TLabel;
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
-    CycleFrequencyUnit: TComboBox;
     procedure CycleFrequencyChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   public
@@ -62,7 +62,7 @@ implementation
 {$R *.lfm}
 
 uses
-  Math;
+  Math, UtilsBase;
 
 { TApplicationForm }
 
@@ -86,11 +86,11 @@ end;
 
 procedure TApplicationForm.Load(IniFile: TIniFile);
 begin
-  LoadType         .ItemIndex := IniFile.ReadInteger('TApplicationForm', 'LoadType',          0);
-  CycleFrequency   .Value     := IniFile.ReadFloat  ('TApplicationForm', 'CycleFrequency',    1);
-  Temperature      .Value     := IniFile.ReadFloat  ('TApplicationForm', 'Temperature',       0);
-  TemperatureUnit  .ItemIndex := IniFile.ReadInteger('TApplicationForm', 'TemperatureUnit',   0);
-  SeatingCoefficent.ItemIndex := IniFile.ReadInteger('TApplicationForm', 'SeatingCoefficent', 0);
+  LoadType         .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm', 'LoadType',          '0'));
+  CycleFrequency   .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm', 'CycleFrequency',    '1'));
+  Temperature      .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm', 'Temperature',       '0'));
+  TemperatureUnit  .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm', 'TemperatureUnit',   '0'));
+  SeatingCoefficent.ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm', 'SeatingCoefficent', '0'));
 end;
 
 procedure TApplicationForm.Save(IniFile: TIniFile);
