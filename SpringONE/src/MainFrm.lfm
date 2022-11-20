@@ -23,13 +23,43 @@ object MainForm: TMainForm
     Align = alClient
     Alignment = taCenter
     Anchors = []
+    ClientHeight = 500
+    ClientWidth = 700
     Color = clNone
     ParentColor = False
     TabOrder = 0
+    OnDblClick = VirtualScreenDblClick
     OnMouseDown = VirtualScreenMouseDown
     OnMouseMove = VirtualScreenMouseMove
     OnMouseUp = VirtualScreenMouseUp
     OnResize = VirtualScreenResize
+    object Selection: TBGRAShape
+      Left = 32
+      Height = 40
+      Top = 96
+      Width = 40
+      Angle = 45
+      BorderColor = clRed
+      BorderGradient.StartColor = clWhite
+      BorderGradient.EndColor = clBlack
+      BorderGradient.GradientType = gtLinear
+      BorderGradient.Point1XPercent = 0
+      BorderGradient.Point1YPercent = 0
+      BorderGradient.Point2XPercent = 100
+      BorderGradient.Point2YPercent = 100
+      BorderStyle = psDash
+      FillColor = clBlue
+      FillOpacity = 10
+      FillGradient.StartColor = clWhite
+      FillGradient.EndColor = clBlack
+      FillGradient.GradientType = gtLinear
+      FillGradient.Point1XPercent = 0
+      FillGradient.Point1YPercent = 0
+      FillGradient.Point2XPercent = 0
+      FillGradient.Point2YPercent = 100
+      RatioXY = 2
+      Caption = 'Selection'
+    end
   end
   object MainMenu: TMainMenu
     Left = 40
@@ -197,58 +227,6 @@ object MainForm: TMainForm
           Caption = 'Profile drawing (L)'
           OnClick = CustomSectionMenuItemClick
         end
-      end
-    end
-    object ZoomMenuItem: TMenuItem
-      Caption = 'Zoom'
-      object Zoom100MenuItem: TMenuItem
-        Caption = 'Zoom 100%'
-        Checked = True
-        OnClick = ZoomMenuItemClick
-      end
-      object Zoom125MenuItem: TMenuItem
-        Caption = 'Zoom 125%'
-        OnClick = ZoomMenuItemClick
-      end
-      object Zoom150MenuItem: TMenuItem
-        Caption = 'Zoom 150%'
-        OnClick = ZoomMenuItemClick
-      end
-      object Zoom175MenuItem: TMenuItem
-        Caption = 'Zoom 175%'
-        OnClick = ZoomMenuItemClick
-      end
-      object Zoom200MenuItem: TMenuItem
-        Caption = 'Zoom 200%'
-        OnClick = ZoomMenuItemClick
-      end
-      object Zoom225MenuItem: TMenuItem
-        Caption = 'Zoom 225%'
-        OnClick = ZoomMenuItemClick
-      end
-      object Zoom250MenuItem: TMenuItem
-        Caption = 'Zoom 250%'
-        OnClick = ZoomMenuItemClick
-      end
-      object Separator7: TMenuItem
-        Caption = '-'
-      end
-      object IncreaseFontMenuItem: TMenuItem
-        Caption = 'Increase font size'
-        ShortCut = 16491
-        OnClick = ModifyFontMenuItemClick
-      end
-      object DecreaseFontMenuItem: TMenuItem
-        Caption = 'Decrease font size'
-        ShortCut = 16493
-        OnClick = ModifyFontMenuItemClick
-      end
-      object Separator8: TMenuItem
-        Caption = '-'
-      end
-      object ResetFontMenuItem: TMenuItem
-        Caption = 'Reset font size'
-        OnClick = ModifyFontMenuItemClick
       end
     end
     object DocsMenuItem: TMenuItem

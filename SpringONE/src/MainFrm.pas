@@ -25,23 +25,22 @@ unit MainFrm;
 interface
 
 uses
-  BGRABitmap, BGRABitmapTypes, BGRAVirtualScreen, BGRASVG, BGRATextFX, BGRAUnits,
-  Classes, Controls, Dialogs, IniFiles, EN13906_1, EN10270, EN15800, ExtCtrls, Forms,
-  GraphBase, Graphics, Math, Menus, StdCtrls, Spin, ExtDlgs, PrintersDlgs,
-  SysUtils, LResources;
+  BGRABitmap, BGRABitmapTypes, BGRAVirtualScreen, BGRAShape, BGRASVG,
+  BGRATextFX, BGRAUnits, Classes, Controls, Dialogs, IniFiles, EN13906_1,
+  EN10270, EN15800, ExtCtrls, Forms, GraphBase, Graphics, Math, Menus, StdCtrls,
+  Spin, ExtDlgs, PrintersDlgs, SysUtils, LResources;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    Selection: TBGRAShape;
     DrawingTextMenuItem: TMenuItem;
     GeometryMenuItem: TMenuItem;
     MaterialMenuItem: TMenuItem;
     DrawMenuItem: TMenuItem;
     CloseMenuItem: TMenuItem;
-    IncreaseFontMenuItem: TMenuItem;
-    DecreaseFontMenuItem: TMenuItem;
     ExportMenuItem: TMenuItem;
     ExportReportMenuItem: TMenuItem;
     ExportProductionMenuItem: TMenuItem;
@@ -59,20 +58,9 @@ type
     YoungModulusMenuItem: TMenuItem;
     F1MenuItem: TMenuItem;
     F2MenuItem: TMenuItem;
-    ResetFontMenuItem: TMenuItem;
     SavePictureDialog: TSavePictureDialog;
     Separator3: TMenuItem;
-    Separator7: TMenuItem;
-    Separator8: TMenuItem;
     Separator9: TMenuItem;
-    Zoom250MenuItem: TMenuItem;
-    Zoom225MenuItem: TMenuItem;
-    ZoomMenuItem: TMenuItem;
-    Zoom100MenuItem: TMenuItem;
-    Zoom125MenuItem: TMenuItem;
-    Zoom150MenuItem: TMenuItem;
-    Zoom175MenuItem: TMenuItem;
-    Zoom200MenuItem: TMenuItem;
     QualityMenuItem: TMenuItem;
     VirtualScreen: TBGRAVirtualScreen;
     MainMenu: TMainMenu;
@@ -123,7 +111,6 @@ type
     procedure MaterialMenuItemClick(Sender: TObject);
     procedure AboutMenuItemClick(Sender: TObject);
     procedure PageSetupMenuItemClick(Sender: TObject);
-    procedure ModifyFontMenuItemClick(Sender: TObject);
 
     procedure PrintMenuItemClick(Sender: TObject);
     procedure ProductionMenuItemClick(Sender: TObject);
@@ -135,6 +122,7 @@ type
     procedure ExitMenuItemClick(Sender: TObject);
     procedure ApplicationMenuItemClick(Sender: TObject);
     procedure CustomSectionMenuItemClick(Sender: TObject);
+    procedure VirtualScreenDblClick(Sender: TObject);
     procedure VirtualScreenMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -144,7 +132,6 @@ type
     procedure NewMenuItemClick(Sender: TObject);
     procedure ReportMenuItemClick(Sender: TObject);
     procedure VirtualScreenResize(Sender: TObject);
-    procedure ZoomMenuItemClick(Sender: TObject);
   private
     FileName: string;
     ClientFile: TIniFile;
@@ -193,7 +180,7 @@ uses
   AboutFrm, ApplicationFrm, DrawingFrm, DrawingTextFrm, GeometryFrm, LCLIntf, LCLType,
   MaterialFrm, Printers, ProductionFrm, QualityFrm, ReportFrm, UtilsBase;
 
-// Solve routine
+{ Solve routine }
 
 procedure TMainForm.Solve;
 begin
@@ -289,6 +276,7 @@ begin
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
 
   Clear;
+  Selection.Visible := False;
   ScreenImage       := TBGRABitmap.Create;
   ScreenImageWidth  := Screen.Width  - (Width  - VirtualScreen.Width);
   ScreenImageHeight := Screen.Height - (Height - VirtualScreen.Height + LCLIntf.GetSystemMetrics(SM_CYCAPTION));
@@ -311,7 +299,7 @@ begin
   {$ifopt D+}
   Logo := TBGRABitmap.Create;
   Logo.SetSize(2560, 2048);
-  DrawLogo2(Logo.Canvas, Logo.Width, Logo.Height);
+  DrawLogo(Logo.Canvas, Logo.Width, Logo.Height);
   Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'BACKGROUND.png');
   Logo.Destroy;
   {$endif}
@@ -328,17 +316,16 @@ procedure TMainForm.Clear;
 var
   i: longint;
 begin
-  MouseIsDown := False;
-  MoveX := 0;
-  MoveY := 0;
-  ScreenScale   := 1.00;
-
   for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
   for i := 0 to TempMenuItem.Count -1 do TempMenuItem.Items[i].Checked := False;
   for i := 0 to DrawMenuItem.Count -1 do DrawMenuItem.Items[i].Checked := False;
-  for i := 0 to ZoomMenuitem.Count -1 do ZoomMenuItem.Items[i].Checked := False;
   for i := 0 to DocsMenuItem.Count -1 do DocsMenuItem.Items[i].Checked := False;
+
   FileName := '';
+  MoveX := 0;
+  MoveY := 0;
+  MouseIsDown := False;
+  ScreenScale := 1.00;
 end;
 
 procedure TMainForm.FormWindowStateChange(Sender: TObject);
@@ -360,18 +347,18 @@ procedure TMainForm.Save(IniFile: TIniFile);
 begin
 
 end;
-
 *)
 
 // Mouse Events
 
 procedure TMainForm.VirtualScreenMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
+  Selection.Visible := False;
   if Button = mbLeft then
   begin
     MouseIsDown := True;
-    Px := X - MoveX;
-    Py := Y - MoveY;
+    Px := X;
+    Py := Y;
   end;
 end;
 
@@ -379,16 +366,62 @@ procedure TMainForm.VirtualScreenMouseMove(Sender: TObject; Shift: TShiftState; 
 begin
   if MouseIsDown then
   begin
-    MoveX := X - Px;
-    MoveY := Y - Py;
-    VirtualScreenResize(Sender);
-    VirtualScreen.RedrawBitmap;
+    Selection.Visible := not (ssCtrl in Shift);
+    if Selection.Visible then
+    begin
+      Selection.SetBounds(Px, Py, X - Px, Y - Py);
+    end else
+    begin
+      MoveX := MoveX + (X - Px);
+      MoveY := MoveY + (Y - Py);
+      Px    := X;
+      Py    := Y;
+      VirtualScreenResize(Sender);
+      VirtualScreen.RedrawBitmap;
+    end;
   end;
 end;
 
 procedure TMainForm.VirtualScreenMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+const
+  MaxScale = 5;
+var
+  NewScale: double;
 begin
-  MouseIsDown := False;
+  if MouseIsDown then
+  begin
+    MouseIsDown := False;
+    if Selection.Visible then
+    begin
+      Selection.Visible := False;
+      if ((X - Px) > 0) and ((Y - Py) > 0) then
+      begin
+        NewScale := Min(ScreenImageWidth / (X - Px), ScreenImageHeight / (Y - Py));
+        if ScreenScale*NewScale > MaxScale then
+        begin
+          Newscale := MaxScale / ScreenScale;
+        end;
+        ScreenScale := ScreenScale * NewScale;
+
+        MoveX := Trunc(ScreenImageWidth /2 - ((Px + X) / 2 - MoveX) * NewScale);
+        MoveY := Trunc(ScreenImageHeight/2 - ((Py + Y) / 2 - MoveY) * NewScale);
+
+        FormPaint(Sender);
+      end;
+    end else
+    begin
+      VirtualScreenResize(Sender);
+      VirtualScreen.RedrawBitmap;
+    end;
+  end;
+end;
+
+procedure TMainForm.VirtualScreenDblClick(Sender: TObject);
+begin
+  MoveX := 0;
+  MoveY := 0;
+  ScreenScale := 1.0;
+  FormPaint(Sender);
 end;
 
 // Virtual Screen Events
@@ -400,11 +433,8 @@ end;
 
 procedure TMainForm.VirtualScreenResize(Sender: TObject);
 begin
-  if MoveX > 0 then MoveX := 0;
-  if MoveY > 0 then MoveY := 0;
-
-  if MoveX < VirtualScreen.Width  - ScreenImage.Width  then MoveX := VirtualScreen.Width  - ScreenImage.Width;
-  if MoveY < VirtualScreen.Height - ScreenImage.Height then MoveY := VirtualScreen.Height - ScreenImage.Height;
+  MoveX := Max(Min(0, MoveX), VirtualScreen.Width  - ScreenImage.Width );
+  MoveY := Max(Min(0, MoveY), VirtualScreen.Height - ScreenImage.Height);
 end;
 
 // Menu File //
@@ -419,8 +449,7 @@ begin
      (ProductionForm .ShowModal = mrOk) and
      (ApplicationForm.ShowModal = mrOk) then
   begin
-    Quick1MenuItem .Checked := True;
-    Zoom100MenuItem.Checked := True;
+    Quick1MenuItem.Checked := True;
     Solve();
   end;
 end;
@@ -446,8 +475,7 @@ begin
       ApplicationForm.Load(IniFile);
       IniFile.Destroy;
     end;
-    Quick1MenuItem .Checked := True;
-    Zoom100MenuItem.Checked := True;
+    Quick1MenuItem.Checked := True;
     Solve();
   end;
 end;
@@ -494,34 +522,20 @@ begin
   ApplicationForm.Clear;
 
   Caption := ApplicationVer;
-//Quick1MenuItem .Checked := True;
-  Zoom100MenuItem.Checked := True;
   Solve();
-end;
-
-function TMainForm.CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
-var
-  PageColor: TBGRAPixel;
-begin
-  Result := TBGRABitmap.Create;
-  Result.SetSize(
-    Trunc(aWidth  *aScale),
-    Trunc(aHeight *aScale));
-  PageColor.FromString(aSetting.ReadString('Custom', 'Background Color', 'White'));
-  PaintTo(Result, PageColor, aScale, aSetting);
 end;
 
 procedure TMainForm.ExportMenuItemClick(Sender: TObject);
 var
   Page: TBGRABitmap;
 begin
-  Solve();
   SavePictureDialog.Filter :=
     'Graphics (*.png;*.xpm;*.bmp;*.jpeg;*.jpg;)|*.png;*.xpm;*.bmp;*.jpeg;*.jpg|' +
     'PNG Files (*.png)|*.png|' + 'Pixmap Files (*.xpm)|*.xpm|' + 'Bitmap Files (*.bmp)|*.bmp)|' +
     'JPEG Files (*.jpeg;*.jpg;)|*.jpeg;*.jpg|' + 'Tutti i file (*.*)|*.*|;';
   if SavePictureDialog.Execute then
   begin
+    Solve();
     if Production2MenuItem.Checked then
       Page := CreatePage(Trunc(ScreenImageHeight*0.707), ScreenImageHeight, 4.5, PrinterFile)
     else
@@ -551,9 +565,9 @@ var
   Page: TBGRABitmap;
   Scale: double;
 begin
-  Solve();
   if PrintDialog.Execute then
   begin
+    Solve();
     if Production2MenuItem.Checked then
       Scale := Printer.PageHeight / Printer.PageWidth
     else
@@ -783,8 +797,7 @@ procedure TMainForm.ViewMenuItemClick(Sender: TObject);
 var
   i: longint;
 begin
-  if (Sender <> TempMenuItem) and
-     (Sender <> DrawMenuItem) then
+  if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
   begin
     for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
     for i := 0 to TempMenuItem.Count -1 do TempMenuItem.Items[i].Checked := False;
@@ -802,8 +815,7 @@ var
   i: longint;
   SpringLength: double;
 begin
-  if (Sender <> TempMenuItem) and
-     (Sender <> DrawMenuItem) then
+  if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
   begin
     DrawingForm.SpringLength.MinValue := SpringSolver.LengthLc;
     DrawingForm.SpringLength.MaxValue := SpringSolver.LengthL0;
@@ -824,60 +836,6 @@ begin
   end;
 end;
 
-// Menu Zoom //
-
-procedure TMainForm.ZoomMenuItemClick(Sender: TObject);
-var
-  i: longint;
-begin
-  for i := 0 to ZoomMenuItem.Count -1 do
-    ZoomMenuItem.Items[i].Checked := False;
-
-  if Assigned(Sender) then
-  begin
-    ScreenScale := 1.00;
-    if Sender = Zoom100MenuItem then ScreenScale := 1.00;
-    if Sender = Zoom125MenuItem then ScreenScale := 1.25;
-    if Sender = Zoom150MenuItem then ScreenScale := 1.50;
-    if Sender = Zoom175MenuItem then ScreenScale := 1.75;
-    if Sender = Zoom200MenuItem then ScreenScale := 2.00;
-    if Sender = Zoom225MenuItem then ScreenScale := 2.25;
-    if Sender = Zoom250MenuItem then ScreenScale := 2.50;
-    TMenuItem(Sender).Checked := True;
-  end;
-
-  MoveX := 0;
-  MoveY := 0;
-  FormPaint(Sender);
-end;
-
-procedure TMainForm.ModifyFontMenuItemClick(Sender: TObject);
-var
-  FontHeightInc: longint;
-begin
-  FontHeightInc := ClientFile.ReadInteger('Custom', 'FontHeightInc', 0);
-
-  if Sender = IncreaseFontMenuItem then
-    Inc(FontHeightInc);
-
-  if Sender = DecreaseFontMenuItem then
-    Dec(FontHeightInc);
-
-  if Sender = ResetFontMenuItem then
-    FontHeightInc := 0;
-
-  ClientFile.WriteInteger('Custom', 'FontHeightInc', FontHeightInc);
-  try
-    FormPaint(nil);
-  except
-    if Sender = DecreaseFontMenuItem then
-      ModifyFontMenuItemClick(IncreaseFontMenuItem);
-
-    if Sender = IncreaseFontMenuItem then
-      ModifyFontMenuItemClick(DecreaseFontMenuItem);
-  end;
-end;
-
 // Menu Documentation
 
 procedure TMainForm.ReportMenuItemClick(Sender: TObject);
@@ -889,6 +847,7 @@ end;
 
 function TMainForm.ProductionDrawing(const Tx: string; aSetting: TIniFile): string;
 begin
+  Solve();
   Result := Tx;
   Result := StringReplace(Result, '@0.00', Format('e1=%s mm', [TryFloatToText(SpringSolver.EccentricityE1)]), [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@0.01', Format('e2=%s mm', [TryFloatToText(SpringSolver.EccentricityE2)]), [rfReplaceAll, rfIgnoreCase]);
@@ -1079,7 +1038,7 @@ end;
 
 procedure TMainForm.ExportProductionMenuItemClick(Sender: TObject);
 var
-  SVG: TBGRASVG;
+  SVG: TBGRASvg;
 begin
   Solve();
   SaveDialog.Filter := 'Svg file (*.svg)|*.svg|All files (*.*)|*.*|;';
@@ -1199,7 +1158,7 @@ begin
     ReportList1.Zoom         := aScreenScale;
 
     ReportList1.ColumnCount  := 1;
-    ReportList1.RowCount     := 16;
+    ReportList1.RowCount     := 17;
     ReportList1.Items[ 0, 0] := TryFormatFloat   ('d     = %s mm',     'd     = ---', SpringSolver.WireDiameter);
     ReportList1.Items[ 1, 0] := TryFormatFloat   ('tauk1 = %s MPa',    'tauk1 = ---', SpringSolver.TorsionalStressTauk1);
     ReportList1.Items[ 2, 0] := TryFormatFloat   ('tauk2 = %s MPa',    'tauk2 = ---', SpringSolver.TorsionalStressTauk2);
@@ -1209,15 +1168,18 @@ begin
     ReportList1.Items[ 6, 0] := TryFormatFloat   ('G     = %s MPa',    'G     = ---', SpringSolver.ShearModulus);
     ReportList1.Items[ 7, 0] := TryFormatFloat   ('rho   = %s kg/dm3', 'rho   = ---', SpringSolver.DensityRho);
     ReportList1.Items[ 8, 0] := TryFormatFloat   ('Rm    = %s MPa',    'Rm    = ---', SpringSolver.TensileStrengthRm);
-    ReportList1.Items[ 9, 0] := TryFormatFloat   ('tauoz = %s MPa',    'tauoz = ---', SpringSolver.AdmDynamicTorsionalStressTauoz);
-    ReportList1.Items[10, 0] := TryFormatFloat   ('tauhz = %s MPa',    'tauhz = ---', SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
-    ReportList1.Items[11, 0] := ' ';
-    ReportList1.Items[12, 0] := TryFormatFloat   ('ns    = %s',        'ns    = ---', SpringSolver.StaticSafetyFactor);
+    ReportList1.Items[ 9, 0] := TryFormatFloat   ('tauz  = %s MPa',    'tauz  = ---', SpringSolver.AdmStaticTorsionalStressTauz);
+    ReportList1.Items[10, 0] := ' ';
+    ReportList1.Items[11, 0] := TryFormatFloat   ('ns    = %s',        'ns    = ---', SpringSolver.StaticSafetyFactor);
     if ApplicationForm.LoadType.ItemIndex = 0 then
     begin
-      ReportList1.Items[13, 0] := TryFormatFloat   ('nf    = %s',        'nf    = ---', SpringSolver.DynamicSafetyFactor);
-      ReportList1.Items[14, 0] := TryFormatText    ('N     = %s cycles', 'N     = ---', TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
-      ReportList1.Items[15, 0] := TryFormatFloatDiv('Nh    = %s hours',  'Nh    = ---', SpringSolver.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
+      ReportList1.Items[12, 0] := TryFormatFloat   ('tauoz = %s MPa',    'tauoz = ---', SpringSolver.AdmDynamicTorsionalStressTauoz);
+      ReportList1.Items[13, 0] := TryFormatFloat   ('tauhz = %s MPa',    'tauhz = ---', SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
+
+
+      ReportList1.Items[14, 0] := TryFormatFloat   ('nf    = %s',        'nf    = ---', SpringSolver.DynamicSafetyFactor);
+      ReportList1.Items[15, 0] := TryFormatText    ('N     = %s cycles', 'N     = ---', TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
+      ReportList1.Items[16, 0] := TryFormatFloatDiv('Nh    = %s hours',  'Nh    = ---', SpringSolver.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
     end;
 
     Bit[1].SetSize(ReportList1.Width + ReportList1.Spacer, aScreen.Height - Bit[0].Height);
@@ -1394,6 +1356,8 @@ begin
   ReportTable.Destroy;
   ReportList0.Destroy;
   SpringDrawing.Destroy;
+
+  VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
 end;
 
@@ -1579,17 +1543,17 @@ begin
 
   Result[0, 4]       := 'tau/tauz';
   Result[1, 4]       := '';
-  Result[2, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauk1, SpringSolver.AdmStaticTorsionalStressTauz);
-  Result[3, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauk2, SpringSolver.AdmStaticTorsionalStressTauz);
-  Result[4, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTaun , SpringSolver.AdmStaticTorsionalStressTauz);
-  Result[5, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauc , SpringSolver.AdmStaticTorsionalStressTauz);
+  Result[2, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau1, SpringSolver.AdmStaticTorsionalStressTauz);
+  Result[3, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau2, SpringSolver.AdmStaticTorsionalStressTauz);
+  Result[4, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTaun, SpringSolver.AdmStaticTorsionalStressTauz);
+  Result[5, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauc, SpringSolver.AdmStaticTorsionalStressTauz);
 
   Result[0, 5]       := 'tau/Rm';
   Result[1, 5]       := '';
-  Result[2, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauk1, SpringSolver.TensileStrengthRm);
-  Result[3, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauk2, SpringSolver.TensileStrengthRm);
-  Result[4, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTaun , SpringSolver.TensileStrengthRm);
-  Result[5, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauc , SpringSolver.TensileStrengthRm);
+  Result[2, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau1, SpringSolver.TensileStrengthRm);
+  Result[3, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau2, SpringSolver.TensileStrengthRm);
+  Result[4, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTaun, SpringSolver.TensileStrengthRm);
+  Result[5, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauc, SpringSolver.TensileStrengthRm);
 
   Result[0, 6]       := 'De';
   Result[1, 6]       := TryFormatFloat      ('%s', '---', SpringSolver.De);
@@ -1700,6 +1664,18 @@ begin
   Result.GroundEnds := SpringSolver.GroundEnds;
   Result.Spacer     := Trunc(DefaultSpacer*aScreenScale);
   Result.Zoom       := aScreenScale;
+end;
+
+function TMainForm.CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
+var
+  PageColor: TBGRAPixel;
+begin
+  Result := TBGRABitmap.Create;
+  Result.SetSize(
+    Trunc(aWidth  *aScale),
+    Trunc(aHeight *aScale));
+  PageColor.FromString(aSetting.ReadString('Custom', 'Background Color', 'White'));
+  PaintTo(Result, PageColor, aScale, aSetting);
 end;
 
 procedure TMainForm.FormPaint(Sender: TObject);

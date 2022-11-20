@@ -283,6 +283,7 @@ begin
   fTaukc := 0;
   fTaukn := 0;
   fTauz  := 0;
+  fTauoz := 0;
   fTauhz := 0;
   fToleranceWireDiameter := 0;
   fToleranceDm := 0;
@@ -497,17 +498,17 @@ begin
     // L'incremento del diamtro esterno della molla sotto carico, DeltaDe, è determinato usando la
     // formula sottostante, valida per molla a pacco LengthLc YoungModulus per estremità della molla
     // liberamente appoggiate.
-    if (fClosedEnds = True) and (GroundEnds = True) then
+    if (fClosedEnds) and (GroundEnds) then
       m := (fSc + fn * fd) / fn
     else
-      if (fClosedEnds = False) and (GroundEnds = False) then
+      if (not fClosedEnds) and (not GroundEnds) then
         m := (fSc + (fn + 1.5) * fd) / fn
       else
         m := 0;
 
     if m = 0 then
     begin
-      ErrorMessage.Add('DeltaDe undefined. Please change kind spring ends.');
+      WarningMessage.Add('DeltaDe undefined. Please change kind spring ends.');
     end else
     begin
       fDeltaDe := 0.1 * (power(m, 2) - 0.8 * m * fd - 0.2 * power(fd, 2)) / fDm;
@@ -519,9 +520,6 @@ begin
   // Calcolo carichi della molla
   if fCheck then
   begin
-    // Calcolo diametro minimo e massimo della molla in esercizio:
-    fDiMin := fDi - fToleranceDm - fToleranceWireDiameter;
-    fDeMax := fDe + fDeltaDe + fToleranceDm + fToleranceWireDiameter;
     // Calcolo rigidezza della molla:
     fR := (fG * power(fd, 4)) / (8 * power(fDm, 3) * fn);
     // Calcolo carichi della molla:
@@ -566,16 +564,23 @@ begin
     fe2          := fSpringTolerance.EccentricityE2;
   end;
 
+  // Calcolo diametro minimo e massimo della molla in esercizio:
+  if fCheck then
+  begin
+    fDiMin := fDi - fToleranceDm - fToleranceWireDiameter;
+    fDeMax := fDe + fDeltaDe + fToleranceDm + fToleranceWireDiameter;
+  end;
+
   // Calcolo lunghezza sviluppo del filo della molla
   if fCheck then
   begin
-    fWireLength := fnt * (pi * fDm);
+    fWireLength := fDm * pi * fnt;
   end;
 
   // Calcolo massa della molla
   if fCheck then
   begin
-    fMass := fWireLength * (pi * sqr(fd) / 4) * fRho / 1000;
+    fMass := pi * sqr(fd)/4 * (fRho/1000) * fWireLength;
   end;
 
   // Calcolo frequenza naturale del primo ordine della molla

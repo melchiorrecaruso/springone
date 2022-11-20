@@ -290,7 +290,7 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 6
-    Caption = 'Build 20221116'
+    Caption = 'Build 20221120'
     Layout = tlCenter
     ParentFont = False
   end

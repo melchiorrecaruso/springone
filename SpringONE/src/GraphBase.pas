@@ -26,7 +26,7 @@ unit GraphBase;
 interface
 
 uses
-  BGRABitmap, BGRABitmapTypes, Classes, Graphics, IniFiles, Math, SysUtils, UtilsBase;
+  BGRABitmap, BGRABitmapTypes, BGRATextFX, Classes, Graphics, IniFiles, Math, SysUtils, UtilsBase;
 
 type
   TCustomGraph = class
@@ -284,8 +284,7 @@ type
   end;
 
 
-  procedure DrawLogo (aCanvas: TCanvas; aWidth, aHeight: longint);
-  procedure DrawLogo2(aCanvas: TCanvas; aWidth, aHeight: longint);
+  procedure DrawLogo(aCanvas: TCanvas; aWidth, aHeight: longint);
 
 const
   DefaultSpacer = 16;
@@ -332,7 +331,9 @@ end;
 constructor TCustomGraph.Create(const aSection: string; aSetting: TIniFile);
 begin
   inherited Create;
-  fBitmap   := TBGRABitmap.Create;
+  fBitmap              := TBGRABitmap.Create;
+  fBitmap.FontRenderer := TBGRATextEffectFontRenderer.Create;
+
   fHeight   := 0;
   fWidth    := 0;
   fZoom     := 1.0;
@@ -362,21 +363,18 @@ end;
 procedure TCustomGraph.LoadFont(Index: string; var FontColor: TBGRAPixel);
 var
   FontStyle: string;
-  FontHeightInc: longint;
 begin
-  FontHeightInc := fSetting.ReadInteger('Custom', 'FontHeightInc', 0);
-
-  fBitmap.FontAntialias := True;
-  fBitmap.FontQuality   := fqSystemClearType;
-  fBitmap.FontName      := fSetting.ReadString (fSection, Format('Font %s Name',   [Index]), 'Courier New');
-  fBitmap.FontHeight    := Max(1, Trunc(FontHeightInc + fSetting.ReadInteger(fSection, Format('Font %s Height', [Index]), 16) * fZoom));
-  fBitmap.FontStyle     := [];
+  fBitmap.FontStyle      := [];
+  fBitmap.FontAntialias  := True;
+  fBitmap.FontQuality    := fqSystemClearType;
+  fBitmap.FontName       := fSetting.ReadString (fSection, Format('Font %s Name', [Index]), 'Courier New');
+  fBitmap.FontHeight     := Trunc(fSetting.ReadInteger(fSection, Format('Font %s Height', [Index]), 16) * fZoom);
 
   FontStyle := fSetting.ReadString(fSection, Format('Font %s Style', [Index]), '');
-  if Pos('Bold',      FontStyle) > 0 then Include(fBitmap.FontStyle, fsBold     );
-  if Pos('Italic',    FontStyle) > 0 then Include(fBitmap.FontStyle, fsItalic   );
-  if Pos('Underline', FontStyle) > 0 then Include(fBitmap.FontStyle, fsUnderline);
-  if Pos('StrikeOut', FontStyle) > 0 then Include(fBitmap.FontStyle, fsStrikeOut);
+  if Pos('Bold',      FontStyle) > 0 then Include(fBitmap.FontStyle, fsBold      );
+  if Pos('Italic',    FontStyle) > 0 then Include(fBitmap.FontStyle, fsItalic    );
+  if Pos('Underline', FontStyle) > 0 then Include(fBitmap.FontStyle, fsUnderline );
+  if Pos('StrikeOut', FontStyle) > 0 then Include(fBitmap.FontStyle, fsStrikeOut );
 
   FontColor.FromString(fSetting.ReadString(fSection, Format('Font %s Color', [index]), 'Black'));
 end;
@@ -1535,7 +1533,7 @@ end;
 
 // DrawLogo
 
-procedure DrawLogo2(aCanvas: TCanvas; aWidth, aHeight: longint);
+procedure DrawLogo(aCanvas: TCanvas; aWidth, aHeight: longint);
 var
   Bit: TBGRABitmap;
   x, y: longint;
@@ -1560,51 +1558,6 @@ begin
     end;
     Inc(x, Bit.TextSize('SpringONE').Width + DefaultSpacer div 4);
   end;
-
-  Bit.InvalidateBitmap;
-  Bit.Draw(aCanvas, 0, 0);
-  Bit.Destroy;
-end;
-
-procedure DrawLogo(aCanvas: TCanvas; aWidth, aHeight: longint);
-var
-  Bit: TBGRABitmap;
-  x0, y0: longint;
-  TextHeight: longint;
-  TextWidth: longint;
-begin
-  Bit := TBGRABitmap.Create;
-  Bit.SetSize(aWidth, aHeight);
-  Bit.Fill(BGRA(0,0,0,255));
-
-  Bit.FontName      := 'Roboto';
-  Bit.FontHeight    := 160;
-  Bit.FontAntialias := True;
-  Bit.FontQuality   := fqSystemClearType;
-  Bit.FontStyle     := [fsBold];
-
-  TextHeight := Bit.TextSize('QK').Height;
-  TextWidth  := Bit.TextSize('QK').Width;
-
-  x0 := (aWidth  div 2 - (TextWidth  + 80) div 2);
-  y0 := (aHeight div 2 - (TextHeight     ) div 2);
-
-  Bit.FillRect(x0 +  0, y0 + 35, x0 +  15, y0 + TextHeight - 30, BGRA(255,   0, 0, 255));
-  Bit.FillRect(x0 + 25, y0 + 35, x0 +  45, y0 + TextHeight - 30, BGRA(255, 128, 0, 255));
-  Bit.FillRect(x0 + 55, y0 + 35, x0 +  80, y0 + TextHeight - 30, BGRA(255, 255, 0, 255));
-  Bit.TextOut (x0 + 85, y0, 'QK', BGRA(255, 255, 255, 255), taLeftJustify);
-
-  Bit.FontName      := 'Roboto';
-  Bit.FontHeight    := Trunc(150);
-  Bit.FontAntialias := True;
-  Bit.FontQuality   := fqSystemClearType;
-  Bit.FontStyle     := [fsBold];
-
-  while Bit.TextSize('Design Engineering Software').Width > (TextWidth + 100) do
-  begin
-    Bit.FontHeight := Bit.FontHeight - 1;
-  end;
-  Bit.TextOut(x0, y0 + TextHeight - 25, 'Design Engineering Software', BGRA(255, 255, 255, 255), taLeftJustify);
 
   Bit.InvalidateBitmap;
   Bit.Draw(aCanvas, 0, 0);
