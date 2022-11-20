@@ -1274,8 +1274,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'G [MPa]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
+  Result.Temperature0    := MAT.Tempetature - 200;
+  Result.Temperature1    := MAT.Tempetature + 200;
   Result.Value           := MAT.ShearModulusG;
   Result.Value0          := MAT.GetG(Result.Temperature0);
   Result.Value1          := MAT.GetG(Result.Temperature1);
@@ -1290,8 +1290,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'E [MPa]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
+  Result.Temperature0    := MAT.Tempetature - 200;
+  Result.Temperature1    := MAT.Tempetature + 200;
   Result.Value           := MAT.YoungModulusE;
   Result.Value0          := MAT.GetE(Result.Temperature0);
   Result.Value1          := MAT.GetE(Result.Temperature1);
@@ -1306,8 +1306,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'F1 [N]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
+  Result.Temperature0    := MAT.Tempetature - 200;
+  Result.Temperature1    := MAT.Tempetature + 200;
   Result.Value           := SpringSolver.LoadF1;
   Result.Value0          := SpringSolver.GetF1(Result.Temperature0);
   Result.Value1          := SpringSolver.GetF1(Result.Temperature1);
@@ -1322,8 +1322,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'F2 [N]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
+  Result.Temperature0    := MAT.Tempetature - 200;
+  Result.Temperature1    := MAT.Tempetature + 200;
   Result.Value           := SpringSolver.LoadF2;
   Result.Value0          := SpringSolver.GetF2(Result.Temperature0);
   Result.Value1          := SpringSolver.GetF2(Result.Temperature1);

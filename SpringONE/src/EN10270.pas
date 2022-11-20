@@ -32,8 +32,6 @@ type
   private
     fItemIndex: longint;
     fMatFile: TCsvDocument;
-    fDoWarning: TGetStrProc;
-    fDoError: TGetStrProc;
     fSurfaceTreatment: string;
     fTensileStrengthRm: double;
     fYoungModulusE20: double;
@@ -154,21 +152,17 @@ var
   Ratio: double;
 begin
   Result := fShearModulusG20;
-// L'influenza della temperatura di esercizio sul modulo di elasticità e sul modulo di elasticità //
-// tangenziale è illustrata dalla formula seguente, per valori di media generale, per i materiali //
+// L'influenza della temperatura di esercizio sul modulo di elasticità e sul modulo di elasticità
+// tangenziale è illustrata dalla formula seguente, per valori di media generale, per i materiali
 // specificati sotto;
   Ratio := 0;
 
   if Pos('EN10270-1', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000; // per filo secondo EN10270-1
-  if Pos('EN10270-2', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000; // per filo secondo EN10270-1
+  if Pos('EN10270-2', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000; // per filo secondo EN10270-2
   if Pos('EN10089',   GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000; // per filo secondo EN10089
   if Pos('EN10270-3', GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000; // per filo secondo EN10270-3
   if Pos('EN12166',   GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000; // per filo secondo EN12166
 
-  if (Ratio = 0) and Assigned(fDoWarning)  then
-  begin
-    fDoWarning('DATABASE: "r" coefficent for material "' + GetItem(fItemIndex) + '" not found.');
-  end;
   Result := Result * (1 - Ratio*(aTemperature - 20));
 end;
 
@@ -183,8 +177,6 @@ begin
   fFatigueFactorA          := 0;
   fFatigueFactorB          := 0;
   fSurfaceTreatment        := '';
-  fDoWarning               := nil;
-  fDoError                 := nil;
   fTensileStrengthRm       := 0;
   fYoungModulusE20         := 0;
   fYoungModulusE           := 0;
@@ -215,7 +207,10 @@ function TMaterialDB.GetItem(Index: longint): string;
 begin
   //0	1
   //ID	GRADE
-  Result := Format('%s Grade %s', [fMatFile.Cells[0, Index], fMatFile.Cells[1, Index]])
+  if Index <> -1 then
+    Result := Format('%s Grade %s', [fMatFile.Cells[0, Index], fMatFile.Cells[1, Index]])
+  else
+    Result := '';
 end;
 
 function TMaterialDB.Search(const aID: string; const aWireDiameter, aTemperature: double; const aSurfaceTreatment: string): longint;

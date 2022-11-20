@@ -219,7 +219,7 @@ end;
 
 procedure TCompressionSpringSolver.Clear;
 begin
-  fCheck := True;
+  fCheck      := False;
   fClosedEnds := True;
   fColdCoiled := True;
   fd := 0;
@@ -466,9 +466,9 @@ begin
     end;
     fLn := fLc + fSa;
 
-    if fLn < fLc then ErrorMessage  .Add('Wrong Ln value, Ln must be > Lc.');
-    if fLn > fL0 then ErrorMessage  .Add('Wrong Ln value, Ln must be < L0.');
-    if fLn > fL1 then WarningMessage.Add('Wrong Ln value, Ln must be < L1.');
+    if fLn < fLc then ErrorMessage  .Add('Error: Wrong Ln value, Ln must be > Lc.');
+    if fLn > fL0 then ErrorMessage  .Add('Error: Wrong Ln value, Ln must be < L0.');
+    if fLn > fL1 then WarningMessage.Add('Warning: Wrong Ln value, Ln must be < L1.');
     if fLn > fL2 then WarningMessage.Add('Warning: Wrong Ln value, Ln must be < L2.');
 
     fCheck := ErrorMessage.Count = 0;
