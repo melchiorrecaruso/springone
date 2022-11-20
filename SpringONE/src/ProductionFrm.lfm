@@ -222,7 +222,7 @@ object ProductionForm: TProductionForm
     Anchors = [akTop, akRight]
     BorderSpacing.Top = 4
     BorderSpacing.Right = 10
-    OnChange = LengthLsChange
+    OnEditingDone = EditingDone
     TabOrder = 7
   end
   object DividerBevel: TDividerBevel

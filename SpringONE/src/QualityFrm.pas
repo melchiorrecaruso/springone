@@ -52,7 +52,8 @@ type
     ToleranceLengthL0Label: TLabel;
     ToleranceWireDiameterUnit: TComboBox;
     procedure FormCreate(Sender: TObject);
-    procedure ToleranceWireDiameterChange(Sender: TObject);
+    procedure EditingDone(Sender: TObject);
+
   private
 
   public
@@ -76,7 +77,7 @@ begin
   Clear;
 end;
 
-procedure TQualityForm.ToleranceWireDiameterChange(Sender: TObject);
+procedure TQualityForm.EditingDone(Sender: TObject);
 begin
   TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
 end;

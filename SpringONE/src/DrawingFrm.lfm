@@ -1,7 +1,7 @@
 object DrawingForm: TDrawingForm
-  Left = 448
+  Left = 517
   Height = 160
-  Top = 215
+  Top = 180
   Width = 340
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -119,7 +119,7 @@ object DrawingForm: TDrawingForm
     BorderSpacing.Left = 12
     BorderSpacing.Top = 20
     BorderSpacing.Right = 12
-    OnChange = SpringLengthChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 6
   end
   object SpringLengthLabel: TLabel

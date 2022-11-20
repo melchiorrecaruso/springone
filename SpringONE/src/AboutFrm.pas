@@ -25,23 +25,23 @@ unit AboutFrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls, ExtCtrls;
+  Buttons, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics, StdCtrls, SysUtils;
 
 type
 
   { TAboutForm }
 
   TAboutForm = class(TForm)
-    AboutCopyrigthLB: TLabel;
-    AboutDescriptionLB: TLabel;
-    AboutLicenseLB: TLabel;
-    AboutLinkLB: TLabel;
-    AboutNameLB: TLabel;
-    AboutVersionLB: TLabel;
+    AboutCopyrigthLabel: TLabel;
+    AboutDescriptionLabel: TLabel;
+    AboutLicenseLabel: TLabel;
+    AboutLinkLabel: TLabel;
+    AboutNameLabel: TLabel;
+    AboutVersionLabel: TLabel;
     Image: TImage;
-    procedure AboutLinkLBClick(Sender: TObject);
-    procedure AboutLinkLBMouseLeave(Sender: TObject);
-    procedure AboutLinkLBMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure AboutLinkLabelClick(Sender: TObject);
+    procedure AboutLinkLabelMouseLeave(Sender: TObject);
+    procedure AboutLinkLabelMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
   private
 
   public
@@ -60,19 +60,19 @@ uses
 
 { TAboutForm }
 
-procedure TAboutForm.AboutLinkLBClick(Sender: TObject);
+procedure TAboutForm.AboutLinkLabelClick(Sender: TObject);
 begin
   openurl('https://github.com/melchiorrecaruso');
 end;
 
-procedure TAboutForm.AboutLinkLBMouseLeave(Sender: TObject);
+procedure TAboutForm.AboutLinkLabelMouseLeave(Sender: TObject);
 begin
-  AboutLinkLB.Font.Color := clDefault;
+  AboutLinkLabel.Font.Color := clDefault;
 end;
 
-procedure TAboutForm.AboutLinkLBMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+procedure TAboutForm.AboutLinkLabelMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
-  AboutLinkLB.Font.Color := clBlue;
+  AboutLinkLabel.Font.Color := clBlue;
 end;
 
 end.

@@ -29,7 +29,7 @@
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Melchiorre Caruso" FileDescription="Helical Compression Spring Designer" ProductName="SpringONE"/>
     </VersionInfo>
-    <BuildModes Active="Debug">
+    <BuildModes Active="Release">
       <Item Name="Debug" Default="True"/>
       <Item Name="Release">
         <CompilerOptions>
@@ -99,7 +99,7 @@
         <Filename Value="SpringONE.lpr"/>
         <IsPartOfProject Value="True"/>
         <TopLine Value="18"/>
-        <CursorPos X="55" Y="34"/>
+        <CursorPos Y="54"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -719,9 +719,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="9"/>
-        <CursorPos X="110" Y="40"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="16"/>
+        <CursorPos X="36" Y="34"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -733,10 +733,10 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="1150"/>
-        <CursorPos X="34" Y="1160"/>
-        <FoldState Value=" T3*U0F5 piYjI0E2]9ZjC0m3 PiGjH0a"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="41"/>
+        <CursorPos X="36" Y="107"/>
+        <FoldState Value=" T3/90F5 piYjI0E2]9ZjC0m3 PiGjH0k"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -746,7 +746,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="293"/>
         <CursorPos X="37" Y="311"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -757,7 +757,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="11"/>
         <CursorPos X="120" Y="240"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -774,7 +774,7 @@
         <EditorIndex Value="12"/>
         <TopLine Value="105"/>
         <CursorPos X="6" Y="149"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -784,9 +784,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="69"/>
-        <CursorPos X="61" Y="89"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="23"/>
+        <CursorPos X="34" Y="51"/>
+        <FoldState Value=" T3id071J"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -797,9 +798,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="41"/>
-        <CursorPos X="3" Y="75"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="11"/>
+        <CursorPos X="46" Y="29"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -810,9 +811,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="64"/>
-        <CursorPos X="3" Y="83"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="67"/>
+        <CursorPos X="40" Y="28"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -822,7 +823,7 @@
         <EditorIndex Value="13"/>
         <TopLine Value="123"/>
         <CursorPos X="14" Y="134"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -831,16 +832,16 @@
         <EditorIndex Value="14"/>
         <TopLine Value="467"/>
         <CursorPos X="89" Y="476"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\EN15800.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="15"/>
-        <TopLine Value="237"/>
+        <TopLine Value="27"/>
         <CursorPos X="14" Y="255"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -850,9 +851,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="95"/>
-        <CursorPos X="50" Y="101"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="38"/>
+        <CursorPos X="61" Y="97"/>
+        <FoldState Value=" T3jO0H1 PHJ0T"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -863,9 +865,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="8"/>
-        <TopLine Value="172"/>
-        <CursorPos X="3" Y="178"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="92"/>
+        <CursorPos X="6" Y="105"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -876,9 +878,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="9"/>
-        <TopLine Value="87"/>
-        <CursorPos X="51" Y="99"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="77"/>
+        <CursorPos X="21" Y="84"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -889,9 +891,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="10"/>
-        <TopLine Value="63"/>
-        <CursorPos X="74" Y="88"/>
-        <UsageCount Value="155"/>
+        <TopLine Value="64"/>
+        <CursorPos X="39" Y="69"/>
+        <UsageCount Value="157"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -969,94 +971,6 @@
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="139" Column="5" TopLine="129"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="298" Column="3" TopLine="287"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="300" Column="12" TopLine="290"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="1708" TopLine="1676"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="139" Column="5" TopLine="129"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="298" Column="3" TopLine="287"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="139" Column="5" TopLine="128"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="298" Column="3" TopLine="287"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="328" Column="9" TopLine="316"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="378" Column="7" TopLine="367"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="409" Column="9" TopLine="399"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="424" Column="3" TopLine="412"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="435" Column="19" TopLine="424"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="440" Column="3" TopLine="424"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="1706" Column="5" TopLine="1693"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="329" Column="14" TopLine="320"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="847" Column="3" TopLine="844"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="811" Column="37" TopLine="800"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="813" Column="48" TopLine="797"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="1341" Column="27" TopLine="1331"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="804" Column="3" TopLine="799"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="107" Column="24" TopLine="89"/>
-      </Position>
-      <Position>
-        <Filename Value="src\MainFrm.pas"/>
         <Caret Line="1692" Column="30" TopLine="1626"/>
       </Position>
       <Position>
@@ -1086,6 +1000,94 @@
       <Position>
         <Filename Value="src\MainFrm.pas"/>
         <Caret Line="1169" Column="33" TopLine="1150"/>
+      </Position>
+      <Position>
+        <Filename Value="src\GeometryFrm.pas"/>
+        <Caret Line="101" Column="50" TopLine="95"/>
+      </Position>
+      <Position>
+        <Filename Value="src\GeometryFrm.pas"/>
+        <Caret Line="97" Column="3" TopLine="95"/>
+      </Position>
+      <Position>
+        <Filename Value="src\GeometryFrm.pas"/>
+        <Caret Line="103" Column="3" TopLine="101"/>
+      </Position>
+      <Position>
+        <Filename Value="src\GeometryFrm.pas"/>
+        <Caret Line="70" Column="15" TopLine="50"/>
+      </Position>
+      <Position>
+        <Filename Value="src\GeometryFrm.pas"/>
+        <Caret Line="67" Column="4" TopLine="49"/>
+      </Position>
+      <Position>
+        <Filename Value="src\ApplicationFrm.pas"/>
+        <Caret Line="89" Column="61" TopLine="69"/>
+      </Position>
+      <Position>
+        <Filename Value="src\ApplicationFrm.pas"/>
+        <Caret Line="73" TopLine="69"/>
+      </Position>
+      <Position>
+        <Filename Value="src\ApplicationFrm.pas"/>
+        <Caret Line="51" Column="5" TopLine="39"/>
+      </Position>
+      <Position>
+        <Filename Value="src\QualityFrm.pas"/>
+        <Caret Line="88" Column="74" TopLine="63"/>
+      </Position>
+      <Position>
+        <Filename Value="src\QualityFrm.pas"/>
+        <Caret Line="78" TopLine="45"/>
+      </Position>
+      <Position>
+        <Filename Value="src\QualityFrm.pas"/>
+        <Caret Line="56" Column="5" TopLine="44"/>
+      </Position>
+      <Position>
+        <Filename Value="src\ProductionFrm.pas"/>
+        <Caret Line="99" Column="51" TopLine="87"/>
+      </Position>
+      <Position>
+        <Filename Value="src\ProductionFrm.pas"/>
+        <Caret Line="85" TopLine="80"/>
+      </Position>
+      <Position>
+        <Filename Value="src\ProductionFrm.pas"/>
+        <Caret Line="61" Column="5" TopLine="50"/>
+      </Position>
+      <Position>
+        <Filename Value="src\DrawingFrm.pas"/>
+        <Caret Line="72" TopLine="53"/>
+      </Position>
+      <Position>
+        <Filename Value="src\DrawingFrm.pas"/>
+        <Caret Line="47" Column="4" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MaterialFrm.pas"/>
+        <Caret Line="178" Column="3" TopLine="172"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MaterialFrm.pas"/>
+        <Caret Line="158" TopLine="148"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MaterialFrm.pas"/>
+        <Caret Line="61" Column="6" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="src\DrawingFrm.pas"/>
+        <Caret Line="37" TopLine="43"/>
+      </Position>
+      <Position>
+        <Filename Value="src\DrawingFrm.pas"/>
+        <Caret Line="47" Column="44" TopLine="32"/>
+      </Position>
+      <Position>
+        <Filename Value="src\GeometryFrm.pas"/>
+        <Caret Line="104" Column="44" TopLine="46"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>

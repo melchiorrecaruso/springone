@@ -25,49 +25,51 @@ unit GeometryFrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Spin, ExtCtrls, Buttons, IniFiles;
+  Buttons, Classes, Controls, Dialogs, ExtCtrls, Forms,
+  Graphics, IniFiles, Spin, StdCtrls, SysUtils;
 
 type
 
   { TGeometryForm }
 
   TGeometryForm = class(TForm)
+    ActiveCoilLabel: TLabel;
+    ActiveCoil: TFloatSpinEdit;
     Bevel1: TBevel;
-    OkBtn: TBitBtn;
+    CoilDiameterIndex: TComboBox;
+    CoilDiameter: TFloatSpinEdit;
+    CoilDiameterUnit: TComboBox;
+    EndCoilTypeLabel: TLabel;
+    EndCoilType: TComboBox;
+    InactiveCoil1Label: TLabel;
+    InactiveCoil1: TFloatSpinEdit;
+    InactiveCoil2Label: TLabel;
+    InactiveCoil2: TFloatSpinEdit;
+    LengthL0Label: TLabel;
+    LengthL0: TFloatSpinEdit;
+    LengthL0Unit: TComboBox;
+    LengthL1Label: TLabel;
+    LengthL1: TFloatSpinEdit;
+    LengthL1Unit: TComboBox;
+    LengthL2Label: TLabel;
+    LengthL2: TFloatSpinEdit;
+    LengthL2Unit: TComboBox;
+    WireDiameterLabel: TLabel;
+    WireDiameter: TFloatSpinEdit;
+    WireDiameterUnit: TComboBox;
+
     ApplyBtn: TBitBtn;
     CancelBtn: TBitBtn;
-    CoilDiameter: TFloatSpinEdit;
-    CoilDiameterIndex: TComboBox;
-    CoilDiameterUnit: TComboBox;
-    EndCoilType: TComboBox;
-    EndCoilTypeLabel: TLabel;
-    InactiveCoil1: TFloatSpinEdit;
-    InactiveCoil1Label: TLabel;
-    InactiveCoil2: TFloatSpinEdit;
-    InactiveCoil2Label: TLabel;
-    ActiveCoil: TFloatSpinEdit;
-    ActiveCoilLabel: TLabel;
-    LengthL0: TFloatSpinEdit;
-    LengthL0Label: TLabel;
-    LengthL0Unit: TComboBox;
-    LengthL1: TFloatSpinEdit;
-    LengthL1Label: TLabel;
-    LengthL1Unit: TComboBox;
-    LengthL2: TFloatSpinEdit;
-    LengthL2Label: TLabel;
-    LengthL2Unit: TComboBox;
-    WireDiameter: TFloatSpinEdit;
-    WireDiameterLabel: TLabel;
-    WireDiameterUnit: TComboBox;
-    procedure ApplyBtnClick(Sender: TObject);
+    OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
-    procedure WireDiameterChange(Sender: TObject);
+    procedure SpinEditEditingDone(Sender: TObject);
+    procedure ApplyBtnClick(Sender: TObject);
   private
 
   public
+    procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
-    procedure Clear;
   end;
 
 var
@@ -82,19 +84,9 @@ uses
 
 { TGeometryForm }
 
-procedure TGeometryForm.ApplyBtnClick(Sender: TObject);
-begin
-  MainForm.Solve();
-end;
-
 procedure TGeometryForm.FormCreate(Sender: TObject);
 begin
   Clear;
-end;
-
-procedure TGeometryForm.WireDiameterChange(Sender: TObject);
-begin
-  TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
 end;
 
 procedure TGeometryForm.Clear;
@@ -152,6 +144,16 @@ begin
   IniFile.WriteFloat  ('TGeometryForm', 'LengthL2',          LengthL2         .Value    );
   IniFile.WriteInteger('TGeometryForm', 'LengthL2Unit',      LengthL2Unit     .ItemIndex);
   IniFile.WriteInteger('TGeometryForm', 'EndCoilType',       EndCoilType      .ItemIndex);
+end;
+
+procedure TGeometryForm.SpinEditEditingDone(Sender: TObject);
+begin
+  TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
+end;
+
+procedure TGeometryForm.ApplyBtnClick(Sender: TObject);
+begin
+  MainForm.Solve();
 end;
 
 end.

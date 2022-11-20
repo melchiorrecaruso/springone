@@ -25,44 +25,65 @@ unit MainFrm;
 interface
 
 uses
-  BGRABitmap, BGRABitmapTypes, BGRAVirtualScreen, BGRAShape, BGRASVG,
-  BGRATextFX, BGRAUnits, Classes, Controls, Dialogs, IniFiles, EN13906_1,
-  EN10270, EN15800, ExtCtrls, Forms, GraphBase, Graphics, Math, Menus, StdCtrls,
-  Spin, ExtDlgs, PrintersDlgs, SysUtils, LResources;
+  BGRABitmap, BGRAShape, BGRASVG, BGRATextFX, BGRABitmapTypes, BGRAUnits, BGRAVirtualScreen,
+  Classes, Controls, Dialogs, EN10270, EN13906_1, EN15800, ExtCtrls, ExtDlgs, Forms, GraphBase,
+  Graphics, IniFiles, LResources, Math, Menus, PrintersDlgs, Spin, StdCtrls, SysUtils;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
-    Selection: TBGRAShape;
-    DrawingTextMenuItem: TMenuItem;
-    GeometryMenuItem: TMenuItem;
-    MaterialMenuItem: TMenuItem;
-    DrawMenuItem: TMenuItem;
+
+
     CloseMenuItem: TMenuItem;
+    CustomProfileMenuItem: TMenuItem;
+    CustomSectionMenuItem: TMenuItem;
+
+    DrawingTextMenuItem: TMenuItem;
+    DrawMenuItem: TMenuItem;
+
     ExportMenuItem: TMenuItem;
-    ExportReportMenuItem: TMenuItem;
     ExportProductionMenuItem: TMenuItem;
-    PageSetupMenuItem: TMenuItem;
+    ExportReportMenuItem: TMenuItem;
+    GeometryMenuItem: TMenuItem;
+
+    MaterialMenuItem: TMenuItem;
+
+
     PageSetupDialog: TPageSetupDialog;
+    PageSetupMenuItem: TMenuItem;
+    ProfileMenuItem: TMenuItem;
     ProductionMenuItem: TMenuItem;
     Production2MenuItem: TMenuItem;
+
+    Selection: TBGRAShape;
     SectionMenuItem: TMenuItem;
-    CustomSectionMenuItem: TMenuItem;
-    ProfileMenuItem: TMenuItem;
-    CustomProfileMenuItem: TMenuItem;
+
+
+    Separator1: TMenuItem;
+    Separator2: TMenuItem;
+    Separator3: TMenuItem;
+    Separator4: TMenuItem;
+    Separator5: TMenuItem;
+    Separator6: TMenuItem;
+    Separator9: TMenuItem;
     Separator10: TMenuItem;
     Separator11: TMenuItem;
+
+
+
+
+
     ShearModulusMenuItem: TMenuItem;
     YoungModulusMenuItem: TMenuItem;
     F1MenuItem: TMenuItem;
     F2MenuItem: TMenuItem;
     SavePictureDialog: TSavePictureDialog;
-    Separator3: TMenuItem;
-    Separator9: TMenuItem;
+
+
     QualityMenuItem: TMenuItem;
-    VirtualScreen: TBGRAVirtualScreen;
+
     MainMenu: TMainMenu;
     FileMenuItem: TMenuItem;
     AboutMenuItem: TMenuItem;
@@ -73,8 +94,7 @@ type
     Quick2MenuItem: TMenuItem;
     OpenDialog: TOpenDialog;
     SaveDialog: TSaveDialog;
-    Separator6: TMenuItem;
-    Separator5: TMenuItem;
+
     ForceMenuItem: TMenuItem;
     GoodmanMenuItem: TMenuItem;
     BucklingMenuItem: TMenuItem;
@@ -85,8 +105,7 @@ type
     MenuItem24: TMenuItem;
     MenuItem25: TMenuItem;
     Quick3MenuItem: TMenuItem;
-    Separator4: TMenuItem;
-    Separator2: TMenuItem;
+
     SaveMenuItem: TMenuItem;
     ExitMenuItem: TMenuItem;
     EditMenuItem: TMenuItem;
@@ -96,7 +115,10 @@ type
     Design: TMenuItem;
     DocsMenuItem: TMenuItem;
     MenuItem9: TMenuItem;
-    Separator1: TMenuItem;
+
+
+    VirtualScreen: TBGRAVirtualScreen;
+
     procedure CloseMenuItemClick(Sender: TObject);
     procedure ExportMenuItemClick(Sender: TObject);
     procedure ExportProductionMenuItemClick(Sender: TObject);
@@ -884,7 +906,7 @@ end;
 
 procedure TMainForm.AboutMenuItemClick(Sender: TObject);
 begin
-  AboutForm.AboutNameLb.Caption := ApplicationVer;
+  AboutForm.AboutNameLabel.Caption := ApplicationVer;
   AboutForm.ShowModal;
 end;
 

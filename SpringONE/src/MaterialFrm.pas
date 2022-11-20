@@ -52,10 +52,13 @@ type
     YoungModulus: TFloatSpinEdit;
     YoungModulusLabel: TLabel;
     YoungModulusUnit: TComboBox;
-    procedure ApplyBtnClick(Sender: TObject);
+
     procedure FormCreate(Sender: TObject);
     procedure Change(Sender: TObject);
-    procedure YoungModulusChange(Sender: TObject);
+    procedure ApplyBtnClick(Sender: TObject);
+    procedure EditingDone(Sender: TObject);
+
+
   public
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
@@ -94,6 +97,11 @@ begin
   end;
   Material.ItemIndex := 1;
   Change(Sender);
+end;
+
+procedure TMaterialForm.EditingDone(Sender: TObject);
+begin
+  TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
 end;
 
 procedure TMaterialForm.Change(Sender: TObject);
@@ -154,11 +162,6 @@ begin
   end;
 end;
 
-procedure TMaterialForm.YoungModulusChange(Sender: TObject);
-begin
-  TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
-end;
-
 procedure TMaterialForm.Clear;
 begin
   Material.ItemIndex            := 0;
@@ -205,6 +208,8 @@ procedure TMaterialForm.ApplyBtnClick(Sender: TObject);
 begin
   MainForm.Solve();
 end;
+
+
 
 end.
 

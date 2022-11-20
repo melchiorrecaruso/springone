@@ -25,35 +25,37 @@ unit DrawingTextFrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons, ExtCtrls, DividerBevel, IniFiles;
+  Buttons, Classes, Controls, Dialogs, ExtCtrls,
+  Forms, Graphics, IniFiles, StdCtrls, SysUtils;
 
 type
 
   { TDrawingTextForm }
 
   TDrawingTextForm = class(TForm)
-    AuthorName: TEdit;
-    AuthorNameLabel: TLabel;
     Bevel1: TBevel;
-    OkBtn: TBitBtn;
-    CancelBtn: TBitBtn;
-    CompanyName: TEdit;
-    Note1: TEdit;
-    Note2: TEdit;
+    AuthorNameLabel: TLabel;
+    AuthorName: TEdit;
     CompanyNameLabel: TLabel;
-    Note1Label: TLabel;
-    Note2Label: TLabel;
-    DrawingName: TEdit;
+    CompanyName: TEdit;
     DrawingNameLabel: TLabel;
-    DrawingNumber: TEdit;
+    DrawingName: TEdit;
     DrawingNumberLabel: TLabel;
+    DrawingNumber: TEdit;
+    Note1Label: TLabel;
+    Note1: TEdit;
+    Note2Label: TLabel;
+    Note2: TEdit;
+
+    CancelBtn: TBitBtn;
+    OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
   private
 
   public
+    procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
-    procedure Clear;
   end;
 
 var

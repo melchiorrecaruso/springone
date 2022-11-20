@@ -25,8 +25,8 @@ unit DrawingFrm;
 interface
 
 uses
-  Classes, SysUtils, EN13906_1, Forms, Controls, Graphics, Dialogs, Buttons, ComCtrls,
-  Spin, StdCtrls, ExtCtrls;
+  Buttons, Classes, ComCtrls, Controls, Dialogs, EN13906_1,
+  ExtCtrls, Forms, Graphics, Spin, StdCtrls, SysUtils;
 
 type
 
@@ -34,16 +34,17 @@ type
 
   TDrawingForm = class(TForm)
     Bevel1: TBevel;
-    OkBtn: TBitBtn;
-    CancelBtn: TBitBtn;
-    SpringLength: TFloatSpinEdit;
     L0Btn: TBitBtn;
     L1Btn: TBitBtn;
     L2Btn: TBitBtn;
     LcBtn: TBitBtn;
+    SpringLength: TFloatSpinEdit;
+
+    CancelBtn: TBitBtn;
+    OkBtn: TBitBtn;
     SpringLengthLabel: TLabel;
     procedure BtnClick(Sender: TObject);
-    procedure SpringLengthChange(Sender: TObject);
+    procedure SpinEditEditingDone(Sender: TObject);
   private
 
   public
@@ -70,10 +71,11 @@ begin
   if Sender = LcBtn  then SpringLength.Value := SpringSolver.LengthLc;
 end;
 
-procedure TDrawingForm.SpringLengthChange(Sender: TObject);
+procedure TDrawingForm.SpinEditEditingDone(Sender: TObject);
 begin
   TFloatSpinedit(Sender).Value := Min(SpringSolver.LengthL0, Max(SpringSolver.LengthLc,  TFloatSpinedit(Sender).Value));
 end;
+
 
 end.
 

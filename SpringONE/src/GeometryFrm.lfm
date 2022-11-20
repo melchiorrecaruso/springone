@@ -40,7 +40,7 @@ object GeometryForm: TGeometryForm
     BorderSpacing.Top = 12
     BorderSpacing.Right = 10
     Increment = 0.05
-    OnChange = WireDiameterChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 0
   end
   object WireDiameterUnit: TComboBox
@@ -110,8 +110,8 @@ object GeometryForm: TGeometryForm
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
     BorderSpacing.Right = 10
-    Increment = 0.01
-    OnChange = WireDiameterChange
+    Increment = 0.5
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 3
   end
   object CoilDiameterIndex: TComboBox
@@ -168,7 +168,7 @@ object GeometryForm: TGeometryForm
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
     Increment = 0.1
-    OnChange = WireDiameterChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 6
   end
   object InactiveCoil1Label: TLabel
@@ -217,7 +217,7 @@ object GeometryForm: TGeometryForm
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     Increment = 0.1
-    OnChange = WireDiameterChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 7
   end
   object EndCoilType: TComboBox
@@ -290,7 +290,7 @@ object GeometryForm: TGeometryForm
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    OnChange = WireDiameterChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 8
   end
   object LengthL0Unit: TComboBox
@@ -332,7 +332,7 @@ object GeometryForm: TGeometryForm
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     Increment = 0.1
-    OnChange = WireDiameterChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 5
   end
   object Bevel1: TBevel
@@ -417,7 +417,7 @@ object GeometryForm: TGeometryForm
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    OnChange = WireDiameterChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 10
   end
   object LengthL1Unit: TComboBox
@@ -484,7 +484,7 @@ object GeometryForm: TGeometryForm
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    OnChange = WireDiameterChange
+    OnEditingDone = SpinEditEditingDone
     TabOrder = 12
   end
   object LengthL2Label: TLabel

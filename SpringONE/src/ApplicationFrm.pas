@@ -25,8 +25,8 @@ unit ApplicationFrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Spin, ExtCtrls, Menus,
-  Buttons, ComCtrls, EN13906_1, EN10270, EN15800, IniFiles;
+  Buttons, Classes, ComCtrls, Controls, Dialogs, Forms, EN10270, EN13906_1, EN15800,
+  ExtCtrls, Graphics, IniFiles, Menus,  Spin, StdCtrls, SysUtils;
 
 type
 
@@ -34,24 +34,25 @@ type
 
   TApplicationForm = class(TForm)
     Bevel: TBevel;
-    CycleFrequency: TFloatSpinEdit;
     CycleFrequencyLabel: TLabel;
+    CycleFrequency: TFloatSpinEdit;
     CycleFrequencyUnit: TComboBox;
-    Temperature: TFloatSpinEdit;
-    TemperatureLabel: TLabel;
-    LoadType: TComboBox;
     LoadTypeLabel: TLabel;
-    TemperatureUnit: TComboBox;
-    SeatingCoefficent: TComboBox;
+    LoadType: TComboBox;
     SeatingCoefficentLabel: TLabel;
+    SeatingCoefficent: TComboBox;
+    TemperatureLabel: TLabel;
+    Temperature: TFloatSpinEdit;
+    TemperatureUnit: TComboBox;
+
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
-    procedure CycleFrequencyChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure SpinEditEditingDone(Sender: TObject);
   public
+    procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
-    procedure Clear;
   end;
 
 var
@@ -69,11 +70,6 @@ uses
 procedure TApplicationForm.FormCreate(Sender: TObject);
 begin
   Clear;
-end;
-
-procedure TApplicationForm.CycleFrequencyChange(Sender: TObject);
-begin
-  TFloatSpinEdit(Sender).Value := Max(1,  TFloatSpinEdit(Sender).Value);
 end;
 
 procedure TApplicationForm.Clear;
@@ -100,6 +96,11 @@ begin
   IniFile.WriteFloat  ('TApplicationForm', 'Temperature',       Temperature      .Value    );
   IniFile.WriteInteger('TApplicationForm', 'TemperatureUnit',   TemperatureUnit  .ItemIndex);
   IniFile.WriteInteger('TApplicationForm', 'SeatingCoefficent', SeatingCoefficent.ItemIndex);
+end;
+
+procedure TApplicationForm.SpinEditEditingDone(Sender: TObject);
+begin
+  TFloatSpinEdit(Sender).Value := Max(1,  TFloatSpinEdit(Sender).Value);
 end;
 
 end.

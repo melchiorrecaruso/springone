@@ -57,7 +57,8 @@ type
     LengthLsLB: TLabel;
     OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
-    procedure LengthLsChange(Sender: TObject);
+    procedure EditingDone(Sender: TObject);
+
   private
 
   public
@@ -83,7 +84,7 @@ begin
   Clear;
 end;
 
-procedure TProductionForm.LengthLsChange(Sender: TObject);
+procedure TProductionForm.EditingDone(Sender: TObject);
 begin
   TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
 end;

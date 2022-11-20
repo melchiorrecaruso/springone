@@ -182,9 +182,9 @@ object AboutForm: TAboutForm
       D285B10000000049454E44AE426082
     }
   end
-  object AboutLicenseLB: TLabel
+  object AboutLicenseLabel: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = AboutCopyrigthLB
+    AnchorSideTop.Control = AboutCopyrigthLabel
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -203,7 +203,7 @@ object AboutForm: TAboutForm
     ParentFont = False
     WordWrap = True
   end
-  object AboutNameLB: TLabel
+  object AboutNameLabel: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Image
     AnchorSideTop.Side = asrBottom
@@ -221,9 +221,9 @@ object AboutForm: TAboutForm
     Layout = tlCenter
     ParentFont = False
   end
-  object AboutDescriptionLB: TLabel
+  object AboutDescriptionLabel: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = AboutVersionLB
+    AnchorSideTop.Control = AboutVersionLabel
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -238,9 +238,9 @@ object AboutForm: TAboutForm
     Layout = tlCenter
     ParentFont = False
   end
-  object AboutLinkLB: TLabel
+  object AboutLinkLabel: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = AboutDescriptionLB
+    AnchorSideTop.Control = AboutDescriptionLabel
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -256,13 +256,13 @@ object AboutForm: TAboutForm
     Font.Style = [fsUnderline]
     Layout = tlCenter
     ParentFont = False
-    OnClick = AboutLinkLBClick
-    OnMouseLeave = AboutLinkLBMouseLeave
-    OnMouseMove = AboutLinkLBMouseMove
+    OnClick = AboutLinkLabelClick
+    OnMouseLeave = AboutLinkLabelMouseLeave
+    OnMouseMove = AboutLinkLabelMouseMove
   end
-  object AboutCopyrigthLB: TLabel
+  object AboutCopyrigthLabel: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = AboutLinkLB
+    AnchorSideTop.Control = AboutLinkLabel
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -277,9 +277,9 @@ object AboutForm: TAboutForm
     Layout = tlCenter
     ParentFont = False
   end
-  object AboutVersionLB: TLabel
+  object AboutVersionLabel: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = AboutNameLB
+    AnchorSideTop.Control = AboutNameLabel
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
