@@ -52,7 +52,7 @@ type
     ToleranceLengthL0Label: TLabel;
     ToleranceWireDiameterUnit: TComboBox;
     procedure FormCreate(Sender: TObject);
-    procedure EditingDone(Sender: TObject);
+    procedure SpinEditChange(Sender: TObject);
 
   private
 
@@ -70,16 +70,16 @@ implementation
 {$R *.lfm}
 
 uses
-  Math, UtilsBase;
+  UtilsBase;
 
 procedure TQualityForm.FormCreate(Sender: TObject);
 begin
   Clear;
 end;
 
-procedure TQualityForm.EditingDone(Sender: TObject);
+procedure TQualityForm.SpinEditChange(Sender: TObject);
 begin
-  TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
+  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
 procedure TQualityForm.Clear;

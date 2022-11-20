@@ -48,7 +48,7 @@ type
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
-    procedure SpinEditEditingDone(Sender: TObject);
+    procedure SpinEditChange(Sender: TObject);
   public
     procedure Clear;
     procedure Load(IniFile: TIniFile);
@@ -98,9 +98,9 @@ begin
   IniFile.WriteInteger('TApplicationForm', 'SeatingCoefficent', SeatingCoefficent.ItemIndex);
 end;
 
-procedure TApplicationForm.SpinEditEditingDone(Sender: TObject);
+procedure TApplicationForm.SpinEditChange(Sender: TObject);
 begin
-  TFloatSpinEdit(Sender).Value := Max(1,  TFloatSpinEdit(Sender).Value);
+  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
 end.

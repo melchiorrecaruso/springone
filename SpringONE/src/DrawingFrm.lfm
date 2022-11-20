@@ -119,7 +119,7 @@ object DrawingForm: TDrawingForm
     BorderSpacing.Left = 12
     BorderSpacing.Top = 20
     BorderSpacing.Right = 12
-    OnEditingDone = SpinEditEditingDone
+    OnChange = SpinEditChange
     TabOrder = 6
   end
   object SpringLengthLabel: TLabel

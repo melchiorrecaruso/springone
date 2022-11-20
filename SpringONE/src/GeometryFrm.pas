@@ -62,7 +62,7 @@ type
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
-    procedure SpinEditEditingDone(Sender: TObject);
+    procedure SpinEditChange(Sender: TObject);
     procedure ApplyBtnClick(Sender: TObject);
   private
 
@@ -146,9 +146,9 @@ begin
   IniFile.WriteInteger('TGeometryForm', 'EndCoilType',       EndCoilType      .ItemIndex);
 end;
 
-procedure TGeometryForm.SpinEditEditingDone(Sender: TObject);
+procedure TGeometryForm.SpinEditChange(Sender: TObject);
 begin
-  TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
+  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
 procedure TGeometryForm.ApplyBtnClick(Sender: TObject);

@@ -76,7 +76,7 @@ object MaterialForm: TMaterialForm
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
     DecimalPlaces = 0
-    OnEditingDone = EditingDone
+    OnChange = SpinEditChange
     TabOrder = 1
   end
   object YoungModulusUnit: TComboBox
@@ -144,7 +144,7 @@ object MaterialForm: TMaterialForm
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
     DecimalPlaces = 0
-    OnEditingDone = EditingDone
+    OnChange = SpinEditChange
     TabOrder = 4
   end
   object ShearModulusLabel: TLabel
@@ -237,7 +237,7 @@ object MaterialForm: TMaterialForm
     BorderSpacing.Right = 10
     DecimalPlaces = 5
     Increment = 0.00001
-    OnEditingDone = EditingDone
+    OnChange = SpinEditChange
     TabOrder = 7
   end
   object MaterialDensityLabel: TLabel
@@ -372,7 +372,7 @@ object MaterialForm: TMaterialForm
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
     DecimalPlaces = 0
-    OnEditingDone = EditingDone
+    OnChange = SpinEditChange
     TabOrder = 12
   end
 end

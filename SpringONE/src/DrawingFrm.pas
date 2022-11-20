@@ -44,7 +44,7 @@ type
     OkBtn: TBitBtn;
     SpringLengthLabel: TLabel;
     procedure BtnClick(Sender: TObject);
-    procedure SpinEditEditingDone(Sender: TObject);
+    procedure SpinEditChange(Sender: TObject);
   private
 
   public
@@ -58,9 +58,6 @@ implementation
 
 {$R *.lfm}
 
-uses
-  Math;
-
 { TDrawingForm }
 
 procedure TDrawingForm.BtnClick(Sender: TObject);
@@ -71,9 +68,9 @@ begin
   if Sender = LcBtn  then SpringLength.Value := SpringSolver.LengthLc;
 end;
 
-procedure TDrawingForm.SpinEditEditingDone(Sender: TObject);
+procedure TDrawingForm.SpinEditChange(Sender: TObject);
 begin
-  TFloatSpinedit(Sender).Value := Min(SpringSolver.LengthL0, Max(SpringSolver.LengthLc,  TFloatSpinedit(Sender).Value));
+  if TFloatSpinedit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
 

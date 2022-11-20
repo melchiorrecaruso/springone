@@ -56,7 +56,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Change(Sender: TObject);
     procedure ApplyBtnClick(Sender: TObject);
-    procedure EditingDone(Sender: TObject);
+    procedure SpinEditChange(Sender: TObject);
 
 
   public
@@ -99,9 +99,9 @@ begin
   Change(Sender);
 end;
 
-procedure TMaterialForm.EditingDone(Sender: TObject);
+procedure TMaterialForm.SpinEditChange(Sender: TObject);
 begin
-  TFloatSpinEdit(Sender).Value := Max(0, TFloatSpinEdit(Sender).Value);
+  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
 procedure TMaterialForm.Change(Sender: TObject);

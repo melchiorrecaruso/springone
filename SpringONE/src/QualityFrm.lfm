@@ -43,7 +43,7 @@ object QualityForm: TQualityForm
     BorderSpacing.Right = 10
     DecimalPlaces = 3
     Increment = 0.001
-    OnEditingDone = EditingDone
+    OnChange = SpinEditChange
     TabOrder = 0
   end
   object ToleranceWireDiameterUnit: TComboBox

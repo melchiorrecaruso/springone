@@ -1458,7 +1458,7 @@ begin
   Result[1, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.CoilDiameterTolerance);
   Result[2, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.LengthL0Tolerance);
   Result[3, 4]             := TryFormatFloat('%s N',  ' --- ', SpringTolerance.LoadF1Tolerance);
-  Result[4, 4]             := TryFormatFloat('%s N',  ' --- ', SpringTolerance.LoadF1Tolerance);
+  Result[4, 4]             := TryFormatFloat('%s N',  ' --- ', SpringTolerance.LoadF2Tolerance);
   Result[5, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.EccentricityE1);
   Result[6, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.EccentricityE2);
 end;

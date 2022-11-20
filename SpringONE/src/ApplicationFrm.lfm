@@ -199,7 +199,7 @@ object ApplicationForm: TApplicationForm
     BorderSpacing.Top = 8
     BorderSpacing.Right = 10
     DecimalPlaces = 1
-    OnEditingDone = SpinEditEditingDone
+    OnChange = SpinEditChange
     TabOrder = 5
     Value = 20
   end
@@ -243,7 +243,7 @@ object ApplicationForm: TApplicationForm
     BorderSpacing.Top = 8
     BorderSpacing.Right = 10
     DecimalPlaces = 1
-    OnEditingDone = SpinEditEditingDone
+    OnChange = SpinEditChange
     TabOrder = 7
     Value = 1
   end
