@@ -13,8 +13,8 @@ CoilDiameterIndex=1
 CoilDiameter=18
 CoilDiameterUnit=0
 ActiveCoil=50
-InactiveCoil1=1
-InactiveCoil2=1
+InactiveCoil1=0,75
+InactiveCoil2=0,75
 LengthL0=325
 LengthL0Unit=0
 LengthL1=227
@@ -24,12 +24,12 @@ LengthL2Unit=0
 EndCoilType=1
 
 [TMaterialForm]
-Material=1
+Material=0
 YoungModulus=206000
 YoungModulusUnit=0
-ShearModulus=81500
+ShearModulus=82000
 ShearModulusUnit=0
-TensileStrength=1879
+TensileStrength=1710
 TensileStrengthUnit=0
 MaterialDensity=7,85
 MaterialDensityUnit=0
@@ -50,6 +50,7 @@ LoadType=0
 TemperatureUnit=0
 SeatingCoefficent=2
 Temperature=20
+CycleFrequency=1
 
 [TProductionForm]
 DirectionCoilsIndex=0

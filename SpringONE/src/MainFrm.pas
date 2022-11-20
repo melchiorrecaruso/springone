@@ -1025,11 +1025,15 @@ begin
     begin
       ReportList1.Items[12, 0] := TryFormatFloat   ('tauoz = %s MPa',    'tauoz = ---', SpringSolver.AdmDynamicTorsionalStressTauoz);
       ReportList1.Items[13, 0] := TryFormatFloat   ('tauhz = %s MPa',    'tauhz = ---', SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
-
-
       ReportList1.Items[14, 0] := TryFormatFloat   ('nf    = %s',        'nf    = ---', SpringSolver.DynamicSafetyFactor);
-      ReportList1.Items[15, 0] := TryFormatText    ('N     = %s cycles', 'N     = ---', TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
-      ReportList1.Items[16, 0] := TryFormatFloatDiv('Nh    = %s hours',  'Nh    = ---', SpringSolver.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
+
+      ReportList1.Items[15, 0] := 'N     = ---';
+      ReportList1.Items[16, 0] := 'Nh    = ---';
+      if SpringSolver.NumOfCycles > 0 then
+      begin
+        ReportList1.Items[15, 0] := TryFormatText    ('N     = %s cycles', 'N     = ---', TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
+        ReportList1.Items[16, 0] := TryFormatFloatDiv('Nh    = %s hours',  'Nh    = ---', SpringSolver.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
+      end;
     end;
 
     Bit[1].SetSize(ReportList1.Width + ReportList1.Spacer, aScreen.Height - Bit[0].Height);
@@ -1274,8 +1278,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'G [MPa]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := MAT.Tempetature - 200;
-  Result.Temperature1    := MAT.Tempetature + 200;
+  Result.Temperature0    := 0;
+  Result.Temperature1    := 500;
   Result.Value           := MAT.ShearModulusG;
   Result.Value0          := MAT.GetG(Result.Temperature0);
   Result.Value1          := MAT.GetG(Result.Temperature1);
@@ -1290,8 +1294,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'E [MPa]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := MAT.Tempetature - 200;
-  Result.Temperature1    := MAT.Tempetature + 200;
+  Result.Temperature0    := 0;
+  Result.Temperature1    := 500;
   Result.Value           := MAT.YoungModulusE;
   Result.Value0          := MAT.GetE(Result.Temperature0);
   Result.Value1          := MAT.GetE(Result.Temperature1);
@@ -1306,8 +1310,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'F1 [N]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := MAT.Tempetature - 200;
-  Result.Temperature1    := MAT.Tempetature + 200;
+  Result.Temperature0    := 0;
+  Result.Temperature1    := 500;
   Result.Value           := SpringSolver.LoadF1;
   Result.Value0          := SpringSolver.GetF1(Result.Temperature0);
   Result.Value1          := SpringSolver.GetF1(Result.Temperature1);
@@ -1322,8 +1326,8 @@ begin
   Result.HorizontalLabel := 'T [C°]';
   Result.VerticalLabel   := 'F2 [N]';
   Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := MAT.Tempetature - 200;
-  Result.Temperature1    := MAT.Tempetature + 200;
+  Result.Temperature0    := 0;
+  Result.Temperature1    := 500;
   Result.Value           := SpringSolver.LoadF2;
   Result.Value0          := SpringSolver.GetF2(Result.Temperature0);
   Result.Value1          := SpringSolver.GetF2(Result.Temperature1);

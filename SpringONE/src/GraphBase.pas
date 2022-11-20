@@ -1517,7 +1517,7 @@ begin
        CartesianToCanvasX(OffSet),
       CartesianToCanvasY(fCANVAS_Y_MIN + fCANVAS_Y_RANGE + fSpacer/2),
       PenColor, PenWidth, False);
-     // Text
+    // Text
     LoadFont('2nd', TextColor);
     x0 := OffSet;
     Y0 := fSpacer div 2 + fBitmap.TextSize(fText).Height;
