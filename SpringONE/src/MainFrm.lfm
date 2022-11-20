@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 401
+  Left = 405
   Height = 500
-  Top = 166
+  Top = 145
   Width = 700
   Caption = 'Spring ONE'
   ClientHeight = 500
