@@ -25,8 +25,8 @@ unit DrawingFrm;
 interface
 
 uses
-  Buttons, Classes, ComCtrls, Controls, Dialogs, EN13906_1,
-  ExtCtrls, Forms, Graphics, Spin, StdCtrls, SysUtils;
+  Buttons, Classes, ComCtrls, Controls, Dialogs, EN13906, ExtCtrls,
+  Forms, Graphics, IniFiles, Spin, StdCtrls, SysUtils;
 
 type
 
@@ -44,28 +44,53 @@ type
     OkBtn: TBitBtn;
     SpringLengthLabel: TLabel;
     procedure BtnClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
   private
 
   public
-
+    procedure Load(IniFile: TIniFile);
+    procedure Save(IniFile: TIniFile);
+    procedure Clear;
   end;
+
 
 var
   DrawingForm: TDrawingForm;
+
 
 implementation
 
 {$R *.lfm}
 
-{ TDrawingForm }
+// TDrawingForm
+
+procedure TDrawingForm.FormCreate(Sender: TObject);
+begin
+  Clear;
+end;
+
+procedure TDrawingForm.Clear;
+begin
+
+end;
 
 procedure TDrawingForm.BtnClick(Sender: TObject);
 begin
-  if Sender = L0Btn  then SpringLength.Value := SpringSolver.LengthL0;
-  if Sender = L1Btn  then SpringLength.Value := SpringSolver.LengthL1;
-  if Sender = L2Btn  then SpringLength.Value := SpringSolver.LengthL2;
-  if Sender = LcBtn  then SpringLength.Value := SpringSolver.LengthLc;
+  if Sender = L0Btn  then SpringLength.Value := SOLVER.LengthL0;
+  if Sender = L1Btn  then SpringLength.Value := SOLVER.LengthL1;
+  if Sender = L2Btn  then SpringLength.Value := SOLVER.LengthL2;
+  if Sender = LcBtn  then SpringLength.Value := SOLVER.LengthLc;
+end;
+
+procedure TDrawingForm.Load(IniFile: TIniFile);
+begin
+
+end;
+
+procedure TDrawingForm.Save(IniFile: TIniFile);
+begin
+
 end;
 
 procedure TDrawingForm.SpinEditChange(Sender: TObject);

@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 405
+  Left = 534
   Height = 500
-  Top = 145
+  Top = 150
   Width = 700
   Caption = 'Spring ONE'
   ClientHeight = 500
@@ -124,7 +124,7 @@ object MainForm: TMainForm
       Caption = '&Edit'
       object DrawingTextMenuItem: TMenuItem
         Caption = 'Drawing Text'
-        OnClick = DrawingTextMenuItemClick
+        OnClick = TextMenuItemClick
       end
       object GeometryMenuItem: TMenuItem
         Caption = 'Geometry and working length'

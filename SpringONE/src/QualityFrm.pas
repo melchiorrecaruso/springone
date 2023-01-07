@@ -25,8 +25,8 @@ unit QualityFrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Spin,
-  Buttons, ExtCtrls, IniFiles;
+  Buttons, Classes, Controls, Dialogs, EN13906, EN15800, ExtCtrls,
+  Forms, Graphics, IniFiles, Spin,StdCtrls, SysUtils;
 
 type
 
@@ -53,24 +53,28 @@ type
     ToleranceWireDiameterUnit: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
-
   private
 
   public
+    procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
-    procedure Clear;
+    procedure SaveToSolver;
   end;
+
 
 var
   QualityForm: TQualityForm;
+
 
 implementation
 
 {$R *.lfm}
 
 uses
-  UtilsBase;
+  GeometryFrm, UtilsBase;
+
+// TQualityForm
 
 procedure TQualityForm.FormCreate(Sender: TObject);
 begin
@@ -116,6 +120,46 @@ begin
   IniFile.WriteInteger('TQualityForm', 'ToleranceLoadF2',           ToleranceLoadF2          .ItemIndex);
   IniFile.WriteInteger('TQualityForm', 'ToleranceEccentricitye1',   ToleranceEccentricitye1  .ItemIndex);
   IniFile.WriteInteger('TQualityForm', 'ToleranceEccentricitye2',   ToleranceEccentricitye2  .ItemIndex);
+end;
+
+procedure TQualityForm.SaveToSolver;
+begin
+  if Assigned(GeometryForm) then
+  begin
+    SOLVER.WireDiameterMax := GetMillimeters(GeometryForm.WireDiameter.Value, GeometryForm.WireDiameterUnit.ItemIndex) +
+                              GetMillimeters(ToleranceWireDiameter    .Value, ToleranceWireDiameterUnit    .ItemIndex);
+  end;
+
+  case ToleranceCoilDiameter.ItemIndex of
+    0: TOL.DmQualityGrade := 1;
+    1: TOL.DmQualityGrade := 2;
+    2: TOL.DmQualityGrade := 3;
+  end;
+  case ToleranceLengthL0.ItemIndex of
+    0: TOL.L0QualityGrade := 1;
+    1: TOL.L0QualityGrade := 2;
+    2: TOL.L0QualityGrade := 3;
+  end;
+  case ToleranceLoadF1.ItemIndex of
+    0: TOL.F1QualityGrade := 1;
+    1: TOL.F1QualityGrade := 2;
+    2: TOL.F1QualityGrade := 3;
+  end;
+  case ToleranceLoadF2.ItemIndex of
+    0: TOL.F2QualityGrade := 1;
+    1: TOL.F2QualityGrade := 2;
+    2: TOL.F2QualityGrade := 3;
+  end;
+  case ToleranceEccentricitye1.ItemIndex of
+    0: TOL.E1QualityGrade := 1;
+    1: TOL.E1QualityGrade := 2;
+    2: TOL.E1QualityGrade := 3;
+  end;
+  case ToleranceEccentricitye2.ItemIndex of
+    0: TOL.E2QualityGrade := 1;
+    1: TOL.E2QualityGrade := 2;
+    2: TOL.E2QualityGrade := 3;
+  end;
 end;
 
 end.

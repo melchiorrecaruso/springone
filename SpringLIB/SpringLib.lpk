@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="SpringLib"/>
+    <Type Value="RunAndDesignTime"/>
+    <AddToProjectUsesSection Value="True"/>
+    <Author Value="Melchiorre Caruso"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="src"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <CodeGeneration>
+        <Optimizations>
+          <OptimizationLevel Value="0"/>
+        </Optimizations>
+      </CodeGeneration>
+      <Linking>
+        <Debugging>
+          <UseHeaptrc Value="True"/>
+        </Debugging>
+      </Linking>
+    </CompilerOptions>
+    <Description Value="SpringXXX Application Library"/>
+    <Version Minor="1"/>
+    <Files>
+      <Item>
+        <Filename Value="src\EN10270.pas"/>
+        <UnitName Value="EN10270"/>
+      </Item>
+      <Item>
+        <Filename Value="src\EN13906.pas"/>
+        <UnitName Value="EN13906"/>
+      </Item>
+      <Item>
+        <Filename Value="src\EN15800.pas"/>
+        <UnitName Value="EN15800"/>
+      </Item>
+      <Item>
+        <Filename Value="src\UtilsBase.pas"/>
+        <UnitName Value="UtilsBase"/>
+      </Item>
+      <Item>
+        <Filename Value="src\GraphBase.pas"/>
+        <UnitName Value="GraphBase"/>
+      </Item>
+    </Files>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="BGRABitmapPack"/>
+      </Item>
+      <Item>
+        <PackageName Value="LCLBase"/>
+      </Item>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -8,6 +8,7 @@ object DrawingForm: TDrawingForm
   Caption = 'Drawing spring'
   ClientHeight = 160
   ClientWidth = 340
+  OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '2.3.0.0'
   object OkBtn: TBitBtn

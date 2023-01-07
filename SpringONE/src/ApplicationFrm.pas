@@ -25,8 +25,8 @@ unit ApplicationFrm;
 interface
 
 uses
-  Buttons, Classes, ComCtrls, Controls, Dialogs, Forms, EN10270, EN13906_1, EN15800,
-  ExtCtrls, Graphics, IniFiles, Menus,  Spin, StdCtrls, SysUtils;
+  Buttons, Classes, ComCtrls, Controls, Dialogs, Forms, ExtCtrls,
+  Graphics, IniFiles, Menus,  Spin, StdCtrls, SysUtils;
 
 type
 
@@ -44,7 +44,6 @@ type
     TemperatureLabel: TLabel;
     Temperature: TFloatSpinEdit;
     TemperatureUnit: TComboBox;
-
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
@@ -53,19 +52,22 @@ type
     procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
+    procedure SaveToSolver;
   end;
+
 
 var
   ApplicationForm: TApplicationForm;
+
 
 implementation
 
 {$R *.lfm}
 
 uses
-  Math, UtilsBase;
+  EN13906, MaterialFrm, Math, UtilsBase;
 
-{ TApplicationForm }
+// TApplicationForm
 
 procedure TApplicationForm.FormCreate(Sender: TObject);
 begin
@@ -96,6 +98,15 @@ begin
   IniFile.WriteFloat  ('TApplicationForm', 'Temperature',       Temperature      .Value    );
   IniFile.WriteInteger('TApplicationForm', 'TemperatureUnit',   TemperatureUnit  .ItemIndex);
   IniFile.WriteInteger('TApplicationForm', 'SeatingCoefficent', SeatingCoefficent.ItemIndex);
+end;
+
+procedure TApplicationForm.SaveToSolver;
+begin
+  case LoadType.ItemIndex of
+   0: SOLVER.DynamicLoad := True;
+   1: SOLVER.DynamicLoad := False;
+  end;
+  SOLVER.SeatingCoefficent := TryTextToFloat(Self.SeatingCoefficent.Text);
 end;
 
 procedure TApplicationForm.SpinEditChange(Sender: TObject);

@@ -26,7 +26,7 @@ interface
 
 uses
   BGRABitmap, BGRAShape, BGRASVG, BGRATextFX, BGRABitmapTypes, BGRAUnits, BGRAVirtualScreen,
-  Classes, Controls, Dialogs, EN10270, EN13906_1, EN15800, ExtCtrls, ExtDlgs, Forms, GraphBase,
+  Classes, Controls, Dialogs, ExtCtrls, ExtDlgs, Forms, GraphBase, EN10270, EN13906, EN15800,
   Graphics, IniFiles, LResources, Math, Menus, PrintersDlgs, Spin, StdCtrls, SysUtils;
 
 type
@@ -149,13 +149,13 @@ type
     procedure VirtualScreenMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenRedraw(Sender: TObject; Bitmap: TBGRABitmap);
-    procedure DrawingTextMenuItemClick(Sender: TObject);
+    procedure TextMenuItemClick(Sender: TObject);
     procedure ViewMenuItemClick(Sender: TObject);
     procedure NewMenuItemClick(Sender: TObject);
     procedure ReportMenuItemClick(Sender: TObject);
     procedure VirtualScreenResize(Sender: TObject);
   private
-    FileName: string;
+
     ClientFile: TIniFile;
     PrinterFile: TIniFile;
     MoveX, MoveY: longint;
@@ -166,25 +166,18 @@ type
     ScreenImageHeight: longint;
     ScreenColor: TBGRAPixel;
     ScreenScale: double;
-
-    function CreateForceDisplacementDiagram(const aScreenScale: double; aSetting: TIniFile): TForceDisplacementDiagram;
-    function CreateGoodmanDiagram          (const aScreenScale: double; aSetting: TIniFile): TGoodmanDiagram;
-    function CreateBucklingDiagram         (const aScreenScale: double; aSetting: TIniFile): TBucklingDiagram;
-    function CreateShearModulusDiagram     (const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-    function CreateYoungModulusDiagram     (const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-    function CreateLoad1Diagram            (const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-    function CreateLoad2Diagram            (const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-    function CreateMessageList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-    function CreateReportTable             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-    function CreateQualityTable            (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-    function CreateReportList0             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-    function CreateSpringDrawing           (const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
+    SessionFileName: string;
   public
-    //procedure LoadClient(IniFile: TIniFile);
-    //procedure SaveClient(IniFile: TIniFile);
+    function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
     function CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
     function CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
+
     procedure PaintTo(var aScreen: TBGRABitmap; aScreenColor: TBGRAPixel; aScreenScale: double; aSetting: TIniFile);
+
+  public
+    procedure LoadAll(SessionIniFile: TIniFile);
+    procedure SaveAll(SessionIniFile: TIniFile);
+    procedure ClearAll;
     procedure Clear;
     procedure Solve;
   end;
@@ -199,85 +192,20 @@ implementation
 {$R *.lfm}
 
 uses
-  AboutFrm, ApplicationFrm, DrawingFrm, DrawingTextFrm, GeometryFrm, LCLIntf, LCLType,
+  AboutFrm, ApplicationFrm, Compozer, DrawingFrm, TextFrm, GeometryFrm, LCLIntf, LCLType,
   MaterialFrm, Printers, ProductionFrm, QualityFrm, ReportFrm, UtilsBase;
 
 { Solve routine }
 
 procedure TMainForm.Solve;
 begin
-  SpringSolver.Clear;
-  // Geometry
-  SpringSolver.WireDiameter := GetMillimeters(GeometryForm.WireDiameter.Value, GeometryForm.WireDiameterUnit.ItemIndex);
-  case GeometryForm.CoilDiameterIndex.ItemIndex of
-     0: SpringSolver.Dm := GetMillimeters(GeometryForm.CoilDiameter.Value, GeometryForm.CoilDiameterUnit.ItemIndex) + SpringSolver.WireDiameter; // Input Di
-     1: SpringSolver.Dm := GetMillimeters(GeometryForm.CoilDiameter.Value, GeometryForm.CoilDiameterUnit.ItemIndex);                             // Input Dm
-     2: SpringSolver.Dm := GetMillimeters(GeometryForm.CoilDiameter.Value, GeometryForm.CoilDiameterUnit.ItemIndex) - SpringSolver.WireDiameter; // Input De
-  end;
-  SpringSolver.ActiveColis := GeometryForm.ActiveCoil.Value;
-  SpringSolver.TotalCoils  := GeometryForm.ActiveCoil.Value + GeometryForm.InactiveCoil1.Value + GeometryForm.InactiveCoil2.Value;
-
-  SpringSolver.ClosedEnds := GeometryForm.EndCoilType.ItemIndex in [0, 1];
-  SpringSolver.GroundEnds := GeometryForm.EndCoilType.ItemIndex in [   1];
-
-  SpringSolver.LengthL0 := GetMillimeters(GeometryForm.LengthL0.Value, GeometryForm.LengthL0Unit.ItemIndex);
-  SpringSolver.LengthL1 := GetMillimeters(GeometryForm.LengthL1.Value, GeometryForm.LengthL1Unit.ItemIndex);
-  SpringSolver.LengthL2 := GetMillimeters(GeometryForm.LengthL2.Value, GeometryForm.LengthL2Unit.ItemIndex);
-  // Material Grade & Manufactoring
-  MaterialForm.Change(nil);
-  if MaterialForm.Material.Text = '' then
-  begin
-    SpringSolver.YoungModulus := GetMegaPascal(MaterialForm.YoungModulus.Value, MaterialForm.YoungModulusUnit.ItemIndex);
-    SpringSolver.ShearModulus := GetMegaPascal(MaterialForm.ShearModulus.Value, MaterialForm.ShearModulusUnit.ItemIndex);
-  end else
-  begin
-    SpringSolver.YoungModulus := MAT.YoungModulusE;
-    SpringSolver.ShearModulus := MAT.ShearModulusG;
-  end;
-  SpringSolver.TensileStrengthRm  := GetMegaPascal(MaterialForm.TensileStrength.Value, MaterialForm.TensileStrengthUnit.ItemIndex);
-  SpringSolver.DensityRho         := GetDensity   (MaterialForm.MaterialDensity.Value, MaterialForm.MaterialDensityUnit.ItemIndex);
-  case MaterialForm.CoilingType.ItemIndex of
-    0: SpringSolver.ColdCoiled := True;
-    1: SpringSolver.ColdCoiled := False;
-  end;
-  // Quality Grade
-  SpringSolver.ToleranceWireDiameter := GetMillimeters(QualityForm.ToleranceWireDiameter.Value, QualityForm.ToleranceWireDiameterUnit.ItemIndex);
-  case QualityForm.ToleranceCoilDiameter.ItemIndex of
-    0: SpringSolver.QualityGradeDm := 1;
-    1: SpringSolver.QualityGradeDm := 2;
-    2: SpringSolver.QualityGradeDm := 3;
-  end;
-  case QualityForm.ToleranceLengthL0.ItemIndex of
-    0: SpringSolver.QualityGradeL0 := 1;
-    1: SpringSolver.QualityGradeL0 := 2;
-    2: SpringSolver.QualityGradeL0 := 3;
-  end;
-  case QualityForm.ToleranceLoadF1.ItemIndex of
-    0: SpringSolver.QualityGradeF1 := 1;
-    1: SpringSolver.QualityGradeF1 := 2;
-    2: SpringSolver.QualityGradeF1 := 3;
-  end;
-  case QualityForm.ToleranceLoadF2.ItemIndex of
-    0: SpringSolver.QualityGradeF2 := 1;
-    1: SpringSolver.QualityGradeF2 := 2;
-    2: SpringSolver.QualityGradeF2 := 3;
-  end;
-  case QualityForm.ToleranceEccentricitye1.ItemIndex of
-    0: SpringSolver.QualityGradee1 := 1;
-    1: SpringSolver.QualityGradee1 := 2;
-    2: SpringSolver.QualityGradee1 := 3;
-  end;
-  case QualityForm.ToleranceEccentricitye2.ItemIndex of
-    0: SpringSolver.QualityGradee2 := 1;
-    1: SpringSolver.QualityGradee2 := 2;
-    2: SpringSolver.QualityGradee2 := 3;
-  end;
-  // Analisys
-  case ApplicationForm.LoadType.ItemIndex of
-    0: SpringSolver.DynamicLoad := True;
-    1: SpringSolver.DynamicLoad := False;
-  end;
-  SpringSolver.SeatingCoefficent := TryTextToFloat(ApplicationForm.SeatingCoefficent.Text);
+  TOL.Clear;
+  SOLVER.Clear;
+  GeometryForm.SaveToSolver;      // GeometryForm
+  MaterialForm.SaveToSolver;      // MaterialForm
+  ProductionForm.SaveToSolver;    // ProductionForm
+  QualityForm.SaveToSolver;       // QualityForm
+  ApplicationForm.SaveToSolver;   // ApplicationForm
   // Solve
   MainForm.FormPaint(nil);
 end;
@@ -291,8 +219,8 @@ var
   Logo: TBGRABitmap;
   {$endif}
 begin
-  Caption     := ApplicationVer;
-  ClientFile  := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
+  Caption    := ApplicationVer;
+  ClientFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
   PrinterFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'printer.ini',
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
@@ -305,15 +233,15 @@ begin
   ScreenColor.FromString(ClientFile.ReadString('Custom', 'Background Color', 'White'));
   VirtualScreen.Color := ScreenColor;
 
-  PaperName := ClientFile.ReadString ('Printer', 'Page.Name', '');
+  PaperName := ClientFile.ReadString('Printer', 'Page.Name', '');
   if PaperName <> '' then
   begin
     Printer.PaperSize.PaperName  := PaperName;
     Printer.Orientation          := TPrinterOrientation(ClientFile.ReadInteger('Printer', 'Page.Orientation',  0 ));
-    PageSetupDialog.MarginTop    := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginTop',    '0'));
-    PageSetupDialog.MarginLeft   := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginLeft',   '0'));
-    PageSetupDialog.MarginRight  := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginRight',  '0'));
-    PageSetupDialog.MarginBottom := TryTextToInt       (ClientFile.ReadString('Printer', 'Page.MarginBottom', '0'));
+    PageSetupDialog.MarginTop    := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginTop',    '0'));
+    PageSetupDialog.MarginLeft   := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginLeft',   '0'));
+    PageSetupDialog.MarginRight  := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginRight',  '0'));
+    PageSetupDialog.MarginBottom := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginBottom', '0'));
   end;
   WindowState := wsMaximized;
 
@@ -324,10 +252,11 @@ begin
   {$ifopt D+}
   Logo := TBGRABitmap.Create;
   Logo.SetSize(2560, 2048);
-  DrawLogo(Logo.Canvas, Logo.Width, Logo.Height);
-  Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'BACKGROUND.png');
+  // DrawLogo(Logo.Canvas, Logo.Width, Logo.Height);
+  // Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'BACKGROUND.png');
   Logo.Destroy;
   {$endif}
+  SessionFileName := '';
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -337,22 +266,6 @@ begin
   ScreenImage.Destroy;
 end;
 
-procedure TMainForm.Clear;
-var
-  i: longint;
-begin
-  for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
-  for i := 0 to TempMenuItem.Count -1 do TempMenuItem.Items[i].Checked := False;
-  for i := 0 to DrawMenuItem.Count -1 do DrawMenuItem.Items[i].Checked := False;
-  for i := 0 to DocsMenuItem.Count -1 do DocsMenuItem.Items[i].Checked := False;
-
-  FileName := '';
-  MoveX := 0;
-  MoveY := 0;
-  MouseIsDown := False;
-  ScreenScale := 1.00;
-end;
-
 procedure TMainForm.FormWindowStateChange(Sender: TObject);
 begin
   if WindowState = wsMaximized then
@@ -360,6 +273,53 @@ begin
     ScreenImageWidth  := VirtualScreen.Width;
     ScreenImageHeight := VirtualScreen.Height;
   end;
+end;
+
+procedure TMainForm.Clear;
+var
+  i: LongInt;
+begin
+  ClearAll;
+  for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
+  for i := 0 to TempMenuItem.Count -1 do TempMenuItem.Items[i].Checked := False;
+  for i := 0 to DrawMenuItem.Count -1 do DrawMenuItem.Items[i].Checked := False;
+  for i := 0 to DocsMenuItem.Count -1 do DocsMenuItem.Items[i].Checked := False;
+
+  MoveX := 0;
+  MoveY := 0;
+  MouseIsDown := False;
+  ScreenScale := 1.00;
+  SessionFileName := '';
+end;
+
+procedure TMainForm.ClearAll;
+begin
+  if Assigned(TextForm         ) then TextForm         .Clear;
+  if Assigned(GeometryForm     ) then GeometryForm     .Clear;
+  if Assigned(MaterialForm     ) then MaterialForm     .Clear;
+  if Assigned(QualityForm      ) then QualityForm      .Clear;
+  if Assigned(ProductionForm   ) then ProductionForm   .Clear;
+  if Assigned(ApplicationForm  ) then ApplicationForm  .Clear;
+end;
+
+procedure TMainForm.LoadAll(SessionIniFile: TIniFile);
+begin
+  TextForm         .Load(SessionIniFile);
+  GeometryForm     .Load(SessionIniFile);
+  MaterialForm     .Load(SessionIniFile);
+  QualityForm      .Load(SessionIniFile);
+  ProductionForm   .Load(SessionIniFile);
+  ApplicationForm  .Load(SessionIniFile);
+end;
+
+procedure TMainForm.SaveAll(SessionIniFile: TIniFile);
+begin
+  TextForm         .Save(SessionIniFile);
+  GeometryForm     .Save(SessionIniFile);
+  MaterialForm     .Save(SessionIniFile);
+  QualityForm      .Save(SessionIniFile);
+  ProductionForm   .Save(SessionIniFile);
+  ApplicationForm  .Save(SessionIniFile);
 end;
 
 (*
@@ -375,6 +335,15 @@ end;
 *)
 
 // Mouse Events
+
+procedure TMainForm.VirtualScreenDblClick(Sender: TObject);
+begin
+  MoveX := 0;
+  MoveY := 0;
+  ScreenScale := 1.0;
+
+  FormPaint(Sender);
+end;
 
 procedure TMainForm.VirtualScreenMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
@@ -441,15 +410,6 @@ begin
   end;
 end;
 
-procedure TMainForm.VirtualScreenDblClick(Sender: TObject);
-begin
-  MoveX := 0;
-  MoveY := 0;
-  ScreenScale := 1.0;
-
-  FormPaint(Sender);
-end;
-
 // Virtual Screen Events
 
 procedure TMainForm.VirtualScreenRedraw(Sender: TObject; Bitmap: TBGRABitmap);
@@ -463,91 +423,74 @@ begin
   MoveY := Max(Min(0, MoveY), VirtualScreen.Height - ScreenImage.Height);
 end;
 
-// Menu File //
+// Menu File
 
 procedure TMainForm.NewMenuItemClick(Sender: TObject);
 begin
-  CloseMenuItemClick(Sender);
-  if (DrawingTextForm.ShowModal = mrOk) and
-     (GeometryForm   .ShowModal = mrOk) and
-     (MaterialForm   .ShowModal = mrOk) and
-     (QualityForm    .ShowModal = mrOk) and
-     (ProductionForm .ShowModal = mrOk) and
-     (ApplicationForm.ShowModal = mrOk) then
+  ClearAll;
+  if (TextForm         .ShowModal = mrOk) and
+     (GeometryForm     .ShowModal = mrOk) and
+     (MaterialForm     .ShowModal = mrOk) and
+     (QualityForm      .ShowModal = mrOk) and
+     (ProductionForm   .ShowModal = mrOk) and
+     (ApplicationForm  .ShowModal = mrOk) then
   begin
     Quick1MenuItem.Checked := True;
-    Solve();
   end;
+  Solve();
 end;
 
 procedure TMainForm.OpenMenuItemClick(Sender: TObject);
 var
-  IniFile: TIniFile;
+  SessionIniFile: TIniFile;
 begin
-  OpenDialog.Filter := 'Spring ONE file (*.springone)|*.springone|All files (*.*)|*.*|;';
+  OpenDialog.Filter := 'SpringOne file (*.springone)|*.springone|All files (*.*)|*.*|;';
   if OpenDialog.Execute then
   begin
-    CloseMenuItemClick(Sender);
-    FileName := OpenDialog.FileName;
-    Caption  := Format(ApplicationVer + ' - %s', [FileName]);
+    SessionFileName := OpenDialog.FileName;
+    SessionIniFile  := TIniFile.Create(SessionFileName,
+      [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+    LoadAll(SessionIniFile);
+    SessionIniFile.Destroy;
     begin
-      IniFile := TIniFile.Create(FileName);
-      IniFile.FormatSettings.DecimalSeparator := '.' ;
-      DrawingTextForm.Load(IniFile);
-      GeometryForm   .Load(IniFile);
-      MaterialForm   .Load(IniFile);
-      QualityForm    .Load(IniFile);
-      ProductionForm .Load(IniFile);
-      ApplicationForm.Load(IniFile);
-      IniFile.Destroy;
+      Quick1MenuItem.Checked := True;
     end;
-    Quick1MenuItem.Checked := True;
-    Solve();
   end;
+  Solve();
 end;
 
 procedure TMainForm.SaveMenuItemClick(Sender: TObject);
 var
-  IniFile: TIniFile;
+  SessionIniFile: TIniFile;
 begin
-  if FileName = '' then
+  if SessionFileName = '' then
   begin
     SaveAsMenuItemClick(Sender);
   end else
   begin
-    IniFile := TIniFile.Create(FileName);
-    DrawingTextForm.Save(IniFile);
-    GeometryForm   .Save(IniFile);
-    MaterialForm   .Save(IniFile);
-    QualityForm    .Save(IniFile);
-    ProductionForm .Save(IniFile);
-    ApplicationForm.Save(IniFile);
-    IniFile.Destroy;
+    SessionIniFile  := TIniFile.Create(SessionFileName,
+      [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+    SaveAll(SessionIniFile);
+    SessionIniFile.Destroy;
   end;
 end;
 
 procedure TMainForm.SaveAsMenuItemClick(Sender: TObject);
 begin
-  SaveDialog.Filter := 'Spring ONE file (*.springone)|*.springone|All files (*.*)|*.*|;';
+  SaveDialog.Filter := 'SpringOne file (*.springone)|*.springone|All files (*.*)|*.*|;';
   if SaveDialog.Execute then
   begin
-    FileName := SaveDialog.FileName;
-    Caption  := Format(ApplicationVer + ' - %s', [FileName]);
+    SessionFileName := SaveDialog.FileName;
+
     SaveMenuItemClick(Sender);
   end;
 end;
 
 procedure TMainForm.CloseMenuItemClick(Sender: TObject);
 begin
-  MainForm       .Clear;
-  DrawingTextForm.Clear;
-  GeometryForm   .Clear;
-  MaterialForm   .Clear;
-  QualityForm    .Clear;
-  ProductionForm .Clear;
-  ApplicationForm.Clear;
-
-  Caption := ApplicationVer;
+  Clear;
   Solve();
 end;
 
@@ -576,7 +519,7 @@ begin
   if PageSetupDialog.Execute then
   begin
     ClientFile.WriteString ('Printer', 'Page.Name',         Printer.PaperSize.PaperName );
-    ClientFile.WriteInteger('Printer', 'Page.Orientation',  longint(Printer.Orientation));
+    ClientFile.WriteInteger('Printer', 'Page.Orientation',  LongInt(Printer.Orientation));
     ClientFile.WriteInteger('Printer', 'Page.MarginTop',    PageSetupDialog.MarginTop   );
     ClientFile.WriteInteger('Printer', 'Page.MarginLeft',   PageSetupDialog.MarginLeft  );
     ClientFile.WriteInteger('Printer', 'Page.MarginRight',  PageSetupDialog.MarginRight );
@@ -586,10 +529,10 @@ end;
 
 procedure TMainForm.PrintMenuItemClick(Sender: TObject);
 var
-  OffSetX: longint;
-  OffSetY: longint;
+  OffSetX: LongInt;
+  OffSetY: LongInt;
   Page: TBGRABitmap;
-  Scale: double;
+  Scale: Double;
 begin
   if PrintDialog.Execute then
   begin
@@ -620,204 +563,123 @@ begin
   Close;
 end;
 
-// Menu Edit //
+// Menu Edit
 
-procedure TMainForm.DrawingTextMenuItemClick(Sender: TObject);
+procedure TMainForm.TextMenuItemClick(Sender: TObject);
 var
-  DrawingName: string;
-  DrawingNumber: string;
-  AuthorName: string;
-  CompanyName: string;
-  Note1: string;
-  Note2: string;
+  SessionIniFile: TIniFile;
+  SessionStream: TMemoryStream;
 begin
-  DrawingName   := DrawingTextForm.DrawingName  .Text;
-  DrawingNumber := DrawingTextForm.DrawingNumber.Text;
-  AuthorName    := DrawingTextForm.AuthorName   .Text;
-  CompanyName   := DrawingTextForm.CompanyName  .Text;
-  Note1         := DrawingTextForm.Note1        .Text;
-  Note2         := DrawingTextForm.Note2        .Text;
-  if DrawingTextForm.ShowModal <> mrOk then
+  SessionStream  := TMemoryStream.Create;
+  SessionIniFile := TIniFile.Create(SessionStream,
+    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+  TextForm.Save(SessionIniFile);
+  if TextForm.ShowModal <> mrOk then
   begin
-    DrawingTextForm.DrawingName  .Text := DrawingName;
-    DrawingTextForm.DrawingNumber.Text := DrawingNumber;
-    DrawingTextForm.AuthorName   .Text := AuthorName;
-    DrawingTextForm.CompanyName  .Text := CompanyName;
-    DrawingTextForm.Note1        .Text := Note1;
-    DrawingTextForm.Note2        .Text := Note2;
+    TextForm.Load(SessionIniFile);
   end;
+  SessionIniFile.Destroy;
+  SessionStream.Destroy;
   Solve();
 end;
 
 procedure TMainForm.GeometryMenuItemClick(Sender: TObject);
 var
-  WireDiameter: double;
-  WireDiameterUnit: longint;
-  CoilDiameterIndex: longint;
-  CoilDiameter: double;
-  CoilDiameterUnit: longint;
-  AnctiveCoil: double;
-  InactiveCoil1: double;
-  InactiveCoil2: double;
-  LengthL0: double;
-  LengthL0Unit: longint;
-  LengthL1: double;
-  LengthL1Unit: longint;
-  LengthL2: double;
-  LengthL2Unit: longint;
-  EndCoilType: longint;
+  SessionIniFile: TIniFile;
+  SessionStream: TMemoryStream;
 begin
-  WireDiameter      := GeometryForm.WireDiameter     .Value;
-  WireDiameterUnit  := GeometryForm.WireDiameterUnit .ItemIndex;
-  CoilDiameterIndex := GeometryForm.CoilDiameterIndex.ItemIndex;
-  CoilDiameter      := GeometryForm.CoilDiameter     .Value;
-  CoilDiameterUnit  := GeometryForm.CoilDiameterUnit .ItemIndex;
-  AnctiveCoil       := GeometryForm.ActiveCoil       .Value;
-  InactiveCoil1     := GeometryForm.InactiveCoil1    .Value;
-  InactiveCoil2     := GeometryForm.InactiveCoil2    .Value;
-  LengthL0          := GeometryForm.LengthL0         .Value;
-  LengthL0Unit      := GeometryForm.LengthL0Unit     .ItemIndex;
-  LengthL1          := GeometryForm.LengthL1         .Value;
-  LengthL1Unit      := GeometryForm.LengthL1Unit     .ItemIndex;
-  LengthL2          := GeometryForm.LengthL2         .Value;
-  LengthL2Unit      := GeometryForm.LengthL2Unit     .ItemIndex;
-  EndCoilType       := GeometryForm.EndCoilType      .ItemIndex;
+  SessionStream  := TMemoryStream.Create;
+  SessionIniFile := TIniFile.Create(SessionStream,
+    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+  GeometryForm.Save(SessionIniFile);
   if GeometryForm.ShowModal <> mrOk then
   begin
-    GeometryForm.WireDiameter     .Value     := WireDiameter;
-    GeometryForm.WireDiameterUnit .ItemIndex := WireDiameterUnit;
-    GeometryForm.CoilDiameterIndex.ItemIndex := CoilDiameterIndex;
-    GeometryForm.CoilDiameter     .Value     := CoilDiameter;
-    GeometryForm.CoilDiameterUnit .ItemIndex := CoilDiameterUnit;
-    GeometryForm.ActiveCoil       .Value     := AnctiveCoil;
-    GeometryForm.InactiveCoil1    .Value     := InactiveCoil1;
-    GeometryForm.InactiveCoil2    .Value     := InactiveCoil2;
-    GeometryForm.LengthL0         .Value     := LengthL0;
-    GeometryForm.LengthL0Unit     .ItemIndex := LengthL0Unit;
-    GeometryForm.LengthL1         .Value     := LengthL1;
-    GeometryForm.LengthL1Unit     .ItemIndex := LengthL1Unit;
-    GeometryForm.LengthL2         .Value     := LengthL2;
-    GeometryForm.LengthL2Unit     .ItemIndex := LengthL2Unit;
-    GeometryForm.EndCoilType      .ItemIndex := EndCoilType;
+    GeometryForm.Load(SessionIniFile);
   end;
+  SessionIniFile.Destroy;
+  SessionStream.Destroy;
   Solve();
 end;
 
 procedure TMainForm.MaterialMenuItemClick(Sender: TObject);
 var
-  Material: longint;
-  YoungModulus: double;
-  ShearModulus: double;
-  TensileStrength: double;
-  MaterialDensity: double;
-  CoilingType: longint;
+  SessionIniFile: TIniFile;
+  SessionStream: TMemoryStream;
 begin
-  Material        := MaterialForm.Material       .ItemIndex;
-  YoungModulus    := MaterialForm.YoungModulus   .Value;
-  ShearModulus    := MaterialForm.ShearModulus   .Value;
-  TensileStrength := MaterialForm.TensileStrength.Value;
-  MaterialDensity := MaterialForm.MaterialDensity.Value;
-  CoilingType     := MaterialForm.CoilingType    .ItemIndex;
+  SessionStream  := TMemoryStream.Create;
+  SessionIniFile := TIniFile.Create(SessionStream,
+    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+  MaterialForm.Save(SessionIniFile);
   if MaterialForm.ShowModal <> mrOk then
   begin
-    MaterialForm.Material       .ItemIndex := Material;
-    MaterialForm.YoungModulus   .Value     := YoungModulus;
-    MaterialForm.ShearModulus   .Value     := ShearModulus;
-    MaterialForm.TensileStrength.Value     := TensileStrength;
-    MaterialForm.MaterialDensity.Value     := MaterialDensity;
-    MaterialForm.CoilingType    .ItemIndex := CoilingType;
+    MaterialForm.Load(SessionIniFile);
   end;
+  SessionIniFile.Destroy;
+  SessionStream.Destroy;
   Solve();
 end;
 
 procedure TMainForm.QualityMenuItemClick(Sender: TObject);
 var
-  ToleranceWireDiameter: double;
-  ToleranceWireDiameterUnit: longint;
-  ToleranceCoilDiameter: longint;
-  ToleranceLengthL0: longint;
-  ToleranceLoadF1: longint;
-  ToleranceLoadF2: longint;
-  ToleranceEccentricitye1: longint;
-  ToleranceEccentricitye2: longint;
+  SessionIniFile: TIniFile;
+  SessionStream: TMemoryStream;
 begin
-  ToleranceWireDiameter     := QualityForm.ToleranceWireDiameter    .Value;
-  ToleranceWireDiameterUnit := QualityForm.ToleranceWireDiameterUnit.ItemIndex;
-  ToleranceCoilDiameter     := QualityForm.ToleranceCoilDiameter    .ItemIndex;
-  ToleranceLengthL0         := QualityForm.ToleranceLengthL0        .ItemIndex;
-  ToleranceLoadF1           := QualityForm.ToleranceLoadF1          .ItemIndex;
-  ToleranceLoadF2           := QualityForm.ToleranceLoadF2          .ItemIndex;
-  ToleranceEccentricitye1   := QualityForm.ToleranceEccentricitye1  .ItemIndex;
-  ToleranceEccentricitye2   := QualityForm.ToleranceEccentricitye2  .ItemIndex;
+  SessionStream  := TMemoryStream.Create;
+  SessionIniFile := TIniFile.Create(SessionStream,
+    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+  QualityForm.Save(SessionIniFile);
   if QualityForm.ShowModal <> mrOk then
   begin
-    QualityForm.ToleranceWireDiameter    .Value     := ToleranceWireDiameter;
-    QualityForm.ToleranceWireDiameterUnit.ItemIndex := ToleranceWireDiameterUnit;
-    QualityForm.ToleranceCoilDiameter    .ItemIndex := ToleranceCoilDiameter;
-    QualityForm.ToleranceLengthL0        .ItemIndex := ToleranceLengthL0;
-    QualityForm.ToleranceLoadF1          .ItemIndex := ToleranceLoadF1;
-    QualityForm.ToleranceLoadF2          .ItemIndex := ToleranceLoadF2;
-    QualityForm.ToleranceEccentricitye1  .ItemIndex := ToleranceEccentricitye1;
-    QualityForm.ToleranceEccentricitye2  .ItemIndex := ToleranceEccentricitye2;
+    QualityForm.Load(SessionIniFile);
   end;
+  SessionIniFile.Destroy;
+  SessionStream.Destroy;
   Solve();
 end;
 
 procedure TMainForm.ProductionMenuItemClick(Sender: TObject);
 var
-  DirectionCoilsIndex: longint;
-  BurringEndsIndex: longint;
-  WireSurfaceIndex: longint;
-  LengthLs: double;
-  L0, nAndd, nAndDeDi, L0nAndd, L0nAndDeDi: boolean;
+  SessionIniFile: TIniFile;
+  SessionStream: TMemoryStream;
 begin
-  DirectionCoilsIndex := ProductionForm.DirectionCoils.ItemIndex;
-  BurringEndsIndex    := ProductionForm.BurringEnds.ItemIndex;
-  WireSurfaceIndex    := ProductionForm.WireSurface.ItemIndex;
-  LengthLs            := ProductionForm.LengthLs.Value;
-  L0                  := ProductionForm.L0.Checked;
-  nAndd               := ProductionForm.nAndd.Checked;
-  nAndDeDi            := ProductionForm.nAndDeDi.Checked;
-  L0nAndd             := ProductionForm.L0nAndd.Checked;
-  L0nAndDeDi          := ProductionForm.L0nAndDeDi.Checked;
+  SessionStream  := TMemoryStream.Create;
+  SessionIniFile := TIniFile.Create(SessionStream,
+    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
 
+  ProductionForm.Save(SessionIniFile);
   if ProductionForm.ShowModal <> mrOk then
   begin
-    ProductionForm.DirectionCoils.ItemIndex := DirectionCoilsIndex;
-    ProductionForm.BurringEnds   .ItemIndex := BurringEndsIndex;
-    ProductionForm.WireSurface   .ItemIndex := WireSurfaceIndex;
-    ProductionForm.LengthLs      .Value     := LengthLs;
-    ProductionForm.L0            .Checked   := L0;
-    ProductionForm.nAndd         .Checked   := nAndd;
-    ProductionForm.nAndDeDi      .Checked   := nAndDeDi;
-    ProductionForm.L0nAndd       .Checked   := L0nAndd;
-    ProductionForm.L0nAndDeDi    .Checked   := L0nAndDeDi;
+    ProductionForm.Load(SessionIniFile);
   end;
+  SessionIniFile.Destroy;
+  SessionStream.Destroy;
   Solve();
 end;
 
 procedure TMainForm.ApplicationMenuItemClick(Sender: TObject);
 var
-  LoadType: longint;
-  Temperature: double;
-  TemperatureUnit: longint;
-  SeatingCoefficent: longint;
+  SessionIniFile: TIniFile;
+  SessionStream: TMemoryStream;
 begin
-  LoadType          := ApplicationForm.LoadType         .ItemIndex;
-  Temperature       := ApplicationForm.Temperature      .Value;
-  TemperatureUnit   := ApplicationForm.TemperatureUnit  .ItemIndex;
-  SeatingCoefficent := ApplicationForm.SeatingCoefficent.ItemIndex;
+  SessionStream  := TMemoryStream.Create;
+  SessionIniFile := TIniFile.Create(SessionStream,
+    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+  ApplicationForm.Save(SessionIniFile);
   if ApplicationForm.ShowModal <> mrOk then
   begin
-    ApplicationForm.LoadType         .ItemIndex := LoadType;
-    ApplicationForm.Temperature      .Value     := Temperature;
-    ApplicationForm.TemperatureUnit  .ItemIndex := TemperatureUnit;
-    ApplicationForm.SeatingCoefficent.ItemIndex := SeatingCoefficent;
+    ApplicationForm.Load(SessionIniFile);
   end;
+  SessionIniFile.Destroy;
+  SessionStream.Destroy;
   Solve();
 end;
 
-// Memu View //
+// Memu View
 
 procedure TMainForm.ViewMenuItemClick(Sender: TObject);
 var
@@ -842,14 +704,14 @@ end;
 procedure TMainForm.CustomSectionMenuItemClick(Sender: TObject);
 var
   i: longint;
-  SpringLength: double;
+  Value: double;
 begin
   if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
   begin
-    DrawingForm.SpringLength.MinValue := SpringSolver.LengthLc;
-    DrawingForm.SpringLength.MaxValue := SpringSolver.LengthL0;
+    DrawingForm.SpringLength.MinValue := SOLVER.LengthLc;
+    DrawingForm.SpringLength.MaxValue := SOLVER.LengthL0;
 
-    SpringLength := DrawingForm.SpringLength.Value;
+    Value := DrawingForm.SpringLength.Value;
     if DrawingForm.ShowModal = mrOk then
     begin
       for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
@@ -859,7 +721,7 @@ begin
       if Assigned(Sender) then
         TMenuItem(Sender).Checked := True;
     end else
-      DrawingForm.SpringLength.Value := SpringLength;
+      DrawingForm.SpringLength.Value := Value;
 
     FormPaint(Sender);
   end;
@@ -870,7 +732,8 @@ end;
 procedure TMainForm.ReportMenuItemClick(Sender: TObject);
 begin
   Solve();
-  ReportForm.LoadReport;
+
+  ReportForm.CreateReport;
   ReportForm.ShowModal;
 end;
 
@@ -880,10 +743,10 @@ begin
   SaveDialog.Filter := 'Text file (*.txt)|*.txt|All files (*.*)|*.*|;';
   if SaveDialog.Execute then
   begin
-    ReportForm.LoadReport;
+    ReportForm.CreateReport;
     ReportForm.Memo.Lines.SaveToFile(SaveDialog.FileName);
   end;
-  SaveDialog.FileName := FileName;
+  SaveDialog.FileName := SessionFileName;
 end;
 
 procedure TMainForm.ExportProductionMenuItemClick(Sender: TObject);
@@ -900,9 +763,10 @@ begin
     SVG.SaveToFile(SaveDialog.FileName);
     SVG.Destroy;
   end;
+  SaveDialog.FileName := SessionFileName;
 end;
 
-// Menu Help //
+// Menu Help
 
 procedure TMainForm.AboutMenuItemClick(Sender: TObject);
 begin
@@ -912,41 +776,69 @@ end;
 
 // FormPaint
 
+procedure TMainForm.FormPaint(Sender: TObject);
+var
+  i: longint;
+  Check: boolean;
+begin
+  FormWindowStateChange(Sender);
+
+  Check := False;
+  for i := 0 to ViewMenuItem.Count -1 do if ViewMenuItem.Items[i].Checked then Check := True;
+  for i := 0 to TempMenuItem.Count -1 do if TempMenuItem.Items[i].Checked then Check := True;
+  for i := 0 to DrawMenuItem.Count -1 do if DrawMenuItem.Items[i].Checked then Check := True;
+  for i := 0 to DocsMenuItem.Count -1 do if DocsMenuItem.Items[i].Checked then Check := True;
+
+  if Check then
+  begin
+    ScreenImage.SetSize(
+      Trunc(ScreenImageWidth *ScreenScale),
+      Trunc(ScreenImageHeight*ScreenScale));
+    PaintTo(ScreenImage, ScreenColor ,ScreenScale, ClientFile);
+  end else
+  begin
+    MoveX := (VirtualScreen.Width  - ScreenImageWidth ) div 2;
+    MoveY := (VirtualScreen.Height - ScreenImageHeight) div 2;
+    ScreenImage.LoadFromResource('BACKGROUND');
+    VirtualScreen.RedrawBitmap;
+  end;
+end;
+
 procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenColor: TBGRAPixel; aScreenScale: double; aSetting: TIniFile);
 var
   i: longint;
   Bit: array of TBGRABitmap = nil;
-  BucklingDiagram: TBucklingDiagram;
-  ForceDiagram: TForceDisplacementDiagram;
-  GoodmanDiagram: TGoodmanDiagram;
-  Load1Diagram: TLinearTemperatureDiagram;
-  Load2Diagram: TLinearTemperatureDiagram;
+  BucklingDiagram: TChart;
+  ForceDiagram: TChart;
+  GoodmanDiagram: TChart;
+  Load1Diagram: TChart;
+  Load2Diagram: TChart;
   MessageList: TReportTable;
   QualityTable: TReportTable;
-  ReportList0: TReportTable;
+  Quick1List: TReportTable;
   ReportList1: TReportTable;
-  ReportTable: TReportTable;
-  ShearModulusDiagram: TLinearTemperatureDiagram;
+  Quick1Table: TReportTable;
+  ShearModulusDiagram: TChart;
   SpringDrawing: TSectionSpringDrawing;
-  YoungModulusDiagram: TLinearTemperatureDiagram;
+  YoungModulusDiagram: TChart;
   SVG: TBGRASvg;
 begin
   ErrorMessage.Clear;
   WarningMessage.Clear;
   aScreen.Fill(aScreenColor);
 
-  SpringSolver.Solve;
-  ForceDiagram        := CreateForceDisplacementDiagram(aScreenScale, aSetting);
-  GoodmanDiagram      := CreateGoodmanDiagram          (aScreenScale, aSetting);
-  BucklingDiagram     := CreateBucklingDiagram         (aScreenScale, aSetting);
-  ShearModulusDiagram := CreateShearModulusDiagram     (aScreenScale, aSetting);
-  YoungModulusDiagram := CreateYoungModulusDiagram     (aScreenScale, aSetting);
-  Load1Diagram        := CreateLoad1Diagram            (aScreenScale, aSetting);
-  Load2Diagram        := CreateLoad2Diagram            (aScreenScale, aSetting);
+  SOLVER.Solve;
+  ForceDiagram        := CreateForceDisplacementChart  (aScreenScale, aSetting);
+  GoodmanDiagram      := CreateGoodmanChart            (aScreenScale, aSetting);
+  BucklingDiagram     := CreateBucklingChart           (aScreenScale, aSetting);
+  ShearModulusDiagram := CreateShearModulusChart       (aScreenScale, aSetting);
+  YoungModulusDiagram := CreateYoungModulusChart       (aScreenScale, aSetting);
+  Load1Diagram        := CreateLoadF1Chart             (aScreenScale, aSetting);
+  Load2Diagram        := CreateLoadF2Chart             (aScreenScale, aSetting);
   MessageList         := CreateMessageList             (aScreenScale, aSetting);
-  ReportTable         := CreateReportTable             (aScreenScale, aSetting);
+  Quick1Table         := CreateQuick1Table             (aScreenScale, aSetting);
   QualityTable        := CreateQualityTable            (aScreenScale, aSetting);
-  ReportList0         := CreateReportList0             (aScreenScale, aSetting);
+  Quick1List          := CreateQuick1List              (aScreenScale, aSetting);
   SpringDrawing       := CreateSpringDrawing           (aScreenScale, aSetting);
 
   if ForceMenuItem        .Checked then ForceDiagram       .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
@@ -963,35 +855,29 @@ begin
     SetLength(Bit, 3);
     for i := Low(Bit) to High(Bit) do
       Bit[i] := TBGRABitmap.Create;
-
     SpringDrawing.ClosedEnds  := False;
     SpringDrawing.GroundEnds  := False;
-
     Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
     SpringDrawing.Fit  := True;
-    SpringDrawing.Lx   := SpringSolver.LengthL0;
+    SpringDrawing.Lx   := SOLVER.LengthL0;
     SpringDrawing.Text := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
     Bit[1].SetSize(Bit[0].Width, Bit[0].Height);
     SpringDrawing.Fit  := False;
-    SpringDrawing.Lx   := SpringSolver.LengthL1;
+    SpringDrawing.Lx   := SOLVER.LengthL1;
     SpringDrawing.Text := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
     Bit[2].SetSize(Bit[1].Width, Bit[1].Height);
     SpringDrawing.Fit  := False;
-    SpringDrawing.Lx   := SpringSolver.LengthL2;
+    SpringDrawing.Lx   := SOLVER.LengthL2;
     SpringDrawing.Text := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-
     Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, False);
     Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, False);
     Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, False);
-
     for i := Low(Bit) to High(Bit) do
       Bit[i].Destroy;
-    Bit := nil
+    Bit := nil;
   end;
 
   if Quick1MenuItem.Checked then
@@ -1000,8 +886,8 @@ begin
     for i := Low(Bit) to High(Bit) do
       Bit[i] := TBGRABitmap.Create;
 
-    Bit[0].SetSize(ReportList0.Width + ReportList0.Spacer, ReportList0.Height + ReportList0.Spacer);
-    ReportList0.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+    Bit[0].SetSize(Quick1List.Width + Quick1List.Spacer, Quick1List.Height + Quick1List.Spacer);
+    Quick1List.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
     ReportList1 := TReportTable.Create('ReportList', aSetting);
     ReportList1.Spacer       := Trunc(DefaultSpacer*aScreenScale);
@@ -1009,30 +895,30 @@ begin
 
     ReportList1.ColumnCount  := 1;
     ReportList1.RowCount     := 17;
-    ReportList1.Items[ 0, 0] := TryFormatFloat   ('d     = %s mm',     'd     = ---', SpringSolver.WireDiameter);
-    ReportList1.Items[ 1, 0] := TryFormatFloat   ('tauk1 = %s MPa',    'tauk1 = ---', SpringSolver.TorsionalStressTauk1);
-    ReportList1.Items[ 2, 0] := TryFormatFloat   ('tauk2 = %s MPa',    'tauk2 = ---', SpringSolver.TorsionalStressTauk2);
-    ReportList1.Items[ 3, 0] := TryFormatFloat   ('taukh = %s MPa',    'taukh = ---', SpringSolver.TorsionalStressTaukh);
+    ReportList1.Items[ 0, 0] := TryFormatFloat   ('d     = %s mm',     'd     = ---', SOLVER.WireDiameter);
+    ReportList1.Items[ 1, 0] := TryFormatFloat   ('tauk1 = %s MPa',    'tauk1 = ---', SOLVER.TorsionalStressTauk1);
+    ReportList1.Items[ 2, 0] := TryFormatFloat   ('tauk2 = %s MPa',    'tauk2 = ---', SOLVER.TorsionalStressTauk2);
+    ReportList1.Items[ 3, 0] := TryFormatFloat   ('taukh = %s MPa',    'taukh = ---', SOLVER.TorsionalStressTaukh);
     ReportList1.Items[ 4, 0] := ' ';
-    ReportList1.Items[ 5, 0] := TryFormatFloat   ('E     = %s MPa',    'E     = ---', SpringSolver.YoungModulus);
-    ReportList1.Items[ 6, 0] := TryFormatFloat   ('G     = %s MPa',    'G     = ---', SpringSolver.ShearModulus);
-    ReportList1.Items[ 7, 0] := TryFormatFloat   ('rho   = %s kg/dm3', 'rho   = ---', SpringSolver.DensityRho);
-    ReportList1.Items[ 8, 0] := TryFormatFloat   ('Rm    = %s MPa',    'Rm    = ---', SpringSolver.TensileStrengthRm);
-    ReportList1.Items[ 9, 0] := TryFormatFloat   ('tauz  = %s MPa',    'tauz  = ---', SpringSolver.AdmStaticTorsionalStressTauz);
+    ReportList1.Items[ 5, 0] := TryFormatFloat   ('E     = %s MPa',    'E     = ---', SOLVER.YoungModulus);
+    ReportList1.Items[ 6, 0] := TryFormatFloat   ('G     = %s MPa',    'G     = ---', SOLVER.ShearModulus);
+    ReportList1.Items[ 7, 0] := TryFormatFloat   ('rho   = %s kg/dm3', 'rho   = ---', SOLVER.MaterialDensity);
+    ReportList1.Items[ 8, 0] := TryFormatFloat   ('Rm    = %s MPa',    'Rm    = ---', SOLVER.TensileStrengthRm);
+    ReportList1.Items[ 9, 0] := TryFormatFloat   ('tauz  = %s MPa',    'tauz  = ---', SOLVER.AdmStaticTorsionalStressTauz);
     ReportList1.Items[10, 0] := ' ';
-    ReportList1.Items[11, 0] := TryFormatFloat   ('ns    = %s',        'ns    = ---', SpringSolver.StaticSafetyFactor);
+    ReportList1.Items[11, 0] := TryFormatFloat   ('ns    = %s',        'ns    = ---', SOLVER.StaticSafetyFactor);
     if ApplicationForm.LoadType.ItemIndex = 0 then
     begin
-      ReportList1.Items[12, 0] := TryFormatFloat   ('tauoz = %s MPa',    'tauoz = ---', SpringSolver.AdmDynamicTorsionalStressTauoz);
-      ReportList1.Items[13, 0] := TryFormatFloat   ('tauhz = %s MPa',    'tauhz = ---', SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
-      ReportList1.Items[14, 0] := TryFormatFloat   ('nf    = %s',        'nf    = ---', SpringSolver.DynamicSafetyFactor);
+      ReportList1.Items[12, 0] := TryFormatFloat   ('tauoz = %s MPa',    'tauoz = ---', SOLVER.AdmDynamicTorsionalStressTauoz);
+      ReportList1.Items[13, 0] := TryFormatFloat   ('tauhz = %s MPa',    'tauhz = ---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
+      ReportList1.Items[14, 0] := TryFormatFloat   ('nf    = %s',        'nf    = ---', SOLVER.DynamicSafetyFactor);
 
       ReportList1.Items[15, 0] := 'N     = ---';
       ReportList1.Items[16, 0] := 'Nh    = ---';
-      if SpringSolver.NumOfCycles > 0 then
+      if SOLVER.NumOfCycles > 0 then
       begin
-        ReportList1.Items[15, 0] := TryFormatText    ('N     = %s cycles', 'N     = ---', TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
-        ReportList1.Items[16, 0] := TryFormatFloatDiv('Nh    = %s hours',  'Nh    = ---', SpringSolver.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
+        ReportList1.Items[15, 0] := TryFormatText    ('N     = %s cycles', 'N     = ---', TryFloatToText(SOLVER.NumOfCycles, 2, 0));
+        ReportList1.Items[16, 0] := TryFormatFloatDiv('Nh    = %s hours',  'Nh    = ---', SOLVER.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
       end;
     end;
 
@@ -1045,26 +931,26 @@ begin
     Bit[3].SetSize((aScreen.Width - Bit[1].Width) div 2, Bit[1].Height);
     GoodmanDiagram.Draw(Bit[3].Canvas, Bit[3].Width, Bit[3].Height);
 
-    Bit[4].SetSize(ReportTable.Width + ReportTable.Spacer, ReportTable.Height + ReportTable.Spacer);
-    ReportTable.Draw(Bit[4].Canvas, Bit[4].Width, Bit[4].Height);
+    Bit[4].SetSize(Quick1Table.Width + Quick1Table.Spacer, Quick1Table.Height + Quick1Table.Spacer);
+    Quick1Table.Draw(Bit[4].Canvas, Bit[4].Width, Bit[4].Height);
 
     Bit[5].SetSize((aScreen.Width - Bit[0].Width - Bit[4].Width) div 3, Bit[0].Height);
-    SpringDrawing.Text := Format('L0 = %s', [TryFloatToText(SpringSolver.LengthL0)]);
-    SpringDrawing.Lx   := SpringSolver.LengthL0;
+    SpringDrawing.Text := Format('L0 = %s', [TryFloatToText(SOLVER.LengthL0)]);
+    SpringDrawing.Lx   := SOLVER.LengthL0;
     SpringDrawing.Fit  := True;
     SpringDrawing.Draw(Bit[5].Canvas, Bit[5].Width, Bit[5].Height);
 
     if (3*Bit[5].Width) <= (aScreen.Width - Bit[0].Width - Bit[4].Width) then
     begin
       Bit[6].SetSize(Bit[5].Width, Bit[5].Height);
-      SpringDrawing.Text := Format('L1 = %s', [TryFloatToText(SpringSolver.LengthL1)]);
-      SpringDrawing.Lx   := SpringSolver.LengthL1;
+      SpringDrawing.Text := Format('L1 = %s', [TryFloatToText(SOLVER.LengthL1)]);
+      SpringDrawing.Lx   := SOLVER.LengthL1;
       SpringDrawing.Fit  := False;
       SpringDrawing.Draw(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
 
       Bit[7].SetSize(Bit[5].Width, Bit[5].Height);
-      SpringDrawing.Text := Format('L2 = %s', [TryFloatToText(SpringSolver.LengthL2)]);
-      SpringDrawing.Lx   := SpringSolver.LengthL2;
+      SpringDrawing.Text := Format('L2 = %s', [TryFloatToText(SOLVER.LengthL2)]);
+      SpringDrawing.Lx   := SOLVER.LengthL2;
       SpringDrawing.Fit  := False;
       SpringDrawing.Draw(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
     end;
@@ -1105,65 +991,65 @@ begin
 
     ReportList1.ColumnCount  := 3;
     ReportList1.RowCount     := 33;
-    ReportList1.Items[ 0, 0] := TryFormatFloat   ('d        = %s mm',     'd     = ---', SpringSolver.WireDiameter) + TryFormatFloat(' ± %s mm', '', SpringSolver.ToleranceWireDiameter);
-    ReportList1.Items[ 1, 0] := TryFormatFloat   ('Di       = %s mm',     'Di    = ---', SpringSolver.Di);
-    ReportList1.Items[ 2, 0] := TryFormatFloat   ('Dm       = %s mm',     'Dm    = ---', SpringSolver.Dm) + TryFormatFloat(' ± %s mm', '', SpringSolver.ToleranceDm);
-    ReportList1.Items[ 3, 0] := TryFormatFloat   ('De       = %s mm',     'De    = ---', SpringSolver.De);
-    ReportList1.Items[ 4, 0] := TryFormatFloat   ('n        = %s coils',  'n     = ---', SpringSolver.ActiveColis);
-    ReportList1.Items[ 5, 0] := TryFormatFloat   ('nt       = %s colis',  'nt    = ---', SpringSolver.TotalCoils);
-    ReportList1.Items[ 6, 0] := TryFormatFloatDiv('Dm/d     = %s',        'Dm/d  = ---', SpringSolver.Dm, SpringSolver.WireDiameter);
-    ReportList1.Items[ 7, 0] := TryFormatFloat   ('nu       = %s',        'nu    = ---', SpringSolver.SeatingCoefficent);
-    ReportList1.Items[ 8, 0] := TryFormatFloat   ('k        = %s',        'k     = ---', SpringSolver.CorrectionFactorK);
+    ReportList1.Items[ 0, 0] := TryFormatFloat   ('d        = %s mm',     'd     = ---', SOLVER.WireDiameter) + TryFormatFloat(' ± %s mm', '', SOLVER.WireDiameterMax - SOLVER.WireDiameter);
+    ReportList1.Items[ 1, 0] := TryFormatFloat   ('Di       = %s mm',     'Di    = ---', SOLVER.Di);
+    ReportList1.Items[ 2, 0] := TryFormatFloat   ('Dm       = %s mm',     'Dm    = ---', SOLVER.Dm) + TryFormatFloat(' ± %s mm', '', TOL.CoilDiameterTolerance);
+    ReportList1.Items[ 3, 0] := TryFormatFloat   ('De       = %s mm',     'De    = ---', SOLVER.De);
+    ReportList1.Items[ 4, 0] := TryFormatFloat   ('n        = %s coils',  'n     = ---', SOLVER.ActiveColis);
+    ReportList1.Items[ 5, 0] := TryFormatFloat   ('nt       = %s colis',  'nt    = ---', SOLVER.TotalCoils);
+    ReportList1.Items[ 6, 0] := TryFormatFloatDiv('Dm/d     = %s',        'Dm/d  = ---', SOLVER.Dm, SOLVER.WireDiameter);
+    ReportList1.Items[ 7, 0] := TryFormatFloat   ('nu       = %s',        'nu    = ---', SOLVER.SeatingCoefficent);
+    ReportList1.Items[ 8, 0] := TryFormatFloat   ('k        = %s',        'k     = ---', SOLVER.CorrectionFactorK);
     ReportList1.Items[ 9, 0] := '';
-    ReportList1.Items[10, 0] := TryFormatFloat   ('L        = %s mm',     'L     = ---', SpringSolver.WireLength);
-    ReportList1.Items[11, 0] := TryFormatFloat   ('rho      = %s kg/dm3', 'rho   = ---', SpringSolver.DensityRho);
-    ReportList1.Items[12, 0] := TryFormatFloat   ('mass     = %s g',      'mass  = ---', SpringSolver.Mass);
-    ReportList1.Items[13, 0] := TryFormatFloat   ('fe       = %s Hz',     'fe    = ---', SpringSolver.NaturalFrequency);
+    ReportList1.Items[10, 0] := TryFormatFloat   ('L        = %s mm',     'L     = ---', SOLVER.WireLength);
+    ReportList1.Items[11, 0] := TryFormatFloat   ('rho      = %s kg/dm3', 'rho   = ---', SOLVER.MaterialDensity);
+    ReportList1.Items[12, 0] := TryFormatFloat   ('mass     = %s g',      'mass  = ---', SOLVER.Mass);
+    ReportList1.Items[13, 0] := TryFormatFloat   ('fe       = %s Hz',     'fe    = ---', SOLVER.NaturalFrequency);
     ReportList1.Items[14, 0] := '';
     ReportList1.Items[15, 0] := TryFormatText    ('Material = %s',        'Material = ---', MAT.Items[MAT.ItemIndex]);
-    ReportList1.Items[16, 0] := TryFormatFloat   ('G        = %s MPa',    'G        = ---', SpringSolver.ShearModulus);
-    ReportList1.Items[17, 0] := TryFormatFloat   ('Rm       = %s MPa',    'Rm       = ---', SpringSolver.TensileStrengthRm);
-    ReportList1.Items[18, 0] := TryFormatFloat   ('tauz     = %s MPa',    'tauz     = ---', SpringSolver.AdmStaticTorsionalStressTauz);
+    ReportList1.Items[16, 0] := TryFormatFloat   ('G        = %s MPa',    'G        = ---', SOLVER.ShearModulus);
+    ReportList1.Items[17, 0] := TryFormatFloat   ('Rm       = %s MPa',    'Rm       = ---', SOLVER.TensileStrengthRm);
+    ReportList1.Items[18, 0] := TryFormatFloat   ('tauz     = %s MPa',    'tauz     = ---', SOLVER.AdmStaticTorsionalStressTauz);
     ReportList1.Items[19, 0] := TryFormatFloat   ('T        = %s C°',     'T        = ---', MAT.Tempetature);
     ReportList1.Items[20, 0] := TryFormatFloat   ('G(T)     = %s MPa',    'G(T)     = ---', MAT.GetG(MAT.Tempetature));
     ReportList1.Items[21, 0] := '';
-    ReportList1.Items[22, 0] := TryFormatBool    ('Closed ends    = True', 'Closed ends    = False', SpringSolver.ClosedEnds);
-    ReportList1.Items[23, 0] := TryFormatBool    ('Ground ends    = True', 'Ground ends    = False', SpringSolver.GroundEnds);
-    ReportList1.Items[24, 0] := TryFormatBool    ('Cold coiled    = True', 'Cold coiled    = False', SpringSolver.ColdCoiled);
-    ReportList1.Items[25, 0] := TryFormatBool    ('Dynamic strain = True', 'Dynamic strain = False', SpringSolver.DynamicLoad);
+    ReportList1.Items[22, 0] := TryFormatBool    ('Closed ends    = True', 'Closed ends    = False', SOLVER.ClosedEnds);
+    ReportList1.Items[23, 0] := TryFormatBool    ('Ground ends    = True', 'Ground ends    = False', SOLVER.GroundEnds);
+    ReportList1.Items[24, 0] := TryFormatBool    ('Cold coiled    = True', 'Cold coiled    = False', SOLVER.ColdCoiled);
+    ReportList1.Items[25, 0] := TryFormatBool    ('Dynamic strain = True', 'Dynamic strain = False', SOLVER.DynamicLoad);
     ReportList1.Items[26, 0] := '';
-    ReportList1.Items[27, 0] := TryFormatInt     ('EN15800 Quality Grade Dm  = %s', 'EN15800 Quality Grade Dm  = ---', SpringSolver.QualityGradeDm);
-    ReportList1.Items[28, 0] := TryFormatInt     ('EN15800 Quality Grade L0  = %s', 'EN15800 Quality Grade L0  = ---', SpringSolver.QualityGradeL0);
-    ReportList1.Items[29, 0] := TryFormatInt     ('EN15800 Quality Grade F1  = %s', 'EN15800 Quality Grade F1  = ---', SpringSolver.QualityGradeF1);
-    ReportList1.Items[30, 0] := TryFormatInt     ('EN15800 Quality Grade F2  = %s', 'EN15800 Quality Grade F2  = ---', SpringSolver.QualityGradeF2);
-    ReportList1.Items[31, 0] := TryFormatInt     ('EN15800 Quality Grade e1  = %s', 'EN15800 Quality Grade e1  = ---', SpringSolver.QualityGradee1);
-    ReportList1.Items[32, 0] := TryFormatInt     ('EN15800 Quality Grade e2  = %s', 'EN15800 Quality Grade e2  = ---', SpringSolver.QualityGradee2);
+    ReportList1.Items[27, 0] := TryFormatInt     ('EN15800 Quality Grade Dm  = %s', 'EN15800 Quality Grade Dm  = ---', TOL.DmQualityGrade);
+    ReportList1.Items[28, 0] := TryFormatInt     ('EN15800 Quality Grade L0  = %s', 'EN15800 Quality Grade L0  = ---', TOL.L0QualityGrade);
+    ReportList1.Items[29, 0] := TryFormatInt     ('EN15800 Quality Grade F1  = %s', 'EN15800 Quality Grade F1  = ---', TOL.F1QualityGrade);
+    ReportList1.Items[30, 0] := TryFormatInt     ('EN15800 Quality Grade F2  = %s', 'EN15800 Quality Grade F2  = ---', TOL.F2QualityGrade);
+    ReportList1.Items[31, 0] := TryFormatInt     ('EN15800 Quality Grade e1  = %s', 'EN15800 Quality Grade e1  = ---', TOL.E1QualityGrade);
+    ReportList1.Items[32, 0] := TryFormatInt     ('EN15800 Quality Grade e2  = %s', 'EN15800 Quality Grade e2  = ---', TOL.E2QualityGrade);
 
     ReportList1.Items[ 0, 1] := '   ';
 
-    ReportList1.Items[ 0, 2] := TryFormatFloat('L0    = %s mm',  'L0    = ---', SpringSolver.LengthL0) + TryFormatFloat(' ± %s mm', '', SpringSolver.ToleranceL0);
-    ReportList1.Items[ 1, 2] := TryFormatFloat('L1    = %s mm',  'L1    = ---', SpringSolver.LengthL1);
-    ReportList1.Items[ 2, 2] := TryFormatFloat('L2    = %s mm',  'L2    = ---', SpringSolver.LengthL2);
-    ReportList1.Items[ 3, 2] := TryFormatFloat('Ln    = %s mm',  'Ln    = ---', SpringSolver.LengthLn);
-    ReportList1.Items[ 4, 2] := TryFormatFloat('Lc    = %s mm',  'Lc    = ---', SpringSolver.LengthLc);
+    ReportList1.Items[ 0, 2] := TryFormatFloat('L0    = %s mm',  'L0    = ---', SOLVER.LengthL0) + TryFormatFloat(' ± %s mm', '', TOL.LengthL0Tolerance);
+    ReportList1.Items[ 1, 2] := TryFormatFloat('L1    = %s mm',  'L1    = ---', SOLVER.LengthL1);
+    ReportList1.Items[ 2, 2] := TryFormatFloat('L2    = %s mm',  'L2    = ---', SOLVER.LengthL2);
+    ReportList1.Items[ 3, 2] := TryFormatFloat('Ln    = %s mm',  'Ln    = ---', SOLVER.LengthLn);
+    ReportList1.Items[ 4, 2] := TryFormatFloat('Lc    = %s mm',  'Lc    = ---', SOLVER.LengthLc);
     ReportList1.Items[ 5, 2] := '';
-    ReportList1.Items[ 6, 2] := TryFormatFloat('s1    = %s mm',  's1    = ---', SpringSolver.DeflectionS1);
-    ReportList1.Items[ 7, 2] := TryFormatFloat('s2    = %s mm',  's2    = ---', SpringSolver.DeflectionS2);
-    ReportList1.Items[ 8, 2] := TryFormatFloat('sh    = %s mm',  'sh    = ---', SpringSolver.DeflectionSh);
-    ReportList1.Items[ 9, 2] := TryFormatFloat('sn    = %s mm',  'sn    = ---', SpringSolver.DeflectionSn);
-    ReportList1.Items[10, 2] := TryFormatFloat('sc    = %s mm',  'sc    = ---', SpringSolver.DeflectionSc);
+    ReportList1.Items[ 6, 2] := TryFormatFloat('s1    = %s mm',  's1    = ---', SOLVER.DeflectionS1);
+    ReportList1.Items[ 7, 2] := TryFormatFloat('s2    = %s mm',  's2    = ---', SOLVER.DeflectionS2);
+    ReportList1.Items[ 8, 2] := TryFormatFloat('sh    = %s mm',  'sh    = ---', SOLVER.DeflectionSh);
+    ReportList1.Items[ 9, 2] := TryFormatFloat('sn    = %s mm',  'sn    = ---', SOLVER.DeflectionSn);
+    ReportList1.Items[10, 2] := TryFormatFloat('sc    = %s mm',  'sc    = ---', SOLVER.DeflectionSc);
     ReportList1.Items[11, 2] := '';
-    ReportList1.Items[12, 2] := TryFormatFloat('F1    = %s N',   'F1    = ---', SpringSolver.LoadF1) + TryFormatFloat(' ± %s N', '', SpringSolver.ToleranceLoadF1);
-    ReportList1.Items[13, 2] := TryFormatFloat('F2    = %s N',   'F2    = ---', SpringSolver.LoadF2) + TryFormatFloat(' ± %s N', '', SpringSolver.ToleranceLoadF2);
-    ReportList1.Items[14, 2] := TryFormatFloat('Fn    = %s N',   'Fn    = ---', SpringSolver.LoadFn);
-    ReportList1.Items[15, 2] := TryFormatFloat('Fc    = %s N',   'Fc    = ---', SpringSolver.LoadFc);
+    ReportList1.Items[12, 2] := TryFormatFloat('F1    = %s N',   'F1    = ---', SOLVER.LoadF1) + TryFormatFloat(' ± %s N', '', TOL.LoadF1Tolerance);
+    ReportList1.Items[13, 2] := TryFormatFloat('F2    = %s N',   'F2    = ---', SOLVER.LoadF2) + TryFormatFloat(' ± %s N', '', TOL.LoadF2Tolerance);
+    ReportList1.Items[14, 2] := TryFormatFloat('Fn    = %s N',   'Fn    = ---', SOLVER.LoadFn);
+    ReportList1.Items[15, 2] := TryFormatFloat('Fc    = %s N',   'Fc    = ---', SOLVER.LoadFc);
     ReportList1.Items[16, 2] := '';
-    ReportList1.Items[17, 2] := TryFormatFloat('tauk1 = %s MPa', 'tauk1 = ---', SpringSolver.TorsionalStressTauk1);
-    ReportList1.Items[18, 2] := TryFormatFloat('tauk2 = %s MPa', 'tauk2 = ---', SpringSolver.TorsionalStressTauk2);
-    ReportList1.Items[19, 2] := TryFormatFloat('taukh = %s MPa', 'taukh = ---', SpringSolver.TorsionalStressTaukh);
+    ReportList1.Items[17, 2] := TryFormatFloat('tauk1 = %s MPa', 'tauk1 = ---', SOLVER.TorsionalStressTauk1);
+    ReportList1.Items[18, 2] := TryFormatFloat('tauk2 = %s MPa', 'tauk2 = ---', SOLVER.TorsionalStressTauk2);
+    ReportList1.Items[19, 2] := TryFormatFloat('taukh = %s MPa', 'taukh = ---', SOLVER.TorsionalStressTaukh);
     ReportList1.Items[20, 2] := '';
-    ReportList1.Items[21, 2] := TryFormatFloat('tauoz = %s MPa', 'tauoz = ---', SpringSolver.AdmDynamicTorsionalStressTauoz);
-    ReportList1.Items[22, 2] := TryFormatFloat('tauhz = %s MPa', 'tauhz = ---', SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
+    ReportList1.Items[21, 2] := TryFormatFloat('tauoz = %s MPa', 'tauoz = ---', SOLVER.AdmDynamicTorsionalStressTauoz);
+    ReportList1.Items[22, 2] := TryFormatFloat('tauhz = %s MPa', 'tauhz = ---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
     ReportList1.Items[23, 2] := '';
 
     Bit[0].SetSize(ReportList1.Width + ReportList1.Spacer, aScreen.Height);
@@ -1207,374 +1093,77 @@ begin
   Load2Diagram.Destroy;
   MessageList.Destroy;
   QualityTable.Destroy;
-  ReportTable.Destroy;
-  ReportList0.Destroy;
+  Quick1Table.Destroy;
+  Quick1List.Destroy;
   SpringDrawing.Destroy;
 
   VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
 end;
 
-function TMainForm.CreateForceDisplacementDiagram(const aScreenScale: double; aSetting: TIniFile): TForceDisplacementDiagram;
-begin
-  Result             := TForceDisplacementDiagram.Create('ForceDisplacementDiagram', aSetting);
-  Result.F1          := SpringSolver.LoadF1;
-  Result.F2          := SpringSolver.LoadF2;
-  Result.Fn          := SpringSolver.LoadFn;
-  Result.Fc          := SpringSolver.LoadFc;
-  Result.s1          := SpringSolver.DeflectionS1;
-  Result.s2          := SpringSolver.DeflectionS2;
-  Result.sn          := SpringSolver.DeflectionSn;
-  Result.sc          := SpringSolver.DeflectionSc;
-  Result.ToleranceF1 := SpringSolver.ToleranceLoadF1;
-  Result.ToleranceF1 := SpringSolver.ToleranceLoadF2;
-  Result.Spacer      := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom        := aScreenScale;
-end;
-
-function TMainForm.CreateGoodmanDiagram(const aScreenScale: double; aSetting: TIniFile): TGoodmanDiagram;
-begin
-  Result                         := TGoodmanDiagram.Create('GoodmanDiagram', aSetting);
-  Result.Caption                 := Format('Goodman Diagram: %s', [MAT.Items[MAT.ItemIndex]]);
-  Result.Tauz                    := SpringSolver.AdmStaticTorsionalStressTauz;
-  Result.Tauk1                   := SpringSolver.TorsionalStressTauk1;
-  Result.Tauk2                   := SpringSolver.TorsionalStressTauk2;
-  Result.TorsionalStressTauYield := MAT.TorsionalStressTauYield;
-  Result.TorsionalStressTauOE7   := MAT.TorsionalStressTauOE7;
-  Result.TorsionalStressTauOE6   := MAT.TorsionalStressTauOE6;
-  Result.TorsionalStressTauOE5   := MAT.TorsionalStressTauOE5;
-  Result.TorsionalStressTauUE7   := MAT.TorsionalStressTauUE7;
-  Result.TorsionalStressTauUE6   := MAT.TorsionalStressTauUE6;
-  Result.TorsionalStressTauUE5   := MAT.TorsionalStressTauUE5;
-  Result.NumOfCyclesE7           := FloatToStrF(MAT.NumOfCyclesE7, ffGeneral, 4, 0) + ' Cycles';
-  Result.NumOfCyclesE6           := FloatToStrF(MAT.NumOfCyclesE6, ffGeneral, 4, 0);
-  Result.NumOfCyclesE5           := FloatToStrF(MAT.NumOfCyclesE5, ffGeneral, 4, 0);
-  Result.Tauk1Tolerance          := SpringSolver.Tolerancetauk1;
-  Result.Tauk2Tolerance          := SpringSolver.Tolerancetauk2;
-  Result.Spacer                  := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom                    := aScreenScale;
-end;
-
-function TMainForm.CreateBucklingDiagram(const aScreenScale: double; aSetting: TIniFile): TBucklingDiagram;
-begin
-  Result        := TBucklingDiagram.Create('BucklingDiagram', aSetting);
-  Result.Dm     := SpringSolver.Dm;
-  Result.E      := SpringSolver.YoungModulus;
-  Result.G      := SpringSolver.ShearModulus;
-  Result.L0     := SpringSolver.LengthL0;
-  Result.nu     := SpringSolver.SeatingCoefficent;
-  Result.s1     := SpringSolver.DeflectionS1;
-  Result.s2     := SpringSolver.DeflectionS2;
-  Result.sc     := SpringSolver.DeflectionSc;
-  Result.sk     := SpringSolver.DeflectionSk;
-  Result.Spacer := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom   := aScreenScale;
-end;
-
-function TMainForm.CreateShearModulusDiagram(const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-begin
-  Result                 := TLinearTemperatureDiagram.Create('LinearTemperatureDiagram', aSetting);
-  Result.Caption         := 'G-T Diagram';
-  Result.HorizontalLabel := 'T [C°]';
-  Result.VerticalLabel   := 'G [MPa]';
-  Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
-  Result.Value           := MAT.ShearModulusG;
-  Result.Value0          := MAT.GetG(Result.Temperature0);
-  Result.Value1          := MAT.GetG(Result.Temperature1);
-  Result.Spacer          := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom            := aScreenScale;
-end;
-
-function TMainForm.CreateYoungModulusDiagram(const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-begin
-  Result                 := TLinearTemperatureDiagram.Create('LinearTemperatureDiagram', aSetting);
-  Result.Caption         := 'E-T Diagram';
-  Result.HorizontalLabel := 'T [C°]';
-  Result.VerticalLabel   := 'E [MPa]';
-  Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
-  Result.Value           := MAT.YoungModulusE;
-  Result.Value0          := MAT.GetE(Result.Temperature0);
-  Result.Value1          := MAT.GetE(Result.Temperature1);
-  Result.Spacer          := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom            := aScreenScale;
-end;
-
-function TMainForm.CreateLoad1Diagram(const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-begin
-  Result                 := TLinearTemperatureDiagram.Create('LinearTemperatureDiagram', aSetting);
-  Result.Caption         := 'F1-T Diagram';
-  Result.HorizontalLabel := 'T [C°]';
-  Result.VerticalLabel   := 'F1 [N]';
-  Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
-  Result.Value           := SpringSolver.LoadF1;
-  Result.Value0          := SpringSolver.GetF1(Result.Temperature0);
-  Result.Value1          := SpringSolver.GetF1(Result.Temperature1);
-  Result.Spacer          := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom            := aScreenScale;
-end;
-
-function TMainForm.CreateLoad2Diagram(const aScreenScale: double; aSetting: TIniFile): TLinearTemperatureDiagram;
-begin
-  Result                 := TLinearTemperatureDiagram.Create('LinearTemperatureDiagram', aSetting);
-  Result.Caption         := 'F2-T Diagram';
-  Result.HorizontalLabel := 'T [C°]';
-  Result.VerticalLabel   := 'F2 [N]';
-  Result.Temperature     := MAT.Tempetature;
-  Result.Temperature0    := 0;
-  Result.Temperature1    := 500;
-  Result.Value           := SpringSolver.LoadF2;
-  Result.Value0          := SpringSolver.GetF2(Result.Temperature0);
-  Result.Value1          := SpringSolver.GetF2(Result.Temperature1);
-  Result.Spacer          := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom            := aScreenScale;
-end;
-
-function TMainForm.CreateMessageList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-var
-  i, j: longint;
-begin
-  Result                   := TReportTable.Create('MessageList', aSetting);
-  Result.Spacer            := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom              := aScreenScale;
-  Result.ColumnCount       := 1;
-  Result.RowCount          := 1 + ErrorMessage.Count + WarningMessage.Count;
-  Result.VerticalAlignment := 1;
-  Result.Items[0, 0]       := TryFormatBool('Messages:', '', (ErrorMessage.Count + WarningMessage.Count) > 0);
-
-  j := 1;
-  for i := 0 to ErrorMessage.Count -1 do
-  begin
-    Result.Items[j, 0] := ErrorMessage[i];
-    Inc(j);
-  end;
-  for i := 0 to WarningMessage.Count -1 do
-  begin
-    Result.Items[j, 0] := WarningMessage[i];
-    Inc(j);
-  end;
-end;
-
-function TMainForm.CreateReportTable(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-begin
-  Result             := TReportTable.Create('ReportTable', aSetting);
-  Result.Spacer      := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom        := aScreenScale;
-  Result.RowCount    := 6;
-  Result.ColumnCount := 7;
-  Result[0, 0]       := 'L [mm]';
-  Result[1, 0]       := TryFormatFloat('L0: %s', 'L0: ---', SpringSolver.LengthL0);
-  Result[2, 0]       := TryFormatFloat('L1: %s', 'L1: ---', SpringSolver.LengthL1);
-  Result[3, 0]       := TryFormatFloat('L2: %s', 'L2: ---', SpringSolver.LengthL2);
-  Result[4, 0]       := TryFormatFloat('Ln: %s', 'Ln: ---', SpringSolver.LengthLn);
-  Result[5, 0]       := TryFormatFloat('Lc: %s', 'Lc: ---', SpringSolver.LengthLc);
-
-  Result[0, 1]       := 'F [N]';
-  Result[1, 1]       := '';
-  Result[2, 1]       := TryFormatFloat('F1: %s', 'F1: ---', SpringSolver.LoadF1);
-  Result[3, 1]       := TryFormatFloat('F2: %s', 'F2: ---', SpringSolver.LoadF2);
-  Result[4, 1]       := TryFormatFloat('Fn: %s', 'Fn: ---', SpringSolver.LoadFn);
-  Result[5, 1]       := TryFormatFloat('Fc: %s', 'Fc: ---', SpringSolver.LoadFc);
-
-  Result[0, 2]       := 'tau [MPa]';
-  Result[1, 2]       := '';
-  Result[2, 2]       := TryFormatFloat('tauk1: %s', 'tauk1: ---', SpringSolver.TorsionalStressTauk1);
-  Result[3, 2]       := TryFormatFloat('tauk2: %s', 'tauk2: ---', SpringSolver.TorsionalStressTauk2);
-  Result[4, 2]       := TryFormatFloat('tau n: %s', 'tau n: ---', SpringSolver.TorsionalStressTaun);
-  Result[5, 2]       := TryFormatFloat('tau c: %s', 'tau c: ---', SpringSolver.TorsionalStressTauc);
-
-  Result[0, 3]       := 's [mm]';
-  Result[1, 3]       := '';
-  Result[2, 3]       := TryFormatFloat('s1: %s', 's1: ---', SpringSolver.DeflectionS1);
-  Result[3, 3]       := TryFormatFloat('s2: %s', 's2: ---', SpringSolver.DeflectionS2);
-  Result[4, 3]       := TryFormatFloat('sn: %s', 'sn: ---', SpringSolver.DeflectionSn);
-  Result[5, 3]       := TryFormatFloat('sc: %s', 'sc: ---', SpringSolver.DeflectionSc);
-
-  Result[0, 4]       := 'tau/tauz';
-  Result[1, 4]       := '';
-  Result[2, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau1, SpringSolver.AdmStaticTorsionalStressTauz);
-  Result[3, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau2, SpringSolver.AdmStaticTorsionalStressTauz);
-  Result[4, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTaun, SpringSolver.AdmStaticTorsionalStressTauz);
-  Result[5, 4]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauc, SpringSolver.AdmStaticTorsionalStressTauz);
-
-  Result[0, 5]       := 'tau/Rm';
-  Result[1, 5]       := '';
-  Result[2, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau1, SpringSolver.TensileStrengthRm);
-  Result[3, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTau2, SpringSolver.TensileStrengthRm);
-  Result[4, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTaun, SpringSolver.TensileStrengthRm);
-  Result[5, 5]       := TryFormatFloatDiv('%s', '---', SpringSolver.TorsionalStressTauc, SpringSolver.TensileStrengthRm);
-
-  Result[0, 6]       := 'De';
-  Result[1, 6]       := TryFormatFloat      ('%s', '---', SpringSolver.De);
-  Result[2, 6]       := TryFormatFloatSumDiv('%s', '---', SpringSolver.De, SpringSolver.DeltaDe*SpringSolver.DeflectionS1, SpringSolver.DeflectionSc);
-  Result[3, 6]       := TryFormatFloatSumDiv('%s', '---', SpringSolver.De, SpringSolver.DeltaDe*SpringSolver.DeflectionS2, SpringSolver.DeflectionSc);
-  Result[4, 6]       := TryFormatFloatSumDiv('%s', '---', SpringSolver.De, SpringSolver.DeltaDe*SpringSolver.DeflectionSn, SpringSolver.DeflectionSc);
-  Result[5, 6]       := TryFormatFloatSumDiv('%s', '---', SpringSolver.De, SpringSolver.DeltaDe*SpringSolver.DeflectionSc, SpringSolver.DeflectionSc);
-end;
-
-function TMainForm.CreateQualityTable(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-begin
-  Result                   := TReportTable.Create('QualityTable', aSetting);
-  Result.Spacer            := Trunc(DefaultSpacer*aScreenScale);
-  Result.VerticalAlignment := 1;
-  Result.Zoom              := aScreenScale;
-  Result.RowCount          := 7;
-  Result.ColumnCount       := 5;
-
-  Result[0, 0]             := 'Quality Grade';
-  Result[1, 0]             := 'De, Di';
-  Result[2, 0]             := 'L0';
-  Result[3, 0]             := 'F1';
-  Result[4, 0]             := 'F2';
-  Result[5, 0]             := 'e1';
-  Result[6, 0]             := 'e2';
-
-  Result[0, 1]             := '1';
-  Result[1, 1]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeDm = 1);
-  Result[2, 1]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeL0 = 1);
-  Result[3, 1]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeF1 = 1);
-  Result[4, 1]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeF2 = 1);
-  Result[5, 1]             := TryFormatBool('x', ' ', SpringSolver.QualityGradee1 = 1);
-  Result[6, 1]             := TryFormatBool('x', ' ', SpringSolver.QualityGradee2 = 1);
-
-  Result[0, 2]             := '2';
-  Result[1, 2]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeDm = 2);
-  Result[2, 2]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeL0 = 2);
-  Result[3, 2]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeF1 = 2);
-  Result[4, 2]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeF2 = 2);
-  Result[5, 2]             := TryFormatBool('x', ' ', SpringSolver.QualityGradee1 = 2);
-  Result[6, 2]             := TryFormatBool('x', ' ', SpringSolver.QualityGradee2 = 2);
-
-  Result[0, 3]             := '3';
-  Result[1, 3]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeDm = 3);
-  Result[2, 3]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeL0 = 3);
-  Result[3, 3]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeF1 = 3);
-  Result[4, 3]             := TryFormatBool('x', ' ', SpringSolver.QualityGradeF2 = 3);
-  Result[5, 3]             := TryFormatBool('x', ' ', SpringSolver.QualityGradee1 = 3);
-  Result[6, 3]             := TryFormatBool('x', ' ', SpringSolver.QualityGradee2 = 3);
-
-  Result[0, 4]             := ' Tol.';
-  Result[1, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.CoilDiameterTolerance);
-  Result[2, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.LengthL0Tolerance);
-  Result[3, 4]             := TryFormatFloat('%s N',  ' --- ', SpringTolerance.LoadF1Tolerance);
-  Result[4, 4]             := TryFormatFloat('%s N',  ' --- ', SpringTolerance.LoadF2Tolerance);
-  Result[5, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.EccentricityE1);
-  Result[6, 4]             := TryFormatFloat('%s mm', ' --- ', SpringTolerance.EccentricityE2);
-end;
-
-function TMainForm.CreateReportList0(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-begin
-  Result                   := TReportTable.Create('ReportList', aSetting);
-  Result.Spacer            := Trunc(DefaultSpacer*aScreenScale);
-  Result.VerticalAlignment := 1;
-  Result.Zoom              := aScreenScale;
-
-  Result.ColumnCount       := 1;
-  Result.RowCount          := 20;
-  Result.Items[ 0, 0]      := TryFormatFloat('d      = %s',       'd      = ---', SpringSolver.WireDiameter) + TryFormatFloat(' ± %s mm', '', SpringSolver.ToleranceWireDiameter);
-  Result.Items[ 1, 0]      := TryFormatFloat('Di     = %s mm',    'Di     = ---', SpringSolver.Di);
-  Result.Items[ 2, 0]      := TryFormatFloat('Dm     = %s mm',    'Dm     = ---', SpringSolver.Dm);
-  Result.Items[ 3, 0]      := TryFormatFloat('De     = %s',       'De     = ---', SpringSolver.De) + TryFormatFloat(' ± %s mm', '', SpringSolver.ToleranceDm);
-  Result.Items[ 4, 0]      := TryFormatFloat('n      = %s coils', 'n      = ---', SpringSolver.ActiveColis);
-  Result.Items[ 5, 0]      := TryFormatFloat('nt     = %s coils', 'nt     = ---', SpringSolver.TotalCoils);
-  Result.Items[ 6, 0]      := TryFormatFloat('R      = %s N/mm',  'R      = ---', SpringSolver.SpringRateR);
-  Result.Items[ 7, 0]      := TryFormatFloat('Dec    = %s mm',    'Dec    = ---', SpringSolver.De + SpringSolver.DeltaDe);
-  Result.Items[ 8, 0]      := TryFormatFloat('Di.min = %s mm',    'Di.min = ---', SpringSolver.Di_Min);
-  Result.Items[ 9, 0]      := TryFormatFloat('De.max = %s mm',    'De.max = ---', SpringSolver.De_Max);
-  Result.Items[10, 0]      := TryFormatFloat('sk     = %s mm',    'sk     = ---', SpringSolver.DeflectionSk);
-  Result.Items[11, 0]      := TryFormatFloat('L      = %s mm',    'L      = ---', SpringSolver.WireLength);
-  Result.Items[12, 0]      := TryFormatFloat('m      = %s g',     'm      = ---', SpringSolver.Mass);
-  Result.Items[13, 0]      := TryFormatFloat('W12    = %s Nmm',   'W12    = ---', SpringSolver.SpringWorkW12);
-  Result.Items[14, 0]      := TryFormatFloat('W0n    = %s Nmm',   'W0n    = ---', SpringSolver.SpringWorkW0n);
-  Result.Items[15, 0]      := TryFormatFloat('fe     = %s Hz',    'fe     = ---' ,SpringSolver.NaturalFrequency);
-  Result.Items[16, 0]      := TryFormatFloat('Pitch  = %s mm',    'Pitch  = ---', SpringSolver.Pitch);
-  Result.Items[17, 0]      := TryFormatFloat('PitchRatio = %s',   'PitchRatio = ---', SpringSolver.PitchRatio);
-  Result.Items[18, 0]      := TryFormatFloat('nu         = %s',   'nu         = ---', SpringSolver.SeatingCoefficent);
-
-  if SpringSolver.DynamicLoad then
-    Result.Items[19, 0] := ('dynamic load = true')
-  else
-    Result.Items[19, 0] := ('dynamic load = false');
-end;
+// Create Diagrams
 
 function TMainForm.CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
 begin
   Result            := TSectionSpringDrawing.Create('SpringDrawing', aSetting);
-  Result.d          := SpringSolver.WireDiameter;
-  Result.Dm         := SpringSolver.Dm;
-  Result.Lc         := SpringSolver.LengthLc;
+  Result.d          := SOLVER.WireDiameter;
+  Result.Dm         := SOLVER.Dm;
+  Result.Lc         := SOLVER.LengthLc;
   Result.Lx         := DrawingForm.SpringLength.Value;
   Result.Text       := TryFormatFloat('L = %s', 'L = ---', Result.Lx);
-  Result.n          := SpringSolver.ActiveColis;
+  Result.n          := SOLVER.ActiveColis;
   Result.nt1        := GeometryForm.InactiveCoil1.Value;
   Result.nt2        := GeometryForm.InactiveCoil2.Value;
   Result.ClockWise  := True;
   Result.Fit        := True;
-  Result.GroundEnds := SpringSolver.GroundEnds;
+  Result.GroundEnds := SOLVER.GroundEnds;
   Result.Spacer     := Trunc(DefaultSpacer*aScreenScale);
   Result.Zoom       := aScreenScale;
-end;
-
-function TMainForm.CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
-var
-  PageColor: TBGRAPixel;
-begin
-  Result := TBGRABitmap.Create;
-  Result.SetSize(
-    Trunc(aWidth  *aScale),
-    Trunc(aHeight *aScale));
-  PageColor.FromString(aSetting.ReadString('Custom', 'Background Color', 'White'));
-  PaintTo(Result, PageColor, aScale, aSetting);
 end;
 
 function TMainForm.CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
 begin
 //Solve();
   Result := Tx;
-  Result := StringReplace(Result, '@0.00', Format('e1=%s mm', [TryFloatToText(SpringSolver.EccentricityE1)]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.01', Format('e2=%s mm', [TryFloatToText(SpringSolver.EccentricityE2)]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.02', Format('d=%s mm',  [TryFloatToText(SpringSolver.WireDiameter  )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.03', Format('Di=%s mm', [TryFloatToText(SpringSolver.Di            )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.04', Format('Dm=%s mm', [TryFloatToText(SpringSolver.Dm            )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.05', Format('De=%s mm', [TryFloatToText(SpringSolver.De            )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.06', Format('L0=%s mm', [TryFloatToText(SpringSolver.LengthL0      )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.07', Format('L1=%s mm', [TryFloatToText(SpringSolver.LengthL1      )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.08', Format('L2=%s mm', [TryFloatToText(SpringSolver.LengthL2      )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.09', Format('Ln=%s mm', [TryFloatToText(SpringSolver.LengthLn      )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.10', Format('Lc=%s mm', [TryFloatToText(SpringSolver.LengthLc      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.00', Format('e1=%s mm', [TryFloatToText(SOLVER.EccentricityE1)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.01', Format('e2=%s mm', [TryFloatToText(SOLVER.EccentricityE2)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.02', Format('d=%s mm',  [TryFloatToText(SOLVER.WireDiameter  )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.03', Format('Di=%s mm', [TryFloatToText(SOLVER.Di            )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.04', Format('Dm=%s mm', [TryFloatToText(SOLVER.Dm            )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.05', Format('De=%s mm', [TryFloatToText(SOLVER.De            )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.06', Format('L0=%s mm', [TryFloatToText(SOLVER.LengthL0      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.07', Format('L1=%s mm', [TryFloatToText(SOLVER.LengthL1      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.08', Format('L2=%s mm', [TryFloatToText(SOLVER.LengthL2      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.09', Format('Ln=%s mm', [TryFloatToText(SOLVER.LengthLn      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.10', Format('Lc=%s mm', [TryFloatToText(SOLVER.LengthLc      )]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.11', Format('F1=%s',    [TryFloatToText(SpringSolver.LoadF1        )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.13', Format('F2=%s',    [TryFloatToText(SpringSolver.LoadF2        )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.15', Format('Fn=%s',    [TryFloatToText(SpringSolver.LoadFn        )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.17', Format('Fc=%s',    [TryFloatToText(SpringSolver.LoadFc        )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.11', Format('F1=%s',    [TryFloatToText(SOLVER.LoadF1        )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.13', Format('F2=%s',    [TryFloatToText(SOLVER.LoadF2        )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.15', Format('Fn=%s',    [TryFloatToText(SOLVER.LoadFn        )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.17', Format('Fc=%s',    [TryFloatToText(SOLVER.LoadFc        )]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s', [TryFloatToText(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s', [TryFloatToText(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.16', Format('Taukn=%s', [TryFloatToText(SpringSolver.TorsionalStressTaukn)]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.18', Format('Tauc=%s',  [TryFloatToText(SpringSolver.TorsionalStressTauc )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s', [TryFloatToText(SOLVER.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s', [TryFloatToText(SOLVER.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.16', Format('Taukn=%s', [TryFloatToText(SOLVER.TorsionalStressTaukn)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.18', Format('Tauc=%s',  [TryFloatToText(SOLVER.TorsionalStressTauc )]), [rfReplaceAll, rfIgnoreCase]);
 
-  if SpringSolver.ClosedEnds and (SpringSolver.GroundEnds = True) then
+  if SOLVER.ClosedEnds and (SOLVER.GroundEnds = True) then
   begin
     Result := StringReplace(Result, '@0.20', 'X', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@0.21', ' ', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@0.22', ' ', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  if SpringSolver.ClosedEnds and (SpringSolver.GroundEnds = False) then
+  if SOLVER.ClosedEnds and (SOLVER.GroundEnds = False) then
   begin
     Result := StringReplace(Result, '@0.20', ' ', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@0.21', 'X', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@0.22', ' ', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  Result := StringReplace(Result, '@1.0', Format('n=%s',      [TryFloatToText(SpringSolver.ActiveColis)]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@1.1', Format('nt=%s',     [TryFloatToText(SpringSolver.TotalCoils )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@2.0', Format('R=%s N/mm', [TryFloatToText(SpringSolver.SpringRateR)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@1.0', Format('n=%s',      [TryFloatToText(SOLVER.ActiveColis)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@1.1', Format('nt=%s',     [TryFloatToText(SOLVER.TotalCoils )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@2.0', Format('R=%s N/mm', [TryFloatToText(SOLVER.SpringRateR)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.DirectionCoils.ItemIndex of
     0: ;
@@ -1584,8 +1173,8 @@ begin
   Result := StringReplace(Result, '@3.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@3.1', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@4.0', Format('Dd=%s mm', [TryFloatToText(SpringSolver.Di_Min)]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@4.1', Format('Dh=%s mm', [TryFloatToText(SpringSolver.De_Max)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@4.0', Format('Dd=%s mm', [TryFloatToText(SOLVER.DiMin)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@4.1', Format('Dh=%s mm', [TryFloatToText(SOLVER.DeMax)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.BurringEnds.ItemIndex of
     0: Result := StringReplace(Result, '@5.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1596,7 +1185,7 @@ begin
   Result := StringReplace(Result, '@5.1', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@5.2', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@6.0', Format('fe=%s Hz', [TryFloatToText(SpringSolver.De_Max)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@6.0', Format('fe=%s Hz', [TryFloatToText(SOLVER.DeMax)]), [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@7.0', Format('%s C° / %s C°',
     [TryFloatToText(MAT.TempetatureMin),
      TryFloatToText(MAT.TempetatureMax), MAT.TempetatureMax
@@ -1615,10 +1204,10 @@ begin
 
   Result := StringReplace(Result, '@9.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@10.0', MAT.Items[MAT.ItemIndex], [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@10.1', Format('tauz=%s Mpa', [TryFloatToText(SpringSolver.AdmStaticTorsionalStressTauz)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@10.1', Format('tauz=%s Mpa', [TryFloatToText(SOLVER.AdmStaticTorsionalStressTauz)]), [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@10.2', Format('G=%s Mpa', [TryFloatToText(MAT.ShearModulusG20)]), [rfReplaceAll, rfIgnoreCase]);
 
-  case SpringSolver.QualityGradeDm of
+  case TOL.DmQualityGrade of
     1: Result := StringReplace(Result, '@11.00', 'X', [rfReplaceAll, rfIgnoreCase]);
     2: Result := StringReplace(Result, '@11.01', 'X', [rfReplaceAll, rfIgnoreCase]);
     3: Result := StringReplace(Result, '@11.02', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1627,7 +1216,7 @@ begin
   Result := StringReplace(Result, '@11.01', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@11.02', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  case SpringSolver.QualityGradeL0 of
+  case TOL.L0QualityGrade of
     1: Result := StringReplace(Result, '@11.10', 'X', [rfReplaceAll, rfIgnoreCase]);
     2: Result := StringReplace(Result, '@11.11', 'X', [rfReplaceAll, rfIgnoreCase]);
     3: Result := StringReplace(Result, '@11.12', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1636,7 +1225,7 @@ begin
   Result := StringReplace(Result, '@11.11', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@11.12', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  case SpringSolver.QualityGradeF1 of
+  case TOL.F1QualityGrade of
     1: Result := StringReplace(Result, '@11.20', 'X', [rfReplaceAll, rfIgnoreCase]);
     2: Result := StringReplace(Result, '@11.21', 'X', [rfReplaceAll, rfIgnoreCase]);
     3: Result := StringReplace(Result, '@11.22', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1645,7 +1234,7 @@ begin
   Result := StringReplace(Result, '@11.21', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@11.22', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  case SpringSolver.QualityGradeF2 of
+  case TOL.F2QualityGrade of
     1: Result := StringReplace(Result, '@11.30', 'X', [rfReplaceAll, rfIgnoreCase]);
     2: Result := StringReplace(Result, '@11.31', 'X', [rfReplaceAll, rfIgnoreCase]);
     3: Result := StringReplace(Result, '@11.32', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1654,7 +1243,7 @@ begin
   Result := StringReplace(Result, '@11.31', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@11.32', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  case SpringSolver.QualityGradee1 of
+  case TOL.E1QualityGrade of
     1: Result := StringReplace(Result, '@11.40', 'X', [rfReplaceAll, rfIgnoreCase]);
     2: Result := StringReplace(Result, '@11.41', 'X', [rfReplaceAll, rfIgnoreCase]);
     3: Result := StringReplace(Result, '@11.42', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1663,7 +1252,7 @@ begin
   Result := StringReplace(Result, '@11.41', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@11.42', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  case SpringSolver.QualityGradee2 of
+  case TOL.E2QualityGrade of
     1: Result := StringReplace(Result, '@11.50', 'X', [rfReplaceAll, rfIgnoreCase]);
     2: Result := StringReplace(Result, '@11.51', 'X', [rfReplaceAll, rfIgnoreCase]);
     3: Result := StringReplace(Result, '@11.52', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1695,12 +1284,12 @@ begin
     Result := StringReplace(Result, '@13.2', 'X', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  Result := StringReplace(Result, '@14.0', DrawingTextForm.Note1        .Text, [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@14.1', DrawingTextForm.Note2        .Text, [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@15.0', DrawingTextForm.DrawingName  .Text, [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@15.1', DrawingTextForm.DrawingNumber.Text, [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@15.2', DrawingTextForm.CompanyName  .Text, [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@15.3', ApplicationVer,                     [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@14.0', TextForm.Note1        .Text, [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@14.1', TextForm.Note2        .Text, [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@15.0', TextForm.DrawingName  .Text, [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@15.1', TextForm.DrawingNumber.Text, [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@15.2', TextForm.CompanyName  .Text, [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@15.3', ApplicationVer,              [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '#ff0',    aSetting.ReadString('Printer', 'Page.Color4', '#ff0'),     [rfReplaceAll, rfIgnoreCase]); // Yellow line
   Result := StringReplace(Result, '#f00',    aSetting.ReadString('Printer', 'Page.Color5', '#f00'),     [rfReplaceAll, rfIgnoreCase]); // Red    line
@@ -1711,33 +1300,16 @@ begin
   Result := StringReplace(Result, '#00ff00', aSetting.ReadString('Printer', 'Page.Color3', '#00ff00'),  [rfReplaceAll, rfIgnoreCase]); // Green
 end;
 
-procedure TMainForm.FormPaint(Sender: TObject);
+function TMainForm.CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
 var
-  i: longint;
-  Check: boolean;
+  PageColor: TBGRAPixel;
 begin
-  FormWindowStateChange(Sender);
-
-  Check := False;
-  for i := 0 to ViewMenuItem.Count -1 do if ViewMenuItem.Items[i].Checked then Check := True;
-  for i := 0 to TempMenuItem.Count -1 do if TempMenuItem.Items[i].Checked then Check := True;
-  for i := 0 to DrawMenuItem.Count -1 do if DrawMenuItem.Items[i].Checked then Check := True;
-  for i := 0 to DocsMenuItem.Count -1 do if DocsMenuItem.Items[i].Checked then Check := True;
-
-  if Check then
-  begin
-    ScreenImage.SetSize(
-      Trunc(ScreenImageWidth *ScreenScale),
-      Trunc(ScreenImageHeight*ScreenScale));
-    PaintTo(ScreenImage, ScreenColor ,ScreenScale, ClientFile);
-  end else
-  begin
-    MoveX := (VirtualScreen.Width  - ScreenImageWidth ) div 2;
-    MoveY := (VirtualScreen.Height - ScreenImageHeight) div 2;
-    ScreenImage.LoadFromResource('BACKGROUND');
-    VirtualScreen.RedrawBitmap;
-  end;
-
+  Result := TBGRABitmap.Create;
+  Result.SetSize(
+    Trunc(aWidth  *aScale),
+    Trunc(aHeight *aScale));
+  PageColor.FromString(aSetting.ReadString('Custom', 'Background Color', 'White'));
+  PaintTo(Result, PageColor, aScale, aSetting);
 end;
 
 end.

@@ -25,8 +25,8 @@ unit GeometryFrm;
 interface
 
 uses
-  Buttons, Classes, Controls, Dialogs, ExtCtrls, Forms,
-  Graphics, IniFiles, Spin, StdCtrls, SysUtils;
+  Buttons, Classes, Controls, Dialogs, ExtCtrls, EN13906,
+  Forms, Graphics, IniFiles, Spin, StdCtrls, SysUtils;
 
 type
 
@@ -57,7 +57,6 @@ type
     WireDiameterLabel: TLabel;
     WireDiameter: TFloatSpinEdit;
     WireDiameterUnit: TComboBox;
-
     ApplyBtn: TBitBtn;
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
@@ -70,19 +69,22 @@ type
     procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
+    procedure SaveToSolver;
   end;
+
 
 var
   GeometryForm: TGeometryForm;
+
 
 implementation
 
 {$R *.lfm}
 
 uses
-  MainFrm, Math, UtilsBase;
+  MainFrm, UtilsBase;
 
-{ TGeometryForm }
+// TGeometryForm
 
 procedure TGeometryForm.FormCreate(Sender: TObject);
 begin
@@ -144,6 +146,25 @@ begin
   IniFile.WriteFloat  ('TGeometryForm', 'LengthL2',          LengthL2         .Value    );
   IniFile.WriteInteger('TGeometryForm', 'LengthL2Unit',      LengthL2Unit     .ItemIndex);
   IniFile.WriteInteger('TGeometryForm', 'EndCoilType',       EndCoilType      .ItemIndex);
+end;
+
+procedure TGeometryForm.SaveToSolver;
+begin
+  SOLVER.WireDiameter := GetMillimeters(WireDiameter.Value, WireDiameterUnit.ItemIndex);
+  case CoilDiameterIndex.ItemIndex of
+    0: SOLVER.Dm := GetMillimeters(CoilDiameter.Value, CoilDiameterUnit.ItemIndex) + SOLVER.WireDiameter; // Input Di
+    1: SOLVER.Dm := GetMillimeters(CoilDiameter.Value, CoilDiameterUnit.ItemIndex);                             // Input Dm
+    2: SOLVER.Dm := GetMillimeters(CoilDiameter.Value, CoilDiameterUnit.ItemIndex) - SOLVER.WireDiameter; // Input De
+  end;
+  SOLVER.ActiveColis := ActiveCoil.Value;
+  SOLVER.TotalCoils  := ActiveCoil.Value + InactiveCoil1.Value + InactiveCoil2.Value;
+
+  SOLVER.ClosedEnds := EndCoilType.ItemIndex in [0, 1];
+  SOLVER.GroundEnds := EndCoilType.ItemIndex in [   1];
+
+  SOLVER.LengthL0 := GetMillimeters(LengthL0.Value, LengthL0Unit.ItemIndex);
+  SOLVER.LengthL1 := GetMillimeters(LengthL1.Value, LengthL1Unit.ItemIndex);
+  SOLVER.LengthL2 := GetMillimeters(LengthL2.Value, LengthL2Unit.ItemIndex);
 end;
 
 procedure TGeometryForm.SpinEditChange(Sender: TObject);

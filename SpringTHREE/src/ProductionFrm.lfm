@@ -1,0 +1,383 @@
+object ProductionForm: TProductionForm
+  Left = 581
+  Height = 362
+  Top = 210
+  Width = 430
+  Anchors = []
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Production'
+  ClientHeight = 362
+  ClientWidth = 430
+  OnCreate = FormCreate
+  LCLVersion = '2.3.0.0'
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = OkBtn
+    Left = 6
+    Height = 2
+    Top = 308
+    Width = 418
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Left = 6
+    BorderSpacing.Right = 6
+    BorderSpacing.Bottom = 12
+    Constraints.MaxHeight = 2
+    Constraints.MinHeight = 2
+  end
+  object OkBtn: TBitBtn
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 318
+    Height = 28
+    Top = 322
+    Width = 100
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 12
+    BorderSpacing.Bottom = 12
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object CancelBtn: TBitBtn
+    AnchorSideTop.Control = OkBtn
+    AnchorSideRight.Control = OkBtn
+    AnchorSideBottom.Control = OkBtn
+    AnchorSideBottom.Side = asrBottom
+    Left = 208
+    Height = 28
+    Top = 322
+    Width = 100
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object DirectionCoils: TComboBox
+    AnchorSideLeft.Control = BurringEnds
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = BurringEnds
+    AnchorSideRight.Side = asrBottom
+    Left = 149
+    Height = 23
+    Top = 12
+    Width = 200
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 12
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'Free'
+      'Rigth'
+      'Left'
+    )
+    ParentBidiMode = False
+    Style = csDropDownList
+    TabOrder = 3
+    Text = 'Free'
+  end
+  object DirectionCoilsLB: TLabel
+    AnchorSideTop.Control = DirectionCoils
+    AnchorSideRight.Control = DirectionCoils
+    AnchorSideBottom.Control = DirectionCoils
+    AnchorSideBottom.Side = asrBottom
+    Left = 46
+    Height = 23
+    Top = 12
+    Width = 91
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 12
+    Caption = 'Direction of Colis'
+    Layout = tlCenter
+  end
+  object BurringEndsLB: TLabel
+    AnchorSideTop.Control = BurringEnds
+    AnchorSideRight.Control = WireSurface
+    AnchorSideBottom.Control = BurringEnds
+    AnchorSideBottom.Side = asrBottom
+    Left = 23
+    Height = 23
+    Top = 39
+    Width = 114
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 12
+    Caption = 'Burring if Spring Ends'
+    Layout = tlCenter
+  end
+  object BurringEnds: TComboBox
+    AnchorSideLeft.Control = WireSurface
+    AnchorSideTop.Control = DirectionCoils
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = WireSurface
+    AnchorSideRight.Side = asrBottom
+    Left = 149
+    Height = 23
+    Top = 39
+    Width = 200
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 4
+    ItemHeight = 15
+    ItemIndex = 1
+    Items.Strings = (
+      'No'
+      'Inside'
+      'Outside'
+    )
+    Style = csDropDownList
+    TabOrder = 4
+    Text = 'Inside'
+  end
+  object WireSurfaceLB: TLabel
+    AnchorSideTop.Control = WireSurface
+    AnchorSideRight.Control = WireSurface
+    AnchorSideBottom.Control = WireSurface
+    AnchorSideBottom.Side = asrBottom
+    Left = 33
+    Height = 23
+    Top = 66
+    Width = 104
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 12
+    Caption = 'Wire or Rod Surface'
+    Layout = tlCenter
+  end
+  object WireSurface: TComboBox
+    AnchorSideLeft.Control = LengthLs
+    AnchorSideTop.Control = BurringEnds
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = LengthLs
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = LengthLs
+    Left = 149
+    Height = 23
+    Top = 66
+    Width = 200
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 4
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'Drawn'
+      'Rolled'
+      'Tipless grinding'
+      'Shot peened'
+    )
+    Style = csDropDownList
+    TabOrder = 5
+    Text = 'Drawn'
+  end
+  object LengthLsLB: TLabel
+    AnchorSideTop.Control = LengthLs
+    AnchorSideRight.Control = LengthLs
+    AnchorSideBottom.Control = LengthLsUnit
+    AnchorSideBottom.Side = asrBottom
+    Left = 46
+    Height = 23
+    Top = 93
+    Width = 91
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 12
+    Caption = 'Setting Length Ls'
+    Layout = tlCenter
+  end
+  object LengthLsUnit: TComboBox
+    AnchorSideTop.Control = LengthLs
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = LengthLs
+    AnchorSideBottom.Side = asrBottom
+    Left = 359
+    Height = 23
+    Top = 93
+    Width = 59
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 12
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'mm'
+    )
+    Style = csDropDownList
+    TabOrder = 6
+    Text = 'mm'
+  end
+  object LengthLs: TFloatSpinEdit
+    AnchorSideTop.Control = WireSurface
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = LengthLsUnit
+    Left = 149
+    Height = 23
+    Top = 93
+    Width = 200
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight]
+    BorderSpacing.Top = 4
+    BorderSpacing.Right = 10
+    OnChange = SpinEditChange
+    TabOrder = 7
+  end
+  object DividerBevel: TDividerBevel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = LengthLs
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 6
+    Height = 15
+    Top = 128
+    Width = 418
+    Caption = 'Production Compensation:'
+    Anchors = [akTop, akLeft, akRight]
+    BevelWidth = 2
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 6
+    Font.Style = [fsBold]
+    LeftIndent = 30
+    ParentFont = False
+  end
+  object ACaseLB: TLabel
+    AnchorSideLeft.Control = DividerBevel
+    AnchorSideTop.Control = DividerBevel
+    AnchorSideTop.Side = asrBottom
+    Left = 18
+    Height = 30
+    Top = 153
+    Width = 151
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 10
+    Caption = 'a) if the spring force and the'#13#10'    spring length are specified'
+  end
+  object BCaseLb: TLabel
+    AnchorSideLeft.Control = DividerBevel
+    AnchorSideTop.Control = Bevel2
+    AnchorSideTop.Side = asrBottom
+    Left = 18
+    Height = 30
+    Top = 207
+    Width = 166
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 10
+    Caption = 'b) if the spring force, the spring'#13#10'     length and L0 are specified'
+  end
+  object CCaseLB: TLabel
+    AnchorSideLeft.Control = DividerBevel
+    AnchorSideTop.Control = Bevel3
+    AnchorSideTop.Side = asrBottom
+    Left = 18
+    Height = 30
+    Top = 261
+    Width = 157
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 10
+    Caption = 'c) if two spring forces and the'#13#10'    spring lengths are specified'
+  end
+  object L0nAndDeDi: TRadioButton
+    AnchorSideLeft.Control = L0nAndd
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = CCaseLB
+    AnchorSideRight.Side = asrBottom
+    Left = 300
+    Height = 19
+    Top = 261
+    Width = 100
+    BorderSpacing.Left = 20
+    Caption = 'L0, n and De, Di'
+    TabOrder = 8
+  end
+  object nAndDeDi: TRadioButton
+    AnchorSideLeft.Control = L0nAndd
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = BCaseLb
+    AnchorSideRight.Control = DividerBevel
+    AnchorSideRight.Side = asrBottom
+    Left = 300
+    Height = 19
+    Top = 207
+    Width = 82
+    BorderSpacing.Left = 20
+    Caption = 'n and De, Di'
+    TabOrder = 9
+  end
+  object nAndd: TRadioButton
+    AnchorSideLeft.Control = BCaseLb
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = BCaseLb
+    Left = 204
+    Height = 19
+    Top = 207
+    Width = 58
+    BorderSpacing.Left = 20
+    Caption = 'n and d'
+    TabOrder = 10
+  end
+  object L0: TRadioButton
+    AnchorSideLeft.Control = BCaseLb
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = ACaseLB
+    Left = 204
+    Height = 19
+    Top = 153
+    Width = 30
+    BorderSpacing.Left = 20
+    Caption = 'L0'
+    Checked = True
+    TabOrder = 0
+    TabStop = True
+  end
+  object Bevel2: TBevel
+    AnchorSideLeft.Control = DividerBevel
+    AnchorSideTop.Control = ACaseLB
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = DividerBevel
+    AnchorSideRight.Side = asrBottom
+    Left = 18
+    Height = 2
+    Top = 195
+    Width = 394
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 12
+    Constraints.MaxHeight = 2
+    Constraints.MinHeight = 2
+  end
+  object Bevel3: TBevel
+    AnchorSideLeft.Control = DividerBevel
+    AnchorSideTop.Control = BCaseLb
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = DividerBevel
+    AnchorSideRight.Side = asrBottom
+    Left = 18
+    Height = 2
+    Top = 249
+    Width = 394
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 12
+    Constraints.MaxHeight = 2
+    Constraints.MinHeight = 2
+  end
+  object L0nAndd: TRadioButton
+    AnchorSideLeft.Control = BCaseLb
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = CCaseLB
+    Left = 204
+    Height = 19
+    Top = 261
+    Width = 76
+    BorderSpacing.Left = 20
+    Caption = 'L0, n and d'
+    TabOrder = 11
+  end
+end

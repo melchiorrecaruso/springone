@@ -25,7 +25,8 @@ unit MaterialFrm;
 interface
 
 uses
-  Classes, SysUtils, EN10270, EN15800, Forms, Controls, Graphics, Dialogs, StdCtrls, Spin, ExtCtrls, Buttons, IniFiles;
+  Buttons, Classes, Controls, Dialogs, ExtCtrls, Forms,
+  Graphics, IniFiles, Spin, StdCtrls, SysUtils;
 
 type
 
@@ -52,30 +53,31 @@ type
     YoungModulus: TFloatSpinEdit;
     YoungModulusLabel: TLabel;
     YoungModulusUnit: TComboBox;
-
     procedure FormCreate(Sender: TObject);
     procedure Change(Sender: TObject);
     procedure ApplyBtnClick(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
-
-
   public
+    procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
-    procedure Clear;
+    procedure SaveToSolver;
   end;
+
 
 var
   MaterialForm: TMaterialForm;
+
 
 implementation
 
 {$R *.lfm}
 
 uses
-  ApplicationFrm, GeometryFrm, MainFrm, Math, ProductionFrm, QualityFrm, UtilsBase;
+  ApplicationFrm, GeometryFrm, EN10270, EN13906, EN15800,
+  MainFrm, ProductionFrm, QualityFrm, UtilsBase;
 
-{ TMaterialForm }
+// TMaterialForm
 
 procedure TMaterialForm.FormCreate(Sender: TObject);
 var
@@ -97,11 +99,6 @@ begin
   end;
   Material.ItemIndex := 1;
   Change(Sender);
-end;
-
-procedure TMaterialForm.SpinEditChange(Sender: TObject);
-begin
-  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
 procedure TMaterialForm.Change(Sender: TObject);
@@ -141,8 +138,7 @@ begin
 
       if MAT.ItemIndex = -1 then
       begin
-        MAT.SetItem(Material.Text, GeometryForm.WireDiameter.Value,
-          ApplicationForm.Temperature.Value, '');
+        MAT.SetItem(Material.Text, GeometryForm.WireDiameter.Value, ApplicationForm.Temperature.Value, '');
       end;
 
       if MAT.ItemIndex <> -1 then
@@ -152,10 +148,10 @@ begin
         TensileStrength.Value := MAT.TensileStrengthRm;
         MaterialDensity.Value := MAT.DensityRho;
 
-        SpringTolerance.WireDiameterTolerance.Search(Material.Text, GeometryForm.WireDiameter.Value);
+        TOL.WireDiameterTolerance.Search(Material.Text, GeometryForm.WireDiameter.Value);
         if Assigned(QualityForm) then
         begin
-          QualityForm.ToleranceWireDiameter.Value := SpringTolerance.WireDiameterTolerance.Value;
+          QualityForm.ToleranceWireDiameter.Value := TOL.WireDiameterTolerance.Value;
         end;
       end;
     end;
@@ -204,12 +200,35 @@ begin
   IniFile.WriteInteger('TMaterialForm', 'CoilingType',         CoilingType        .ItemIndex);
 end;
 
+procedure TMaterialForm.SaveToSolver;
+begin
+  Change(nil);
+  if Material.Text = '' then
+  begin
+    SOLVER.YoungModulus := GetMegaPascal(YoungModulus.Value, YoungModulusUnit.ItemIndex);
+    SOLVER.ShearModulus := GetMegaPascal(ShearModulus.Value, ShearModulusUnit.ItemIndex);
+  end else
+  begin
+    SOLVER.YoungModulus := MAT.YoungModulusE;
+    SOLVER.ShearModulus := MAT.ShearModulusG;
+  end;
+  SOLVER.TensileStrengthRm  := GetMegaPascal(MaterialForm.TensileStrength.Value, MaterialForm.TensileStrengthUnit.ItemIndex);
+  SOLVER.MaterialDensity    := GetDensity   (MaterialForm.MaterialDensity.Value, MaterialForm.MaterialDensityUnit.ItemIndex);
+  case MaterialForm.CoilingType.ItemIndex of
+    0: SOLVER.ColdCoiled := True;
+    1: SOLVER.ColdCoiled := False;
+  end;
+end;
+
+procedure TMaterialForm.SpinEditChange(Sender: TObject);
+begin
+  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
+end;
+
 procedure TMaterialForm.ApplyBtnClick(Sender: TObject);
 begin
   MainForm.Solve();
 end;
-
-
 
 end.
 

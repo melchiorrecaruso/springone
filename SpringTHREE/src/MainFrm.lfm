@@ -1,0 +1,293 @@
+object MainForm: TMainForm
+  Left = 534
+  Height = 500
+  Top = 150
+  Width = 700
+  Caption = 'Spring ONE'
+  ClientHeight = 500
+  ClientWidth = 700
+  Color = clForm
+  Constraints.MinHeight = 500
+  Constraints.MinWidth = 700
+  Menu = MainMenu
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnWindowStateChange = FormWindowStateChange
+  LCLVersion = '2.3.0.0'
+  object VirtualScreen: TBGRAVirtualScreen
+    Left = 0
+    Height = 500
+    Top = 0
+    Width = 700
+    OnRedraw = VirtualScreenRedraw
+    Align = alClient
+    Alignment = taCenter
+    Anchors = []
+    ClientHeight = 500
+    ClientWidth = 700
+    Color = clNone
+    ParentColor = False
+    TabOrder = 0
+    OnDblClick = VirtualScreenDblClick
+    OnMouseDown = VirtualScreenMouseDown
+    OnMouseMove = VirtualScreenMouseMove
+    OnMouseUp = VirtualScreenMouseUp
+    OnResize = VirtualScreenResize
+    object Selection: TBGRAShape
+      Left = 32
+      Height = 40
+      Top = 96
+      Width = 40
+      Angle = 45
+      BorderColor = clRed
+      BorderGradient.StartColor = clWhite
+      BorderGradient.EndColor = clBlack
+      BorderGradient.GradientType = gtLinear
+      BorderGradient.Point1XPercent = 0
+      BorderGradient.Point1YPercent = 0
+      BorderGradient.Point2XPercent = 100
+      BorderGradient.Point2YPercent = 100
+      BorderStyle = psDash
+      FillColor = clBlue
+      FillOpacity = 10
+      FillGradient.StartColor = clWhite
+      FillGradient.EndColor = clBlack
+      FillGradient.GradientType = gtLinear
+      FillGradient.Point1XPercent = 0
+      FillGradient.Point1YPercent = 0
+      FillGradient.Point2XPercent = 0
+      FillGradient.Point2YPercent = 100
+      RatioXY = 2
+      Caption = 'Selection'
+    end
+  end
+  object MainMenu: TMainMenu
+    Left = 40
+    Top = 32
+    object FileMenuItem: TMenuItem
+      Caption = '&File'
+      object NewMenuItem: TMenuItem
+        Caption = 'New sheet'
+        ShortCut = 16462
+        OnClick = NewMenuItemClick
+      end
+      object Separator3: TMenuItem
+        Caption = '-'
+      end
+      object OpenMenuItem: TMenuItem
+        Caption = '&Open ...'
+        ShortCut = 16463
+        OnClick = OpenMenuItemClick
+      end
+      object SaveMenuItem: TMenuItem
+        Caption = '&Save'
+        ShortCut = 16467
+        OnClick = SaveMenuItemClick
+      end
+      object SaveAsMenuItem: TMenuItem
+        Caption = '&Save as ...'
+        OnClick = SaveAsMenuItemClick
+      end
+      object CloseMenuItem: TMenuItem
+        Caption = 'Close'
+        ShortCut = 16451
+        OnClick = CloseMenuItemClick
+      end
+      object Separator2: TMenuItem
+        Caption = '-'
+      end
+      object ExportMenuItem: TMenuItem
+        Caption = 'Export image ...'
+        OnClick = ExportMenuItemClick
+      end
+      object Separator9: TMenuItem
+        Caption = '-'
+      end
+      object PageSetupMenuItem: TMenuItem
+        Caption = 'Page setup ...'
+        OnClick = PageSetupMenuItemClick
+      end
+      object PrintMenuItem: TMenuItem
+        Caption = 'Print ...'
+        ShortCut = 16464
+        OnClick = PrintMenuItemClick
+      end
+      object Separator1: TMenuItem
+        Caption = '-'
+      end
+      object ExitMenuItem: TMenuItem
+        Caption = 'Exit'
+        OnClick = ExitMenuItemClick
+      end
+    end
+    object EditMenuItem: TMenuItem
+      Caption = '&Edit'
+      object DrawingTextMenuItem: TMenuItem
+        Caption = 'Drawing Text'
+        OnClick = TextMenuItemClick
+      end
+      object GeometryMenuItem: TMenuItem
+        Caption = 'Geometry and working length'
+        OnClick = GeometryMenuItemClick
+      end
+      object MaterialMenuItem: TMenuItem
+        Caption = 'Material'
+        OnClick = MaterialMenuItemClick
+      end
+      object QualityMenuItem: TMenuItem
+        Caption = 'Quality grade'
+        OnClick = QualityMenuItemClick
+      end
+      object ProductionMenuItem: TMenuItem
+        Caption = 'Production'
+        OnClick = ProductionMenuItemClick
+      end
+      object ApplicationMenuItem: TMenuItem
+        Caption = 'Application'
+        OnClick = ApplicationMenuItemClick
+      end
+      object Separator6: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem8: TMenuItem
+        Caption = 'Recalculation mode'
+        Checked = True
+      end
+      object Design: TMenuItem
+        Caption = 'Design mode'
+        Enabled = False
+      end
+    end
+    object ViewMenuItem: TMenuItem
+      Caption = '&View'
+      object Quick1MenuItem: TMenuItem
+        Caption = 'Quick 1'
+        OnClick = ViewMenuItemClick
+      end
+      object Quick2MenuItem: TMenuItem
+        Caption = 'Quick 2'
+        OnClick = ViewMenuItemClick
+      end
+      object Quick3MenuItem: TMenuItem
+        Caption = 'Quick 3'
+        OnClick = ViewMenuItemClick
+      end
+      object Separator5: TMenuItem
+        Caption = '-'
+      end
+      object ForceMenuItem: TMenuItem
+        Caption = 'Force and displacement diagram'
+        OnClick = ViewMenuItemClick
+      end
+      object GoodmanMenuItem: TMenuItem
+        Caption = 'Goodman diagram'
+        OnClick = ViewMenuItemClick
+      end
+      object BucklingMenuItem: TMenuItem
+        Caption = 'Buckling diagram'
+        OnClick = ViewMenuItemClick
+      end
+      object TempMenuItem: TMenuItem
+        Caption = 'Temperature'
+        object ShearModulusMenuItem: TMenuItem
+          Caption = 'G-T diagram'
+          OnClick = ViewMenuItemClick
+        end
+        object YoungModulusMenuItem: TMenuItem
+          Caption = 'E-T diagram'
+          OnClick = ViewMenuItemClick
+        end
+        object F1MenuItem: TMenuItem
+          Caption = 'F1-T diagram'
+          OnClick = ViewMenuItemClick
+        end
+        object F2MenuItem: TMenuItem
+          Caption = 'F2-T diagram'
+          OnClick = ViewMenuItemClick
+        end
+      end
+      object DrawMenuItem: TMenuItem
+        Caption = 'Drawing'
+        object SectionMenuItem: TMenuItem
+          Caption = 'Section drawing'
+          OnClick = ViewMenuItemClick
+        end
+        object ProfileMenuItem: TMenuItem
+          Caption = 'Profile drawing'
+          OnClick = ViewMenuItemClick
+        end
+        object Separator10: TMenuItem
+          Caption = '-'
+        end
+        object CustomSectionMenuItem: TMenuItem
+          Caption = 'Section drawing (L)'
+          OnClick = CustomSectionMenuItemClick
+        end
+        object CustomProfileMenuItem: TMenuItem
+          Caption = 'Profile drawing (L)'
+          OnClick = CustomSectionMenuItemClick
+        end
+      end
+    end
+    object DocsMenuItem: TMenuItem
+      Caption = '&Documents'
+      object ReportMenuItem: TMenuItem
+        Caption = 'Report'
+        OnClick = ReportMenuItemClick
+      end
+      object Production2MenuItem: TMenuItem
+        Caption = 'Production drawing'
+        OnClick = ViewMenuItemClick
+      end
+      object Separator11: TMenuItem
+        Caption = '-'
+      end
+      object ExportReportMenuItem: TMenuItem
+        Caption = 'Export report ...'
+        OnClick = ExportReportMenuItemClick
+      end
+      object ExportProductionMenuItem: TMenuItem
+        Caption = 'Export production drawing ...'
+        OnClick = ExportProductionMenuItemClick
+      end
+    end
+    object MenuItem9: TMenuItem
+      Caption = '&Help'
+      object MenuItem25: TMenuItem
+        Caption = 'Homepage'
+      end
+      object Separator4: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem24: TMenuItem
+        Caption = 'License'
+      end
+      object AboutMenuItem: TMenuItem
+        Caption = 'About ...'
+        OnClick = AboutMenuItemClick
+      end
+    end
+  end
+  object SaveDialog: TSaveDialog
+    Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
+    Left = 224
+    Top = 32
+  end
+  object OpenDialog: TOpenDialog
+    Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
+    Left = 136
+    Top = 32
+  end
+  object PrintDialog: TPrintDialog
+    Left = 136
+    Top = 96
+  end
+  object SavePictureDialog: TSavePictureDialog
+    Left = 320
+    Top = 32
+  end
+  object PageSetupDialog: TPageSetupDialog
+    Left = 240
+    Top = 96
+  end
+end

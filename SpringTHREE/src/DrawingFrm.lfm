@@ -1,0 +1,155 @@
+object DrawingForm: TDrawingForm
+  Left = 517
+  Height = 160
+  Top = 180
+  Width = 340
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Drawing spring'
+  ClientHeight = 160
+  ClientWidth = 340
+  OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '2.3.0.0'
+  object OkBtn: TBitBtn
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 228
+    Height = 28
+    Top = 120
+    Width = 100
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 12
+    BorderSpacing.Bottom = 12
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object CancelBtn: TBitBtn
+    AnchorSideRight.Control = OkBtn
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 116
+    Height = 28
+    Top = 120
+    Width = 100
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 12
+    BorderSpacing.Bottom = 12
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 1
+  end
+  object L0Btn: TBitBtn
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = SpringLength
+    AnchorSideTop.Side = asrBottom
+    Left = 12
+    Height = 28
+    Top = 55
+    Width = 70
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 12
+    Caption = 'L0'
+    OnClick = BtnClick
+    TabOrder = 2
+  end
+  object L1Btn: TBitBtn
+    AnchorSideLeft.Control = L0Btn
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = SpringLength
+    AnchorSideTop.Side = asrBottom
+    Left = 94
+    Height = 28
+    Top = 55
+    Width = 70
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 12
+    Caption = 'L1'
+    OnClick = BtnClick
+    TabOrder = 3
+  end
+  object L2Btn: TBitBtn
+    AnchorSideLeft.Control = L1Btn
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = SpringLength
+    AnchorSideTop.Side = asrBottom
+    Left = 176
+    Height = 28
+    Top = 55
+    Width = 70
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 12
+    Caption = 'L2'
+    OnClick = BtnClick
+    TabOrder = 4
+  end
+  object LcBtn: TBitBtn
+    AnchorSideLeft.Control = L2Btn
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = SpringLength
+    AnchorSideTop.Side = asrBottom
+    Left = 258
+    Height = 28
+    Top = 55
+    Width = 70
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 12
+    Caption = 'Lc'
+    OnClick = BtnClick
+    TabOrder = 5
+  end
+  object SpringLength: TFloatSpinEdit
+    AnchorSideLeft.Control = SpringLengthLabel
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 98
+    Height = 23
+    Top = 20
+    Width = 230
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 20
+    BorderSpacing.Right = 12
+    OnChange = SpinEditChange
+    TabOrder = 6
+  end
+  object SpringLengthLabel: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = SpringLength
+    AnchorSideBottom.Control = SpringLength
+    AnchorSideBottom.Side = asrBottom
+    Left = 12
+    Height = 23
+    Top = 20
+    Width = 74
+    Anchors = [akTop, akLeft, akBottom]
+    BorderSpacing.Left = 12
+    Caption = 'Spring length:'
+    Layout = tlCenter
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = OkBtn
+    Left = 6
+    Height = 2
+    Top = 106
+    Width = 328
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Left = 6
+    BorderSpacing.Right = 6
+    BorderSpacing.Bottom = 12
+  end
+end

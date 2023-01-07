@@ -25,8 +25,8 @@ unit ProductionFrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons,
-  StdCtrls, Spin, DividerBevel, IniFiles;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  Buttons, StdCtrls, Spin, DividerBevel, IniFiles;
 
 type
 
@@ -58,26 +58,28 @@ type
     OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
-
   private
 
   public
+    procedure Clear;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
-    procedure Clear;
+    procedure SaveToSolver;
   end;
+
 
 var
   ProductionForm: TProductionForm;
+
 
 implementation
 
 {$R *.lfm}
 
 uses
-  Math, UtilsBase;
+  UtilsBase;
 
-{ TProductionForm }
+// TProductionForm
 
 procedure TProductionForm.FormCreate(Sender: TObject);
 begin
@@ -128,6 +130,11 @@ begin
   IniFile.WriteBool   ('TProductionForm', 'nAndDeDi',            nAndDeDi      .Checked);
   IniFile.WriteBool   ('TProductionForm', 'L0nAndd',             L0nAndd       .Checked);
   IniFile.WriteBool   ('TProductionForm', 'L0nAndDeDi',          L0nAndDeDi    .Checked);
+end;
+
+procedure TProductionForm.SaveToSolver;
+begin
+
 end;
 
 end.

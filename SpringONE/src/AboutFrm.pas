@@ -25,7 +25,8 @@ unit AboutFrm;
 interface
 
 uses
-  Buttons, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics, StdCtrls, SysUtils;
+  Buttons, Classes, Controls, Dialogs, ExtCtrls,
+  Forms, Graphics, StdCtrls, SysUtils;
 
 type
 
@@ -48,8 +49,10 @@ type
 
   end;
 
+
 var
   AboutForm: TAboutForm;
+
 
 implementation
 
@@ -58,7 +61,7 @@ implementation
 uses
   LCLIntf;
 
-{ TAboutForm }
+// TAboutForm
 
 procedure TAboutForm.AboutLinkLabelClick(Sender: TObject);
 begin
