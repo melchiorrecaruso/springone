@@ -13,8 +13,10 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    Button2: TButton;
     Screen: TBGRAVirtualScreen;
     Button1: TButton;
+    procedure Button2Click(Sender: TObject);
     procedure Image1Click(Sender: TObject);
   private
 
@@ -57,35 +59,6 @@ begin
     i := i + 22.5;
   end;
 
-  (*
-  Points[0].x := 0;
-  Points[0].y := 0;
-  Points[1].x := 500 * cos(DegToRad(22.5));
-  Points[1].y := 500 * sin(DegToRad(22.5));
-  Chart.AddPolyLine(Points, true, true, 'Start');
-
-  Points[0].x := 0;
-  Points[0].y := 0;
-  Points[1].x := 500 * cos(DegToRad(45));
-  Points[1].y := 500 * sin(DegToRad(45));
-  Chart.AddPolyLine(Points, true, true, 'Start');
-
-  Points[0].x := 0;
-  Points[0].y := 0;
-  Points[1].x := 500 * cos(DegToRad(70));
-  Points[1].y := 500 * sin(DegToRad(70));
-  Chart.AddPolyLine(Points, true, true, 'Start');
-
-  Points[0].x := 0;
-  Points[0].y := 0;
-  Points[1].x := 500 * cos(DegToRad(110));
-  Points[1].y := 500 * sin(DegToRad(110));
-  Chart.AddPolyLine(Points, true, true, 'Start');
-
-  *)
-
-
-
   SetLength(Points, 3);
   Points[0].x := 0;
   Points[0].y := 0;
@@ -104,10 +77,8 @@ begin
   Points[2].x := 1505;
   Points[2].y := 1250;
 
-
   Chart.PenColor := BGRA(0, 255, 255, 255);
   Chart.AddPolyLine(Points, False, 'F2');
-
 
   SetLength(Points, 5);
   Points[0].x := 100;
@@ -135,6 +106,24 @@ begin
   Chart.Zoom := 2.0;
   Chart.Draw(Screen.Canvas);
   Chart.Destroy;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  Report: TReportTable;
+begin
+  Report := TReportTable.Create;
+  Report.ColumnCount := 2;
+  Report.RowCount    := 5;
+
+  Report.PenColor := BGRA(0, 0, 0, 255);
+  Report.PenStyle := psSolid;
+  Report.PenWidth := 1.0;
+
+
+
+  Report.Draw(Screen.Canvas);
+  Report.Destroy;
 end;
 
 end.

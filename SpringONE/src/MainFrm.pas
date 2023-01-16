@@ -838,7 +838,7 @@ begin
   MessageList         := CreateMessageList             (aScreenScale, aSetting);
   Quick1Table         := CreateQuick1Table             (aScreenScale, aSetting);
   QualityTable        := CreateQualityTable            (aScreenScale, aSetting);
-  Quick1List          := CreateQuick1List              (aScreenScale, aSetting);
+  Quick1List          := CreateQuick1AList             (aScreenScale, aSetting);
   SpringDrawing       := CreateSpringDrawing           (aScreenScale, aSetting);
 
   if ForceMenuItem        .Checked then ForceDiagram       .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
@@ -858,17 +858,17 @@ begin
     SpringDrawing.ClosedEnds  := False;
     SpringDrawing.GroundEnds  := False;
     Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
-    SpringDrawing.Fit  := True;
+    SpringDrawing.AutoFit  := True;
     SpringDrawing.Lx   := SOLVER.LengthL0;
     SpringDrawing.Text := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
     Bit[1].SetSize(Bit[0].Width, Bit[0].Height);
-    SpringDrawing.Fit  := False;
+    SpringDrawing.AutoFit  := False;
     SpringDrawing.Lx   := SOLVER.LengthL1;
     SpringDrawing.Text := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
     Bit[2].SetSize(Bit[1].Width, Bit[1].Height);
-    SpringDrawing.Fit  := False;
+    SpringDrawing.AutoFit  := False;
     SpringDrawing.Lx   := SOLVER.LengthL2;
     SpringDrawing.Text := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
@@ -880,191 +880,9 @@ begin
     Bit := nil;
   end;
 
-  if Quick1MenuItem.Checked then
-  begin
-    SetLength(Bit, 10);
-    for i := Low(Bit) to High(Bit) do
-      Bit[i] := TBGRABitmap.Create;
-
-    Bit[0].SetSize(Quick1List.Width + Quick1List.Spacer, Quick1List.Height + Quick1List.Spacer);
-    Quick1List.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-    ReportList1 := TReportTable.Create('ReportList', aSetting);
-    ReportList1.Spacer       := Trunc(DefaultSpacer*aScreenScale);
-    ReportList1.Zoom         := aScreenScale;
-
-    ReportList1.ColumnCount  := 1;
-    ReportList1.RowCount     := 17;
-    ReportList1.Items[ 0, 0] := TryFormatFloat   ('d     = %s mm',     'd     = ---', SOLVER.WireDiameter);
-    ReportList1.Items[ 1, 0] := TryFormatFloat   ('tauk1 = %s MPa',    'tauk1 = ---', SOLVER.TorsionalStressTauk1);
-    ReportList1.Items[ 2, 0] := TryFormatFloat   ('tauk2 = %s MPa',    'tauk2 = ---', SOLVER.TorsionalStressTauk2);
-    ReportList1.Items[ 3, 0] := TryFormatFloat   ('taukh = %s MPa',    'taukh = ---', SOLVER.TorsionalStressTaukh);
-    ReportList1.Items[ 4, 0] := ' ';
-    ReportList1.Items[ 5, 0] := TryFormatFloat   ('E     = %s MPa',    'E     = ---', SOLVER.YoungModulus);
-    ReportList1.Items[ 6, 0] := TryFormatFloat   ('G     = %s MPa',    'G     = ---', SOLVER.ShearModulus);
-    ReportList1.Items[ 7, 0] := TryFormatFloat   ('rho   = %s kg/dm3', 'rho   = ---', SOLVER.MaterialDensity);
-    ReportList1.Items[ 8, 0] := TryFormatFloat   ('Rm    = %s MPa',    'Rm    = ---', SOLVER.TensileStrengthRm);
-    ReportList1.Items[ 9, 0] := TryFormatFloat   ('tauz  = %s MPa',    'tauz  = ---', SOLVER.AdmStaticTorsionalStressTauz);
-    ReportList1.Items[10, 0] := ' ';
-    ReportList1.Items[11, 0] := TryFormatFloat   ('ns    = %s',        'ns    = ---', SOLVER.StaticSafetyFactor);
-    if ApplicationForm.LoadType.ItemIndex = 0 then
-    begin
-      ReportList1.Items[12, 0] := TryFormatFloat   ('tauoz = %s MPa',    'tauoz = ---', SOLVER.AdmDynamicTorsionalStressTauoz);
-      ReportList1.Items[13, 0] := TryFormatFloat   ('tauhz = %s MPa',    'tauhz = ---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
-      ReportList1.Items[14, 0] := TryFormatFloat   ('nf    = %s',        'nf    = ---', SOLVER.DynamicSafetyFactor);
-
-      ReportList1.Items[15, 0] := 'N     = ---';
-      ReportList1.Items[16, 0] := 'Nh    = ---';
-      if SOLVER.NumOfCycles > 0 then
-      begin
-        ReportList1.Items[15, 0] := TryFormatText    ('N     = %s cycles', 'N     = ---', TryFloatToText(SOLVER.NumOfCycles, 2, 0));
-        ReportList1.Items[16, 0] := TryFormatFloatDiv('Nh    = %s hours',  'Nh    = ---', SOLVER.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
-      end;
-    end;
-
-    Bit[1].SetSize(ReportList1.Width + ReportList1.Spacer, aScreen.Height - Bit[0].Height);
-    ReportList1.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-    Bit[2].SetSize((aScreen.Width - Bit[1].Width) div 2, Bit[1].Height);
-    ForceDiagram.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-
-    Bit[3].SetSize((aScreen.Width - Bit[1].Width) div 2, Bit[1].Height);
-    GoodmanDiagram.Draw(Bit[3].Canvas, Bit[3].Width, Bit[3].Height);
-
-    Bit[4].SetSize(Quick1Table.Width + Quick1Table.Spacer, Quick1Table.Height + Quick1Table.Spacer);
-    Quick1Table.Draw(Bit[4].Canvas, Bit[4].Width, Bit[4].Height);
-
-    Bit[5].SetSize((aScreen.Width - Bit[0].Width - Bit[4].Width) div 3, Bit[0].Height);
-    SpringDrawing.Text := Format('L0 = %s', [TryFloatToText(SOLVER.LengthL0)]);
-    SpringDrawing.Lx   := SOLVER.LengthL0;
-    SpringDrawing.Fit  := True;
-    SpringDrawing.Draw(Bit[5].Canvas, Bit[5].Width, Bit[5].Height);
-
-    if (3*Bit[5].Width) <= (aScreen.Width - Bit[0].Width - Bit[4].Width) then
-    begin
-      Bit[6].SetSize(Bit[5].Width, Bit[5].Height);
-      SpringDrawing.Text := Format('L1 = %s', [TryFloatToText(SOLVER.LengthL1)]);
-      SpringDrawing.Lx   := SOLVER.LengthL1;
-      SpringDrawing.Fit  := False;
-      SpringDrawing.Draw(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
-
-      Bit[7].SetSize(Bit[5].Width, Bit[5].Height);
-      SpringDrawing.Text := Format('L2 = %s', [TryFloatToText(SOLVER.LengthL2)]);
-      SpringDrawing.Lx   := SOLVER.LengthL2;
-      SpringDrawing.Fit  := False;
-      SpringDrawing.Draw(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
-    end;
-
-    Bit[8].SetSize(MessageList.Width, MessageList.Height);
-    MessageList.Draw(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
-
-    Bit[9].SetSize(QualityTable.Width + QualityTable.Spacer, Bit[0].Height - Bit[4].Height);
-    QualityTable.Draw(Bit[9].Canvas, Bit[9].Width, Bit[9].Height);
-
-    Bit[0].Draw(aScreen.Canvas, Bit[5].Width + Bit[6].Width + Bit[7].Width, 0, False);
-    Bit[1].Draw(aScreen.Canvas, Bit[2].Width + Bit[3].Width, Bit[0].Height, False);
-    Bit[2].Draw(aScreen.Canvas, 0, Bit[0].Height, False);
-    Bit[3].Draw(aScreen.Canvas, Bit[2].Width, Bit[0].Height, False);
-    Bit[4].Draw(aScreen.Canvas, Bit[5].Width + Bit[6].Width + Bit[7].Width + Bit[0].Width, 0, False);
-    Bit[5].Draw(aScreen.Canvas, 0 , 0, False);
-    Bit[6].Draw(aScreen.Canvas, Bit[5].Width, 0, False);
-    Bit[7].Draw(aScreen.Canvas, Bit[5].Width + Bit[6].Width, 0, False);
-    Bit[9].Draw(aScreen.Canvas, Bit[5].Width + Bit[6].Width + Bit[7].Width + Bit[0].Width, Bit[4].Height, False);
-    Bit[8].Draw(aScreen.Canvas, Bit[5].Width + Bit[6].Width + Bit[7].Width + Bit[0].Width + Bit[9].Width, Bit[4].Height, False);
-
-    ReportList1.Destroy;
-    for i := Low(Bit) to High(Bit) do
-      Bit[i].Destroy;
-    Bit := nil
-  end;
-
-  if (Quick2MenuItem.Checked) or (Quick3MenuItem.Checked) then
-  begin
-    SetLength(Bit, 2);
-    for i := Low(Bit) to High(Bit) do
-      Bit[i] := TBGRABitmap.Create;
-
-    ReportList1                   := TReportTable.Create('ReportList', aSetting);
-    ReportList1.Spacer            := Trunc(DefaultSpacer*aScreenScale);
-    ReportList1.VerticalAlignment := 1;
-    ReportList1.Zoom              := aScreenScale;
-
-    ReportList1.ColumnCount  := 3;
-    ReportList1.RowCount     := 33;
-    ReportList1.Items[ 0, 0] := TryFormatFloat   ('d        = %s mm',     'd     = ---', SOLVER.WireDiameter) + TryFormatFloat(' ± %s mm', '', SOLVER.WireDiameterMax - SOLVER.WireDiameter);
-    ReportList1.Items[ 1, 0] := TryFormatFloat   ('Di       = %s mm',     'Di    = ---', SOLVER.Di);
-    ReportList1.Items[ 2, 0] := TryFormatFloat   ('Dm       = %s mm',     'Dm    = ---', SOLVER.Dm) + TryFormatFloat(' ± %s mm', '', TOL.CoilDiameterTolerance);
-    ReportList1.Items[ 3, 0] := TryFormatFloat   ('De       = %s mm',     'De    = ---', SOLVER.De);
-    ReportList1.Items[ 4, 0] := TryFormatFloat   ('n        = %s coils',  'n     = ---', SOLVER.ActiveColis);
-    ReportList1.Items[ 5, 0] := TryFormatFloat   ('nt       = %s colis',  'nt    = ---', SOLVER.TotalCoils);
-    ReportList1.Items[ 6, 0] := TryFormatFloatDiv('Dm/d     = %s',        'Dm/d  = ---', SOLVER.Dm, SOLVER.WireDiameter);
-    ReportList1.Items[ 7, 0] := TryFormatFloat   ('nu       = %s',        'nu    = ---', SOLVER.SeatingCoefficent);
-    ReportList1.Items[ 8, 0] := TryFormatFloat   ('k        = %s',        'k     = ---', SOLVER.CorrectionFactorK);
-    ReportList1.Items[ 9, 0] := '';
-    ReportList1.Items[10, 0] := TryFormatFloat   ('L        = %s mm',     'L     = ---', SOLVER.WireLength);
-    ReportList1.Items[11, 0] := TryFormatFloat   ('rho      = %s kg/dm3', 'rho   = ---', SOLVER.MaterialDensity);
-    ReportList1.Items[12, 0] := TryFormatFloat   ('mass     = %s g',      'mass  = ---', SOLVER.Mass);
-    ReportList1.Items[13, 0] := TryFormatFloat   ('fe       = %s Hz',     'fe    = ---', SOLVER.NaturalFrequency);
-    ReportList1.Items[14, 0] := '';
-    ReportList1.Items[15, 0] := TryFormatText    ('Material = %s',        'Material = ---', MAT.Items[MAT.ItemIndex]);
-    ReportList1.Items[16, 0] := TryFormatFloat   ('G        = %s MPa',    'G        = ---', SOLVER.ShearModulus);
-    ReportList1.Items[17, 0] := TryFormatFloat   ('Rm       = %s MPa',    'Rm       = ---', SOLVER.TensileStrengthRm);
-    ReportList1.Items[18, 0] := TryFormatFloat   ('tauz     = %s MPa',    'tauz     = ---', SOLVER.AdmStaticTorsionalStressTauz);
-    ReportList1.Items[19, 0] := TryFormatFloat   ('T        = %s C°',     'T        = ---', MAT.Tempetature);
-    ReportList1.Items[20, 0] := TryFormatFloat   ('G(T)     = %s MPa',    'G(T)     = ---', MAT.GetG(MAT.Tempetature));
-    ReportList1.Items[21, 0] := '';
-    ReportList1.Items[22, 0] := TryFormatBool    ('Closed ends    = True', 'Closed ends    = False', SOLVER.ClosedEnds);
-    ReportList1.Items[23, 0] := TryFormatBool    ('Ground ends    = True', 'Ground ends    = False', SOLVER.GroundEnds);
-    ReportList1.Items[24, 0] := TryFormatBool    ('Cold coiled    = True', 'Cold coiled    = False', SOLVER.ColdCoiled);
-    ReportList1.Items[25, 0] := TryFormatBool    ('Dynamic strain = True', 'Dynamic strain = False', SOLVER.DynamicLoad);
-    ReportList1.Items[26, 0] := '';
-    ReportList1.Items[27, 0] := TryFormatInt     ('EN15800 Quality Grade Dm  = %s', 'EN15800 Quality Grade Dm  = ---', TOL.DmQualityGrade);
-    ReportList1.Items[28, 0] := TryFormatInt     ('EN15800 Quality Grade L0  = %s', 'EN15800 Quality Grade L0  = ---', TOL.L0QualityGrade);
-    ReportList1.Items[29, 0] := TryFormatInt     ('EN15800 Quality Grade F1  = %s', 'EN15800 Quality Grade F1  = ---', TOL.F1QualityGrade);
-    ReportList1.Items[30, 0] := TryFormatInt     ('EN15800 Quality Grade F2  = %s', 'EN15800 Quality Grade F2  = ---', TOL.F2QualityGrade);
-    ReportList1.Items[31, 0] := TryFormatInt     ('EN15800 Quality Grade e1  = %s', 'EN15800 Quality Grade e1  = ---', TOL.E1QualityGrade);
-    ReportList1.Items[32, 0] := TryFormatInt     ('EN15800 Quality Grade e2  = %s', 'EN15800 Quality Grade e2  = ---', TOL.E2QualityGrade);
-
-    ReportList1.Items[ 0, 1] := '   ';
-
-    ReportList1.Items[ 0, 2] := TryFormatFloat('L0    = %s mm',  'L0    = ---', SOLVER.LengthL0) + TryFormatFloat(' ± %s mm', '', TOL.LengthL0Tolerance);
-    ReportList1.Items[ 1, 2] := TryFormatFloat('L1    = %s mm',  'L1    = ---', SOLVER.LengthL1);
-    ReportList1.Items[ 2, 2] := TryFormatFloat('L2    = %s mm',  'L2    = ---', SOLVER.LengthL2);
-    ReportList1.Items[ 3, 2] := TryFormatFloat('Ln    = %s mm',  'Ln    = ---', SOLVER.LengthLn);
-    ReportList1.Items[ 4, 2] := TryFormatFloat('Lc    = %s mm',  'Lc    = ---', SOLVER.LengthLc);
-    ReportList1.Items[ 5, 2] := '';
-    ReportList1.Items[ 6, 2] := TryFormatFloat('s1    = %s mm',  's1    = ---', SOLVER.DeflectionS1);
-    ReportList1.Items[ 7, 2] := TryFormatFloat('s2    = %s mm',  's2    = ---', SOLVER.DeflectionS2);
-    ReportList1.Items[ 8, 2] := TryFormatFloat('sh    = %s mm',  'sh    = ---', SOLVER.DeflectionSh);
-    ReportList1.Items[ 9, 2] := TryFormatFloat('sn    = %s mm',  'sn    = ---', SOLVER.DeflectionSn);
-    ReportList1.Items[10, 2] := TryFormatFloat('sc    = %s mm',  'sc    = ---', SOLVER.DeflectionSc);
-    ReportList1.Items[11, 2] := '';
-    ReportList1.Items[12, 2] := TryFormatFloat('F1    = %s N',   'F1    = ---', SOLVER.LoadF1) + TryFormatFloat(' ± %s N', '', TOL.LoadF1Tolerance);
-    ReportList1.Items[13, 2] := TryFormatFloat('F2    = %s N',   'F2    = ---', SOLVER.LoadF2) + TryFormatFloat(' ± %s N', '', TOL.LoadF2Tolerance);
-    ReportList1.Items[14, 2] := TryFormatFloat('Fn    = %s N',   'Fn    = ---', SOLVER.LoadFn);
-    ReportList1.Items[15, 2] := TryFormatFloat('Fc    = %s N',   'Fc    = ---', SOLVER.LoadFc);
-    ReportList1.Items[16, 2] := '';
-    ReportList1.Items[17, 2] := TryFormatFloat('tauk1 = %s MPa', 'tauk1 = ---', SOLVER.TorsionalStressTauk1);
-    ReportList1.Items[18, 2] := TryFormatFloat('tauk2 = %s MPa', 'tauk2 = ---', SOLVER.TorsionalStressTauk2);
-    ReportList1.Items[19, 2] := TryFormatFloat('taukh = %s MPa', 'taukh = ---', SOLVER.TorsionalStressTaukh);
-    ReportList1.Items[20, 2] := '';
-    ReportList1.Items[21, 2] := TryFormatFloat('tauoz = %s MPa', 'tauoz = ---', SOLVER.AdmDynamicTorsionalStressTauoz);
-    ReportList1.Items[22, 2] := TryFormatFloat('tauhz = %s MPa', 'tauhz = ---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
-    ReportList1.Items[23, 2] := '';
-
-    Bit[0].SetSize(ReportList1.Width + ReportList1.Spacer, aScreen.Height);
-    ReportList1.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-    Bit[1].SetSize(aScreen.Width - Bit[0].Width, aScreen.Height);
-    if Quick2MenuItem.Checked then ForceDiagram  .Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-    if Quick3MenuItem.Checked then GoodmanDiagram.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-    Bit[0].Draw(aScreen.Canvas, Bit[1].Width, 0, False);
-    Bit[1].Draw(aScreen.Canvas, 0, 0, False);
-    ReportList1.Destroy;
-
-    for i := Low(Bit) to High(Bit) do
-      Bit[i].Destroy;
-    Bit := nil;
-  end;
+  if Quick1MenuItem.Checked then DrawQuick1(aScreen, aScreenScale, aSetting);
+  if Quick2MenuItem.Checked then DrawQuick2(aScreen, aScreenScale, aSetting);
+  if Quick3MenuItem.Checked then DrawQuick3(aScreen, aScreenScale, aSetting);
 
   if Production2MenuItem.Checked then
   begin
@@ -1105,7 +923,7 @@ end;
 
 function TMainForm.CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
 begin
-  Result            := TSectionSpringDrawing.Create('SpringDrawing', aSetting);
+  Result            := TSectionSpringDrawing.Create;
   Result.d          := SOLVER.WireDiameter;
   Result.Dm         := SOLVER.Dm;
   Result.Lc         := SOLVER.LengthLc;
@@ -1115,7 +933,7 @@ begin
   Result.nt1        := GeometryForm.InactiveCoil1.Value;
   Result.nt2        := GeometryForm.InactiveCoil2.Value;
   Result.ClockWise  := True;
-  Result.Fit        := True;
+  Result.AutoFit    := True;
   Result.GroundEnds := SOLVER.GroundEnds;
   Result.Spacer     := Trunc(DefaultSpacer*aScreenScale);
   Result.Zoom       := aScreenScale;
