@@ -106,8 +106,8 @@
       <Unit>
         <Filename Value="SpringONE.lpr"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="24"/>
-        <CursorPos X="41" Y="30"/>
+        <TopLine Value="27"/>
+        <CursorPos X="38" Y="40"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -726,9 +726,11 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="29" Y="45"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="87" Y="5"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\MainFrm.pas"/>
@@ -736,7 +738,7 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="868"/>
         <CursorPos X="78" Y="885"/>
         <UsageCount Value="200"/>
@@ -756,7 +758,7 @@
         <ComponentName Value="ReportForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="85"/>
         <CursorPos X="43" Y="20"/>
         <UsageCount Value="200"/>
@@ -782,10 +784,12 @@
         <ComponentName Value="ApplicationForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="69"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="68"/>
         <CursorPos X="32" Y="46"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\DrawingFrm.pas"/>
@@ -848,10 +852,12 @@
         <ComponentName Value="MaterialForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="170"/>
-        <CursorPos X="40" Y="171"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="169"/>
+        <CursorPos X="18" Y="185"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\ProductionFrm.pas"/>
@@ -859,10 +865,11 @@
         <ComponentName Value="ProductionForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="105"/>
         <CursorPos X="27" Y="80"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\QualityFrm.pas"/>
@@ -1011,9 +1018,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <EditorIndex Value="8"/>
-        <CursorPos X="55" Y="53"/>
-        <UsageCount Value="63"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="29"/>
+        <CursorPos X="10" Y="44"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1021,19 +1029,19 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Compozer"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="1254"/>
-        <CursorPos X="58" Y="1158"/>
-        <FoldState Value=" T3f0B4 pidjJ0{G1 pj7lM0o3]JckA0R2112]LfuV0* T6q901K"/>
-        <UsageCount Value="127"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="1309"/>
+        <CursorPos X="67" Y="902"/>
+        <FoldState Value=" T3f0B4 pidjJ0{G1 pj7lM0o3]JckA0R2112]Lfud0* T6q901d"/>
+        <UsageCount Value="133"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="1465"/>
-        <CursorPos X="74" Y="1465"/>
-        <UsageCount Value="61"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="252"/>
+        <CursorPos X="14" Y="267"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1052,26 +1060,26 @@
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="48"/>
         <CursorPos X="5" Y="64"/>
-        <UsageCount Value="53"/>
+        <UsageCount Value="57"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN15800.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="109"/>
         <CursorPos X="21" Y="74"/>
-        <UsageCount Value="53"/>
+        <UsageCount Value="57"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN10270.pas"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="59"/>
-        <CursorPos X="45" Y="71"/>
-        <UsageCount Value="47"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="62"/>
+        <CursorPos X="14" Y="77"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1095,54 +1103,6 @@
       <Define0 Value="THREE"/>
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1075" Column="50" TopLine="1074"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1093" TopLine="1077"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1104" Column="3" TopLine="1086"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1101" Column="69" TopLine="1092"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1075" Column="34" TopLine="1059"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1112" Column="18" TopLine="1098"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1126" Column="23" TopLine="1105"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1073" Column="27" TopLine="1059"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1127" Column="24" TopLine="1108"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1162" Column="3" TopLine="1144"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1145" Column="46" TopLine="1137"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1146" Column="42" TopLine="1135"/>
-      </Position>
       <Position>
         <Filename Value="src\compozer.pas"/>
         <Caret Line="1181" Column="50" TopLine="1159"/>
@@ -1214,6 +1174,54 @@
       <Position>
         <Filename Value="src\compozer.pas"/>
         <Caret Line="1160" TopLine="1145"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1258" Column="5" TopLine="1240"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1209" Column="20" TopLine="1198"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1288" Column="45" TopLine="1277"/>
+      </Position>
+      <Position>
+        <Filename Value="..\SpringLIB\src\EN10270.pas"/>
+        <Caret Line="77" Column="14" TopLine="62"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1288" Column="81" TopLine="1273"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1276" Column="63" TopLine="1273"/>
+      </Position>
+      <Position>
+        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
+        <Caret Line="44" Column="10" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1288" Column="89" TopLine="1273"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1294" Column="25" TopLine="1273"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1292" Column="62" TopLine="1285"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1164" TopLine="1151"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="917" Column="13" TopLine="1006"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>
