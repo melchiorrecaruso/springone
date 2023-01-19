@@ -25,7 +25,6 @@ function CreateQualityTable            (const aScreenScale: double; aSetting: TI
 function CreateQuick1Table             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 function CreateQuick1List              (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 function CreateMessageList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-function CreateGoodmanList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 
 function CreateQuick1AList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 
@@ -741,6 +740,7 @@ begin
   end;
 end;
 
+(*
 function CreateGoodmanList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
 begin
   Result := TReportTable.Create;
@@ -823,79 +823,8 @@ begin
       Result.Items[15, 2] := '---';
     end;
   end;
-
-
-  (*
-  Result := TReportTable.Create;
-  Result.ColumnSpacer := Trunc(DefaultSpacer*aScreenScale);
-  Result.Zoom         := aScreenScale;
-  LoadTable(Result, 'Quick1List', 'Table', ASetting);
-
-
-  Result.ColumnCount  := 3;
-  Result.RowCount     := 33;
-  Result.Items[ 0, 0] := TryFormatFloat   ('d        = %s mm',     'd     = ---', SOLVER.WireDiameter) + TryFormatFloat(' ± %s mm', '', SOLVER.WireDiameterMax - SOLVER.WireDiameter);
-  Result.Items[ 1, 0] := TryFormatFloat   ('Di       = %s mm',     'Di    = ---', SOLVER.Di);
-  Result.Items[ 2, 0] := TryFormatFloat   ('Dm       = %s mm',     'Dm    = ---', SOLVER.Dm) + TryFormatFloat(' ± %s mm', '', TOL.CoilDiameterTolerance);
-  Result.Items[ 3, 0] := TryFormatFloat   ('De       = %s mm',     'De    = ---', SOLVER.De);
-  Result.Items[ 4, 0] := TryFormatFloat   ('n        = %s coils',  'n     = ---', SOLVER.ActiveColis);
-  Result.Items[ 5, 0] := TryFormatFloat   ('nt       = %s colis',  'nt    = ---', SOLVER.TotalCoils);
-  Result.Items[ 6, 0] := TryFormatFloatDiv('Dm/d     = %s',        'Dm/d  = ---', SOLVER.Dm, SOLVER.WireDiameter);
-  Result.Items[ 7, 0] := TryFormatFloat   ('nu       = %s',        'nu    = ---', SOLVER.SeatingCoefficent);
-  Result.Items[ 8, 0] := TryFormatFloat   ('k        = %s',        'k     = ---', SOLVER.CorrectionFactorK);
-  Result.Items[ 9, 0] := '';
-  Result.Items[10, 0] := TryFormatFloat   ('L        = %s mm',     'L     = ---', SOLVER.WireLength);
-  Result.Items[11, 0] := TryFormatFloat   ('rho      = %s kg/dm3', 'rho   = ---', SOLVER.MaterialDensity);
-  Result.Items[12, 0] := TryFormatFloat   ('mass     = %s g',      'mass  = ---', SOLVER.Mass);
-  Result.Items[13, 0] := TryFormatFloat   ('fe       = %s Hz',     'fe    = ---', SOLVER.NaturalFrequency);
-  Result.Items[14, 0] := '';
-  Result.Items[15, 0] := TryFormatText    ('Material = %s',        'Material = ---', MAT.Items[MAT.ItemIndex]);
-  Result.Items[16, 0] := TryFormatFloat   ('G        = %s MPa',    'G        = ---', SOLVER.ShearModulus);
-  Result.Items[17, 0] := TryFormatFloat   ('Rm       = %s MPa',    'Rm       = ---', SOLVER.TensileStrengthRm);
-  Result.Items[18, 0] := TryFormatFloat   ('tauz     = %s MPa',    'tauz     = ---', SOLVER.AdmStaticTorsionalStressTauz);
-  Result.Items[19, 0] := TryFormatFloat   ('T        = %s C°',     'T        = ---', MAT.Tempetature);
-  Result.Items[20, 0] := TryFormatFloat   ('G(T)     = %s MPa',    'G(T)     = ---', MAT.GetG(MAT.Tempetature));
-  Result.Items[21, 0] := '';
-  Result.Items[22, 0] := TryFormatBool    ('Closed ends    = True', 'Closed ends    = False', SOLVER.ClosedEnds);
-  Result.Items[23, 0] := TryFormatBool    ('Ground ends    = True', 'Ground ends    = False', SOLVER.GroundEnds);
-  Result.Items[24, 0] := TryFormatBool    ('Cold coiled    = True', 'Cold coiled    = False', SOLVER.ColdCoiled);
-  Result.Items[25, 0] := TryFormatBool    ('Dynamic strain = True', 'Dynamic strain = False', SOLVER.DynamicLoad);
-  Result.Items[26, 0] := '';
-  Result.Items[27, 0] := TryFormatInt     ('EN15800 Quality Grade Dm  = %s', 'EN15800 Quality Grade Dm  = ---', TOL.DmQualityGrade);
-  Result.Items[28, 0] := TryFormatInt     ('EN15800 Quality Grade L0  = %s', 'EN15800 Quality Grade L0  = ---', TOL.L0QualityGrade);
-  Result.Items[29, 0] := TryFormatInt     ('EN15800 Quality Grade F1  = %s', 'EN15800 Quality Grade F1  = ---', TOL.F1QualityGrade);
-  Result.Items[30, 0] := TryFormatInt     ('EN15800 Quality Grade F2  = %s', 'EN15800 Quality Grade F2  = ---', TOL.F2QualityGrade);
-  Result.Items[31, 0] := TryFormatInt     ('EN15800 Quality Grade e1  = %s', 'EN15800 Quality Grade e1  = ---', TOL.E1QualityGrade);
-  Result.Items[32, 0] := TryFormatInt     ('EN15800 Quality Grade e2  = %s', 'EN15800 Quality Grade e2  = ---', TOL.E2QualityGrade);
-  Result.Items[ 0, 1] := '   ';
-
-  Result.Items[ 0, 2] := TryFormatFloat('L0    = %s mm',  'L0    = ---', SOLVER.LengthL0) + TryFormatFloat(' ± %s mm', '', TOL.LengthL0Tolerance);
-  Result.Items[ 1, 2] := TryFormatFloat('L1    = %s mm',  'L1    = ---', SOLVER.LengthL1);
-  Result.Items[ 2, 2] := TryFormatFloat('L2    = %s mm',  'L2    = ---', SOLVER.LengthL2);
-  Result.Items[ 3, 2] := TryFormatFloat('Ln    = %s mm',  'Ln    = ---', SOLVER.LengthLn);
-  Result.Items[ 4, 2] := TryFormatFloat('Lc    = %s mm',  'Lc    = ---', SOLVER.LengthLc);
-  Result.Items[ 5, 2] := '';
-  Result.Items[ 6, 2] := TryFormatFloat('s1    = %s mm',  's1    = ---', SOLVER.DeflectionS1);
-  Result.Items[ 7, 2] := TryFormatFloat('s2    = %s mm',  's2    = ---', SOLVER.DeflectionS2);
-  Result.Items[ 8, 2] := TryFormatFloat('sh    = %s mm',  'sh    = ---', SOLVER.DeflectionSh);
-  Result.Items[ 9, 2] := TryFormatFloat('sn    = %s mm',  'sn    = ---', SOLVER.DeflectionSn);
-  Result.Items[10, 2] := TryFormatFloat('sc    = %s mm',  'sc    = ---', SOLVER.DeflectionSc);
-  Result.Items[11, 2] := '';
-  Result.Items[12, 2] := TryFormatFloat('F1    = %s N',   'F1    = ---', SOLVER.LoadF1) + TryFormatFloat(' ± %s N', '', TOL.LoadF1Tolerance);
-  Result.Items[13, 2] := TryFormatFloat('F2    = %s N',   'F2    = ---', SOLVER.LoadF2) + TryFormatFloat(' ± %s N', '', TOL.LoadF2Tolerance);
-  Result.Items[14, 2] := TryFormatFloat('Fn    = %s N',   'Fn    = ---', SOLVER.LoadFn);
-  Result.Items[15, 2] := TryFormatFloat('Fc    = %s N',   'Fc    = ---', SOLVER.LoadFc);
-  Result.Items[16, 2] := '';
-  Result.Items[17, 2] := TryFormatFloat('tauk1 = %s MPa', 'tauk1 = ---', SOLVER.TorsionalStressTauk1);
-  Result.Items[18, 2] := TryFormatFloat('tauk2 = %s MPa', 'tauk2 = ---', SOLVER.TorsionalStressTauk2);
-  Result.Items[19, 2] := TryFormatFloat('taukh = %s MPa', 'taukh = ---', SOLVER.TorsionalStressTaukh);
-  Result.Items[20, 2] := '';
-  Result.Items[21, 2] := TryFormatFloat('tauoz = %s MPa', 'tauoz = ---', SOLVER.AdmDynamicTorsionalStressTauoz);
-  Result.Items[22, 2] := TryFormatFloat('tauhz = %s MPa', 'tauhz = ---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
-  Result.Items[23, 2] := '';
-  *)
 end;
-
+*)
 
 function CreateQuick1AList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
 var
@@ -1153,24 +1082,18 @@ var
   Bit: array of TBGRABitmap = nil;
   CustomChart: TChart;
   QuickXList: TReportTable;
+  MessageList: TReportTable;
+  Row: longint;
 begin
-  SetLength(Bit, 2);
+  SetLength(Bit, 3);
   for i := Low(Bit) to High(Bit) do
     Bit[i] := TBGRABitmap.Create;
-
   // Quick-X List
   QuickXList := TReportTable.Create;
   QuickXList.ColumnCount := 7;
-  QuickXList.RowCount    := 33;
+  QuickXList.RowCount    := 26;
   QuickXList.Zoom        := aScreenScale;
   LoadTable(QuickXList, 'QuickXList', 'Table', ASetting);
-
-  for i := 0 to QuickXList.RowCount -1 do
-    for j := 0 to QuickXList.ColumnCount -1 do
-    begin
-      QuickXList.Items[i, j] := ' ';
-    end;
-
   QuickXList.ColumnAlignments[0] := taLeftJustify;
   QuickXList.ColumnAlignments[1] := taCenter;
   QuickXList.ColumnAlignments[2] := taLeftJustify;
@@ -1179,252 +1102,229 @@ begin
   QuickXList.ColumnAlignments[5] := taCenter;
   QuickXList.ColumnAlignments[6] := taLeftJustify;
 
-  QuickXList.Items[ 0, 0] := 'd';
-  QuickXList.Items[ 0, 1] := '=';
-  QuickXList.Items[ 0, 2] := TryFormatFloat('%s mm', '---', SOLVER.WireDiameter) +
+  for i := 0 to QuickXList.RowCount -1 do
+    for j := 0 to QuickXList.ColumnCount -1 do
+      QuickXList.Items[i, j] := '  ';
+  //012
+  Row := 0;
+  QuickXList.Items[Row, 0] := 'd';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.WireDiameter) +
     TryFormatFloat(' ± %s mm', '', SOLVER.WireDiameterMax - SOLVER.WireDiameter);
-
-  QuickXList.Items[ 1, 0] := 'Di';
-  QuickXList.Items[ 1, 1] := '=';
-  QuickXList.Items[ 1, 2] := TryFormatFloat('%s mm', '---', SOLVER.Di);
-
-  QuickXList.Items[ 2, 0] := 'Dm';
-  QuickXList.Items[ 2, 1] := '=';
-  QuickXList.Items[ 2, 2] := TryFormatFloat('%s mm', '---', SOLVER.Dm) +
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'Di';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.Di);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'Dm';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.Dm) +
     TryFormatFloat(' ± %s mm', '', TOL.CoilDiameterTolerance);
-
-  QuickXList.Items[ 3, 0] := 'De';
-  QuickXList.Items[ 3, 1] := '=';
-  QuickXList.Items[ 3, 2] := TryFormatFloat('%s mm', '---', SOLVER.De);
-
-  QuickXList.Items[ 4, 0] := 'n';
-  QuickXList.Items[ 4, 1] := '=';
-  QuickXList.Items[ 4, 2] := TryFormatFloat('%s coils', '---', SOLVER.ActiveColis);
-
-  QuickXList.Items[ 5, 0] := 'nt';
-  QuickXList.Items[ 5, 1] := '=';
-  QuickXList.Items[ 5, 2] := TryFormatFloat('%s colis', '---', SOLVER.TotalCoils);
-
-  QuickXList.Items[ 6, 0] := 'w';
-  QuickXList.Items[ 6, 1] := '=';
-  QuickXList.Items[ 6, 2] := TryFormatFloatDiv('%s', '---', SOLVER.Dm, SOLVER.WireDiameter);
-
-  QuickXList.Items[ 7, 0] := 'nu';
-  QuickXList.Items[ 7, 1] := '=';
-  QuickXList.Items[ 7, 2] := TryFormatFloat('%s', '---', SOLVER.SeatingCoefficent);
-
-  QuickXList.Items[ 8, 0] := 'k';
-  QuickXList.Items[ 8, 1] := '=';
-  QuickXList.Items[ 8, 2] := TryFormatFloat('%s', '---', SOLVER.CorrectionFactorK);
-
-  QuickXList.Items[10, 0] := 'L0';
-  QuickXList.Items[10, 1] := '=';
-  QuickXList.Items[10, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthL0) +
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'De';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.De);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'n';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s coils', '---', SOLVER.ActiveColis);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'nt';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s colis', '---', SOLVER.TotalCoils);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'nu';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s', '---', SOLVER.SeatingCoefficent);
+  Inc(Row, 2);
+  QuickXList.Items[Row, 0] := 'L0';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthL0) +
     TryFormatFloat(' ± %s mm', '', TOL.LengthL0Tolerance);
-
-  QuickXList.Items[11, 0] := 'L1';
-  QuickXList.Items[11, 1] := '=';
-  QuickXList.Items[11, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthL1);
-
-  QuickXList.Items[12, 0] := 'L2';
-  QuickXList.Items[12, 1] := '=';
-  QuickXList.Items[12, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthL2);
-
-  QuickXList.Items[13, 0] := 'Ln';
-  QuickXList.Items[13, 1] := '=';
-  QuickXList.Items[13, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthLn);
-
-  QuickXList.Items[14, 0] := 'Lc';
-  QuickXList.Items[14, 1] := '=';
-  QuickXList.Items[14, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthLc);
-
-  QuickXList.Items[16, 0] := 's1';
-  QuickXList.Items[16, 1] := '=';
-  QuickXList.Items[16, 2] := TryFormatFloat('%s mm', '---', SOLVER.DeflectionS1);
-
-  QuickXList.Items[17, 0] := 's2';
-  QuickXList.Items[17, 1] := '=';
-  QuickXList.Items[17, 2] := TryFormatFloat('%s mm', '---', SOLVER.DeflectionS2);
-
-  QuickXList.Items[18, 0] := 'sh';
-  QuickXList.Items[18, 1] := '=';
-  QuickXList.Items[18, 2] := TryFormatFloat('%s mm', '---', SOLVER.DeflectionSh);
-
-  QuickXList.Items[19, 0] := 'sn';
-  QuickXList.Items[19, 1] := '=';
-  QuickXList.Items[19, 2] := TryFormatFloat('%s mm', '---', SOLVER.DeflectionSn);
-
-  QuickXList.Items[20, 0] := 'sc';
-  QuickXList.Items[20, 1] := '=';
-  QuickXList.Items[20, 2] := TryFormatFloat('%s mm', '---', SOLVER.DeflectionSc);
-
-  QuickXList.Items[22, 0] := 'Spring ends';
-  QuickXList.Items[22, 1] := '=';
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'L1';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthL1);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'L2';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthL2);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'Ln';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthLn);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'Lc';
+  QuickXList.Items[Row, 1] := '=';
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', SOLVER.LengthLc);
+  Inc(Row, 2);
+  QuickXList.Items[Row, 0] := 'Quality specs.';
+  QuickXList.Items[Row, 2] := 'EN15800';
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'Di, Dm, De';
+  QuickXList.Items[Row, 1] := ' ';
+  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', TOL.DmQualityGrade);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'L0';
+  QuickXList.Items[Row, 1] := ' ';
+  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', TOL.L0QualityGrade);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'F1';
+  QuickXList.Items[Row, 1] := ' ';
+  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', TOL.F1QualityGrade);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'F2';
+  QuickXList.Items[Row, 1] := ' ';
+  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', TOL.F2QualityGrade);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'e1';
+  QuickXList.Items[Row, 1] := ' ';
+  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', TOL.E1QualityGrade);
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'e2';
+  QuickXList.Items[Row, 1] := ' ';
+  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', TOL.E2QualityGrade);
+  Inc(Row, 2);
+  QuickXList.Items[Row, 0] := 'Spring ends';
+  QuickXList.Items[Row, 1] := '=';
   if SOLVER.ClosedEnds then
   begin
     if SOLVER.GroundEnds then
-      QuickXList.Items[22, 2] := 'Closed and ground'
+      QuickXList.Items[Row, 2] := 'Closed and ground'
     else
-      QuickXList.Items[22, 2] := 'Closed';
+      QuickXList.Items[Row, 2] := 'Closed';
   end else
-    QuickXList.Items[22, 2] := 'Open';
-
-  QuickXList.Items[23, 0] := 'Coiling type';
-  QuickXList.Items[23, 1] := '=';
+    QuickXList.Items[Row, 2] := 'Open';
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'Coiling type';
+  QuickXList.Items[Row, 1] := '=';
   if SOLVER.ColdCoiled then
-    QuickXList.Items[23, 2] := 'Cold coiled'
+    QuickXList.Items[Row, 2] := 'Cold coiled'
   else
-    QuickXList.Items[23, 2] := 'Hot coiled';
-
-  QuickXList.Items[24, 0] := 'Load type';
-  QuickXList.Items[24, 1] := '=';
+    QuickXList.Items[Row, 2] := 'Hot coiled';
+  Inc(Row);
+  QuickXList.Items[Row, 0] := 'Load type';
+  QuickXList.Items[Row, 1] := '=';
   if SOLVER.DynamicLoad then
-    QuickXList.Items[24, 2] := 'Dynamic'
+    QuickXList.Items[Row, 2] := 'Dynamic'
   else
-    QuickXList.Items[24, 2] := 'Static';
-
-  QuickXList.Items[26, 0] := 'Tolerances:';
-
-  QuickXList.Items[27, 0] := 'Di, Dm, De';
-  QuickXList.Items[27, 1] := ' ';
-  QuickXList.Items[27, 2] := TryFormatInt('Quality Grade %s EN15800', '---', TOL.DmQualityGrade);
-
-  QuickXList.Items[28, 0] := 'L0';
-  QuickXList.Items[28, 1] := ' ';
-  QuickXList.Items[28, 2] := TryFormatInt('Quality Grade %s EN15800', '---', TOL.L0QualityGrade);
-
-  QuickXList.Items[29, 0] := 'F1';
-  QuickXList.Items[29, 1] := ' ';
-  QuickXList.Items[29, 2] := TryFormatInt('Quality Grade %s EN15800', '---', TOL.F1QualityGrade);
-
-  QuickXList.Items[30, 0] := 'F2';
-  QuickXList.Items[30, 1] := ' ';
-  QuickXList.Items[30, 2] := TryFormatInt('Quality Grade %s EN15800', '---', TOL.F2QualityGrade);
-
-  QuickXList.Items[31, 0] := 'e1';
-  QuickXList.Items[31, 1] := ' ';
-  QuickXList.Items[31, 2] := TryFormatInt('Quality Grade %s EN15800', '---', TOL.E1QualityGrade);
-
-  QuickXList.Items[32, 0] := 'e2';
-  QuickXList.Items[32, 1] := ' ';
-  QuickXList.Items[32, 2] := TryFormatInt('Quality Grade %s EN15800', '---', TOL.E2QualityGrade);
-
-  //
-
-  QuickXList.Items[ 0, 4] := 'Material';
-  QuickXList.Items[ 0, 5] := '=';
-  QuickXList.Items[ 0, 6] := TryFormatText('%s', '---', MAT.Items[MAT.ItemIndex]);
-
-  QuickXList.Items[ 1, 4] := 'Rm';
-  QuickXList.Items[ 1, 5] := '=';
-  QuickXList.Items[ 1, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TensileStrengthRm);
-
-  QuickXList.Items[ 2, 4] := 'G';
-  QuickXList.Items[ 2, 5] := '=';
-  QuickXList.Items[ 2, 6] := TryFormatFloat('%s MPa', '---', SOLVER.ShearModulus);
-
-  QuickXList.Items[ 3, 4] := Format('G(%s°)', [TryFloatToText(MAT.Tempetature)]);
-  QuickXList.Items[ 3, 5] := '=';
-  QuickXList.Items[ 3, 6] := TryFormatFloat('%s MPa', '---', MAT.GetG(MAT.Tempetature));
-
-  QuickXList.Items[ 4, 4] := 'rho';
-  QuickXList.Items[ 4, 5] := '=';
-  QuickXList.Items[ 4, 6] := TryFormatFloat('%s kg/dm3', '---', SOLVER.MaterialDensity);
-
-  QuickXList.Items[ 6, 4] := 'L';
-  QuickXList.Items[ 6, 5] := '=';
-  QuickXList.Items[ 6, 6] := TryFormatFloat('%s mm', '---', SOLVER.WireLength);
-
-  QuickXList.Items[ 7, 4] := 'mass';
-  QuickXList.Items[ 7, 5] := '=';
-  QuickXList.Items[ 7, 6] := TryFormatFloat('%s g', '---', SOLVER.Mass);
-
-  QuickXList.Items[ 8, 4] := 'fe';
-  QuickXList.Items[ 8, 5] := '=';
-  QuickXList.Items[ 8, 6] := TryFormatFloat('%s Hz', '---', SOLVER.NaturalFrequency);
-
-  QuickXList.Items[11, 4] := 'F1';
-  QuickXList.Items[11, 5] := '=';
-  QuickXList.Items[11, 6] := TryFormatFloat('%s N',  '---', SOLVER.LoadF1) +
+    QuickXList.Items[Row, 2] := 'Static';
+  // 456
+  Row := 2;
+  QuickXList.Items[Row, 4] := 'Material';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatText('%s', '---', MAT.Items[MAT.ItemIndex]);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'Rm';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TensileStrengthRm);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'G';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.ShearModulus);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := Format('G(%s°)', [TryFloatToText(MAT.Tempetature)]);
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', MAT.GetG(MAT.Tempetature));
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'rho';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s kg/dm3', '---', SOLVER.MaterialDensity);
+  Inc(Row, 3);
+  QuickXList.Items[Row, 4] := 'F1';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s N',  '---', SOLVER.LoadF1) +
     TryFormatFloat(' ± %s N', '', TOL.LoadF1Tolerance);
-
-  QuickXList.Items[12, 4] := 'F2';
-  QuickXList.Items[12, 5] := '=';
-  QuickXList.Items[12, 6] := TryFormatFloat('%s N', '---', SOLVER.LoadF2) +
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'F2';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s N', '---', SOLVER.LoadF2) +
     TryFormatFloat(' ± %s N', '', TOL.LoadF2Tolerance);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'Fn';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s N', '---', SOLVER.LoadFn);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'Fc';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s N', '---', SOLVER.LoadFc);
+  Inc(Row, 2);
+  QuickXList.Items[Row, 4] := 'tauk1';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTauk1);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'tauk2';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTauk2);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'taukh';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTaukh);
+  Inc(Row, 2);
+  QuickXList.Items[Row, 4] := 'tauhz';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'tauoz';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.AdmDynamicTorsionalStressTauoz);
+  Inc(Row);
+  QuickXList.Items[Row, 4] := 'tauz';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s MPa', '---', SOLVER.AdmStaticTorsionalStressTauz);
+  Inc(Row, 2);
+  QuickXList.Items[Row, 4] := 'Static safety factor';
+  QuickXList.Items[Row, 5] := '=';
+  QuickXList.Items[Row, 6] := TryFormatFloat('%s', '---', SOLVER.StaticSafetyFactor);
+  Inc(Row);
+  if SOLVER.DynamicLoad then
+  begin
+    QuickXList.Items[Row, 4] := 'Dynamic safety factor';
+    QuickXList.Items[Row, 5] := '=';
+    QuickXList.Items[Row, 6] := TryFormatFloat('%s', '---', SOLVER.DynamicSafetyFactor);
+    if SOLVER.NumOfCycles > 0 then
+    begin
+      Inc(Row);
+      QuickXList.Items[Row, 4] := 'N';
+      QuickXList.Items[Row, 5] := '=';
+      QuickXList.Items[Row, 6] := TryFormatText('%s cycles', '---', TryFloatToText(SOLVER.NumOfCycles, 2, 0));
+      Inc(Row);
+      QuickXList.Items[Row, 4] := 'Nh';
+      QuickXList.Items[Row, 5] := '=';
+      QuickXList.Items[Row, 6] := TryFormatFloatDiv('%s hours', '---', SOLVER.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
+    end else
+    begin
+      Inc(Row);
+      QuickXList.Items[Row, 4] := 'N';
+      QuickXList.Items[Row, 5] := '=';
+      QuickXList.Items[Row, 6] := '---';
+      Inc(Row);
+      QuickXList.Items[Row, 4] := 'Nh';
+      QuickXList.Items[Row, 5] := '=';
+      QuickXList.Items[Row, 6] := '---';
+    end;
+  end;
 
-  QuickXList.Items[13, 4] := 'Fn';
-  QuickXList.Items[13, 5] := '=';
-  QuickXList.Items[13, 6] := TryFormatFloat('%s N', '---', SOLVER.LoadFn);
-
-  QuickXList.Items[14, 4] := 'Fc';
-  QuickXList.Items[14, 5] := '=';
-  QuickXList.Items[14, 6] := TryFormatFloat('%s N', '---', SOLVER.LoadFc);
-
-  QuickXList.Items[16, 4] := 'tauk1';
-  QuickXList.Items[16, 5] := '=';
-  QuickXList.Items[16, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTauk1);
-
-  QuickXList.Items[17, 4] := 'tauk2';
-  QuickXList.Items[17, 5] := '=';
-  QuickXList.Items[17, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTauk2);
-
-  QuickXList.Items[18, 4] := 'taukh';
-  QuickXList.Items[18, 5] := '=';
-  QuickXList.Items[18, 6] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTaukh);
-
-  QuickXList.Items[19, 4] := 'tauhz';
-  QuickXList.Items[19, 5] := '=';
-  QuickXList.Items[19, 6] := TryFormatFloat('%s MPa', '---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
-
-  QuickXList.Items[20, 4] := 'tauoz';
-  QuickXList.Items[20, 5] := '=';
-  QuickXList.Items[20, 6] := TryFormatFloat('%s MPa', '---', SOLVER.AdmDynamicTorsionalStressTauoz);
-
-  QuickXList.Items[21, 4] := 'tauz';
-  QuickXList.Items[21, 5] := '=';
-  QuickXList.Items[21, 6] := TryFormatFloat('%s MPa', '---', SOLVER.AdmStaticTorsionalStressTauz);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // Draw
   Bit[0].SetSize(QuickXList.Width, QuickXList.Height);
   QuickXList.Draw(Bit[0].Canvas);
   Bit[0].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, 0, False);
   QuickXList.Destroy;
+
+  MessageList := CreateMessageList(aScreenScale, aSetting);
+  Bit[1].SetSize(Bit[0].Width, aScreen.Width - Bit[0].Height);
+  MessageList.Draw(Bit[1].Canvas);
+  Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, Bit[0].Height, False);
+  MessageList.Destroy;
 
   if X = 3 then
     CustomChart := CreateGoodmanChart(aScreenScale, aSetting)
   else
     CustomChart := CreateForceDisplacementChart(aScreenScale, aSetting);
 
-  Bit[1].SetSize(aScreen.Width - Bit[0].Width, aScreen.Height);
-  CustomChart.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-  Bit[1].Draw(aScreen.Canvas, 0, 0, False);
+  Bit[2].SetSize(aScreen.Width - Bit[0].Width, aScreen.Height);
+  CustomChart.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+  Bit[2].Draw(aScreen.Canvas, 0, 0, False);
   CustomChart.Destroy;
 
   for i := Low(Bit) to High(Bit) do

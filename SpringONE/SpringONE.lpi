@@ -1021,7 +1021,7 @@
         <EditorIndex Value="12"/>
         <TopLine Value="29"/>
         <CursorPos X="10" Y="44"/>
-        <UsageCount Value="67"/>
+        <UsageCount Value="69"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1030,10 +1030,10 @@
         <UnitName Value="Compozer"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="1309"/>
-        <CursorPos X="67" Y="902"/>
-        <FoldState Value=" T3f0B4 pidjJ0{G1 pj7lM0o3]JckA0R2112]Lfud0* T6q901d"/>
-        <UsageCount Value="133"/>
+        <TopLine Value="1299"/>
+        <CursorPos X="70" Y="1326"/>
+        <FoldState Value=" T3e0B4 pidjJ0{G1 pj7lM0o3]JckA0R22]KnLtC0* T6q801Y"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1041,7 +1041,7 @@
         <EditorIndex Value="10"/>
         <TopLine Value="252"/>
         <CursorPos X="14" Y="267"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1063,7 +1063,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="48"/>
         <CursorPos X="5" Y="64"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1071,7 +1071,7 @@
         <EditorIndex Value="9"/>
         <TopLine Value="109"/>
         <CursorPos X="21" Y="74"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1079,7 +1079,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="62"/>
         <CursorPos X="14" Y="77"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1103,62 +1103,6 @@
       <Define0 Value="THREE"/>
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1181" Column="50" TopLine="1159"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1170" Column="63" TopLine="1153"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1167" Column="41" TopLine="1153"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="12" Column="22"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1270" Column="31" TopLine="1134"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1239" Column="51" TopLine="1224"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1247" Column="3" TopLine="1222"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1236" Column="44" TopLine="1219"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1372" Column="72" TopLine="1132"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1264" Column="56" TopLine="1245"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1277" Column="87" TopLine="1266"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1086" Column="76" TopLine="1082"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1146" Column="24" TopLine="1131"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="1074" Column="15" TopLine="1066"/>
-      </Position>
       <Position>
         <Filename Value="src\compozer.pas"/>
         <Caret Line="1146" Column="23" TopLine="1135"/>
@@ -1221,7 +1165,63 @@
       </Position>
       <Position>
         <Filename Value="src\compozer.pas"/>
-        <Caret Line="917" Column="13" TopLine="1006"/>
+        <Caret Line="903" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="904" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="905" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="906" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="907" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="908" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="910" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="911" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="912" TopLine="889"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="828" Column="3" TopLine="809"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1347" Column="25" TopLine="1315"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1208" Column="61" TopLine="1198"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1319" TopLine="1303"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1085" Column="28" TopLine="1007"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1318" Column="10" TopLine="1296"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>
