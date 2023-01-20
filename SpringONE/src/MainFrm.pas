@@ -872,9 +872,9 @@ begin
     SpringDrawing.Lx   := SOLVER.LengthL2;
     SpringDrawing.Text := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-    Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, False);
-    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, False);
-    Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, False);
+    Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
+    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
+    Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
     for i := Low(Bit) to High(Bit) do
       Bit[i].Destroy;
     Bit := nil;
@@ -897,7 +897,7 @@ begin
       SVG.Destroy;
     end;
     Bit[0].InvalidateBitmap;
-    Bit[0].Draw(aScreen.Canvas, 0, 0, False);
+    Bit[0].Draw(aScreen.Canvas, 0, 0, True);
     Bit[0].Destroy;
     Bit := nil;
   end;

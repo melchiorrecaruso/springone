@@ -1023,14 +1023,14 @@ begin
   ForceDiagram := CreateForceDisplacementChart(aScreenScale, aSetting);
   Bit[0].SetSize(Trunc(aScreen.Width * 0.35), aScreen.Height div 2);
   ForceDiagram.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-  Bit[0].Draw(aScreen.Canvas, 0, 0, False);
+  Bit[0].Draw(aScreen.Canvas, 0, 0, True);
   ForceDiagram.Destroy;
 
   // Goodman Chart
   GoodmanDiagram := CreateGoodmanChart(aScreenScale, aSetting);
   Bit[1].SetSize(Bit[0].Width, Bit[0].Height);
   GoodmanDiagram.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-  Bit[1].Draw(aScreen.Canvas, 0, Bit[0].Height, False);
+  Bit[1].Draw(aScreen.Canvas, 0, Bit[0].Height, True);
   GoodmanDiagram.Destroy;
 
   // Quick-1 List
@@ -1042,7 +1042,7 @@ begin
   Quick1List.RowSpacer := Quick1List.RowSpacer - 1;
   Bit[2].SetSize(Quick1List.Width, Quick1List.Height);
   Quick1List.Draw(Bit[2].Canvas);
-  Bit[2].Draw(aScreen.Canvas, Bit[0].Width, 0, False);
+  Bit[2].Draw(aScreen.Canvas, Bit[0].Width, 0, True);
   Quick1List.Destroy;
 
   // Quick-1 Table
@@ -1054,21 +1054,21 @@ begin
   Quick1Table.ColumnSpacer := Quick1Table.ColumnSpacer - 1;
   Bit[3].SetSize(Quick1Table.Width, Quick1Table.Height);
   Quick1Table.Draw(Bit[3].Canvas);
-  Bit[3].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width, 0, False);
+  Bit[3].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width, 0, True);
   Quick1Table.Destroy;
 
   // Quality Table
   QualityTable := CreateQualityTable(aScreenScale, aSetting);
   Bit[4].SetSize(QualityTable.Width, QualityTable.Height);
   QualityTable.Draw(Bit[4].Canvas);
-  Bit[4].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width, Bit[3].Height, False);
+  Bit[4].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width, Bit[3].Height, True);
   QualityTable.Destroy;
 
   // Message List
   MessageList := CreateMessageList(aScreenScale, aSetting);
   Bit[5].SetSize(MessageList.Width, MessageList.Height);
   MessageList.Draw(Bit[5].Canvas);
-  Bit[5].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width + Bit[4].Width, Bit[3].Height, False);
+  Bit[5].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width + Bit[4].Width, Bit[3].Height, True);
   MessageList.Destroy;
 
   for i := Low(Bit) to High(Bit) do
@@ -1308,13 +1308,13 @@ begin
   // Draw
   Bit[0].SetSize(QuickXList.Width, QuickXList.Height);
   QuickXList.Draw(Bit[0].Canvas);
-  Bit[0].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, 0, False);
+  Bit[0].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, 0, True);
   QuickXList.Destroy;
 
   MessageList := CreateMessageList(aScreenScale, aSetting);
   Bit[1].SetSize(Bit[0].Width, aScreen.Width - Bit[0].Height);
   MessageList.Draw(Bit[1].Canvas);
-  Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, Bit[0].Height, False);
+  Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, Bit[0].Height, True);
   MessageList.Destroy;
 
   if X = 3 then
@@ -1324,7 +1324,7 @@ begin
 
   Bit[2].SetSize(aScreen.Width - Bit[0].Width, aScreen.Height);
   CustomChart.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-  Bit[2].Draw(aScreen.Canvas, 0, 0, False);
+  Bit[2].Draw(aScreen.Canvas, 0, 0, True);
   CustomChart.Destroy;
 
   for i := Low(Bit) to High(Bit) do

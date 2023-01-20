@@ -1282,7 +1282,7 @@ begin
   DrawLine(FXMin, FYMin, FXMin, FYMax, FYAxisLineColor, FYAxisLineWidth * FZoom);
 
   FBit.InvalidateBitmap;
-  FBit.Draw(aCanvas, 0, 0, False);
+  FBit.Draw(aCanvas, 0, 0, True);
 end;
 
 procedure TChart.Draw(aCanvas: TCanvas; aWidth, aHeight: longint);
@@ -1612,7 +1612,7 @@ begin
   y := nil;
   // Draw
   fBit.InvalidateBitmap;
-  fBit.Draw(aCanvas, 0, 0, False);
+  fBit.Draw(aCanvas, 0, 0, True);
 end;
 
 function TReportTable.XToCanvas(X: single): single;
@@ -1875,7 +1875,7 @@ begin
     // Draw
   end;
   FBit.InvalidateBitmap;
-  FBit.Draw(aCanvas, 0, 0, False);
+  FBit.Draw(aCanvas, 0, 0, True);
 end;
 
 // DrawLogo
