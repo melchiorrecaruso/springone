@@ -55,7 +55,7 @@ begin
     Points[0].y := 0;
     Points[1].x := 500 * cos(DegToRad(i));
     Points[1].y := 500 * sin(DegToRad(i));
-    Chart.AddPolyLine(Points, True, '');
+    //Chart.AddPolyLine(Points, True, '');
     i := i + 22.5;
   end;
 
@@ -68,7 +68,7 @@ begin
   Points[2].y := 1250;
 
   Chart.PenColor := BGRA(255, 0, 255, 255);
-  Chart.AddPolyLine(Points, False, 'F1');
+  //Chart.AddPolyLine(Points, False, 'F1');
 
   Points[0].x := 0;
   Points[0].y := 0;
@@ -78,7 +78,7 @@ begin
   Points[2].y := 1250;
 
   Chart.PenColor := BGRA(0, 255, 255, 255);
-  Chart.AddPolyLine(Points, False, 'F2');
+  //Chart.AddPolyLine(Points, False, 'F2');
 
   SetLength(Points, 5);
   Points[0].x := 100;
@@ -95,10 +95,10 @@ begin
   Chart.PenColor     := BGRA(255, 255, 0, 255);
   Chart.TextureColor := BGRA(255, 255, 0, 127);
 
-  Chart.AddPolygon(Points, 'FP');
+  //Chart.AddPolygon(Points, 'FP');
   Points := nil;
 
-  Chart.AddLabel(200, 800, 0, 0, taLeftJustify, taAlignBottom, 'SuperPippo');
+  //Chart.AddLabel(200, 800, 0, 0, taLeftJustify, taAlignBottom, 'SuperPippo');
 
 
   Chart.Width  := Screen.Width;

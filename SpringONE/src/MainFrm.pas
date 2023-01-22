@@ -808,19 +808,13 @@ procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenColor: TBGRAPixel; 
 var
   i: longint;
   Bit: array of TBGRABitmap = nil;
-  BucklingDiagram: TChart;
-  ForceDiagram: TChart;
-  GoodmanDiagram: TChart;
-  Load1Diagram: TChart;
-  Load2Diagram: TChart;
+  Chart: TChart;
   MessageList: TReportTable;
   QualityTable: TReportTable;
   Quick1List: TReportTable;
-  ReportList1: TReportTable;
   Quick1Table: TReportTable;
-  ShearModulusDiagram: TChart;
+
   SpringDrawing: TSectionSpringDrawing;
-  YoungModulusDiagram: TChart;
   SVG: TBGRASvg;
 begin
   ErrorMessage.Clear;
@@ -828,28 +822,95 @@ begin
   aScreen.Fill(aScreenColor);
 
   SOLVER.Solve;
-  ForceDiagram        := CreateForceDisplacementChart  (aScreenScale, aSetting);
-  GoodmanDiagram      := CreateGoodmanChart            (aScreenScale, aSetting);
-  BucklingDiagram     := CreateBucklingChart           (aScreenScale, aSetting);
-  ShearModulusDiagram := CreateShearModulusChart       (aScreenScale, aSetting);
-  YoungModulusDiagram := CreateYoungModulusChart       (aScreenScale, aSetting);
-  Load1Diagram        := CreateLoadF1Chart             (aScreenScale, aSetting);
-  Load2Diagram        := CreateLoadF2Chart             (aScreenScale, aSetting);
+
+
+
+
+
+
+
   MessageList         := CreateMessageList             (aScreenScale, aSetting);
   Quick1Table         := CreateQuick1Table             (aScreenScale, aSetting);
   QualityTable        := CreateQualityTable            (aScreenScale, aSetting);
   Quick1List          := CreateQuick1AList             (aScreenScale, aSetting);
   SpringDrawing       := CreateSpringDrawing           (aScreenScale, aSetting);
 
-  if ForceMenuItem        .Checked then ForceDiagram       .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-  if GoodmanMenuItem      .Checked then GoodmanDiagram     .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-  if BucklingMenuItem     .Checked then BucklingDiagram    .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-  if ShearModulusMenuItem .Checked then ShearModulusDiagram.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-  if YoungModulusMenuItem .Checked then YoungModulusDiagram.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-  if F1MenuItem           .Checked then Load1Diagram       .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-  if F2MenuItem           .Checked then Load2Diagram       .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-  if CustomSectionMenuItem.Checked then SpringDrawing      .Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
 
+  // Quick1
+  if Quick1MenuItem.Checked then
+  begin
+    DrawQuick1(aScreen, aScreenScale, aSetting);
+  end else
+
+  // Quick2
+  if Quick2MenuItem.Checked then
+  begin
+    DrawQuick2(aScreen, aScreenScale, aSetting);
+  end else
+
+  // Quick3
+  if Quick3MenuItem.Checked then
+  begin
+    DrawQuick3(aScreen, aScreenScale, aSetting);
+  end else
+
+  // Force & displacement chart
+  if ForceMenuItem.Checked then
+  begin
+    Chart := CreateForceDisplacementChart(aScreenScale, aSetting);
+    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+    Chart.Destroy;
+  end else
+
+  // Goodman chart
+  if GoodmanMenuItem .Checked then
+  begin
+    Chart := CreateGoodmanChart(aScreenScale, aSetting);
+    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+    Chart.Destroy;
+  end else
+
+  // Buckling chart
+  if BucklingMenuItem.Checked then
+  begin
+    Chart := CreateBucklingChart(aScreenScale, aSetting);
+    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+    Chart.Destroy;
+  end else
+
+  // Shear modulus chart
+  if ShearModulusMenuItem.Checked then
+  begin
+    Chart := CreateShearModulusChart(aScreenScale, aSetting);
+    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+    Chart.Destroy;
+  end else
+
+  // Young modulus chart
+  if YoungModulusMenuItem.Checked then
+  begin
+    Chart := CreateYoungModulusChart(aScreenScale, aSetting);
+    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+    Chart.Destroy;
+  end else
+
+  // F1-Load chart
+  if F1MenuItem.Checked then
+  begin
+    Chart := CreateLoadF1Chart(aScreenScale, aSetting);
+    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+    Chart.Destroy;
+  end else
+
+  // F2-Load chart
+  if F2MenuItem.Checked then
+  begin
+    Chart := CreateLoadF2Chart(aScreenScale, aSetting);
+    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+    Chart.Destroy;
+  end else
+
+  // Spring section
   if SectionMenuItem.Checked then
   begin
     SetLength(Bit, 3);
@@ -880,9 +941,17 @@ begin
     Bit := nil;
   end;
 
-  if Quick1MenuItem.Checked then DrawQuick1(aScreen, aScreenScale, aSetting);
-  if Quick2MenuItem.Checked then DrawQuick2(aScreen, aScreenScale, aSetting);
-  if Quick3MenuItem.Checked then DrawQuick3(aScreen, aScreenScale, aSetting);
+
+
+
+
+
+
+  if CustomSectionMenuItem.Checked then SpringDrawing.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+
+
+
+
 
   if Production2MenuItem.Checked then
   begin
@@ -902,13 +971,13 @@ begin
     Bit := nil;
   end;
 
-  ForceDiagram.Destroy;
-  GoodmanDiagram.Destroy;
-  BucklingDiagram.Destroy;
-  ShearModulusDiagram.Destroy;
-  YoungModulusDiagram.Destroy;
-  Load1Diagram.Destroy;
-  Load2Diagram.Destroy;
+
+
+
+
+
+
+
   MessageList.Destroy;
   QualityTable.Destroy;
   Quick1Table.Destroy;

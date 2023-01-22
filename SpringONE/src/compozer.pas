@@ -156,90 +156,139 @@ begin
   Result.XAxisLabel    := 's[mm]';
   Result.YAxisLabel    := 'F[N]';
   Result.Zoom          := aScreenScale;
-  //
   LoadChart1(Result, Section1, ASetting);
-  // Bisector line
-  LoadChart2(Result, Section2, 'BisectorLine', ASetting);
-  SetLength(Points, 2);
-  Points[0].X := 0;
-  Points[0].Y := 0;
-  Points[1].X := SOLVER.DeflectionSc;
-  Points[1].Y := SOLVER.LoadFc;
-  Result.AddPolyLine(Points, True, 'Bisector');
-  Points := nil;
-  // Tolerance lines
-  LoadChart2(Result, Section2, 'ToleranceLine', ASetting);
-  SetLength(Points, 2);
-  Points[0].X := SOLVER.DeflectionS1;
-  Points[0].Y := TOL.LoadF1 + TOL.LoadF1Tolerance;
-  Points[1].X := SOLVER.DeflectionS2;
-  Points[1].Y := TOL.LoadF2 + TOL.LoadF2Tolerance;
-  Result.AddPolyLine(Points, True, 'Tolerance +');
-  Points := nil;
 
-  SetLength(Points, 2);
-  Points[0].X := SOLVER.DeflectionS1;
-  Points[0].Y := TOL.LoadF1 - TOL.LoadF1Tolerance;
-  Points[1].X := SOLVER.DeflectionS2;
-  Points[1].Y := TOL.LoadF2 - TOL.LoadF2Tolerance;
-  Result.AddPolyLine(Points, True, 'Tolerance -');
-  Points := nil;
+  // Bisector line
+  if SOLVER.LoadFc > 0 then
+  begin
+    LoadChart2(Result, Section2, 'BisectorLine', ASetting);
+
+    SetLength(Points, 2);
+    Points[0].X := 0;
+    Points[0].Y := 0;
+    Points[1].X := SOLVER.DeflectionSc;
+    Points[1].Y := SOLVER.LoadFc;
+    Result.AddPolyLine(Points, True, 'Bisector');
+    Points := nil;
+  end;
+
+  // Tolerance lines
+  if (TOL.LoadF1 > 0) and (TOL.LoadF2 > 0) then
+  begin
+    LoadChart2(Result, Section2, 'ToleranceLine', ASetting);
+
+    SetLength(Points, 2);
+    Points[0].X := SOLVER.DeflectionS1;
+    Points[0].Y := TOL.LoadF1 + TOL.LoadF1Tolerance;
+    Points[1].X := SOLVER.DeflectionS2;
+    Points[1].Y := TOL.LoadF2 + TOL.LoadF2Tolerance;
+    Result.AddPolyLine(Points, True, 'Tolerance +');
+    Points := nil;
+
+    SetLength(Points, 2);
+    Points[0].X := SOLVER.DeflectionS1;
+    Points[0].Y := TOL.LoadF1 - TOL.LoadF1Tolerance;
+    Points[1].X := SOLVER.DeflectionS2;
+    Points[1].Y := TOL.LoadF2 - TOL.LoadF2Tolerance;
+    Result.AddPolyLine(Points, True, 'Tolerance -');
+    Points := nil;
+  end;
+
   // Load-F1
-  LoadChart2(Result, Section2, 'Load-F1', ASetting);
-  SetLength(Points, 3);
-  Points[0].X := 0;
-  Points[0].Y := SOLVER.LoadF1;
-  Points[1].X := SOLVER.DeflectionS1;
-  Points[1].Y := SOLVER.LoadF1;
-  Points[2].X := SOLVER.DeflectionS1;
-  Points[2].Y := 0;
-  Result.AddPolyLine(Points, False, 'F1');
-  Points := nil;
+  if SOLVER.LoadF1 > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-F1', ASetting);
+
+    SetLength(Points, 3);
+    Points[0].X := 0;
+    Points[0].Y := SOLVER.LoadF1;
+    Points[1].X := SOLVER.DeflectionS1;
+    Points[1].Y := SOLVER.LoadF1;
+    Points[2].X := SOLVER.DeflectionS1;
+    Points[2].Y := 0;
+    Result.AddPolyLine(Points, False, 'F1');
+    Points := nil;
+  end;
+
   // Load F2
-  LoadChart2(Result, Section2, 'Load-F2', ASetting);
-  SetLength(Points, 3);
-  Points[0].X := 0;
-  Points[0].Y := SOLVER.LoadF2;
-  Points[1].X := SOLVER.DeflectionS2;
-  Points[1].Y := SOLVER.LoadF2;
-  Points[2].X := SOLVER.DeflectionS2;
-  Points[2].Y := 0;
-  Result.AddPolyLine(Points, False, 'F2');
-  Points := nil;
+  if SOLVER.LoadF2 > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-F2', ASetting);
+
+    SetLength(Points, 3);
+    Points[0].X := 0;
+    Points[0].Y := SOLVER.LoadF2;
+    Points[1].X := SOLVER.DeflectionS2;
+    Points[1].Y := SOLVER.LoadF2;
+    Points[2].X := SOLVER.DeflectionS2;
+    Points[2].Y := 0;
+    Result.AddPolyLine(Points, False, 'F2');
+    Points := nil;
+  end;
+
   // Load Fn
-  LoadChart2(Result, Section2, 'Load-Fn', ASetting);
-  SetLength(Points, 3);
-  Points[0].X := 0;
-  Points[0].Y := SOLVER.LoadFn;
-  Points[1].X := SOLVER.DeflectionSn;
-  Points[1].Y := SOLVER.LoadFn;
-  Points[2].X := SOLVER.DeflectionSn;
-  Points[2].Y := 0;
-  Result.AddPolyLine(Points, False, 'Fn');
-  Points := nil;
+  if SOLVER.LoadFn > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-Fn', ASetting);
+
+    SetLength(Points, 3);
+    Points[0].X := 0;
+    Points[0].Y := SOLVER.LoadFn;
+    Points[1].X := SOLVER.DeflectionSn;
+    Points[1].Y := SOLVER.LoadFn;
+    Points[2].X := SOLVER.DeflectionSn;
+    Points[2].Y := 0;
+    Result.AddPolyLine(Points, False, 'Fn');
+    Points := nil;
+  end;
+
   // Load Fc
-  LoadChart2(Result, Section2, 'Load-Fc', ASetting);
-  SetLength(Points, 3);
-  Points[0].X := 0;
-  Points[0].Y := SOLVER.LoadFc;
-  Points[1].X := SOLVER.DeflectionSc;
-  Points[1].Y := SOLVER.LoadFc;
-  Points[2].X := SOLVER.DeflectionSc;
-  Points[2].Y := 0;
-  Result.AddPolyLine(Points, False, 'Fc');
-  Points := nil;
+  if SOLVER.LoadFc > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-Fc', ASetting);
+
+    SetLength(Points, 3);
+    Points[0].X := 0;
+    Points[0].Y := SOLVER.LoadFc;
+    Points[1].X := SOLVER.DeflectionSc;
+    Points[1].Y := SOLVER.LoadFc;
+    Points[2].X := SOLVER.DeflectionSc;
+    Points[2].Y := 0;
+    Result.AddPolyLine(Points, False, 'Fc');
+    Points := nil;
+  end;
+
   // Label Load-F1
-  LoadChart2(Result, Section2, 'Load-F1', ASetting);
-  Result.AddLabel(0, SOLVER.LoadF1, Trunc(32*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F1');
+  if SOLVER.LoadF1 > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-F1', ASetting);
+
+    Result.AddLabel(0, SOLVER.LoadF1, Trunc(32*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F1');
+  end;
+
   // Label Load-F2
-  LoadChart2(Result, Section2, 'Load-F2', ASetting);
-  Result.AddLabel(0, SOLVER.LoadF2, Trunc(64*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F2');
+  if SOLVER.LoadF2 > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-F2', ASetting);
+
+    Result.AddLabel(0, SOLVER.LoadF2, Trunc(64*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F2');
+  end;
+
   // Label Load-Fn
-  LoadChart2(Result, Section2, 'Load-Fn', ASetting);
-  Result.AddLabel(0, SOLVER.LoadFn, Trunc(96*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fn');
+  if SOLVER.LoadFn > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-Fn', ASetting);
+
+    Result.AddLabel(0, SOLVER.LoadFn, Trunc(96*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fn');
+  end;
+
   // Label Load-Fc
-  LoadChart2(Result, Section2, 'Load-Fc', ASetting);
-  Result.AddLabel(0, SOLVER.LoadFc, Trunc(128*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fc');
+  if SOLVER.LoadFc > 0 then
+  begin
+    LoadChart2(Result, Section2, 'Load-Fc', ASetting);
+
+    Result.AddLabel(0, SOLVER.LoadFc, Trunc(128*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fc');
+  end;
 end;
 
 function CreateGoodmanChart(const aScreenScale: double; aSetting: TIniFile): TChart;
@@ -247,93 +296,130 @@ const
   Section1 = 'Custom';
   Section2 = 'GoodmanChart';
 var
-  Points: ArrayOfTPointF;
+  Points: ArrayOfTPointF = nil;
 begin
   Result               := TChart.Create;
   Result.LegendEnabled := False;
   if MAT.ItemIndex <> -1 then
     Result.Title       := Format('Goodman Chart: %s', [MAT.Items[MAT.ItemIndex]])
   else
-    Result.Title       := Format('Goodman Chart: %s', ['Custom Material']);
+    Result.Title       := Format('Goodman Chart: %s', ['Custom material']);
   Result.XAxisLabel    := 'tau U';
   Result.YAxisLabel    := 'tau O';
   Result.Zoom          := aScreenScale;
-  //
   LoadChart1(Result, Section1, ASetting);
-  // Bisector line
-  LoadChart2(Result, Section2, 'BisectorLine', ASetting);
-  SetLength(Points, 2);
-  Points[0].X := 0;
-  Points[0].Y := 0;
-  Points[1].X := SOLVER.AdmStaticTorsionalStressTauz;
-  Points[1].Y := SOLVER.AdmStaticTorsionalStressTauz;
-  Result.AddPolyLine(Points, True, 'Bisector');
-  Points := nil;
-  // TaulTol
-  LoadChart2(Result, Section2, 'TaukTol', ASetting);
-  SetLength(Points, 4);
-  Points[0].X := Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Points[0].Y := Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Points[1].X := Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Points[1].Y := Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Points[2].X := Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Points[2].Y := Solver.TorsionalStressTauk2 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Points[3].X := Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Points[3].Y := Solver.TorsionalStressTauk2 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
-  Result.AddPolygon(Points, 'TaukTol');
-  Result.AddLabel(Points[1].X, Points[1].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk1');
-  Result.AddLabel(Points[2].X, Points[2].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk2');
-  Points := nil;
 
-  LoadChart2(Result, Section2, 'Tauk', ASetting);
-  SetLength(Points, 2);
-  Points[0].X := Solver.TorsionalStressTauk1;
-  Points[0].Y := Solver.TorsionalStressTauk1;
-  Points[1].X := Solver.TorsionalStressTauk1;
-  Points[1].Y := Solver.TorsionalStressTauk2;
-  Result.AddPolyLine(Points, False, 'Tauk1-Tauk2');
-  Points := nil;
+  // Bisector line
+  if (SOLVER.AdmStaticTorsionalStressTauz > 0) then
+  begin
+    LoadChart2(Result, Section2, 'BisectorLine', ASetting);
+
+    SetLength(Points, 2);
+    Points[0].X := 0;
+    Points[0].Y := 0;
+    Points[1].X := SOLVER.AdmStaticTorsionalStressTauz;
+    Points[1].Y := SOLVER.AdmStaticTorsionalStressTauz;
+    Result.AddPolyLine(Points, True, 'Bisector');
+    Points := nil;
+  end;
+
+  // TaukTolerabces
+  if (SOLVER.GetTauk(TOL.LoadF1Tolerance) > 0) and
+     (SOLVER.GetTauk(TOL.LoadF2Tolerance) > 0) then
+  begin
+    LoadChart2(Result, Section2, 'TaukTol', ASetting);
+
+    SetLength(Points, 4);
+    Points[0].X := Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Points[0].Y := Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Points[1].X := Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Points[1].Y := Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Points[2].X := Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Points[2].Y := Solver.TorsionalStressTauk2 + SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Points[3].X := Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Points[3].Y := Solver.TorsionalStressTauk2 - SOLVER.GetTauk(TOL.LoadF1Tolerance);
+    Result.AddPolygon(Points, 'TaukTol');
+    Result.AddLabel(Points[1].X, Points[1].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk1');
+    Result.AddLabel(Points[2].X, Points[2].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk2');
+    Points := nil;
+  end;
+
+  if (Solver.TorsionalStressTauk1 > 0) and
+     (Solver.TorsionalStressTauk2 > 0) then
+  begin
+    LoadChart2(Result, Section2, 'Tauk', ASetting);
+
+    SetLength(Points, 2);
+    Points[0].X := Solver.TorsionalStressTauk1;
+    Points[0].Y := Solver.TorsionalStressTauk1;
+    Points[1].X := Solver.TorsionalStressTauk1;
+    Points[1].Y := Solver.TorsionalStressTauk2;
+    Result.AddPolyLine(Points, False, 'Tauk1-Tauk2');
+    Points := nil;
+  end;
 
   if MAT.ItemIndex <> -1 then
   begin
-    LoadChart2(Result, Section2, '1E5', ASetting);
-    SetLength(Points, 3);
-    Points[0].X := 0;
-    Points[0].Y := MAT.TorsionalStressTauOE5;
-    Points[1].X := MAT.TorsionalStressTauUE5;
-    Points[1].Y := MAT.TorsionalStressTauYield;
-    Points[2].X := MAT.TorsionalStressTauUE6;
-    Points[2].Y := MAT.TorsionalStressTauYield;
-    Result.AddPolyLine(Points, False, '1E5 Cycles');
-    Result.AddLabel(MAT.TorsionalStressTauUE5, MAT.TorsionalStressTauYield,
-      0, 0, taLeftJustify, taAlignBottom, '1E5');
-    Points := nil;
 
-    LoadChart2(Result, Section2, '1E6', ASetting);
-    SetLength(Points, 3);
-    Points[0].X := 0;
-    Points[0].Y := MAT.TorsionalStressTauOE6;
-    Points[1].X := MAT.TorsionalStressTauUE6;
-    Points[1].Y := MAT.TorsionalStressTauYield;
-    Points[2].X := MAT.TorsionalStressTauUE7;
-    Points[2].Y := MAT.TorsionalStressTauYield;
-    Result.AddPolyLine(Points, False, '1E6 Cycles');
-    Result.AddLabel(MAT.TorsionalStressTauUE6, MAT.TorsionalStressTauYield,
-      0, 0, taLeftJustify, taAlignBottom, '1E6');
-    Points := nil;
+    if (MAT.TorsionalStressTauOE5   > 0) and
+       (MAT.TorsionalStressTauUE5   > 0) and
+       (MAT.TorsionalStressTauYield > 0) and
+       (MAT.TorsionalStressTauUE6   > 0) then
+    begin
+      LoadChart2(Result, Section2, '1E5', ASetting);
 
-    LoadChart2(Result, Section2, '1E7', ASetting);
-    SetLength(Points, 3);
-    Points[0].X := 0;
-    Points[0].Y := MAT.TorsionalStressTauOE7;
-    Points[1].X := MAT.TorsionalStressTauUE7;
-    Points[1].Y := MAT.TorsionalStressTauYield;
-    Points[2].X := MAT.TorsionalStressTauYield;
-    Points[2].Y := MAT.TorsionalStressTauYield;
-    Result.AddPolyLine(Points, False, '1E7 Cycles');
-    Result.AddLabel(MAT.TorsionalStressTauUE7, MAT.TorsionalStressTauYield,
-      0, 0, taLeftJustify, taAlignBottom, '1E7 Cycles');
-    Points := nil;
+      SetLength(Points, 3);
+      Points[0].X := 0;
+      Points[0].Y := MAT.TorsionalStressTauOE5;
+      Points[1].X := MAT.TorsionalStressTauUE5;
+      Points[1].Y := MAT.TorsionalStressTauYield;
+      Points[2].X := MAT.TorsionalStressTauUE6;
+      Points[2].Y := MAT.TorsionalStressTauYield;
+      Result.AddPolyLine(Points, False, '1E5 Cycles');
+      Result.AddLabel(MAT.TorsionalStressTauUE5, MAT.TorsionalStressTauYield,
+        0, 0, taLeftJustify, taAlignBottom, '1E5');
+      Points := nil;
+    end;
+
+    if (MAT.TorsionalStressTauOE6   > 0) and
+       (MAT.TorsionalStressTauUE6   > 0) and
+       (MAT.TorsionalStressTauYield > 0) and
+       (MAT.TorsionalStressTauUE7   > 0) then
+     begin
+      LoadChart2(Result, Section2, '1E6', ASetting);
+
+      SetLength(Points, 3);
+      Points[0].X := 0;
+      Points[0].Y := MAT.TorsionalStressTauOE6;
+      Points[1].X := MAT.TorsionalStressTauUE6;
+      Points[1].Y := MAT.TorsionalStressTauYield;
+      Points[2].X := MAT.TorsionalStressTauUE7;
+      Points[2].Y := MAT.TorsionalStressTauYield;
+      Result.AddPolyLine(Points, False, '1E6 Cycles');
+      Result.AddLabel(MAT.TorsionalStressTauUE6, MAT.TorsionalStressTauYield,
+        0, 0, taLeftJustify, taAlignBottom, '1E6');
+      Points := nil;
+     end;
+
+    if (MAT.TorsionalStressTauOE7   > 0) and
+       (MAT.TorsionalStressTauUE7   > 0) and
+       (MAT.TorsionalStressTauYield > 0) then
+    begin
+      LoadChart2(Result, Section2, '1E7', ASetting);
+
+      SetLength(Points, 3);
+      Points[0].X := 0;
+      Points[0].Y := MAT.TorsionalStressTauOE7;
+      Points[1].X := MAT.TorsionalStressTauUE7;
+      Points[1].Y := MAT.TorsionalStressTauYield;
+      Points[2].X := MAT.TorsionalStressTauYield;
+      Points[2].Y := MAT.TorsionalStressTauYield;
+      Result.AddPolyLine(Points, False, '1E7 Cycles');
+      Result.AddLabel(MAT.TorsionalStressTauUE7, MAT.TorsionalStressTauYield,
+        0, 0, taLeftJustify, taAlignBottom, '1E7 Cycles');
+      Points := nil;
+    end;
+
   end;
 end;
 
@@ -342,9 +428,8 @@ const
   Section1 = 'Custom';
   Section2 = 'BucklingChart';
 var
-  I: longint;
   X, Y: single;
-  Points: ArrayOfTPointF;
+  Points: ArrayOfTPointF = nil;
 begin
   Result               := TChart.Create;
   Result.LegendEnabled := False;
@@ -352,49 +437,57 @@ begin
   Result.XAxisLabel    := 'nu*L0/D';
   Result.YAxisLabel    := 's/L0';
   Result.Zoom          := aScreenScale;
-  //
   LoadChart1(Result, Section1, ASetting);
+
   // Buckling Curve
-  LoadChart2(Result, Section2, 'BucklingCurve', ASetting);
-  Points := nil;
   SOLVER.GetBucklingCurve(Points);
+  if (Length(Points) > 0) then
+  begin
+    LoadChart2(Result, Section2, 'BucklingCurve', ASetting);
 
-  Result.XMinF   := 0.0;
-  Result.YMinF   := 0.0;
-  Result.YMaxF   := 1.0;
-  Result.YDeltaF := 0.1;
-  Result.YCount  := 10;
+    Result.XMinF   := 0.0;
+    Result.YMinF   := 0.0;
+    Result.YMaxF   := 1.0;
+    Result.YDeltaF := 0.1;
+    Result.YCount  := 10;
 
-  Result.AddPolyLine(Points, False, 'Buckling-Curve');
-  Points := nil;
+    Result.AddPolyLine(Points, False, 'Buckling-Curve');
+    Points := nil;
+  end;
 
-  LoadChart2(Result, Section2, 'Sc', ASetting);
-  X := SOLVER.SeatingCoefficent*SOLVER.LengthL0/SOLVER.Dm;
-  if SOLVER.DeflectionSc > SOLVER.DeflectionSk then
-    Y := SOLVER.DeflectionSc / SOLVER.LengthL0
-  else
-    Y := SOLVER.DeflectionSk / SOLVER.LengthL0;
+  if (SOLVER.Dm > 0) and (SOLVER.LengthL0 > 0) then
+  begin
+    LoadChart2(Result, Section2, 'Sc', ASetting);
 
-  SetLength(Points, 2);
-  Points[0].x := X;
-  Points[0].y := 0;
-  Points[1].x := X;
-  Points[1].y := Y;
-  Result.AddPolyLine(Points, False, 'Sc');
-  Result.AddDotLabel(X, SOLVER.DeflectionSc/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'Sc');
-  Points := nil;
+    X := SOLVER.SeatingCoefficent*SOLVER.LengthL0/SOLVER.Dm;
+    if SOLVER.DeflectionSc > SOLVER.DeflectionSk then
+      Y := SOLVER.DeflectionSc / SOLVER.LengthL0
+    else
+      Y := SOLVER.DeflectionSk / SOLVER.LengthL0;
 
-  LoadChart2(Result, Section2, 'Sx', ASetting);
-  Result.AddDotLabel(X, SOLVER.DeflectionS1/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'S1');
-  Result.AddDotLabel(X, SOLVER.DeflectionS2/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'S2');
+    SetLength(Points, 2);
+    Points[0].x := X;
+    Points[0].y := 0;
+    Points[1].x := X;
+    Points[1].y := Y;
+    Result.AddPolyLine(Points, False, 'Sc');
+    Result.AddDotLabel(X, SOLVER.DeflectionSc/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'Sc');
+    Points := nil;
+
+    LoadChart2(Result, Section2, 'Sx', ASetting);
+
+    Result.AddDotLabel(X, SOLVER.DeflectionS1/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'S1');
+    Result.AddDotLabel(X, SOLVER.DeflectionS2/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'S2');
+  end;
 end;
 
 function CreateLoadF1Chart(const aScreenScale: double; aSetting: TIniFile): TChart;
 const
+  DT = 50;
   Section1 = 'Custom';
   Section2 = 'LinearChart';
 var
-  Points: ArrayOfTPointF;
+  Points: ArrayOfTPointF = nil;
 begin
   Result               := TChart.Create;
   Result.LegendEnabled := False;
@@ -402,28 +495,33 @@ begin
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'F1 [N]';
   Result.Zoom          := aScreenScale;
-  //
   LoadChart1(Result, Section1, ASetting);
-  //
-  LoadChart2(Result, Section2, 'Line', ASetting);
-  SetLength(Points, 2);
-  Points[0].x:= MAT.Tempetature - 50;
-  Points[0].y:= SOLVER.GetF1(Points[0].x);
-  Points[1].x:= MAT.Tempetature + 50;
-  Points[1].y:= SOLVER.GetF1(Points[1].x);
-  Result.AddPolyLine(Points, True, 'F1(T°)');
-  Points := nil;
 
-  Result.AddDotLabel(MAT.Tempetature, SOLVER.GetF1(MAT.Tempetature), 5, 0, 10,
-    taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  if (SOLVER.GetF1(MAT.Tempetature - DT) > 0) and
+     (SOLVER.GetF1(MAT.Tempetature + DT) > 0) then
+  begin
+    LoadChart2(Result, Section2, 'Line', ASetting);
+
+    SetLength(Points, 2);
+    Points[0].x:= MAT.Tempetature - DT;
+    Points[0].y:= SOLVER.GetF1(Points[0].x);
+    Points[1].x:= MAT.Tempetature + DT;
+    Points[1].y:= SOLVER.GetF1(Points[1].x);
+    Result.AddPolyLine(Points, True, 'F1(T°)');
+    Points := nil;
+
+    Result.AddDotLabel(MAT.Tempetature, SOLVER.GetF1(MAT.Tempetature), 5, 0, 10,
+      taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  end;
 end;
 
 function CreateLoadF2Chart(const aScreenScale: double; aSetting: TIniFile): TChart;
 const
+  DT = 50;
   Section1 = 'Custom';
   Section2 = 'LinearChart';
 var
-  Points: ArrayOfTPointF;
+  Points: ArrayOfTPointF = nil;
 begin
   Result               := TChart.Create;
   Result.LegendEnabled := False;
@@ -431,28 +529,33 @@ begin
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'F2 [N]';
   Result.Zoom          := aScreenScale;
-  //
   LoadChart1(Result, Section1, ASetting);
-  //
-  LoadChart2(Result, Section2, 'Line', ASetting);
-  SetLength(Points, 2);
-  Points[0].x:= MAT.Tempetature - 50;
-  Points[0].y:= SOLVER.GetF2(Points[0].x);
-  Points[1].x:= MAT.Tempetature + 50;
-  Points[1].y:= SOLVER.GetF2(Points[1].x);
-  Result.AddPolyLine(Points, True, 'F2(T°)');
-  Points := nil;
 
-  Result.AddDotLabel(MAT.Tempetature, SOLVER.GetF2(MAT.Tempetature), 5, 0, 10,
-    taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  if (SOLVER.GetF2(MAT.Tempetature - DT) > 0) and
+     (SOLVER.GetF2(MAT.Tempetature + DT) > 0) then
+  begin
+    LoadChart2(Result, Section2, 'Line', ASetting);
+
+    SetLength(Points, 2);
+    Points[0].x:= MAT.Tempetature - DT;
+    Points[0].y:= SOLVER.GetF2(Points[0].x);
+    Points[1].x:= MAT.Tempetature + DT;
+    Points[1].y:= SOLVER.GetF2(Points[1].x);
+    Result.AddPolyLine(Points, True, 'F2(T°)');
+    Points := nil;
+
+    Result.AddDotLabel(MAT.Tempetature, SOLVER.GetF2(MAT.Tempetature), 5, 0, 10,
+      taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  end;
 end;
 
 function CreateShearModulusChart(const aScreenScale: double; aSetting: TIniFile): TChart;
 const
+  DT = 50;
   Section1 = 'Custom';
   Section2 = 'LinearChart';
 var
-  Points: ArrayOfTPointF;
+  Points: ArrayOfTPointF = nil;
 begin
   Result               := TChart.Create;
   Result.LegendEnabled := False;
@@ -460,28 +563,33 @@ begin
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'G [MPa]';
   Result.Zoom          := aScreenScale;
-  //
   LoadChart1(Result, Section1, ASetting);
-  //
-  LoadChart2(Result, Section2, 'Line', ASetting);
-  SetLength(Points, 2);
-  Points[0].x:= MAT.Tempetature - 50;
-  Points[0].y:= MAT.GetG(Points[0].x);
-  Points[1].x:= MAT.Tempetature + 50;
-  Points[1].y:= MAT.GetG(Points[1].x);
-  Result.AddPolyLine(Points, True, 'G(T°)');
-  Points := nil;
 
-  Result.AddDotLabel(MAT.Tempetature, MAT.GetG(MAT.Tempetature), 5, 0, 10,
-    taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  if (MAT.GetG(MAT.Tempetature - DT) > 0) and
+     (MAT.GetG(MAT.Tempetature + DT) > 0) then
+  begin
+    LoadChart2(Result, Section2, 'Line', ASetting);
+
+    SetLength(Points, 2);
+    Points[0].x:= MAT.Tempetature - DT;
+    Points[0].y:= MAT.GetG(Points[0].x);
+    Points[1].x:= MAT.Tempetature + DT;
+    Points[1].y:= MAT.GetG(Points[1].x);
+    Result.AddPolyLine(Points, True, 'G(T°)');
+    Points := nil;
+
+    Result.AddDotLabel(MAT.Tempetature, MAT.GetG(MAT.Tempetature), 5, 0, 10,
+      taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  end;
 end;
 
 function CreateYoungModulusChart(const aScreenScale: double; aSetting: TIniFile): TChart;
 const
+  DT = 50;
   Section1 = 'Custom';
   Section2 = 'LinearChart';
 var
-  Points: ArrayOfTPointF;
+  Points: ArrayOfTPointF = nil;
 begin
   Result               := TChart.Create;
   Result.LegendEnabled := False;
@@ -489,31 +597,36 @@ begin
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'E [MPa]';
   Result.Zoom          := aScreenScale;
-  //
   LoadChart1(Result, Section1, ASetting);
-  //
-  LoadChart2(Result, Section2, 'Line', ASetting);
-  SetLength(Points, 2);
-  Points[0].x:= MAT.Tempetature - 50;
-  Points[0].y:= MAT.GetE(Points[0].x);
-  Points[1].x:= MAT.Tempetature + 50;
-  Points[1].y:= MAT.GetE(Points[1].x);
-  Result.AddPolyLine(Points, True, 'E(T°)');
-  Points := nil;
 
-  Result.AddDotLabel(MAT.Tempetature, MAT.GetE(MAT.Tempetature), 5, 0, 10,
-    taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  if (MAT.GetE(MAT.Tempetature - DT) > 0) and
+     (MAT.GetE(MAT.Tempetature + DT) > 0) then
+  begin
+    LoadChart2(Result, Section2, 'Line', ASetting);
+    SetLength(Points, 2);
+    Points[0].x:= MAT.Tempetature - DT;
+    Points[0].y:= MAT.GetE(Points[0].x);
+    Points[1].x:= MAT.Tempetature + DT;
+    Points[1].y:= MAT.GetE(Points[1].x);
+    Result.AddPolyLine(Points, True, 'E(T°)');
+    Points := nil;
+
+    Result.AddDotLabel(MAT.Tempetature, MAT.GetE(MAT.Tempetature), 5, 0, 10,
+      taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+  end;
 end;
 
 //
 
 function CreateQualityTable(const aScreenScale: double; aSetting: TIniFile): TReportTable;
+const
+  Section1 = 'CommonTable';
 begin
   Result := TReportTable.Create;
   Result.ColumnCount := 5;
   Result.RowCount    := 7;
   Result.Zoom        := aScreenScale;
-  LoadTable(Result, 'CommonTable', 'Table', ASetting);
+  LoadTable(Result, Section1, 'Table', ASetting);
 
   Result[0, 0] := 'Quality Grade';
   Result[1, 0] := 'De, Di';
@@ -557,12 +670,14 @@ begin
 end;
 
 function CreateQuick1Table(const aScreenScale: double; aSetting: TIniFile): TReportTable;
+const
+  Section1 = 'CommonTable';
 begin
   Result := TReportTable.Create;
   Result.ColumnCount  := 7;
   Result.RowCount     := 6;
   Result.Zoom         := aScreenScale;
-  LoadTable(Result, 'CommonTable', 'Table', ASetting);
+  LoadTable(Result, Section1, 'Table', ASetting);
 
   Result[0, 0] := 'L [mm]';
   Result[1, 0] := TryFormatFloat('L0: %s', 'L0: ---', SOLVER.LengthL0);
@@ -615,12 +730,14 @@ begin
 end;
 
 function CreateQuick1List(const aScreenScale: double; aSetting: TIniFile): TReportTable;
+const
+  Section1 = 'CommonTable';
 begin
   Result := TReportTable.Create;
   Result.ColumnCount := 3;
   Result.RowCount    := 20;
   Result.Zoom        := aScreenScale;
-  LoadTable(Result, 'Quick1List', 'Table', ASetting);
+  LoadTable(Result, Section1, 'Table', ASetting);
 
   Result.ColumnAlignments[0] := taRightJustify;
   Result.ColumnAlignments[1] := taCenter;
@@ -715,6 +832,8 @@ begin
 end;
 
 function CreateMessageList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
+const
+  Section1 = 'MessageList';
 var
   i, j: longint;
 begin
@@ -722,7 +841,7 @@ begin
   Result.ColumnCount  := 1;
   Result.RowCount     := 1 + ErrorMessage.Count + WarningMessage.Count;
   Result.Zoom         := aScreenScale;
-  LoadTable(Result, 'MessageList', 'Table', ASetting);
+  LoadTable(Result, Section1, 'Table', ASetting);
 
   Result.Items[0, 0] := TryFormatBool('Messages:', '', (ErrorMessage.Count + WarningMessage.Count) > 0);
 
@@ -740,93 +859,9 @@ begin
   end;
 end;
 
-(*
-function CreateGoodmanList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-begin
-  Result := TReportTable.Create;
-  Result.RowCount    := 16;
-  Result.ColumnCount := 3;
-  Result.Zoom        := aScreenScale;
-  LoadTable(Result, 'Quick1List', 'Table', aSetting);
-
-  Result.ColumnAlignments[0] := taRightJustify;
-  Result.ColumnAlignments[1] := taCenter;
-  Result.ColumnAlignments[2] := taLeftJustify;
-
-  Result.Items[ 0, 0] := 'tauk1';
-  Result.Items[ 0, 1] := '=';
-  Result.Items[ 0, 2] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTauk1);
-
-  Result.Items[ 1, 0] := 'tauk2';
-  Result.Items[ 1, 1] := '=';
-  Result.Items[ 1, 2] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTauk2);
-
-  Result.Items[ 2, 0] := 'taukh';
-  Result.Items[ 2, 1] := '=';
-  Result.Items[ 2, 2] := TryFormatFloat('%s MPa', '---', SOLVER.TorsionalStressTaukh);
-
-  Result.Items[ 4, 0] := 'E';
-  Result.Items[ 4, 1] := '=';
-  Result.Items[ 4, 2] := TryFormatFloat('%s MPa', '---', SOLVER.YoungModulus);
-
-  Result.Items[ 5, 0] := 'G';
-  Result.Items[ 5, 1] := '=';
-  Result.Items[ 5, 2] := TryFormatFloat('%s MPa', '---', SOLVER.ShearModulus);
-
-  Result.Items[ 6, 0] := 'rho';
-  Result.Items[ 6, 1] := '=';
-  Result.Items[ 6, 2] := TryFormatFloat('%s kg/dm3', '---', SOLVER.MaterialDensity);
-
-  Result.Items[ 7, 0] := 'Rm';
-  Result.Items[ 7, 1] := '=';
-  Result.Items[ 7, 2] := TryFormatFloat('%s MPa', '---', SOLVER.TensileStrengthRm);
-
-  Result.Items[ 8, 0] := 'tauz';
-  Result.Items[ 8, 1] := '=';
-  Result.Items[ 8, 2] := TryFormatFloat('%s MPa', '---', SOLVER.AdmStaticTorsionalStressTauz);
-
-  Result.Items[10, 0] := 'ns';
-  Result.Items[10, 1] := '=';
-  Result.Items[10, 2] := TryFormatFloat('%s', '---', SOLVER.StaticSafetyFactor);
-
-  if SOLVER.DynamicLoad then
-  begin
-    Result.Items[11, 0] := 'tauoz';
-    Result.Items[11, 1] := '=';
-    Result.Items[11, 2] := TryFormatFloat('%s MPa', '---', SOLVER.AdmDynamicTorsionalStressTauoz);
-
-    Result.Items[12, 0] := 'tauhz';
-    Result.Items[12, 1] := '=';
-    Result.Items[12, 2] := TryFormatFloat('%s MPa', '---', SOLVER.AdmDynamicTorsionalStressRangeTauhz);
-
-    Result.Items[13, 0] := 'nf';
-    Result.Items[13, 1] := '=';
-    Result.Items[13, 2] := TryFormatFloat('%s', '---', SOLVER.DynamicSafetyFactor);
-
-    if SOLVER.NumOfCycles > 0 then
-    begin
-      Result.Items[14, 0] := 'N';
-      Result.Items[14, 1] := '=';
-      Result.Items[14, 2] := TryFormatText('%s cycles', '---', TryFloatToText(SOLVER.NumOfCycles, 2, 0));
-
-      Result.Items[15, 0] := 'Nh';
-      Result.Items[15, 1] := '=';
-      Result.Items[15, 2] := TryFormatFloatDiv('%s hours', '---', SOLVER.NumOfCycles, 3600*ApplicationForm.CycleFrequency.Value);
-    end else
-    begin
-      Result.Items[14, 0] := 'N';
-      Result.Items[14, 1] := '=';
-      Result.Items[14, 2] := '---';
-
-      Result.Items[15, 0] := 'Nh';
-      Result.Items[15, 1] := '=';
-      Result.Items[15, 2] := '---';
-    end;
-  end;
-end;
-*)
-
 function CreateQuick1AList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
+const
+  Section1 = 'Quick1List';
 var
   i, j: longint;
 begin
@@ -834,7 +869,7 @@ begin
   Result.ColumnCount := 3;
   Result.RowCount    := 38;
   Result.Zoom        := aScreenScale;
-  LoadTable(Result, 'Quick1List', 'Table', ASetting);
+  LoadTable(Result, Section1, 'Table', ASetting);
 
   Result.ColumnAlignments[0] := taRightJustify;
   Result.ColumnAlignments[1] := taCenter;
@@ -1015,25 +1050,25 @@ var
   Quick1Table: TReportTable;
   QualityTable: TReportTable;
 begin
-  SetLength(Bit, 10);
+  SetLength(Bit, 6);
   for i := Low(Bit) to High(Bit) do
     Bit[i] := TBGRABitmap.Create;
 
-  // Force & Displacement Chart
+  // 0-Force & Displacement Chart
   ForceDiagram := CreateForceDisplacementChart(aScreenScale, aSetting);
   Bit[0].SetSize(Trunc(aScreen.Width * 0.35), aScreen.Height div 2);
   ForceDiagram.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
   Bit[0].Draw(aScreen.Canvas, 0, 0, True);
   ForceDiagram.Destroy;
 
-  // Goodman Chart
+  // 1-Goodman Chart
   GoodmanDiagram := CreateGoodmanChart(aScreenScale, aSetting);
   Bit[1].SetSize(Bit[0].Width, Bit[0].Height);
   GoodmanDiagram.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
   Bit[1].Draw(aScreen.Canvas, 0, Bit[0].Height, True);
   GoodmanDiagram.Destroy;
 
-  // Quick-1 List
+  // 2-Quick-1 List
   Quick1List := CreateQuick1AList(aScreenScale, aSetting);
   while Quick1List.Height < (aScreen.Height) do
   begin
@@ -1045,7 +1080,7 @@ begin
   Bit[2].Draw(aScreen.Canvas, Bit[0].Width, 0, True);
   Quick1List.Destroy;
 
-  // Quick-1 Table
+  // 3-Quick-1 Table
   Quick1Table := CreateQuick1Table(aScreenScale, aSetting);
   while Quick1Table.Width < (aScreen.Width - Bit[0].Width - Bit[2].Width) do
   begin
@@ -1057,14 +1092,14 @@ begin
   Bit[3].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width, 0, True);
   Quick1Table.Destroy;
 
-  // Quality Table
+  // 4-Quality Table
   QualityTable := CreateQualityTable(aScreenScale, aSetting);
   Bit[4].SetSize(QualityTable.Width, QualityTable.Height);
   QualityTable.Draw(Bit[4].Canvas);
   Bit[4].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width, Bit[3].Height, True);
   QualityTable.Destroy;
 
-  // Message List
+  // 5-Message List
   MessageList := CreateMessageList(aScreenScale, aSetting);
   Bit[5].SetSize(MessageList.Width, MessageList.Height);
   MessageList.Draw(Bit[5].Canvas);
@@ -1077,6 +1112,8 @@ begin
 end;
 
 procedure DrawQuickX(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile; X: longint);
+const
+  Section1 = 'QuickXList';
 var
   i, j: longint;
   Bit: array of TBGRABitmap = nil;
@@ -1088,12 +1125,13 @@ begin
   SetLength(Bit, 3);
   for i := Low(Bit) to High(Bit) do
     Bit[i] := TBGRABitmap.Create;
-  // Quick-X List
+
+  // 0-Quick-X List
   QuickXList := TReportTable.Create;
   QuickXList.ColumnCount := 7;
   QuickXList.RowCount    := 26;
   QuickXList.Zoom        := aScreenScale;
-  LoadTable(QuickXList, 'QuickXList', 'Table', ASetting);
+  LoadTable(QuickXList, Section1, 'Table', ASetting);
   QuickXList.ColumnAlignments[0] := taLeftJustify;
   QuickXList.ColumnAlignments[1] := taCenter;
   QuickXList.ColumnAlignments[2] := taLeftJustify;
@@ -1105,6 +1143,7 @@ begin
   for i := 0 to QuickXList.RowCount -1 do
     for j := 0 to QuickXList.ColumnCount -1 do
       QuickXList.Items[i, j] := '  ';
+
   //012
   Row := 0;
   QuickXList.Items[Row, 0] := 'd';
@@ -1209,6 +1248,8 @@ begin
     QuickXList.Items[Row, 2] := 'Dynamic'
   else
     QuickXList.Items[Row, 2] := 'Static';
+
+
   // 456
   Row := 2;
   QuickXList.Items[Row, 4] := 'Material';
@@ -1305,18 +1346,20 @@ begin
     end;
   end;
 
-  // Draw
+  // 0-List
   Bit[0].SetSize(QuickXList.Width, QuickXList.Height);
   QuickXList.Draw(Bit[0].Canvas);
   Bit[0].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, 0, True);
   QuickXList.Destroy;
 
+  // 1-Messages
   MessageList := CreateMessageList(aScreenScale, aSetting);
   Bit[1].SetSize(Bit[0].Width, aScreen.Width - Bit[0].Height);
   MessageList.Draw(Bit[1].Canvas);
   Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, Bit[0].Height, True);
   MessageList.Destroy;
 
+  // 2-Force or Goodman chart
   if X = 3 then
     CustomChart := CreateGoodmanChart(aScreenScale, aSetting)
   else

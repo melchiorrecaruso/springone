@@ -789,71 +789,87 @@ var
   i, j: longint;
   Item: TChartItem;
 begin
-  if FIsNeededCalcXMinF then
-  begin
-    FXMinF := + MaxSingle;
-    for i := 0 to FItems.Count -1 do
+  if FItems.Count = 0 then
+    FXMinF := 0
+  else
+    if FIsNeededCalcXMinF then
     begin
-      Item := TChartItem(FItems[i]);
-      if (Item is TChartPolyLineItem) then
+      FXMinF := + MaxSingle;
+      for i := 0 to FItems.Count -1 do
       begin
-        for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
+        Item := TChartItem(FItems[i]);
+        if (Item is TChartPolyLineItem) then
         begin
-          FXMinF := Min(FXMinF, TChartPolyLineItem(Item).FPoints[j].x);
+          for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
+          begin
+            FXMinF := Min(FXMinF, TChartPolyLineItem(Item).FPoints[j].x);
+          end;
         end;
       end;
+      FXMinF := GetMin(FXMinF);
     end;
-    FXMinF := GetMin(FXMinF);
-  end;
 
-  if FIsNeededCalcXMaxF then
-  begin
-    FXMaxF := - MaxSingle;
-    for i := 0 to FItems.Count -1 do
-    begin
-      Item := TChartItem(FItems[I]);
-      if (Item is TChartPolyLineItem) then
-      begin
-        for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
-        begin
-          FXMaxF := Max(FXMaxF, TChartPolyLineItem(Item).FPoints[j].x);
-        end;
-      end;
-    end;
-  end;
 
-  if FIsNeededCalcYMinF then
-  begin
-    FYMinF := + MaxSingle;
-    for i := 0 to FItems.Count -1 do
+  if FItems.Count = 0 then
+    FXMaxF := 0
+  else
+    if FIsNeededCalcXMaxF and (FItems.Count > 0) then
     begin
-      Item := TChartItem(FItems[I]);
-      if (Item is TChartPolyLineItem) then
+      FXMaxF := - MaxSingle;
+      for i := 0 to FItems.Count -1 do
       begin
-        for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
+        Item := TChartItem(FItems[I]);
+        if (Item is TChartPolyLineItem) then
         begin
-          FYMinF := Min(FYMinF, TChartPolyLineItem(Item).FPoints[j].y);
+          for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
+          begin
+            FXMaxF := Max(FXMaxF, TChartPolyLineItem(Item).FPoints[j].x);
+          end;
         end;
       end;
     end;
-    FYMinF := GetMin(FYMinF);
-  end;
 
-  if FIsNeededCalcYMaxF then
-  begin
-    FYMaxF := - MaxSingle;
-    for i := 0 to FItems.Count -1 do
+
+  if FItems.Count = 0 then
+    FYMinF := 0
+  else
+    if FIsNeededCalcYMinF then
     begin
-      Item := TChartItem(FItems[I]);
-      if (Item is TChartPolyLineItem) then
+      FYMinF := + MaxSingle;
+      for i := 0 to FItems.Count -1 do
       begin
-        for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
+        Item := TChartItem(FItems[I]);
+        if (Item is TChartPolyLineItem) then
         begin
-          FYMaxF := Max(FYMaxF, TChartPolyLineItem(Item).FPoints[j].y);
+          for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
+          begin
+            FYMinF := Min(FYMinF, TChartPolyLineItem(Item).FPoints[j].y);
+          end;
+        end;
+      end;
+      FYMinF := GetMin(FYMinF);
+    end;
+
+
+  if FItems.Count = 0 then
+    FYMaxF := 0
+  else
+    if FIsNeededCalcYMaxF and (FItems.Count > 0) then
+    begin
+      FYMaxF := - MaxSingle;
+      for i := 0 to FItems.Count -1 do
+      begin
+        Item := TChartItem(FItems[I]);
+        if (Item is TChartPolyLineItem) then
+        begin
+          for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
+          begin
+            FYMaxF := Max(FYMaxF, TChartPolyLineItem(Item).FPoints[j].y);
+          end;
         end;
       end;
     end;
-  end;
+
 end;
 
 procedure TChart.DrawGrid;

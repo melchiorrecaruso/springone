@@ -152,6 +152,7 @@ object MainForm: TMainForm
       object MenuItem8: TMenuItem
         Caption = 'Recalculation mode'
         Checked = True
+        ShowAlwaysCheckable = True
       end
       object Design: TMenuItem
         Caption = 'Design mode'
@@ -162,14 +163,17 @@ object MainForm: TMainForm
       Caption = '&View'
       object Quick1MenuItem: TMenuItem
         Caption = 'Quick 1'
+        ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick
       end
       object Quick2MenuItem: TMenuItem
         Caption = 'Quick 2'
+        ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick
       end
       object Quick3MenuItem: TMenuItem
         Caption = 'Quick 3'
+        ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick
       end
       object Separator5: TMenuItem
@@ -177,32 +181,39 @@ object MainForm: TMainForm
       end
       object ForceMenuItem: TMenuItem
         Caption = 'Force and displacement diagram'
+        ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick
       end
       object GoodmanMenuItem: TMenuItem
         Caption = 'Goodman diagram'
+        ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick
       end
       object BucklingMenuItem: TMenuItem
         Caption = 'Buckling diagram'
+        ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick
       end
       object TempMenuItem: TMenuItem
         Caption = 'Temperature'
         object ShearModulusMenuItem: TMenuItem
           Caption = 'G-T diagram'
+          ShowAlwaysCheckable = True
           OnClick = ViewMenuItemClick
         end
         object YoungModulusMenuItem: TMenuItem
           Caption = 'E-T diagram'
+          ShowAlwaysCheckable = True
           OnClick = ViewMenuItemClick
         end
         object F1MenuItem: TMenuItem
           Caption = 'F1-T diagram'
+          ShowAlwaysCheckable = True
           OnClick = ViewMenuItemClick
         end
         object F2MenuItem: TMenuItem
           Caption = 'F2-T diagram'
+          ShowAlwaysCheckable = True
           OnClick = ViewMenuItemClick
         end
       end
@@ -210,10 +221,12 @@ object MainForm: TMainForm
         Caption = 'Drawing'
         object SectionMenuItem: TMenuItem
           Caption = 'Section drawing'
+          ShowAlwaysCheckable = True
           OnClick = ViewMenuItemClick
         end
         object ProfileMenuItem: TMenuItem
           Caption = 'Profile drawing'
+          ShowAlwaysCheckable = True
           OnClick = ViewMenuItemClick
         end
         object Separator10: TMenuItem
@@ -221,10 +234,12 @@ object MainForm: TMainForm
         end
         object CustomSectionMenuItem: TMenuItem
           Caption = 'Section drawing (L)'
+          ShowAlwaysCheckable = True
           OnClick = CustomSectionMenuItemClick
         end
         object CustomProfileMenuItem: TMenuItem
           Caption = 'Profile drawing (L)'
+          ShowAlwaysCheckable = True
           OnClick = CustomSectionMenuItemClick
         end
       end
@@ -237,6 +252,7 @@ object MainForm: TMainForm
       end
       object Production2MenuItem: TMenuItem
         Caption = 'Production drawing'
+        ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick
       end
       object Separator11: TMenuItem

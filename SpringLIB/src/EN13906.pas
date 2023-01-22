@@ -749,7 +749,11 @@ end;
 
 function TCompressionSpringSolver.GetTau(const aLoadF: double): double;
 begin
-  Result  := 8 * fDm * (aLoadF) / (Pi * Power(fd, 3));
+  try
+    Result := 8 * fDm * (aLoadF) / (Pi * Power(fd, 3));
+  except
+    Result := 0;
+  end;
 end;
 
 function TCompressionSpringSolver.GetTauk(const aLoadF: double): double;
@@ -762,18 +766,20 @@ var
   Value: single;
   Y, DY: single;
 begin
-  Y  := 0.980;
-  DY := 0.001;
+  try
+    Y  := 0.980;
+    DY := 0.001;
+    repeat
+      Value := Pi/(Sqrt((1-Sqr(1-Y*2*(1-fG/fE)))*(0.5+fG/fE)/(1-fG/fE)));
 
-  repeat
-    Value := Pi/(Sqrt((1-Sqr(1-Y*2*(1-fG/fE)))*(0.5+fG/fE)/(1-fG/fE)));
-
-    SetLength(aPoints, Length(aPoints) + 1);
-    aPoints[High(aPoints)].x := Value;
-    aPoints[High(aPoints)].y := Y;
-
-    Y := Y - DY;
-  until Value > (1.25*(fnu*fL0/fDm));
+      SetLength(aPoints, Length(aPoints) + 1);
+      aPoints[High(aPoints)].x := Value;
+      aPoints[High(aPoints)].y := Y;
+      Y := Y - DY;
+    until Value > (1.25*(fnu*fL0/fDm));
+  except
+    aPoints := nil;
+  end;
 end;
 
 // TTorsionSpringSolver
