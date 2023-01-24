@@ -20,12 +20,13 @@ function CreateLoadF1Chart             (const aScreenScale: double; aSetting: TI
 function CreateLoadF2Chart             (const aScreenScale: double; aSetting: TIniFile): TChart;
 function CreateShearModulusChart       (const aScreenScale: double; aSetting: TIniFile): TChart;
 function CreateYoungModulusChart       (const aScreenScale: double; aSetting: TIniFile): TChart;
+function CreateSectionSpringDrawing    (const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
+
 
 function CreateQualityTable            (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 function CreateQuick1Table             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 function CreateQuick1List              (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 function CreateMessageList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-
 function CreateQuick1AList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
 
 
@@ -138,7 +139,30 @@ begin
   Table.PenColor.FromString(aSetting.ReadString (ASection, AIdent + '.PenColor',  'Black'));
 
   Table.RowSpacer := aSetting.ReadInteger(ASection, AIdent + '.RowSpacer', 0);
-  Table.ColumnSpacer := aSetting.ReadInteger(ASection, AIdent + '.ColumnSpacer', 0); ;
+  Table.ColumnSpacer := aSetting.ReadInteger(ASection, AIdent + '.ColumnSpacer', 0);
+end;
+
+procedure LoadSpring(Spring: TSectionSpringDrawing; const ASection, AIdent: string; ASetting: TIniFile);
+begin
+  Spring.BackgroundColor.FromString(aSetting.ReadString(ASection, AIdent + '.BackgroundColor', 'White'));
+  Spring.CenterLineColor.FromString(aSetting.ReadString(ASection, AIdent + '.CenterLineColor', 'Black' ));
+  Spring.CenterLineStyle := LoadPenStyle(ASection, AIdent + '.CenterLineStyle', ASetting);
+  Spring.CenterLineWidth := aSetting.ReadFloat(ASection, AIdent + '.CenterLineWidth', 1.0);
+
+  Spring.FontColor.FromString(aSetting.ReadString(ASection, AIdent + '.FontColor', 'Black'));
+  Spring.FontName   := aSetting.ReadString(ASection,  AIdent + '.FontName', 'default');
+  Spring.FontHeight := aSetting.ReadFloat(ASection, AIdent + '.FontHeight', 13);
+  Spring.FontStyle  := LoadFontStyle(ASection, AIdent, ASetting);
+
+  Spring.PenColor.FromString(aSetting.ReadString(ASection, AIdent + '.PenColor', 'Black'));
+  Spring.PenStyle := LoadPenStyle(ASection, AIdent + '.PenStyle', ASetting);
+  Spring.PenWidth := aSetting.ReadFloat(ASection, AIdent + '.PenWidth', 1.0);
+
+  Spring.TextureBackgroundColor.FromString(aSetting.ReadString(ASection, AIdent + '.TextureBackgroundColor', 'White'));
+  Spring.TextureColor.FromString(aSetting.ReadString(ASection, AIdent + '.TextureColor', 'Black'));
+  Spring.TextureHeight   := aSetting.ReadInteger(ASection, AIdent + '.TextureHeight', 8);
+  Spring.TextureWidth    := aSetting.ReadInteger(ASection, AIdent + '.TextureWidth',  8);
+  Spring.TexturePenWidth := aSetting.ReadFloat(ASection, AIdent + '.TexturePenWidth', 1.0);
 end;
 
 //
@@ -155,7 +179,7 @@ begin
   Result.Title         := 'Force & Displacement Chart';
   Result.XAxisLabel    := 's[mm]';
   Result.YAxisLabel    := 'F[N]';
-  Result.Zoom          := aScreenScale;
+  Result.Scale          := aScreenScale;
   LoadChart1(Result, Section1, ASetting);
 
   // Bisector line
@@ -306,7 +330,7 @@ begin
     Result.Title       := Format('Goodman Chart: %s', ['Custom material']);
   Result.XAxisLabel    := 'tau U';
   Result.YAxisLabel    := 'tau O';
-  Result.Zoom          := aScreenScale;
+  Result.Scale          := aScreenScale;
   LoadChart1(Result, Section1, ASetting);
 
   // Bisector line
@@ -436,7 +460,7 @@ begin
   Result.Title         := 'Buckling diagram';
   Result.XAxisLabel    := 'nu*L0/D';
   Result.YAxisLabel    := 's/L0';
-  Result.Zoom          := aScreenScale;
+  Result.Scale          := aScreenScale;
   LoadChart1(Result, Section1, ASetting);
 
   // Buckling Curve
@@ -494,7 +518,7 @@ begin
   Result.Title         := 'Load F1-Temperature Chart';
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'F1 [N]';
-  Result.Zoom          := aScreenScale;
+  Result.Scale          := aScreenScale;
   LoadChart1(Result, Section1, ASetting);
 
   if (SOLVER.GetF1(MAT.Tempetature - DT) > 0) and
@@ -528,7 +552,7 @@ begin
   Result.Title         := 'Load F2-Temperature Chart';
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'F2 [N]';
-  Result.Zoom          := aScreenScale;
+  Result.Scale          := aScreenScale;
   LoadChart1(Result, Section1, ASetting);
 
   if (SOLVER.GetF2(MAT.Tempetature - DT) > 0) and
@@ -562,7 +586,7 @@ begin
   Result.Title         := 'Shear Modulus G-Temperature Chart';
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'G [MPa]';
-  Result.Zoom          := aScreenScale;
+  Result.Scale          := aScreenScale;
   LoadChart1(Result, Section1, ASetting);
 
   if (MAT.GetG(MAT.Tempetature - DT) > 0) and
@@ -596,7 +620,7 @@ begin
   Result.Title         := 'Young Modulus G-Temperature Chart';
   Result.XAxisLabel    := 'T [C°]';
   Result.YAxisLabel    := 'E [MPa]';
-  Result.Zoom          := aScreenScale;
+  Result.Scale          := aScreenScale;
   LoadChart1(Result, Section1, ASetting);
 
   if (MAT.GetE(MAT.Tempetature - DT) > 0) and
@@ -614,6 +638,26 @@ begin
     Result.AddDotLabel(MAT.Tempetature, MAT.GetE(MAT.Tempetature), 5, 0, 10,
       taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
   end;
+end;
+
+function CreateSectionSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
+const
+  Section1 = 'SpringDrawing';
+begin
+  Result := TSectionSpringDrawing.Create;
+
+  LoadSpring(Result, Section1, 'Spring', aSetting);
+
+  Result.d   := SOLVER.WireDiameter;
+  Result.Dm  := SOLVER.Dm;
+  Result.Lc  := SOLVER.LengthLc;
+  Result.n   := SOLVER.ActiveColis;
+  Result.nt1 := (SOLVER.TotalCoils - SOLVER.ActiveColis) / 2;
+  Result.nt2 := (SOLVER.TotalCoils - SOLVER.ActiveColis) / 2;
+  Result.ClosedEnds := False;
+  Result.GroundEnds := False;
+  Result.Spacer     := DefaultSpacer;
+  Result.Scale      := aScreenScale;
 end;
 
 //
@@ -1049,8 +1093,9 @@ var
   Quick1List: TReportTable;
   Quick1Table: TReportTable;
   QualityTable: TReportTable;
+  SpringDrawing: TSectionSpringDrawing;
 begin
-  SetLength(Bit, 6);
+  SetLength(Bit, 9);
   for i := Low(Bit) to High(Bit) do
     Bit[i] := TBGRABitmap.Create;
 
@@ -1105,6 +1150,37 @@ begin
   MessageList.Draw(Bit[5].Canvas);
   Bit[5].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width + Bit[4].Width, Bit[3].Height, True);
   MessageList.Destroy;
+
+  // 6-Spring Drawings
+  SpringDrawing := CreateSectionSpringDrawing(AScreenScale, ASetting);
+  Bit[6].SetSize((aScreen.Width  - Bit[1].Width  - Bit[2].Width) div 3,
+                  aScreen.Height - Bit[3].Height - Bit[4].Height);
+
+  Bit[7].SetSize((aScreen.Width  - Bit[1].Width  - Bit[2].Width) div 3,
+                  aScreen.Height - Bit[3].Height - Bit[4].Height);
+
+  Bit[8].SetSize((aScreen.Width  - Bit[1].Width  - Bit[2].Width) div 3,
+                  aScreen.Height - Bit[3].Height - Bit[4].Height);
+
+  SpringDrawing.AutoFit := True;
+  SpringDrawing.Lx      := SOLVER.LengthL0;
+  SpringDrawing.Caption := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+  SpringDrawing.Draw(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
+
+  SpringDrawing.AutoFit := False;
+  SpringDrawing.Lx      := SOLVER.LengthL1;
+  SpringDrawing.Caption := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+  SpringDrawing.Draw(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
+
+  SpringDrawing.AutoFit := False;
+  SpringDrawing.Lx      := SOLVER.LengthL2;
+  SpringDrawing.Caption := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+  SpringDrawing.Draw(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
+
+  Bit[6].Draw(aScreen.Canvas, Bit[1].Width + Bit[2].Width + Bit[6].Width*0, Bit[3].Height + Bit[4].Height, True);
+  Bit[7].Draw(aScreen.Canvas, Bit[1].Width + Bit[2].Width + Bit[6].Width*1, Bit[3].Height + Bit[4].Height, True);
+  Bit[8].Draw(aScreen.Canvas, Bit[1].Width + Bit[2].Width + Bit[6].Width*2, Bit[3].Height + Bit[4].Height, True);
+  SpringDrawing.Destroy;
 
   for i := Low(Bit) to High(Bit) do
     Bit[i].Destroy;
