@@ -273,7 +273,7 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 10
-    Caption = 'Copyright (c) 2022 Melchiorre Caruso'
+    Caption = 'Copyright (c) 2022-2023 Melchiorre Caruso'
     Layout = tlCenter
     ParentFont = False
   end
@@ -290,7 +290,7 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 6
-    Caption = 'Build 20230118'
+    Caption = 'Build 20230122'
     Layout = tlCenter
     ParentFont = False
   end
