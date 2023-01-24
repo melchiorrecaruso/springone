@@ -1,7 +1,7 @@
 {
   EN13906 Helical Compression Spring Designer
 
-  Copyright (C) 2022 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -97,7 +97,8 @@ type
 
     FWidth, FHeight: longint;
     FSpacer: longint;
-    FZoom: single;
+    FScale: single;
+
 
     FIsNeededCalcXMaxF: boolean;
     FIsNeededCalcXMinF: boolean;
@@ -212,7 +213,7 @@ type
     property Spacer: longint read FSpacer write FSpacer;
     property Width: longint read FWidth write FWidth;
     property Height: longint read FHeight write FHeight;
-    property Zoom: single read FZoom write FZoom;
+    property Scale: single read FScale write FScale;
   end;
 
   TReportTable = class
@@ -292,36 +293,43 @@ type
 
   TSectionSpringDrawing = class
   private
-    fd: double;
-    fDm: double;
+    Fd: double;
+    FDm: double;
     fClockWise: boolean;
-    fLc: double;
-    fLx: double;
-    fn: double;
-    fnt1: double;
-    fnt2: double;
-    fpitch: double;
+    FLc: double;
+    FLx: double;
+    Fn: double;
+    Fnt1: double;
+    Fnt2: double;
+    FPitchF: double;
     fClosedEnds: boolean;
-    fGroundEnds: boolean;
-    fZoom: single;
-    fText: string;
+    FGroundEnds: boolean;
+
+    FCaption: string;
     fAutoFit: boolean;
+    FAutoScale: double;
+    FScale: single;
     FSpacer: longint;
 
     FBit: TBGRABitmap;
     FBackgroundColor: TBGRAPixel;
-    FCurrentFontName: string;
-    FCurrentFontHeight: single;
-    FCurrentFontColor: TBGRAPixel;
-    FCurrentFontStyle: TFontStyles;
-    FCurrentPenColor: TBGRAPixel;
-    FCurrentPenStyle: TPenStyle;
-    FCurrentPenWidth: single;
-    FCurrentTextureColor: TBGRAPixel;
-    FCurrentTextureBackgroundColor: TBGRAPixel;
-    FCurrentTextureWidth: longint;
-    FCurrentTextureHeight: longint;
-    FCurrentTexturePenWidth: single;
+    FFontName: string;
+    FFontHeight: single;
+    FFontColor: TBGRAPixel;
+    FFontStyle: TFontStyles;
+
+    FCenterLineColor: TBGRAPixel;
+    FCenterLineStyle: TPenStyle;
+    FCenterLineWidth: single;
+
+    FPenColor: TBGRAPixel;
+    FPenStyle: TPenStyle;
+    FPenWidth: single;
+    FTextureColor: TBGRAPixel;
+    FTextureBackgroundColor: TBGRAPixel;
+    FTextureWidth: longint;
+    FTextureHeight: longint;
+    FTexturePenWidth: single;
     FWidth, FHeight: longint;
 
     function xt(const t: double): double;
@@ -338,34 +346,38 @@ type
     procedure Draw(aCanvas: TCanvas);
     procedure Draw(aCanvas: TCanvas; aWidth, aHeight: longint);
   public
-    property d: double read fd write fd;
-    property Dm: double read fDm write fDm;
-    property Lc: double read fLc write fLc;
-    property Lx: double read fLx write fLx;
-    property n: double read fn write fn;
-    property nt1: double read fnt1 write fnt1;
-    property nt2: double read fnt2 write fnt2;
+    property d: double read Fd write Fd;
+    property Dm: double read FDm write FDm;
+    property Lc: double read FLc write FLc;
+    property Lx: double read FLx write FLx;
+    property n: double read Fn write Fn;
+    property nt1: double read Fnt1 write Fnt1;
+    property nt2: double read Fnt2 write Fnt2;
     property ClockWise: boolean read fClockWise write fClockWise;
-    property GroundEnds: boolean read fGroundEnds write fGroundEnds;
+    property GroundEnds: boolean read FGroundEnds write FGroundEnds;
     property ClosedEnds: boolean read fClosedEnds write fClosedEnds;
 
-    property Text: string read fText write fText;
+    property Caption: string read FCaption write FCaption;
     property AutoFit: boolean read fAutoFit write fAutoFit;
 
-    property FontName: string read FCurrentFontName write FCurrentFontName;
-    property FontHeight: single read FCurrentFontHeight write FCurrentFontHeight;
-    property FontColor: TBGRAPixel read FCurrentFontColor write FCurrentFontColor;
-    property FontStyle: TFontStyles read FCurrentFontStyle write FCurrentFontStyle;
+    property FontName: string read FFontName write FFontName;
+    property FontHeight: single read FFontHeight write FFontHeight;
+    property FontColor: TBGRAPixel read FFontColor write FFontColor;
+    property FontStyle: TFontStyles read FFontStyle write FFontStyle;
 
-    property PenColor: TBGRAPixel read FCurrentPenColor write FCurrentPenColor;
-    property PenStyle: TPenStyle read FCurrentPenStyle write FCurrentPenStyle;
-    property PenWidth: single read FCurrentPenWidth write FCurrentPenWidth;
+    property CenterLineColor: TBGRAPixel read FCenterLineColor write FCenterLineColor;
+    property CenterLineStyle: TPenStyle read FCenterLineStyle write FCenterLineStyle;
+    property CenterLineWidth: single read FCenterLineWidth write FCenterLineWidth;
 
-    property TextureColor: TBGRAPixel read FCurrentTextureColor write FCurrentTextureColor;
-    property TextureBackgroundColor: TBGRAPixel read FCurrentTextureBackgroundColor write FCurrentTextureBackgroundColor;
-    property TextureWidth: longint read FCurrentTextureWidth write FCurrentTextureWidth;
-    property TextureHeight: longint read FCurrentTextureHeight write FCurrentTextureHeight;
-    property TexturePenWidth: single read FCurrentTexturePenWidth write FCurrentTexturePenWidth;
+    property PenColor: TBGRAPixel read FPenColor write FPenColor;
+    property PenStyle: TPenStyle read FPenStyle write FPenStyle;
+    property PenWidth: single read FPenWidth write FPenWidth;
+
+    property TextureColor: TBGRAPixel read FTextureColor write FTextureColor;
+    property TextureBackgroundColor: TBGRAPixel read FTextureBackgroundColor write FTextureBackgroundColor;
+    property TextureWidth: longint read FTextureWidth write FTextureWidth;
+    property TextureHeight: longint read FTextureHeight write FTextureHeight;
+    property TexturePenWidth: single read FTexturePenWidth write FTexturePenWidth;
 
     property BackgroundColor: TBGRAPixel read FBackgroundColor write FBackgroundColor;
 
@@ -373,7 +385,7 @@ type
     property Height: longint read FHeight write FHeight;
     property Width: longint read FWidth write FWidth;
 
-    property Zoom: single read FZoom write FZoom;
+    property Scale: single read FScale write FScale;
   end;
 
 
@@ -454,23 +466,7 @@ type
 
 // Common routines
 
-function GetDelta(Count: longint; var Range: double): double;
-var
-  k: double = 0.001;
-begin
-  Result := 0;
-  while True do
-  begin
-    Result := 0.10 * k; if (Result * Count) >= (Range) then Break;
-    Result := 0.20 * k; if (Result * Count) >= (Range) then Break;
-    Result := 0.25 * k; if (Result * Count) >= (Range) then Break;
-    Result := 0.50 * k; if (Result * Count) >= (Range) then Break;
-    k := k * 10;
-  end;
-  Range := Result * Count;
-end;
-
-function GetDelta2(Count: longint; const Range: single): single;
+function GetDelta(Count: longint; const Range: single): single;
 var
   k: double = 0.001;
 begin
@@ -578,6 +574,7 @@ constructor TChart.Create;
 begin
   inherited Create;
   FBit := TBGRABitmap.Create;
+  FItems := TList.Create;
   begin
     Clear;
   end;
@@ -677,9 +674,8 @@ begin
   FIsNeededCalcXCount  := True;
   FIsNeededCalcYCount  := True;
 
-  FItems   := TList.Create;
   FSpacer  := DefaultSpacer;
-  FZoom    := 1.0;
+  FScale    := 1.0;
 
   for I := 0 to FItems.Count -1 do
     TChartItem(FItems[I]).Destroy;
@@ -878,8 +874,8 @@ var
   X, XShift, XSpacing: double;
   Y, YShift, YSpacing: double;
 begin
-  XShift   := -(FSpacer * FZoom) * 0.5;
-  YShift   := -(FSpacer * FZoom) * 0.5;
+  XShift   := -(FSpacer * FScale) * 0.5;
+  YShift   := -(FSpacer * FScale) * 0.5;
   XSpacing := +(FXMax - FXMin) / FXCount;
   YSpacing := +(FYMax - FYMin) / FYCount;
   // Draw background color
@@ -894,7 +890,7 @@ begin
   FBit.FontQuality   := fqSystemClearType;
   FBit.FontName      := FXAxisFontName;
   FBit.FontStyle     := FXAxisFontStyle;
-  FBit.FontHeight    := Trunc(FXAxisFontHeight * FZoom);
+  FBit.FontHeight    := Trunc(FXAxisFontHeight * FScale);
 
   FBit.JoinStyle := pjsRound;
   FBit.LineCap   := pecRound;
@@ -903,17 +899,17 @@ begin
   for I := 0 to FXCount - 1 do
   begin
     X := FXMin + XSpacing * I;
-    DrawLine(X, FYMin, X, FYMax, FYGridLineColor, FYGridLineWidth * FZoom);
+    DrawLine(X, FYMin, X, FYMax, FYGridLineColor, FYGridLineWidth * FScale);
     DrawText(X, FYMin + YShift, TryFloatToText(FXMinF + FXDeltaF * I), FXAxisFontColor, taCenter, taAlignTop);
   end;
-  DrawLine(FXMax, FYMin, FXMax, FYMax, FYGridLineColor, FYGridLineWidth * FZoom);
+  DrawLine(FXMax, FYMin, FXMax, FYMax, FYGridLineColor, FYGridLineWidth * FScale);
   DrawText(FXMax, FYMin + YShift, FXAxisLabel, FXAxisFontColor, taCenter, taAlignTop);
   // Draw X secondary axis and Y labels
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;
   FBit.FontName      := FYAxisFontName;
   FBit.FontStyle     := FYAxisFontStyle;
-  FBit.FontHeight    := Trunc(FYAxisFontHeight * FZoom);
+  FBit.FontHeight    := Trunc(FYAxisFontHeight * FScale);
 
   FBit.JoinStyle := pjsRound;
   FBit.LineCap   := pecRound;
@@ -922,19 +918,19 @@ begin
   for I := 0 to FYCount - 1 do
   begin
     Y := FYMin + YSpacing * I;
-    DrawLine(FXMin, Y, FXMax, Y, FXGridLineColor, FXGridLineWidth * FZoom);
+    DrawLine(FXMin, Y, FXMax, Y, FXGridLineColor, FXGridLineWidth * FScale);
     DrawText(FXMin + XShift, Y, TryFloatToText(FYMinF + FYDeltaF * I), FYAxisFontColor, taRightJustify, taVerticalCenter);
   end;
-  DrawLine(FXMin, FYMax, FXMax, FYMax, FXGridLineColor, FXGridLineWidth * FZoom);
+  DrawLine(FXMin, FYMax, FXMax, FYMax, FXGridLineColor, FXGridLineWidth * FScale);
   DrawText(FXMin + XShift, FYMax, FYAxisLabel, FYAxisFontColor, taRightJustify, taVerticalCenter);
   // Draw Chart Title
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;
   FBit.FontName      := FTitleFontName;
   FBit.FontStyle     := FTitleFontStyle;
-  FBit.FontHeight    := Trunc(FTitleFontHeight * fZoom);
+  FBit.FontHeight    := Trunc(FTitleFontHeight * FScale);
 
-  YShift := (FSpacer * FZoom) * 0.5;
+  YShift := (FSpacer * FScale) * 0.5;
   DrawText((FXMin + FXMax) * 0.5, FYMax + YShift, FTitle, FTitleFontColor, taCenter, taAlignBottom);
 end;
 
@@ -989,7 +985,7 @@ begin
         FBit.FontAntialias := True;
         FBit.FontQuality   := fqSystemClearType;
         FBit.FontName      := Item.FFontName;
-        FBit.FontHeight    := Trunc(Item.FFontHeight * FZoom);
+        FBit.FontHeight    := Trunc(Item.FFontHeight * FScale);
         FBit.FontStyle     := Item.FFontStyle;
 
         Result.Width  := Max(Result.Width,  FBit.TextSize(Item.FCaption).Width);
@@ -1000,12 +996,12 @@ begin
 
   if Result.Width > 0 then
   begin
-    Result.Width := Result.Width + Trunc(FSpacer * FZoom * 2.5 + FLegendLineLength * FZoom);
+    Result.Width := Result.Width + Trunc(FSpacer * FScale * 2.5 + FLegendLineLength * FScale);
   end;
 
   if Result.Height > 0 then
   begin
-    Result.Height := Result.Height + Trunc(FSpacer * FZoom);
+    Result.Height := Result.Height + Trunc(FSpacer * FScale);
   end;
 end;
 
@@ -1033,22 +1029,22 @@ begin
         FBit.PenStyle := TChartPolyLineItem(Item).FPenStyle;
 
         FBit.DrawLineAntialias(
-          XToCanvas(X + FSpacer * FZoom),
+          XToCanvas(X + FSpacer * FScale),
           YToCanvas(Y),
-          XToCanvas(X + FSpacer * FZoom + FLegendLineLength * FZoom),
+          XToCanvas(X + FSpacer * FScale + FLegendLineLength * FScale),
           YToCanvas(Y),
           TChartPolyLineItem(Item).FPenColor,
-          TChartPolyLineItem(Item).FPenWidth * FZoom);
+          TChartPolyLineItem(Item).FPenWidth * FScale);
 
         FBit.FontAntialias := True;
         FBit.FontQuality   := fqSystemClearType;
         FBit.FontName      := Item.FFontName;
-        FBit.FontHeight    := Trunc(Item.FFontHeight * FZoom);
+        FBit.FontHeight    := Trunc(Item.FFontHeight * FScale);
         FBit.FontStyle     := Item.FFontStyle;
-        DrawText(X + (FSpacer * FZoom * 1.5) + FLegendLineLength * FZoom, Y,
+        DrawText(X + (FSpacer * FScale * 1.5) + FLegendLineLength * FScale, Y,
           Item.FCaption, Item.FFontColor, taLeftJustify, taVerticalCenter);
 
-        Y := Y - FBit.TextSize(Item.FCaption).Height - (FSpacer * FZoom) * 0.25;
+        Y := Y - FBit.TextSize(Item.FCaption).Height - (FSpacer * FScale) * 0.25;
       end;
     end;
   end;
@@ -1103,9 +1099,9 @@ begin
         end;
 
         Tex := FBit.CreateBrushTexture(bsFDiagonal, FTextureColor, FTextureBackgroundColor,
-          Trunc(FTextureWidth*FZoom), Trunc(FTextureHeight*FZoom), FTexturePenWidth * FZoom) as TBGRABitmap;
+          Trunc(FTextureWidth*FScale), Trunc(FTextureHeight*FScale), FTexturePenWidth*FScale) as TBGRABitmap;
         FBit.FillPolyAntialias(T, Tex);
-        FBit.DrawPolygonAntialias(T, FPenColor, FPenWidth * FZoom, BGRA(255, 255, 255, 0));
+        FBit.DrawPolygonAntialias(T, FPenColor, FPenWidth * FScale, BGRA(255, 255, 255, 0));
         Tex.Destroy;
         T := nil;
       end;
@@ -1167,7 +1163,7 @@ begin
           T[j].x := XToCanvas(FXMin + (T[j].x - FXMinF) * FXScaleF);
           T[j].y := YToCanvas(FYMin + (T[j].y - FYMinF) * FYScaleF);
         end;
-        FBit.DrawPolyLineAntialias(T, FPenColor, FPenWidth * FZoom, BGRA(255, 255, 255, 0));
+        FBit.DrawPolyLineAntialias(T, FPenColor, FPenWidth * FScale, BGRA(255, 255, 255, 0));
         T := nil;
       end;
     end else
@@ -1182,8 +1178,8 @@ begin
         FBit.EllipseAntialias(
           XToCanvas(FXMin + (FX - FXMinF) * FXScaleF),
           YToCanvas(FYMin + (FY - FYMinF) * FYScaleF),
-          FRadius*FZoom,
-          FRadius*FZoom,
+          FRadius*FScale,
+          FRadius*FScale,
           FPenColor,
           FPenWidth,
           FPenColor);
@@ -1191,12 +1187,12 @@ begin
         FBit.FontAntialias := True;
         FBit.FontQuality   := fqSystemClearType;
         FBit.FontName      := FFontName;
-        FBit.FontHeight    := Trunc(FFontHeight * FZoom);
+        FBit.FontHeight    := Trunc(FFontHeight * FScale);
         FBit.FontStyle     := FFontStyle;
 
         DrawText(
-          FXMin + (FX - FXMinF) * FXScaleF + FShiftX*FZoom,
-          FYMin + (FY - FYMinF) * FYScaleF + FShiftY*FZoom,
+          FXMin + (FX - FXMinF) * FXScaleF + FShiftX*FScale,
+          FYMin + (FY - FYMinF) * FYScaleF + FShiftY*FScale,
           FCaption, FFontColor, FAlign, FVertAlign);
       end;
     end else
@@ -1207,12 +1203,12 @@ begin
         FBit.FontAntialias := True;
         FBit.FontQuality   := fqSystemClearType;
         FBit.FontName      := FFontName;
-        FBit.FontHeight    := Trunc(FFontHeight * FZoom);
+        FBit.FontHeight    := Trunc(FFontHeight * FScale);
         FBit.FontStyle     := FFontStyle;
 
         DrawText(
-          FXMin + (FX - FXMinF) * FXScaleF + FShiftX*FZoom,
-          FYMin + (FY - FYMinF) * FYScaleF + FShiftY*FZoom,
+          FXMin + (FX - FXMinF) * FXScaleF + FShiftX*FScale,
+          FYMin + (FY - FYMinF) * FYScaleF + FShiftY*FScale,
           FCaption, FFontColor, FAlign, FVertAlign);
       end;
     end;
@@ -1239,21 +1235,21 @@ begin
   FBit.FontQuality   := fqSystemClearType;
   FBit.FontName      := FXAxisFontName;
   FBit.FontStyle     := FXAxisFontStyle;
-  FBit.FontHeight    := Trunc(FXAxisFontHeight * FZoom);
+  FBit.FontHeight    := Trunc(FXAxisFontHeight * FScale);
 
-  maxXLabelWidth  := Max(FBit.TextSize(FXAxisLabel).Width,  FBit.TextSize(TryFloatToText(FXMaxF)).Width ) + Trunc(FSpacer * FZoom);
-  maxXLabelHeight := Max(FBit.TextSize(FXAxisLabel).Height, FBit.TextSize(TryFloatToText(FXMaxF)).Height) + Trunc(FSpacer * FZoom);
-  maxYLabelWidth  := Max(FBit.TextSize(FYAxisLabel).Width,  FBit.TextSize(TryFloatToText(FYMaxF)).Width ) + Trunc(FSpacer * FZoom);
-  maxYLabelHeight := Max(FBit.TextSize(FYAxisLabel).Height, FBit.TextSize(TryFloatToText(FYMaxF)).Height) + Trunc(FSpacer * FZoom);
+  maxXLabelWidth  := Max(FBit.TextSize(FXAxisLabel).Width,  FBit.TextSize(TryFloatToText(FXMaxF)).Width ) + Trunc(FSpacer * FScale);
+  maxXLabelHeight := Max(FBit.TextSize(FXAxisLabel).Height, FBit.TextSize(TryFloatToText(FXMaxF)).Height) + Trunc(FSpacer * FScale);
+  maxYLabelWidth  := Max(FBit.TextSize(FYAxisLabel).Width,  FBit.TextSize(TryFloatToText(FYMaxF)).Width ) + Trunc(FSpacer * FScale);
+  maxYLabelHeight := Max(FBit.TextSize(FYAxisLabel).Height, FBit.TextSize(TryFloatToText(FYMaxF)).Height) + Trunc(FSpacer * FScale);
 
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;
   FBit.FontName      := FTitleFontName;
   FBit.FontStyle     := FTitleFontStyle;
-  FBit.FontHeight    := Trunc(FTitleFontHeight * FZoom);
+  FBit.FontHeight    := Trunc(FTitleFontHeight * FScale);
 
-  maxTitleWidth  := FBit.TextSize(FTitle).Width  + Trunc(FSpacer * FZoom);
-  maxTitleHeight := FBit.TextSize(FTitle).Height + Trunc(FSpacer * FZoom);
+  maxTitleWidth  := FBit.TextSize(FTitle).Width  + Trunc(FSpacer * FScale);
+  maxTitleHeight := FBit.TextSize(FTitle).Height + Trunc(FSpacer * FScale);
 
   FXMin := maxYLabelWidth;
   FYMin := maxXLabelHeight;
@@ -1267,8 +1263,8 @@ begin
 
     if (FXCount > 0) and (FYCount > 0) then
     begin
-      if FIsNeededCalcXDeltaF then FXDeltaF := GetDelta2(FXCount, FXMaxF - FXMinF);
-      if FIsNeededCalcYDeltaF then FYDeltaF := GetDelta2(FYCount, FYMaxF - FYMinF);
+      if FIsNeededCalcXDeltaF then FXDeltaF := GetDelta(FXCount, FXMaxF - FXMinF);
+      if FIsNeededCalcYDeltaF then FYDeltaF := GetDelta(FYCount, FYMaxF - FYMinF);
 
       if (FXDeltaF > 0) and (FYDeltaF > 0) then
       begin
@@ -1290,12 +1286,12 @@ begin
   FBit.JoinStyle := pjsRound;
   FBit.LineCap   := pecRound;
   FBit.PenStyle  := FXAxisLineStyle;
-  DrawLine(FXMin, FYMin, FXMax, FYmin, FXAxisLineColor, FXAxisLineWidth * FZoom);
+  DrawLine(FXMin, FYMin, FXMax, FYmin, FXAxisLineColor, FXAxisLineWidth * FScale);
 
   FBit.JoinStyle := pjsRound;
   FBit.LineCap   := pecRound;
   FBit.PenStyle  := FYAxisLineStyle;
-  DrawLine(FXMin, FYMin, FXMin, FYMax, FYAxisLineColor, FYAxisLineWidth * FZoom);
+  DrawLine(FXMin, FYMin, FXMin, FYMax, FYAxisLineColor, FYAxisLineWidth * FScale);
 
   FBit.InvalidateBitmap;
   FBit.Draw(aCanvas, 0, 0, True);
@@ -1646,20 +1642,24 @@ end;
 constructor TSectionSpringDrawing.Create;
 begin
   inherited Create;
-  fd := 0;
-  fDm := 0;
-  fLc := 0;
-  fLx := 0;
-  fn := 0;
-  fnt1 := 0;
-  fnt2 := 0;
-  fpitch := 0;
+  Fd := 0;
+  FDm := 0;
+  FLc := 0;
+  FLx := 0;
+  Fn := 0;
+  Fnt1 := 0;
+  Fnt2 := 0;
+  FPitchF := 0;
+
+  FFontHeight := 12;
+
   fClockWise := True;
-  fGroundEnds := True;
+  FGroundEnds := True;
   fClosedEnds := True;
-  fText := '';
-  fZoom := 1.0;
-  fAutoFit := True;
+  FCaption := '';
+  FScale := 1.0;
+  FAutoFit := True;
+  FAutoScale := 1.0;
 end;
 
 destructor TSectionSpringDrawing.Destroy;
@@ -1669,45 +1669,44 @@ end;
 
 function TSectionSpringDrawing.xt(const t: double): double;
 begin
-  Result := (fDm / 2) * cos(2 * pi * t);
+  Result := (FDm / 2) * cos(2 * pi * t);
 end;
 
 function TSectionSpringDrawing.yt(const t: double): double;
 begin
-  Result := (fDm / 2) * sin(2 * pi * t);
+  Result := (FDm / 2) * sin(2 * pi * t);
 end;
 
 function TSectionSpringDrawing.zt(const t: double): double;
 begin
   Result := 0;
-  if (t > 0) and (t <= fnt2) then
+  if (t > 0) and (t <= Fnt2) then
   begin
-    Result := t * fd;
+    Result := t * Fd;
   end;
 
-  if (t > fnt2) and (t <= (fnt2 + fn)) then
+  if (t > Fnt2) and (t <= (Fnt2 + Fn)) then
   begin
-    Result := fnt2 * fd + (t - fnt2) * fpitch;
+    Result := Fnt2 * Fd + (t - Fnt2) * FPitchF;
   end;
 
-  if (t > (fnt2 + fn)) then
+  if (t > (Fnt2 + Fn)) then
   begin
-    Result := fnt2 * fd + fn * fpitch + (t - (fnt2 + fn)) * fd;
+    Result := Fn * FPitchF + (t - Fn) * Fd;
   end;
 end;
 
 function TSectionSpringDrawing.PreCheck: boolean;
 begin
   Result := True;
-  if fd <= 0 then Result := False;
-  if fDm <= 0 then Result := False;
-  if fLc <= 0 then Result := False;
-  if fLx < fLc then Result := False;
-  if fn <= 0 then Result := False;
-  if fnt1 <= 0 then Result := False;
-  if fnt2 <= 0 then Result := False;
-  //if fpitch <= 0   then Result := False;
-  if fZoom <= 0 then Result := False;
+  if Fd     <= 0  then Result := False;
+  if FDm    <= 0  then Result := False;
+  if FLc    <= 0  then Result := False;
+  if FLx    < FLc then Result := False;
+  if Fn     <= 0  then Result := False;
+  if Fnt1   <= 0  then Result := False;
+  if Fnt2   <= 0  then Result := False;
+  if FScale <= 0  then Result := False;
 end;
 
 procedure TSectionSpringDrawing.Draw(aCanvas: TCanvas; aWidth, aHeight: longint);
@@ -1729,49 +1728,51 @@ end;
 
 procedure TSectionSpringDrawing.Draw(aCanvas: TCanvas);
 var
+  CenterPosition: double;
   x0, x1: double;
   y0, y1: double;
-  OffSet: double;
-  Tex: TBGRABitmap;
   t: double;
+  Tex: TBGRABitmap;
 
   FXMin: longint;
   FYMin: longint;
   FXMax: longint;
   FYMax: longint;
 
-  FXMinF: single;
-  FYMinF: single;
-  FXMaxF: single;
-  FYMaxF: single;
-  FPitchF: single;
+  FXMinF: double;
+  FYMinF: double;
+  FXMaxF: double;
+  FYMaxF: double;
 begin
+  CenterPosition := FWidth div 2;
+  FBit := TBGRABitmap.Create;
   FBit.SetSize(FWidth, FHeight);
   FBit.Fill(FBackgroundColor);
 
-  OffSet := FWidth div 2;
-
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;
-  FBit.FontName      := FCurrentFontName;
-  FBit.FontStyle     := FCurrentFontStyle;
-  FBit.FontHeight    := Trunc(FCurrentFontHeight * FZoom);
+  FBit.FontName      := FFontName;
+  FBit.FontStyle     := FFontStyle;
+  FBit.FontHeight    := Trunc(FFontHeight * FScale);
 
   FXMin := FSpacer;
-  FYMin := FBit.TextSize('FF').Height + Trunc(FSpacer * 1.5);
-  FXMax := FWidth  - Trunc(FSpacer * 0.5);
-  FYMax := FHeight - Trunc(FSpacer * 0.5);
+  FXMax := FWidth - Trunc(FSpacer*FScale * 0.5);
+
+  FYMin := FBit.TextSize(FCaption).Height + Trunc(FSpacer*FScale * 1.5);
+  FYMax := FHeight - Trunc(FSpacer*FScale * 0.5);
 
   if PreCheck then
   begin
-    FPitchF := Fd + (Lx - Lc) / Fn;
+    FPitchF := (Lx - Lc) / Fn + Fd;
     FXMinF  := 0;
     FXMaxF  := FDm + Fd;
     FYMinF  := 0;
     FYMaxF  := zt(Fnt2 + Fn + Fnt1) + Fd;
 
     if FAutoFit then
-      FZoom := Min((FXMax-FXMin)/(FXMaxF-FXMinF), (FYMax-FYMin)/(FYMax-FYMinF));
+    begin
+      FAutoScale := Min((FXMax - FXMin)/(FXMaxF - FXMinF), (FYMax - FYMin)/(FYMaxF - FYMinF));
+    end;
 
     x0 := 0;
     y0 := 0;
@@ -1780,59 +1781,57 @@ begin
     begin
       t := t + 0.5;
       if fClockWise then
-        x1 := OffSet + xt(t) * FZoom
+        x1 := CenterPosition + xt(t) * FAutoScale
       else
-        x1 := OffSet + xt(t + 0.5) * FZoom;
+        x1 := CenterPosition + xt(t + 0.5) * FAutoScale;
+      y1 := FYMin + (zt(t) + Fd / 2) * FAutoScale;
 
-      y1 := FYMin + (zt(t) + Fd / 2) * FZoom;
-
-      Tex := FBit.CreateBrushTexture(bsFDiagonal,
-        FCurrentTextureColor, BGRA(255, 255, 255, 0)) as TBGRABitmap;
-
+      Tex := FBit.CreateBrushTexture(bsFDiagonal, FTextureColor, FTextureBackgroundColor,
+        Trunc(FTextureWidth*FScale), Trunc(FTextureHeight*FScale), FTexturePenWidth*FScale) as TBGRABitmap;
       FBit.FillEllipseAntialias(
         XToCanvas(x1),
         YToCanvas(y1),
-        Fd / 2 * FZoom, Fd / 2 * FZoom, Tex);
+        Fd / 2 * FAutoScale, Fd / 2 * FAutoScale, Tex);
       Tex.Destroy;
 
       FBit.EllipseAntialias(
         XToCanvas(x1),
         YToCanvas(y1),
-        Fd / 2 * FZoom,
-        Fd / 2 * FZoom,
-        FCurrentPenColor,
-        FCurrentPenWidth, BGRA(255, 255, 255, 0));
+        Fd / 2 * FAutoScale,
+        Fd / 2 * FAutoScale,
+        FPenColor,
+        FPenWidth * FScale, BGRA(255, 255, 255, 0));
 
       if (t > 0) and ((t mod 1) > 0) then
       begin
         FBit.DrawLineAntialias(
           XToCanvas(x0),
-          YToCanvas(y0 + Fd / 2 * FZoom),
+          YToCanvas(y0 + Fd / 2 * FAutoScale),
           XToCanvas(x1),
-          YToCanvas(y1 + Fd / 2 * FZoom),
-          FCurrentPenColor, FCurrentPenWidth, False);
+          YToCanvas(y1 + Fd / 2 * FAutoScale),
+          FPenColor, FPenWidth * FScale, False);
 
         FBit.DrawLineAntialias(
           XToCanvas(x0),
-          YToCanvas(y0 - Fd / 2 * FZoom),
+          YToCanvas(y0 - Fd / 2 * FAutoScale),
           XToCanvas(x1),
-          YToCanvas(y1 - Fd / 2 * FZoom),
-          FCurrentPenColor, FCurrentPenWidth, False);
+          YToCanvas(y1 - Fd / 2 * FAutoScale),
+          FPenColor, FPenWidth * FScale, False);
       end;
       x0 := x1;
       y0 := y1;
     end;
 
     // Draw Ends
-    x0 := OffSet - (fDm + fd) / 2 * FZoom;
-    x1 := OffSet + (fDm + fd) / 2 * FZoom;
-    if fGroundEnds then
-      y0 := FYMin + Fd / 2 * FZoom
+    x0 := CenterPosition - (FDm + Fd) / 2 * FAutoScale;
+    x1 := CenterPosition + (FDm + Fd) / 2 * FAutoScale;
+    if FGroundEnds then
+      y0 := FYMin + Fd / 2 * FAutoScale
     else
       y0 := FYMin;
     y1 := y0;
 
-    if fGroundEnds then
+    if FGroundEnds then
     begin
       FBit.FillRect(
         Trunc(XToCanvas(x0 - 2)),
@@ -1846,18 +1845,18 @@ begin
         Trunc(YToCanvas(y0)),
         Trunc(XToCanvas(x1)),
         Trunc(YToCanvas(y1)),
-        FCurrentPenColor, FCurrentPenWidth, False);
+        FPenColor, FPenWidth, False);
     end;
 
-    x0 := OffSet - (fDm + fd) / 2 * FZoom;
-    x1 := OffSet + (fDm + fd) / 2 * FZoom;
-    if fGroundEnds then
-      y0 := FYMin + (zt(fnt2 + fn + fnt1)) * FZoom
+    x0 := CenterPosition - (FDm + Fd) / 2 * FAutoScale;
+    x1 := CenterPosition + (FDm + Fd) / 2 * FAutoScale;
+    if FGroundEnds then
+      y0 := FYMin + (zt(Fnt2 + Fn + Fnt1)) * FAutoScale
     else
-      y0 := FYMin + (zt(fnt2 + fn + fnt1) + fd / 2) * FZoom;
+      y0 := FYMin + (zt(Fnt2 + Fn + Fnt1) + Fd / 2) * FAutoScale;
     y1 := y0;
 
-    if fGroundEnds then
+    if FGroundEnds then
     begin
       FBit.FillRect(
         Trunc(XToCanvas(x0 - 2)),
@@ -1871,27 +1870,28 @@ begin
         Trunc(YToCanvas(y0)),
         Trunc(XToCanvas(x1)),
         Trunc(YToCanvas(y1)),
-        FCurrentPenColor, FCurrentPenWidth, False);
+        FPenColor, FPenWidth*FScale, False);
     end;
     // Draw center line
+    FBit.PenStyle := psDashDot;
     FBit.DrawLineAntialias(
-      XToCanvas(OffSet),
-      YToCanvas(FYMin - FSpacer / 2),
-      XToCanvas(OffSet),
-      YToCanvas(FYMin + (FYMaxF-FYMinF) + FSpacer / 2),
-      FCurrentPenColor, FCurrentPenWidth, False);
-    // Text
-
-    x0 := OffSet;
-    Y0 := fSpacer div 2 + FBit.TextSize(FText).Height;
+      XToCanvas(CenterPosition),
+      YToCanvas(FYMin),
+      XToCanvas(CenterPosition),
+      YToCanvas(FYMin + (FYMaxF - FYMinF) * FAutoScale),
+      FCenterLineColor, FCenterLineWidth*FScale, False);
+    // Draw caption
+    x0 := CenterPosition;
+    y0 := FSpacer*FScale + FBit.TextSize(FCaption).Height;
     FBit.TextOut(
       XToCanvas(x0),
-      XToCanvas(y0),
-      FText, FCurrentFontColor, taCenter);
+      YToCanvas(y0),
+      FCaption, FFontColor, taCenter);
     // Draw
   end;
   FBit.InvalidateBitmap;
   FBit.Draw(aCanvas, 0, 0, True);
+  FBit.Destroy;
 end;
 
 // DrawLogo
