@@ -61,7 +61,7 @@ object GeometryForm: TGeometryForm
     ItemIndex = 0
     Items.Strings = (
       'mm'
-      'inch'
+      'in'
     )
     ParentBidiMode = False
     ReadOnly = True
@@ -87,7 +87,7 @@ object GeometryForm: TGeometryForm
     ItemIndex = 0
     Items.Strings = (
       'mm'
-      'inch'
+      'in'
     )
     ParentBidiMode = False
     ReadOnly = True
@@ -310,7 +310,7 @@ object GeometryForm: TGeometryForm
     ItemIndex = 0
     Items.Strings = (
       'mm'
-      'inch'
+      'in'
     )
     ParentBidiMode = False
     ReadOnly = True
@@ -437,7 +437,7 @@ object GeometryForm: TGeometryForm
     ItemIndex = 0
     Items.Strings = (
       'mm'
-      'inch'
+      'in'
     )
     ParentBidiMode = False
     ReadOnly = True
@@ -462,7 +462,7 @@ object GeometryForm: TGeometryForm
     ItemIndex = 0
     Items.Strings = (
       'mm'
-      'inch'
+      'in'
     )
     ParentBidiMode = False
     ReadOnly = True

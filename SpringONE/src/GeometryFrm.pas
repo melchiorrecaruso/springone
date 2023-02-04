@@ -82,7 +82,7 @@ implementation
 {$R *.lfm}
 
 uses
-  MainFrm, UtilsBase;
+  MainFrm, UtilsBase, UnitOfMeasurement;
 
 // TGeometryForm
 
@@ -98,6 +98,7 @@ begin
   CoilDiameterIndex.ItemIndex := 1;
   CoilDiameter     .Value     := 0;
   CoilDiameterUnit .ItemIndex := 0;
+
   ActiveCoil       .Value     := 0;
   InactiveCoil1    .Value     := 0;
   InactiveCoil2    .Value     := 0;
@@ -150,21 +151,42 @@ end;
 
 procedure TGeometryForm.SaveToSolver;
 begin
-  SOLVER.WireDiameter := GetMillimeters(WireDiameter.Value, WireDiameterUnit.ItemIndex);
-  case CoilDiameterIndex.ItemIndex of
-    0: SOLVER.Dm := GetMillimeters(CoilDiameter.Value, CoilDiameterUnit.ItemIndex) + SOLVER.WireDiameter; // Input Di
-    1: SOLVER.Dm := GetMillimeters(CoilDiameter.Value, CoilDiameterUnit.ItemIndex);                             // Input Dm
-    2: SOLVER.Dm := GetMillimeters(CoilDiameter.Value, CoilDiameterUnit.ItemIndex) - SOLVER.WireDiameter; // Input De
+  case WireDiameterUnit.ItemIndex of
+    0: SOLVER.WireDiameter := WireDiameter.Value*mm;
+    1: SOLVER.WireDiameter := WireDiameter.Value*inch;
   end;
+
+  case CoilDiameterUnit.ItemIndex of
+    0: SOLVER.Dm := CoilDiameter.Value*mm;
+    1: SOLVER.Dm := CoilDiameter.Value*inch;
+  end;
+
+  case CoilDiameterIndex.ItemIndex of
+    0: SOLVER.Dm := SOLVER.Dm - SOLVER.WireDiameter;  // Input Di
+    1: SOLVER.Dm := SOLVER.Dm;                        // Input Dm
+    2: SOLVER.Dm := SOLVER.Dm + SOLVER.WireDiameter;  // Input De
+  end;
+
   SOLVER.ActiveColis := ActiveCoil.Value;
   SOLVER.TotalCoils  := ActiveCoil.Value + InactiveCoil1.Value + InactiveCoil2.Value;
 
   SOLVER.ClosedEnds := EndCoilType.ItemIndex in [0, 1];
   SOLVER.GroundEnds := EndCoilType.ItemIndex in [   1];
 
-  SOLVER.LengthL0 := GetMillimeters(LengthL0.Value, LengthL0Unit.ItemIndex);
-  SOLVER.LengthL1 := GetMillimeters(LengthL1.Value, LengthL1Unit.ItemIndex);
-  SOLVER.LengthL2 := GetMillimeters(LengthL2.Value, LengthL2Unit.ItemIndex);
+  case LengthL0Unit.ItemIndex of
+    0: SOLVER.LengthL0 := LengthL0.Value*mm;
+    1: SOLVER.LengthL0 := LengthL0.Value*inch;
+  end;
+
+  case LengthL1Unit.ItemIndex of
+    0: SOLVER.LengthL1 := LengthL1.Value*mm;
+    1: SOLVER.LengthL1 := LengthL1.Value*inch;
+  end;
+
+  case LengthL2Unit.ItemIndex of
+    0: SOLVER.LengthL2 := LengthL2.Value*mm;
+    1: SOLVER.LengthL2 := LengthL2.Value*inch;
+  end;
 end;
 
 procedure TGeometryForm.SpinEditChange(Sender: TObject);

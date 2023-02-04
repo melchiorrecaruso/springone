@@ -75,7 +75,7 @@ implementation
 
 uses
   ApplicationFrm, GeometryFrm, EN10270, EN13906, EN15800,
-  MainFrm, ProductionFrm, QualityFrm, UtilsBase;
+  MainFrm, ProductionFrm, QualityFrm, UtilsBase, UnitOfMeasurement;
 
 // TMaterialForm
 
@@ -131,22 +131,23 @@ begin
     TensileStrength     .Value := 0;
     MaterialDensity     .Value := 0;
 
-    if GeometryForm.WireDiameter.Value > 0 then
+    GeometryForm.SaveToSolver;
+    if SOLVER.WireDiameter > (0*mm) then
     begin
-      MAT.SetItem(Material.Text, GeometryForm.WireDiameter.Value,
+      MAT.SetItem(Material.Text, SOLVER.WireDiameter ,
         ApplicationForm.Temperature.Value, ProductionForm.WireSurface.Text);
 
       if MAT.ItemIndex = -1 then
       begin
-        MAT.SetItem(Material.Text, GeometryForm.WireDiameter.Value, ApplicationForm.Temperature.Value, '');
+        MAT.SetItem(Material.Text, SOLVER.WireDiameter, ApplicationForm.Temperature.Value, '');
       end;
 
       if MAT.ItemIndex <> -1 then
       begin
-        YoungModulus   .Value := MAT.YoungModulusE20;
-        ShearModulus   .Value := MAT.ShearModulusG20;
-        TensileStrength.Value := MAT.TensileStrengthRm;
-        MaterialDensity.Value := MAT.DensityRho;
+        YoungModulus   .Value := MPa.Value(MAT.YoungModulusE20);
+        ShearModulus   .Value := MPa.Value(MAT.ShearModulusG20);
+        TensileStrength.Value := MPa.Value(MAT.TensileStrengthRm);
+        MaterialDensity.Value := kg_dm3.Value(MAT.DensityRho);
 
         TOL.WireDiameterTolerance.Search(Material.Text, GeometryForm.WireDiameter.Value);
         if Assigned(QualityForm) then
@@ -205,15 +206,26 @@ begin
   Change(nil);
   if Material.Text = '' then
   begin
-    SOLVER.YoungModulus := GetMegaPascal(YoungModulus.Value, YoungModulusUnit.ItemIndex);
-    SOLVER.ShearModulus := GetMegaPascal(ShearModulus.Value, ShearModulusUnit.ItemIndex);
+    case YoungModulusUnit.ItemIndex of
+      0: SOLVER.YoungModulus := YoungModulus.Value*MPa;
+    end;
+    case ShearModulusUnit.ItemIndex of
+      0: SOLVER.ShearModulus := ShearModulus.Value*MPa;
+    end;
   end else
   begin
     SOLVER.YoungModulus := MAT.YoungModulusE;
     SOLVER.ShearModulus := MAT.ShearModulusG;
   end;
-  SOLVER.TensileStrengthRm  := GetMegaPascal(MaterialForm.TensileStrength.Value, MaterialForm.TensileStrengthUnit.ItemIndex);
-  SOLVER.MaterialDensity    := GetDensity   (MaterialForm.MaterialDensity.Value, MaterialForm.MaterialDensityUnit.ItemIndex);
+
+  case MaterialForm.TensileStrengthUnit.ItemIndex of
+    0: SOLVER.TensileStrengthRm := MaterialForm.TensileStrength.Value*MPa;
+  end;
+
+  case MaterialForm.MaterialDensityUnit.ItemIndex of
+    0: SOLVER.MaterialDensity := MaterialForm.MaterialDensity.Value*kg_dm3;
+  end;
+
   case MaterialForm.CoilingType.ItemIndex of
     0: SOLVER.ColdCoiled := True;
     1: SOLVER.ColdCoiled := False;

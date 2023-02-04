@@ -63,6 +63,9 @@ implementation
 
 {$R *.lfm}
 
+uses
+  UnitOfMeasurement;
+
 // TDrawingForm
 
 procedure TDrawingForm.FormCreate(Sender: TObject);
@@ -77,10 +80,10 @@ end;
 
 procedure TDrawingForm.BtnClick(Sender: TObject);
 begin
-  if Sender = L0Btn  then SpringLength.Value := SOLVER.LengthL0;
-  if Sender = L1Btn  then SpringLength.Value := SOLVER.LengthL1;
-  if Sender = L2Btn  then SpringLength.Value := SOLVER.LengthL2;
-  if Sender = LcBtn  then SpringLength.Value := SOLVER.LengthLc;
+  if Sender = L0Btn  then SpringLength.Value := mm.Value(SOLVER.LengthL0);
+  if Sender = L1Btn  then SpringLength.Value := mm.Value(SOLVER.LengthL1);
+  if Sender = L2Btn  then SpringLength.Value := mm.Value(SOLVER.LengthL2);
+  if Sender = LcBtn  then SpringLength.Value := mm.Value(SOLVER.LengthLc);
 end;
 
 procedure TDrawingForm.Load(IniFile: TIniFile);

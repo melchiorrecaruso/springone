@@ -27,12 +27,6 @@ interface
 uses
   Classes, SysUtils;
 
-function GetMillimeters(const Value: double; ValueUnit: longint): double;
-function GetMegaPascal (const Value: double; ValueUnit: longint): double;
-function GetNewton     (const Value: double; ValueUnit: longint): double;
-function GetDensity    (const Value: double; ValueUnit: longint): double;
-function GetCelsiusDeg (const Value: double; ValueUnit: longint): double;
-
 function TryFormatFloatSumDiv(const S1, S2 :string; const A0, A1, A2: double): string;
 function TryFormatFloatDiv(const S1, S2 :string; const A1, A2: double): string;
 function TryFormatFloat(const S1, S2 :string; const A1: double): string;
@@ -54,47 +48,6 @@ var
   WarningMessage:  TStringList;
 
 implementation
-
-function GetMillimeters(const Value: double; ValueUnit: longint): double;
-begin
-  case ValueUnit of
-    0: Result := Value;         // mm
-    1: Result := Value * 25.4;  // inch
-  else raise Exception.Create('ERROR::GetMillimeters.');
-  end;
-end;
-
-function GetMegaPascal(const Value: double; ValueUnit: longint): double;
-begin
-  case ValueUnit of
-    0: Result := Value; // N/mm2 or MPa
-  else raise Exception.Create('ERROR::GetMegaPascal.');
-  end;
-end;
-
-function GetNewton(const Value: double; ValueUnit: longint): double;
-begin
-  case ValueUnit of
-    0: Result := Value; // Newton
-  else raise Exception.Create('ERROR::GetNewton.');
-  end;
-end;
-
-function GetDensity(const Value: double; ValueUnit: longint): double;
-begin
-  case ValueUnit of
-    0: Result := Value; // kg/dm3
-  else raise Exception.Create('ERROR::GetDensity.');
-  end;
-end;
-
-function GetCelsiusDeg(const Value: double; ValueUnit: longint): double;
-begin
-  case ValueUnit of
-    0: Result := Value; // C°
-  else raise Exception.Create('ERROR::GetCelsiusDeg');
-  end;
-end;
 
 function TryFormatFloatSumDiv(const S1, S2 :string; const A0, A1, A2: double): string;
 begin

@@ -250,7 +250,7 @@ object MainForm: TMainForm
         Caption = 'Report'
         OnClick = ReportMenuItemClick
       end
-      object Production2MenuItem: TMenuItem
+      object ProductionDrawingMenuItem: TMenuItem
         Caption = 'Production drawing'
         ShowAlwaysCheckable = True
         OnClick = ViewMenuItemClick

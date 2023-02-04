@@ -25,7 +25,7 @@ unit EN10270;
 interface
 
 uses
-  Classes, CsvDocument, LCLType, SysUtils, UtilsBase;
+  Classes, CsvDocument, LCLType, SysUtils, UtilsBase, UnitOfMeasurement;
 
 type
   TMaterialDB = class
@@ -33,30 +33,30 @@ type
     fItemIndex: longint;
     fMatFile: TCsvDocument;
     fSurfaceTreatment: string;
-    fTensileStrengthRm: double;
-    fYoungModulusE20: double;
-    fYoungModulusE: double;
-    fShearModulusG20: double;
-    fShearModulusG: double;
+    fTensileStrengthRm: TPressure;
+    fYoungModulusE20: TPressure;
+    fYoungModulusE: TPressure;
+    fShearModulusG20: TPressure;
+    fShearModulusG: TPressure;
     fPoissonRatio: double;
-    fWireDiameter: double;
-    fDensityRho: double;
+    fWireDiameter: TLength;
+    fDensityRho: TDensity3D;
     fTemperature: double;
     fTemperatureMin: double;
     fTemperatureMax: double;
 
-    fFatigueFactorA: double;
+    fFatigueFactorA: TPressure;
     fFatigueFactorB: double;
-    fTorsionalStressTauStar: double;
-    fTorsionalStressTauUT: double;
-    fTorsionalStressTauYield: double;
-    fTorsionalStressTauOE7: double;
-    fTorsionalStressTauOE6: double;
-    fTorsionalStressTauOE5: double;
-    fTorsionalStressTauOE3: double;
-    fTorsionalStressTauUE7: double;
-    fTorsionalStressTauUE6: double;
-    fTorsionalStressTauUE5: double;
+    fTorsionalStressTauStar: TPressure;
+    fTorsionalStressTauUT: TPressure;
+    fTorsionalStressTauYield: TPressure;
+    fTorsionalStressTauOE7: TPressure;
+    fTorsionalStressTauOE6: TPressure;
+    fTorsionalStressTauOE5: TPressure;
+    fTorsionalStressTauOE3: TPressure;
+    fTorsionalStressTauUE7: TPressure;
+    fTorsionalStressTauUE6: TPressure;
+    fTorsionalStressTauUE5: TPressure;
     fNumOfCyclesE7: double;
     fNumOfCyclesE6: double;
     fNumOfCyclesE5: double;
@@ -66,41 +66,41 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GetG(const aTemperature: double): double;
-    function GetE(const aTemperature: double): double;
+    function GetG(const aTemperature: double): TPressure;
+    function GetE(const aTemperature: double): TPressure;
     procedure Clear;
 
-    function Search (const aID: string; const aWireDiameter, aTemperature: double; const aSurfaceTreatment: string): longint;
-    function SetItem(const aID: string; const aWireDiameter, aTemperature: double; const aSurfaceTreatment: string): longint;
+    function Search (const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
+    function SetItem(const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
   public
     property SurfaceTreatment: string read fSurfaceTreatment;
     property Tempetature: double read fTemperature;
     property TempetatureMin: double read fTemperatureMin;
     property TempetatureMax: double read fTemperatureMax;
-    property TensileStrengthRm: double read fTensileStrengthRm;
-    property YoungModulusE20: double read fYoungModulusE20;
-    property YoungModulusE: double read fYoungModulusE;
-    property ShearModulusG20: double read fShearModulusG20;
-    property ShearModulusG: double read fShearModulusG;
-    property WireDiameter: double read fWireDiameter;
+    property TensileStrengthRm: TPressure read fTensileStrengthRm;
+    property YoungModulusE20: TPressure read fYoungModulusE20;
+    property YoungModulusE: TPressure read fYoungModulusE;
+    property ShearModulusG20: TPressure read fShearModulusG20;
+    property ShearModulusG: TPressure read fShearModulusG;
+    property WireDiameter: TLength read fWireDiameter;
     property PoissonRatio: double read fPoissonRatio;
-    property DensityRho: double read fDensityRho;
+    property DensityRho: TDensity3D read fDensityRho;
     property ItemIndex: longint read fItemIndex;
     property Items[Index: longint]: string read GetItem; default;
     property Count: longint read GetCount;
 
-    property FatigueFactorA: double read fFatigueFactorA;
+    property FatigueFactorA: TPressure read fFatigueFactorA;
     property FatigueFactorB: double read fFatigueFactorB;
-    property TorsionalStressTauStar: double read fTorsionalStressTauStar;
-    property TorsionalStressTauUT: double read fTorsionalStressTauUT;
-    property TorsionalStressTauYield: double read fTorsionalStressTauYield;
-    property TorsionalStressTauOE7: double read fTorsionalStressTauOE7;
-    property TorsionalStressTauOE6: double read fTorsionalStressTauOE6;
-    property TorsionalStressTauOE5: double read fTorsionalStressTauOE5;
-    property TorsionalStressTauOE3: double read fTorsionalStressTauOE3;
-    property TorsionalStressTauUE7: double read fTorsionalStressTauUE7;
-    property TorsionalStressTauUE6: double read fTorsionalStressTauUE6;
-    property TorsionalStressTauUE5: double read fTorsionalStressTauUE5;
+    property TorsionalStressTauStar: TPressure read fTorsionalStressTauStar;
+    property TorsionalStressTauUT: TPressure read fTorsionalStressTauUT;
+    property TorsionalStressTauYield: TPressure read fTorsionalStressTauYield;
+    property TorsionalStressTauOE7: TPressure read fTorsionalStressTauOE7;
+    property TorsionalStressTauOE6: TPressure read fTorsionalStressTauOE6;
+    property TorsionalStressTauOE5: TPressure read fTorsionalStressTauOE5;
+    property TorsionalStressTauOE3: TPressure read fTorsionalStressTauOE3;
+    property TorsionalStressTauUE7: TPressure read fTorsionalStressTauUE7;
+    property TorsionalStressTauUE6: TPressure read fTorsionalStressTauUE6;
+    property TorsionalStressTauUE5: TPressure read fTorsionalStressTauUE5;
     property NumOfCyclesE7: double read fNumOfCyclesE7;
     property NumOfCyclesE6: double read fNumOfCyclesE6;
     property NumOfCyclesE5: double read fNumOfCyclesE5;
@@ -147,7 +147,7 @@ begin
   Result := fMatFile.RowCount;
 end;
 
-function TMaterialDB.GetG(const aTemperature: double): double;
+function TMaterialDB.GetG(const aTemperature: double): TPressure;
 var
   Ratio: double;
 begin
@@ -166,7 +166,7 @@ begin
   Result := Result * (1 - Ratio*(aTemperature - 20));
 end;
 
-function TMaterialDB.GetE(const aTemperature: double): double;
+function TMaterialDB.GetE(const aTemperature: double): TPressure;
 begin
   Result := GetG(aTemperature) * (2*(1 + fPoissonRatio));
 end;
@@ -174,29 +174,29 @@ end;
 procedure TMaterialDB.Clear;
 begin
   fItemIndex               := -1;
-  fFatigueFactorA          := 0;
+  fFatigueFactorA          := 0*MPa;
   fFatigueFactorB          := 0;
   fSurfaceTreatment        := '';
-  fTensileStrengthRm       := 0;
-  fYoungModulusE20         := 0;
-  fYoungModulusE           := 0;
-  fShearModulusG20         := 0;
-  fShearModulusG           := 0;
+  fTensileStrengthRm       := 0*MPa;
+  fYoungModulusE20         := 0*MPa;
+  fYoungModulusE           := 0*MPa;
+  fShearModulusG20         := 0*MPa;
+  fShearModulusG           := 0*MPa;
   fPoissonRatio            := 0;
-  fWireDiameter            := 0;
-  fDensityRho              := 0;
+  fWireDiameter            := 0*mm;
+  fDensityRho              := 0*kg_m3;
   fTemperature             := 0;
   fTemperatureMin          := 0;
   fTemperatureMax          := 0;
-  fTorsionalStressTauStar  := 0;
-  fTorsionalStressTauYield := 0;
-  fTorsionalStressTauOE7   := 0;
-  fTorsionalStressTauOE6   := 0;
-  fTorsionalStressTauOE5   := 0;
-  fTorsionalStressTauOE3   := 0;
-  fTorsionalStressTauUE7   := 0;
-  fTorsionalStressTauUE6   := 0;
-  fTorsionalStressTauUE5   := 0;
+  fTorsionalStressTauStar  := 0*MPa;
+  fTorsionalStressTauYield := 0*MPa;
+  fTorsionalStressTauOE7   := 0*MPa;
+  fTorsionalStressTauOE6   := 0*MPa;
+  fTorsionalStressTauOE5   := 0*MPa;
+  fTorsionalStressTauOE3   := 0*MPa;
+  fTorsionalStressTauUE7   := 0*MPa;
+  fTorsionalStressTauUE6   := 0*MPa;
+  fTorsionalStressTauUE5   := 0*MPa;
   fNumOfCyclesE7           := 0;
   fNumOfCyclesE6           := 0;
   fNumOfCyclesE5           := 0;
@@ -213,7 +213,7 @@ begin
     Result := '';
 end;
 
-function TMaterialDB.Search(const aID: string; const aWireDiameter, aTemperature: double; const aSurfaceTreatment: string): longint;
+function TMaterialDB.Search(const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
 var
   i: longint;
 begin
@@ -223,8 +223,8 @@ begin
     //TREATMENT  DMIN	 DMAX
     if (CompareText(aID, GetItem(i)) = 0) and (CompareText(aSurfaceTreatment, fMatFile.Cells[2, i]) = 0)  then
     begin
-       if (aWireDiameter >  TryTextToFloat(fMatFile.Cells[3, i])) and
-          (aWireDiameter <= TryTextToFloat(fMatFile.Cells[4, i])) then
+       if (aWireDiameter >  (TryTextToFloat(fMatFile.Cells[3, i]))*mm) and
+          (aWireDiameter <= (TryTextToFloat(fMatFile.Cells[4, i]))*mm) then
        begin
          Result := i;
          Break;
@@ -232,10 +232,11 @@ begin
     end;
 end;
 
-function TMaterialDB.SetItem(const aID: string; const aWireDiameter, aTemperature: double; const aSurfaceTreatment: string): longint;
+function TMaterialDB.SetItem(const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
 var
-  DT0, TO0, DTO0, TO1, DTO1, TU1, DTU1: double;
-  RM0, DRM, DR0, RMMAX: double;
+  TO0, DTO0, TO1, DTO1, TU1, DTU1: TPressure;
+  RM0, DRM, RMMAX: TPressure;
+  DR0, DT0: TLength;
 begin
   Clear;
 
@@ -247,24 +248,28 @@ begin
 
     fSurfaceTreatment     := fMatFile.Cells[2,  fItemIndex];
     fWireDiameter         := aWireDiameter;
-    fYoungModulusE20      := TryTextToFloat(fMatFile.Cells[5,  fItemIndex]);
-    fShearModulusG20      := TryTextToFloat(fMatFile.Cells[6,  fItemIndex]);
-    fDensityRho           := TryTextToFloat(fMatFile.Cells[7,  fItemIndex]);
+    fYoungModulusE20      := TryTextToFloat(fMatFile.Cells[5,  fItemIndex])*MPa;
+    fShearModulusG20      := TryTextToFloat(fMatFile.Cells[6,  fItemIndex])*MPa;
+    fDensityRho           := TryTextToFloat(fMatFile.Cells[7,  fItemIndex])*kg_dm3;
 
-    RM0                   := TryTextToFloat(fMatFile.Cells[8,  fItemIndex]);
-    DRM                   := TryTextToFloat(fMatFile.Cells[9,  fItemIndex]);
-    DR0                   := TryTextToFloat(fMatFile.Cells[10, fItemIndex]);
-    RMMAX                 := TryTextToFloat(fMatFile.Cells[11, fItemIndex]);
-    fTensileStrengthRm    := Min(RMMAX, RM0-DRM*Log10(fWireDiameter/DR0));
+    RM0                   := TryTextToFloat(fMatFile.Cells[8,  fItemIndex])*MPa;
+    DRM                   := TryTextToFloat(fMatFile.Cells[9,  fItemIndex])*MPa;
+    DR0                   := TryTextToFloat(fMatFile.Cells[10, fItemIndex])*mm;
+    RMMAX                 := TryTextToFloat(fMatFile.Cells[11, fItemIndex])*MPa;
+    fTensileStrengthRm    := RM0-DRM*Log10(fWireDiameter/DR0);
+
+    if fTensileStrengthRm > RMMAX then
+      fTensileStrengthRm := RMMAX;
+
     fTorsionalStressTauUT := fTensileStrengthRm*0.577;
 
-    DT0                   := TryTextToFloat(fMatFile.Cells[12, fItemIndex]);
-    TO0                   := TryTextToFloat(fMatFile.Cells[13, fItemIndex]);
-    DTO0                  := TryTextToFloat(fMatFile.Cells[14, fItemIndex]);
-    TO1                   := TryTextToFloat(fMatFile.Cells[15, fItemIndex]);
-    DTO1                  := TryTextToFloat(fMatFile.Cells[16, fItemIndex]);
-    TU1                   := TryTextToFloat(fMatFile.Cells[17, fItemIndex]);
-    DTU1                  := TryTextToFloat(fMatFile.Cells[18, fItemIndex]);
+    DT0                   := TryTextToFloat(fMatFile.Cells[12, fItemIndex])*mm;
+    TO0                   := TryTextToFloat(fMatFile.Cells[13, fItemIndex])*MPa;
+    DTO0                  := TryTextToFloat(fMatFile.Cells[14, fItemIndex])*MPa;
+    TO1                   := TryTextToFloat(fMatFile.Cells[15, fItemIndex])*MPa;
+    DTO1                  := TryTextToFloat(fMatFile.Cells[16, fItemIndex])*MPa;
+    TU1                   := TryTextToFloat(fMatFile.Cells[17, fItemIndex])*MPa;
+    DTU1                  := TryTextToFloat(fMatFile.Cells[18, fItemIndex])*MPa;
 
     fNumOfCyclesE7        := TryTextToFloat(fMatFile.Cells[19, fItemIndex]); ;
 
@@ -276,7 +281,7 @@ begin
     fShearModulusG        := GetG(fTemperature);
     fYoungModulusE        := GetE(fTemperature);
 
-    if (DT0 > 0) and (fNumOfCyclesE7 > 0) then
+    if (DT0 > 0*mm) and (fNumOfCyclesE7 > 0) then
     begin
       fTorsionalStressTauYield := TO1 - DTO1*Log10(aWireDiameter/DT0);
       fTorsionalStressTauOE7   := TO0 - DTO0*Log10(aWireDiameter/DT0);
@@ -288,8 +293,8 @@ begin
       fNumOfCyclesE5 := fNumOfCyclesE7/100;
       fNumOfCyclesE3 := 1000;
 
-      if ((fTorsionalStressTauOE7 > 0) and (fNumOfCyclesE7 > 0)) and
-         ((fTorsionalStressTauOE3 > 0) and (fNumOfCyclesE3 > 0)) then
+      if ((fTorsionalStressTauOE7 > 0*MPa) and (fNumOfCyclesE7 > 0)) and
+         ((fTorsionalStressTauOE3 > 0*MPa) and (fNumOfCyclesE3 > 0)) then
       begin
         fFatigueFactorB := LogN(fNumOfCyclesE7/fNumOfCyclesE3, fTorsionalStressTauOE7/fTorsionalStressTauOE3);
         fFatigueFactorA := fTorsionalStressTauOE3/Power(fNumOfCyclesE3, fFatigueFactorB);
@@ -297,11 +302,11 @@ begin
         fTorsionalStressTauOE6 := fFatigueFactorA*Power(fNumOfCyclesE6, fFatigueFactorB);
         fTorsionalStressTauOE5 := fFatigueFactorA*Power(fNumOfCyclesE5, fFatigueFactorB);
 
-        fTorsionalStressTauUE6 := fTorsionalStressTauStar*(fTorsionalStressTauYield - fTorsionalStressTauOE6)/
-                                                          (fTorsionalStressTauStar  - fTorsionalStressTauOE6);
+        fTorsionalStressTauUE6 := fTorsionalStressTauStar*((fTorsionalStressTauYield - fTorsionalStressTauOE6)/
+                                                           (fTorsionalStressTauStar  - fTorsionalStressTauOE6));
 
-        fTorsionalStressTauUE5 := fTorsionalStressTauStar*(fTorsionalStressTauYield - fTorsionalStressTauOE5)/
-                                                          (fTorsionalStressTauStar  - fTorsionalStressTauOE5);
+        fTorsionalStressTauUE5 := fTorsionalStressTauStar*((fTorsionalStressTauYield - fTorsionalStressTauOE5)/
+                                                           (fTorsionalStressTauStar  - fTorsionalStressTauOE5));
       end;
     end;
   end;

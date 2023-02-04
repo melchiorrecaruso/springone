@@ -14,15 +14,20 @@
         <UnitOutputDirectory Value="build\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <CodeGeneration>
+        <SmartLinkUnit Value="True"/>
         <Optimizations>
-          <OptimizationLevel Value="0"/>
+          <OptimizationLevel Value="3"/>
         </Optimizations>
       </CodeGeneration>
       <Linking>
         <Debugging>
-          <UseHeaptrc Value="True"/>
+          <GenerateDebugInfo Value="False"/>
+          <UseLineInfoUnit Value="False"/>
         </Debugging>
       </Linking>
+      <Other>
+        <WriteFPCLogo Value="False"/>
+      </Other>
     </CompilerOptions>
     <Description Value="SpringXXX Application Library"/>
     <Version Minor="1"/>
@@ -46,6 +51,10 @@
       <Item>
         <Filename Value="src\GraphBase.pas"/>
         <UnitName Value="GraphBase"/>
+      </Item>
+      <Item>
+        <Filename Value="src\UnitOfMeasurement.pas"/>
+        <UnitName Value="UnitOfMeasurement"/>
       </Item>
     </Files>
     <RequiredPkgs>

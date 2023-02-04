@@ -25,7 +25,7 @@ unit EN15800;
 interface
 
 uses
-  BGRABitmapTypes, Classes, CsvDocument, Math, SysUtils, UtilsBase;
+  BGRABitmapTypes, Classes, CsvDocument, Math, SysUtils, UtilsBase, UnitOfMeasurement;
 
 type
   TWireDiameterToleranceDB = class
@@ -44,20 +44,20 @@ type
   TToleranceDB = class
   private
     fCheck: boolean;
-    fAD: double;
-    fAF1: double;
-    fAF2: double;
-    fAL0: double;
-    fFactorAlphaF: double;
-    fWireDiameter:  double;
+    fAD: TLength;
+    fAF1: TForce;
+    fAF2: TForce;
+    fAL0: TLength;
+    fFactorAlphaF: TForce;
+    fWireDiameter:  TLength;
     fWireDiameterTolerance: TWireDiameterToleranceDB;
-    fCoilDiameterDm: double;
-    fLoadF1:  double;
-    fLoadF2:  double;
-    fEccentricityE1: double;
-    fEccentricityE2: double;
+    fCoilDiameterDm: TLength;
+    fLoadF1:  TForce;
+    fLoadF2:  TForce;
+    fEccentricityE1: TLength;
+    fEccentricityE2: TLength;
     fFactorKF: double;
-    fLengthL0: double;
+    fLengthL0: TLength;
     fActiveCoils: double;
     fDmQualityGrade: longint;
     fL0QualityGrade: longint;
@@ -65,7 +65,7 @@ type
     fF2QualityGrade: longint;
     fE1QualityGrade: longint;
     fE2QualityGrade: longint;
-    fSpringRateR: double;
+    fSpringRateR: TStiffness;
     fSpringIndexW: double;
   public
     constructor Create;
@@ -73,14 +73,14 @@ type
     procedure Solve;
     procedure Clear;
   public
-    property WireDiameter: double  write fWireDiameter;
+    property WireDiameter: TLength  write fWireDiameter;
     property WireDiameterTolerance: TWireDiameterToleranceDB read fWireDiameterTolerance;
-    property CoilDiameterDm: double write fCoilDiameterDm;
-    property EccentricityE1: double read fEccentricityE1;
-    property EccentricityE2: double read fEccentricityE2;
-    property LoadF1: double read fLoadF1 write fLoadF1;
-    property LoadF2: double read fLoadF2 write fLoadF2;
-    property LengthL0: double write fLengthL0;
+    property CoilDiameterDm: TLength write fCoilDiameterDm;
+    property EccentricityE1: TLength read fEccentricityE1;
+    property EccentricityE2: TLength read fEccentricityE2;
+    property LoadF1: TForce read fLoadF1 write fLoadF1;
+    property LoadF2: TForce read fLoadF2 write fLoadF2;
+    property LengthL0: TLength write fLengthL0;
     property ActiveCoils: double write fActiveCoils;
     property DmQualityGrade: longint read fDmQualityGrade write fDmQualityGrade;
     property L0QualityGrade: longint read fL0QualityGrade write fL0QualityGrade;
@@ -88,11 +88,11 @@ type
     property F2QualityGrade: longint read fF2QualityGrade write fF2QualityGrade;
     property E1QualityGrade: longint read fE1QualityGrade write fE1QualityGrade;
     property E2QualityGrade: longint read fE2QualityGrade write fE2QualityGrade;
-    property SpringRateR: double write fSpringRateR;
-    property CoilDiameterTolerance: double read fAD;
-    property LoadF1Tolerance: double read fAF1;
-    property LoadF2Tolerance: double read fAF2;
-    property LengthL0Tolerance: double read fAL0;
+    property SpringRateR: TStiffness write fSpringRateR;
+    property CoilDiameterTolerance: TLength read fAD;
+    property LoadF1Tolerance: TForce read fAF1;
+    property LoadF2Tolerance: TForce read fAF2;
+    property LengthL0Tolerance: TLength read fAL0;
     property SpringIndexW: double write fSpringIndexW;
   end;
 
@@ -142,21 +142,21 @@ end;
 procedure TToleranceDB.Clear;
 begin
   fCheck          := False;
-  fAD             := 0;
-  fAF1            := 0;
-  fAF2            := 0;
-  fAL0            := 0;
-  fFactorAlphaF   := 0;
-  fWireDiameter   := 0;
-  fCoilDiameterDm := 0;
-  fLoadF1         := 0;
-  fLoadF2         := 0;
-  fEccentricityE1 := 0;
-  fEccentricityE2 := 0;
+  fAD             := 0*m;
+  fAF1            := 0*N;
+  fAF2            := 0*N;
+  fAL0            := 0*m;
+  fFactorAlphaF   := 0*N;
+  fWireDiameter   := 0*m;
+  fCoilDiameterDm := 0*m;
+  fLoadF1         := 0*N;
+  fLoadF2         := 0*N;
+  fEccentricityE1 := 0*m;
+  fEccentricityE2 := 0*m;
   fFactorKF       := 0;
-  fLengthL0       := 0;
+  fLengthL0       := 0*m;
   fActiveCoils    := 0;
-  fSpringRateR    := 0;
+  fSpringRateR    := 0*(N_m);
   fSpringIndexW   := 0;
   fDmQualityGrade := 0;
   fL0QualityGrade := 0;
@@ -175,14 +175,14 @@ begin
   // EN15800
   fCheck := True;
   // Scopo e campo di applicazione
-  if fWireDiameter   < 0.07 then ErrorMessage.Add('Wire diameter < 0.07 mm.');
-  if fWireDiameter   >   16 then ErrorMessage.Add('Wire diameter > 16 mm.');
-  if fCoilDiameterDm < 0.63 then ErrorMessage.Add('Mean coil diameter < 0.63 mm.');
-  if fCoilDiameterDm >  200 then ErrorMessage.Add('Mean coil diameter > 200 mm.');
-  if fLengthL0       >  630 then ErrorMessage.Add('Length of unloaded spring > 630 mm.');
-  if fActiveCoils    <    2 then ErrorMessage.Add('Number of active coils < 2.');
-  if fSpringIndexW   <    4 then ErrorMessage.Add('Spring Index < 4.');
-  if fSpringIndexW   >   20 then ErrorMessage.Add('Spring Index > 20.');
+  if fWireDiameter   < (0.07*mm) then ErrorMessage.Add('Wire diameter < 0.07 mm.');
+  if fWireDiameter   >   (16*mm) then ErrorMessage.Add('Wire diameter > 16 mm.');
+  if fCoilDiameterDm < (0.63*mm) then ErrorMessage.Add('Mean coil diameter < 0.63 mm.');
+  if fCoilDiameterDm >  (200*mm) then ErrorMessage.Add('Mean coil diameter > 200 mm.');
+  if fLengthL0       >  (630*mm) then ErrorMessage.Add('Length of unloaded spring > 630 mm.');
+  if fActiveCoils    <       (2) then ErrorMessage.Add('Number of active coils < 2.');
+  if fSpringIndexW   <       (4) then ErrorMessage.Add('Spring Index < 4.');
+  if fSpringIndexW   >      (20) then ErrorMessage.Add('Spring Index > 20.');
 
   if not fDmQualityGrade in [1, 2, 3] then ErrorMessage.Add('Dm quality grade value must be 1, 2 or 3.');
   if not fF1QualityGrade in [1, 2, 3] then ErrorMessage.Add('F1 quality grade value must be 1, 2 or 3.');
@@ -195,10 +195,10 @@ begin
   begin
     // Tolleranza AD sul diametro medio di avvolgimento CoilDiameterDm di una molla libera
     Index1 := 16;
-    if (fCoilDiameterDm > 0.63) and (fCoilDiameterDm <= 200) then
+    if (fCoilDiameterDm > (0.63*mm)) and (fCoilDiameterDm <= (200*mm)) then
     begin
       for Index := 0 to 16 do
-        if (fCoilDiameterDm > AD_TABLE[Index][0]) and (fCoilDiameterDm <= AD_TABLE[Index][1]) then
+        if (fCoilDiameterDm > (AD_TABLE[Index][0]*mm)) and (fCoilDiameterDm <= (AD_TABLE[Index][1]*mm)) then
         begin
           Index1 := Index;
           Break;
@@ -209,22 +209,22 @@ begin
     if (fSpringIndexW >=  4.0) and (fSpringIndexW <=  8.0) then Index2 := 2 + 3*(fDmQualityGrade - 1) else
     if (fSpringIndexW >   8.0) and (fSpringIndexW <= 14.0) then Index2 := 3 + 3*(fDmQualityGrade - 1) else
     if (fSpringIndexW >  14.0) and (fSpringIndexW <= 20.0) then Index2 := 4 + 3*(fDmQualityGrade - 1);
-    fAD := AD_TABLE[Index1][Index2];
+    fAD := AD_TABLE[Index1][Index2]*mm;
     // alphaF
-    fFactorAlphaF := 65.92*(Power(fWireDiameter,3.3)/Power(fCoilDiameterDm,1.6))*(-0.84*Power(fSpringIndexW/10,3)+3.781*Power(fSpringIndexW/10,2)-4.244*(fSpringIndexW/10)+2.274);
+    fFactorAlphaF := (65.92*(Power(mm.Value(FWireDiameter),3.3)/Power(mm.Value(FCoilDiameterDm),1.6))*(-0.84*Power(fSpringIndexW/10,3)+3.781*Power(fSpringIndexW/10,2)-4.244*(fSpringIndexW/10)+2.274))*N;
     // kF
     fFactorKF := 1/(3*Sqr(fActiveCoils))+8/(5*fActiveCoils)+0.803;
     // Tolleranza AF1 sul carico della molla LoadF1 ad una lunghezza data della molla L1
     case fF1QualityGrade of
-      1: fAF1 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF1)/100)*0.63;
-      2: fAF1 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF1)/100)*1.00;
-      3: fAF1 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF1)/100)*1.60;
+      1: fAF1 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF1/100))*0.63;
+      2: fAF1 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF1/100))*1.00;
+      3: fAF1 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF1/100))*1.60;
     end;
     // Tolleranza AF2 sul carico della molla LoadF2 ad una lunghezza data della molla L2
     case fF2QualityGrade of
-      1: fAF2 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF2)/100)*0.63;
-      2: fAF2 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF2)/100)*1.00;
-      3: fAF2 := (fFactorAlphaF*fFactorKF+(1.5*fLoadF2)/100)*1.60;
+      1: fAF2 := (fFactorAlphaF*fFactorKF+(1.5*FLoadF2/100))*0.63;
+      2: fAF2 := (fFactorAlphaF*fFactorKF+(1.5*FLoadF2/100))*1.00;
+      3: fAF2 := (fFactorAlphaF*fFactorKF+(1.5*FLoadF2/100))*1.60;
     end;
     // Tolleranza AL0 sulla lunghezza LengthL0 di una molla libera
     case fL0QualityGrade of
