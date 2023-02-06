@@ -67,7 +67,7 @@ type
     fPitch: TLength;
     fPitchRatio: double;
     fR: TStiffness;
-    fRho: TDensity3D;
+    fRho: TDensity;
     fRm: TPressure;
     FStrokeS1: TLength;
     FStrokeS2: TLength;
@@ -143,7 +143,7 @@ type
     property LengthLc: TLength read FLengthLc;
     property LengthLn: TLength read FLengthLn;
     property Mass: TMass read fMass;
-    property MaterialDensity: TDensity3D read fRho write fRho;
+    property MaterialDensity: TDensity read fRho write fRho;
     property NaturalFrequency: TFrequency read fNaturalFrequency;
     property NumOfCycles: double read fNumOfCycles;
     property Pitch: TLength read fPitch;
@@ -297,8 +297,8 @@ begin
   fnt                  := 0;
   fPitch               := 0*mm;
   fPitchRatio          := 0;
-  fR                   := 0*(N/m);
-  fRho                 := 0*(kg/m3);
+  fR                   := 0*N_m;
+  fRho                 := 0*kg_m3;
   fRm                  := 0*MPa;
   FStrokeS1            := 0*mm;
   FStrokeS2            := 0*mm;
@@ -336,8 +336,8 @@ begin
   // Controllo validità dati inseriti
   if Fd         <= (0*mm)    then ErrorMessage.Add('Wire diameter "d" unassigned.');
   if FDm        <= (0*mm)    then ErrorMessage.Add('Coil diameter "Dm" unassigned.');
-  if fE         <= (0*MPa)  then ErrorMessage.Add('Young''s modulus "E" unassigned.');
-  if fG         <= (0*MPa)  then ErrorMessage.Add('Shear modulus "G" unassigned.');
+  if fE         <= (0*MPa)   then ErrorMessage.Add('Young''s modulus "E" unassigned.');
+  if fG         <= (0*MPa)   then ErrorMessage.Add('Shear modulus "G" unassigned.');
   if FLengthL0  <= (0*mm)    then ErrorMessage.Add('Spring length "L0" unassigned.');
   if FLengthL1  <= (0*mm)    then ErrorMessage.Add('Spring length "L1" unassigned.');
   if FLengthL2  <= (0*mm)    then ErrorMessage.Add('Spring length "L2" unassigned.');
@@ -345,7 +345,7 @@ begin
   if fnt        <= (0)       then ErrorMessage.Add('Number of total coil "nt" unassigned.');
   if fnu        <= (0)       then ErrorMessage.Add('Seat coefficent "nu" unassigned.');
   if fRm        <= (0*MPa)   then ErrorMessage.Add('Tensile strength "Rm" unassigned.');
-  if fRho       <= (0*(kg/m3)) then ErrorMessage.Add('Material density "rho" unassigned.');
+  if fRho       <= (0*kg_m3) then ErrorMessage.Add('Material density "rho" unassigned.');
 
   if FLengthL0 <= FLengthL1 then ErrorMessage.Add('Wrong L0 and L1 values, L0 must be > L1.');
   if FLengthL1 <= FLengthL2 then ErrorMessage.Add('Wrong L1 and L2 values, L1 must be > L2.');

@@ -40,7 +40,7 @@ type
     fShearModulusG: TPressure;
     fPoissonRatio: double;
     fWireDiameter: TLength;
-    fDensityRho: TDensity3D;
+    fDensityRho: TDensity;
     fTemperature: double;
     fTemperatureMin: double;
     fTemperatureMax: double;
@@ -84,7 +84,7 @@ type
     property ShearModulusG: TPressure read fShearModulusG;
     property WireDiameter: TLength read fWireDiameter;
     property PoissonRatio: double read fPoissonRatio;
-    property DensityRho: TDensity3D read fDensityRho;
+    property DensityRho: TDensity read fDensityRho;
     property ItemIndex: longint read fItemIndex;
     property Items[Index: longint]: string read GetItem; default;
     property Count: longint read GetCount;
