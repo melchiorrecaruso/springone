@@ -808,6 +808,7 @@ procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenColor: TBGRAPixel; 
 var
   i: longint;
   Chart: TChart;
+  Compozer: TCompozer;
   Bit: array of TBGRABitmap = nil;
   SpringDrawing: TSectionSpringDrawing;
   SVG: TBGRASvg;
@@ -817,80 +818,82 @@ begin
   WarningMessage.Clear;
   aScreen.Fill(aScreenColor);
 
+  Compozer := TCompozer.Create(aSetting);
+  Compozer.AreaUnit      := mm2;
+  Compozer.DensityUnit   := g_dm3;
+  Compozer.ForceUnit     := N;
+  Compozer.FrequencyUnit := Hz;
+  Compozer.LengthUnit    := mm;
+  Compozer.MassUnit      := g;
+  Compozer.PressureUnit  := MPa;
+  Compozer.StiffnessUnit := N_mm;
+  Compozer.TimeUnit      := hr;
+  Compozer.WorkUnit      := Nm;
+
   // Quick1
   if Quick1MenuItem.Checked then
   begin
-    DrawQuick1(aScreen, aScreenScale, aSetting);
+    Compozer.DrawQuick1(aScreen, aScreenScale);
   end else
-
   // Quick2
   if Quick2MenuItem.Checked then
   begin
-    DrawQuick2(aScreen, aScreenScale, aSetting);
+    Compozer.DrawQuick2(aScreen, aScreenScale);
   end else
-
   // Quick3
   if Quick3MenuItem.Checked then
   begin
-    DrawQuick3(aScreen, aScreenScale, aSetting);
+    Compozer.DrawQuick3(aScreen, aScreenScale);
   end else
-
   // Force & displacement chart
   if ForceMenuItem.Checked then
   begin
-    Chart := CreateForceDisplacementChart(aScreenScale, aSetting);
+    Chart := Compozer.CreateForceDisplacementChart(aScreenScale);
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
-
   // Goodman chart
   if GoodmanMenuItem .Checked then
   begin
-    Chart := CreateGoodmanChart(aScreenScale, aSetting);
+    Chart := Compozer.CreateGoodmanChart(aScreenScale);
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
-
   // Buckling chart
   if BucklingMenuItem.Checked then
   begin
-    Chart := CreateBucklingChart(aScreenScale, aSetting);
+    Chart := Compozer.CreateBucklingChart(aScreenScale);
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
-
   // Shear modulus chart
   if ShearModulusMenuItem.Checked then
   begin
-    Chart := CreateShearModulusChart(aScreenScale, aSetting);
+    Chart := Compozer.CreateShearModulusChart(aScreenScale);
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
-
   // Young modulus chart
   if YoungModulusMenuItem.Checked then
   begin
-    Chart := CreateYoungModulusChart(aScreenScale, aSetting);
+    Chart := Compozer.CreateYoungModulusChart(aScreenScale);
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
-
   // F1-Load chart
   if F1MenuItem.Checked then
   begin
-    Chart := CreateLoadF1Chart(aScreenScale, aSetting);
+    Chart := Compozer.CreateLoadF1Chart(aScreenScale);
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
-
   // F2-Load chart
   if F2MenuItem.Checked then
   begin
-    Chart := CreateLoadF2Chart(aScreenScale, aSetting);
+    Chart := Compozer.CreateLoadF2Chart(aScreenScale);
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
-
   // Spring section drawing
   if SectionMenuItem.Checked then
   begin    SetLength(Bit, 3);
@@ -901,7 +904,7 @@ begin
     Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
     Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
 
-    SpringDrawing         := CreateSectionSpringDrawing(aScreenScale, aSetting);
+    SpringDrawing         := Compozer.CreateSectionSpringDrawing(aScreenScale);
     SpringDrawing.AutoFit := True;
     SpringDrawing.Lx      := mm.Value(SOLVER.LengthL0);
     SpringDrawing.Caption := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
@@ -963,6 +966,7 @@ begin
     Bit[0].Destroy;
     Bit := nil;
   end;
+  Compozer.Destroy;
   VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
 end;

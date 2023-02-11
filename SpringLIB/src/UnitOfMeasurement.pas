@@ -227,6 +227,21 @@ type
 const
   m_s    : specialize TDimensionUnit<TMeterPerSecond> = (Factor: 1              ; Symbol: 'm/s');
 
+{ Units of Second }
+
+type
+  TSecond = class(TBaseUnit)
+    class function GetSymbol: string; override;
+  end;
+  TTime     = specialize TDimension    <TSecond>;
+  TTimeUnit = specialize TDimensionUnit<TSecond>;
+
+const
+  hr     : specialize TDimensionUnit<TSecond> = (Factor: 3600           ; Symbol: 'hr');
+  mn     : specialize TDimensionUnit<TSecond> = (Factor: 60             ; Symbol: 'mn');
+  s      : specialize TDimensionUnit<TSecond> = (Factor: 1              ; Symbol: 's');
+  ms     : specialize TDimensionUnit<TSecond> = (Factor: 1000           ; Symbol: 'ms');
+
 { Units of UnitPerMeter }
 
 type
@@ -281,6 +296,10 @@ operator /(const ALeft: TLengthUnit; const ARight: TAreaUnit): TInvLengthUnit; i
 operator /(const ALeft: TLength;     const ARight: TArea    ): TInvLength; inline;
 operator /(const ALeft: TLengthUnit; const ARight: TVolumeUnit): TInvAreaUnit; inline;
 operator /(const ALeft: TLength;     const ARight: TVolume    ): TInvArea; inline;
+operator /(const ALeft: TLengthUnit; const ARight: TSpeedUnit): TTimeUnit; inline;
+operator /(const ALeft: TLength;     const ARight: TSpeed    ): TTime; inline;
+operator /(const ALeft: TLengthUnit; const ARight: TTimeUnit): TSpeedUnit; inline;
+operator /(const ALeft: TLength;     const ARight: TTime    ): TSpeed; inline;
 operator /(const ALeft: TLengthUnit; const ARight: TInvLengthUnit): TAreaUnit; inline;
 operator /(const ALeft: TLength;     const ARight: TInvLength    ): TArea; inline;
 operator /(const ALeft: TLengthUnit; const ARight: TInvAreaUnit): TVolumeUnit; inline;
@@ -295,20 +314,12 @@ operator *(const ALeft: TAreaUnit; const ARight: TStiffnessUnit): TWorkUnit; inl
 operator *(const ALeft: TArea;     const ARight: TStiffness    ): TWork; inline;
 operator *(const ALeft: TStiffnessUnit; const ARight: TAreaUnit): TWorkUnit; inline;
 operator *(const ALeft: TStiffness;     const ARight: TArea    ): TWork; inline;
-operator *(const ALeft: TAreaUnit; const ARight: TInvLengthUnit): TLengthUnit; inline;
-operator *(const ALeft: TArea;     const ARight: TInvLength    ): TLength; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TAreaUnit): TLengthUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TArea    ): TLength; inline;
 operator /(const ALeft: TAreaUnit; const ARight: TLengthUnit): TLengthUnit; inline;
 operator /(const ALeft: TArea;     const ARight: TLength    ): TLength; inline;
 operator /(const ALeft: TAreaUnit; const ARight: TVolumeUnit): TInvLengthUnit; inline;
 operator /(const ALeft: TArea;     const ARight: TVolume    ): TInvLength; inline;
 operator /(const ALeft: TAreaUnit; const ARight: TMomentOfAreaUnit): TInvAreaUnit; inline;
 operator /(const ALeft: TArea;     const ARight: TMomentOfArea    ): TInvArea; inline;
-operator /(const ALeft: TAreaUnit; const ARight: TInvLengthUnit): TVolumeUnit; inline;
-operator /(const ALeft: TArea;     const ARight: TInvLength    ): TVolume; inline;
-operator /(const ALeft: TAreaUnit; const ARight: TInvAreaUnit): TMomentOfAreaUnit; inline;
-operator /(const ALeft: TArea;     const ARight: TInvArea    ): TMomentOfArea; inline;
 operator *(const ALeft: TVolumeUnit; const ARight: TPressureUnit): TWorkUnit; inline;
 operator *(const ALeft: TVolume;     const ARight: TPressure    ): TWork; inline;
 operator *(const ALeft: TPressureUnit; const ARight: TVolumeUnit): TWorkUnit; inline;
@@ -317,30 +328,12 @@ operator *(const ALeft: TVolumeUnit; const ARight: TDensityUnit): TMassUnit; inl
 operator *(const ALeft: TVolume;     const ARight: TDensity    ): TMass; inline;
 operator *(const ALeft: TDensityUnit; const ARight: TVolumeUnit): TMassUnit; inline;
 operator *(const ALeft: TDensity;     const ARight: TVolume    ): TMass; inline;
-operator *(const ALeft: TVolumeUnit; const ARight: TInvLengthUnit): TAreaUnit; inline;
-operator *(const ALeft: TVolume;     const ARight: TInvLength    ): TArea; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TVolumeUnit): TAreaUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TVolume    ): TArea; inline;
-operator *(const ALeft: TVolumeUnit; const ARight: TInvAreaUnit): TLengthUnit; inline;
-operator *(const ALeft: TVolume;     const ARight: TInvArea    ): TLength; inline;
-operator *(const ALeft: TInvAreaUnit; const ARight: TVolumeUnit): TLengthUnit; inline;
-operator *(const ALeft: TInvArea;     const ARight: TVolume    ): TLength; inline;
 operator /(const ALeft: TVolumeUnit; const ARight: TLengthUnit): TAreaUnit; inline;
 operator /(const ALeft: TVolume;     const ARight: TLength    ): TArea; inline;
 operator /(const ALeft: TVolumeUnit; const ARight: TAreaUnit): TLengthUnit; inline;
 operator /(const ALeft: TVolume;     const ARight: TArea    ): TLength; inline;
 operator /(const ALeft: TVolumeUnit; const ARight: TMomentOfAreaUnit): TInvLengthUnit; inline;
 operator /(const ALeft: TVolume;     const ARight: TMomentOfArea    ): TInvLength; inline;
-operator /(const ALeft: TVolumeUnit; const ARight: TInvLengthUnit): TMomentOfAreaUnit; inline;
-operator /(const ALeft: TVolume;     const ARight: TInvLength    ): TMomentOfArea; inline;
-operator *(const ALeft: TMomentOfAreaUnit; const ARight: TInvLengthUnit): TVolumeUnit; inline;
-operator *(const ALeft: TMomentOfArea;     const ARight: TInvLength    ): TVolume; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TMomentOfAreaUnit): TVolumeUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TMomentOfArea    ): TVolume; inline;
-operator *(const ALeft: TMomentOfAreaUnit; const ARight: TInvAreaUnit): TAreaUnit; inline;
-operator *(const ALeft: TMomentOfArea;     const ARight: TInvArea    ): TArea; inline;
-operator *(const ALeft: TInvAreaUnit; const ARight: TMomentOfAreaUnit): TAreaUnit; inline;
-operator *(const ALeft: TInvArea;     const ARight: TMomentOfArea    ): TArea; inline;
 operator /(const ALeft: TMomentOfAreaUnit; const ARight: TLengthUnit): TVolumeUnit; inline;
 operator /(const ALeft: TMomentOfArea;     const ARight: TLength    ): TVolume; inline;
 operator /(const ALeft: TMomentOfAreaUnit; const ARight: TAreaUnit): TAreaUnit; inline;
@@ -351,10 +344,6 @@ operator /(const ALeft: TMassUnit; const ARight: TVolumeUnit): TDensityUnit; inl
 operator /(const ALeft: TMass;     const ARight: TVolume    ): TDensity; inline;
 operator /(const ALeft: TMassUnit; const ARight: TDensityUnit): TVolumeUnit; inline;
 operator /(const ALeft: TMass;     const ARight: TDensity    ): TVolume; inline;
-operator *(const ALeft: TForceUnit; const ARight: TInvLengthUnit): TStiffnessUnit; inline;
-operator *(const ALeft: TForce;     const ARight: TInvLength    ): TStiffness; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TForceUnit): TStiffnessUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TForce    ): TStiffness; inline;
 operator *(const ALeft: TForceUnit; const ARight: TInvAreaUnit): TPressureUnit; inline;
 operator *(const ALeft: TForce;     const ARight: TInvArea    ): TPressure; inline;
 operator *(const ALeft: TInvAreaUnit; const ARight: TForceUnit): TPressureUnit; inline;
@@ -369,20 +358,10 @@ operator /(const ALeft: TForceUnit; const ARight: TStiffnessUnit): TLengthUnit; 
 operator /(const ALeft: TForce;     const ARight: TStiffness    ): TLength; inline;
 operator /(const ALeft: TForceUnit; const ARight: TWorkUnit): TInvLengthUnit; inline;
 operator /(const ALeft: TForce;     const ARight: TWork    ): TInvLength; inline;
-operator /(const ALeft: TForceUnit; const ARight: TInvLengthUnit): TWorkUnit; inline;
-operator /(const ALeft: TForce;     const ARight: TInvLength    ): TWork; inline;
 operator /(const ALeft: TPressureUnit; const ARight: TForceUnit): TInvAreaUnit; inline;
 operator /(const ALeft: TPressure;     const ARight: TForce    ): TInvArea; inline;
 operator /(const ALeft: TPressureUnit; const ARight: TStiffnessUnit): TInvLengthUnit; inline;
 operator /(const ALeft: TPressure;     const ARight: TStiffness    ): TInvLength; inline;
-operator /(const ALeft: TPressureUnit; const ARight: TInvLengthUnit): TStiffnessUnit; inline;
-operator /(const ALeft: TPressure;     const ARight: TInvLength    ): TStiffness; inline;
-operator /(const ALeft: TPressureUnit; const ARight: TInvAreaUnit): TForceUnit; inline;
-operator /(const ALeft: TPressure;     const ARight: TInvArea    ): TForce; inline;
-operator *(const ALeft: TStiffnessUnit; const ARight: TInvLengthUnit): TPressureUnit; inline;
-operator *(const ALeft: TStiffness;     const ARight: TInvLength    ): TPressure; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TStiffnessUnit): TPressureUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TStiffness    ): TPressure; inline;
 operator /(const ALeft: TStiffnessUnit; const ARight: TLengthUnit): TPressureUnit; inline;
 operator /(const ALeft: TStiffness;     const ARight: TLength    ): TPressure; inline;
 operator /(const ALeft: TStiffnessUnit; const ARight: TForceUnit): TInvLengthUnit; inline;
@@ -391,22 +370,8 @@ operator /(const ALeft: TStiffnessUnit; const ARight: TPressureUnit): TLengthUni
 operator /(const ALeft: TStiffness;     const ARight: TPressure    ): TLength; inline;
 operator /(const ALeft: TStiffnessUnit; const ARight: TWorkUnit): TInvAreaUnit; inline;
 operator /(const ALeft: TStiffness;     const ARight: TWork    ): TInvArea; inline;
-operator /(const ALeft: TStiffnessUnit; const ARight: TInvLengthUnit): TForceUnit; inline;
-operator /(const ALeft: TStiffness;     const ARight: TInvLength    ): TForce; inline;
-operator /(const ALeft: TStiffnessUnit; const ARight: TInvAreaUnit): TWorkUnit; inline;
-operator /(const ALeft: TStiffness;     const ARight: TInvArea    ): TWork; inline;
 operator /(const ALeft: TFrequencyUnit; const ARight: TSpeedUnit): TInvLengthUnit; inline;
 operator /(const ALeft: TFrequency;     const ARight: TSpeed    ): TInvLength; inline;
-operator /(const ALeft: TFrequencyUnit; const ARight: TInvLengthUnit): TSpeedUnit; inline;
-operator /(const ALeft: TFrequency;     const ARight: TInvLength    ): TSpeed; inline;
-operator *(const ALeft: TWorkUnit; const ARight: TInvLengthUnit): TForceUnit; inline;
-operator *(const ALeft: TWork;     const ARight: TInvLength    ): TForce; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TWorkUnit): TForceUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TWork    ): TForce; inline;
-operator *(const ALeft: TWorkUnit; const ARight: TInvAreaUnit): TStiffnessUnit; inline;
-operator *(const ALeft: TWork;     const ARight: TInvArea    ): TStiffness; inline;
-operator *(const ALeft: TInvAreaUnit; const ARight: TWorkUnit): TStiffnessUnit; inline;
-operator *(const ALeft: TInvArea;     const ARight: TWork    ): TStiffness; inline;
 operator /(const ALeft: TWorkUnit; const ARight: TLengthUnit): TForceUnit; inline;
 operator /(const ALeft: TWork;     const ARight: TLength    ): TForce; inline;
 operator /(const ALeft: TWorkUnit; const ARight: TAreaUnit): TStiffnessUnit; inline;
@@ -419,22 +384,16 @@ operator /(const ALeft: TWorkUnit; const ARight: TPressureUnit): TVolumeUnit; in
 operator /(const ALeft: TWork;     const ARight: TPressure    ): TVolume; inline;
 operator /(const ALeft: TWorkUnit; const ARight: TStiffnessUnit): TAreaUnit; inline;
 operator /(const ALeft: TWork;     const ARight: TStiffness    ): TArea; inline;
-operator *(const ALeft: TSpeedUnit; const ARight: TInvLengthUnit): TFrequencyUnit; inline;
-operator *(const ALeft: TSpeed;     const ARight: TInvLength    ): TFrequency; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TSpeedUnit): TFrequencyUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TSpeed    ): TFrequency; inline;
+operator *(const ALeft: TSpeedUnit; const ARight: TTimeUnit): TLengthUnit; inline;
+operator *(const ALeft: TSpeed;     const ARight: TTime    ): TLength; inline;
+operator *(const ALeft: TTimeUnit; const ARight: TSpeedUnit): TLengthUnit; inline;
+operator *(const ALeft: TTime;     const ARight: TSpeed    ): TLength; inline;
 operator /(const ALeft: TSpeedUnit; const ARight: TLengthUnit): TFrequencyUnit; inline;
 operator /(const ALeft: TSpeed;     const ARight: TLength    ): TFrequency; inline;
 operator /(const ALeft: TSpeedUnit; const ARight: TFrequencyUnit): TLengthUnit; inline;
 operator /(const ALeft: TSpeed;     const ARight: TFrequency    ): TLength; inline;
-operator *(const ALeft: TInvLengthUnit; const ARight: TInvLengthUnit): TInvAreaUnit; inline;
-operator *(const ALeft: TInvLength;     const ARight: TInvLength    ): TInvArea; inline;
 operator /(const ALeft: TInvLengthUnit; const ARight: TLengthUnit): TInvAreaUnit; inline;
 operator /(const ALeft: TInvLength;     const ARight: TLength    ): TInvArea; inline;
-operator /(const ALeft: TInvLengthUnit; const ARight: TInvAreaUnit): TLengthUnit; inline;
-operator /(const ALeft: TInvLength;     const ARight: TInvArea    ): TLength; inline;
-operator /(const ALeft: TInvAreaUnit; const ARight: TInvLengthUnit): TInvLengthUnit; inline;
-operator /(const ALeft: TInvArea;     const ARight: TInvLength    ): TInvLength; inline;
 
 implementation
 
@@ -606,6 +565,13 @@ end;
 class function TMeterPerSecond.GetSymbol: string;
 begin
   result := 'm/s';
+end;
+
+{ Units of Second }
+
+class function TSecond.GetSymbol: string;
+begin
+  result := 's';
 end;
 
 { Units of UnitPerMeter }
@@ -811,6 +777,28 @@ begin
   result.Value := ALeft.Value / ARight.Value;
 end;
 
+operator /(const ALeft: TLengthUnit; const ARight: TSpeedUnit): TTimeUnit;
+begin
+  result.Symbol := 's';
+  result.Factor := ALeft.Factor / ARight.Factor
+end;
+
+operator /(const ALeft: TLength;     const ARight: TSpeed    ): TTime;
+begin
+  result.Value := ALeft.Value / ARight.Value;
+end;
+
+operator /(const ALeft: TLengthUnit; const ARight: TTimeUnit): TSpeedUnit;
+begin
+  result.Symbol := 'm/s';
+  result.Factor := ALeft.Factor / ARight.Factor
+end;
+
+operator /(const ALeft: TLength;     const ARight: TTime    ): TSpeed;
+begin
+  result.Value := ALeft.Value / ARight.Value;
+end;
+
 operator /(const ALeft: TLengthUnit; const ARight: TInvLengthUnit): TAreaUnit;
 begin
   result.Symbol := 'm2';
@@ -888,28 +876,6 @@ begin
   result.Value := ALeft.Value * ARight.Value;
 end;
 
-operator *(const ALeft: TAreaUnit; const ARight: TInvLengthUnit): TLengthUnit;
-begin
-  result.Symbol := 'm';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TArea;     const ARight: TInvLength    ): TLength;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvLengthUnit; const ARight: TAreaUnit): TLengthUnit;
-begin
-  result.Symbol := 'm';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvLength;     const ARight: TArea    ): TLength;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
 operator /(const ALeft: TAreaUnit; const ARight: TLengthUnit): TLengthUnit;
 begin
   result.Symbol := 'm';
@@ -939,28 +905,6 @@ begin
 end;
 
 operator /(const ALeft: TArea;     const ARight: TMomentOfArea    ): TInvArea;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TAreaUnit; const ARight: TInvLengthUnit): TVolumeUnit;
-begin
-  result.Symbol := 'm3';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TArea;     const ARight: TInvLength    ): TVolume;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TAreaUnit; const ARight: TInvAreaUnit): TMomentOfAreaUnit;
-begin
-  result.Symbol := 'm4';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TArea;     const ARight: TInvArea    ): TMomentOfArea;
 begin
   result.Value := ALeft.Value / ARight.Value;
 end;
@@ -1009,50 +953,6 @@ begin
   result.Value := ALeft.Value * ARight.Value;
 end;
 
-operator *(const ALeft: TVolumeUnit; const ARight: TInvLengthUnit): TAreaUnit;
-begin
-  result.Symbol := 'm2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TVolume;     const ARight: TInvLength    ): TArea;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvLengthUnit; const ARight: TVolumeUnit): TAreaUnit;
-begin
-  result.Symbol := 'm2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvLength;     const ARight: TVolume    ): TArea;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TVolumeUnit; const ARight: TInvAreaUnit): TLengthUnit;
-begin
-  result.Symbol := 'm';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TVolume;     const ARight: TInvArea    ): TLength;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvAreaUnit; const ARight: TVolumeUnit): TLengthUnit;
-begin
-  result.Symbol := 'm';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvArea;     const ARight: TVolume    ): TLength;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
 operator /(const ALeft: TVolumeUnit; const ARight: TLengthUnit): TAreaUnit;
 begin
   result.Symbol := 'm2';
@@ -1084,61 +984,6 @@ end;
 operator /(const ALeft: TVolume;     const ARight: TMomentOfArea    ): TInvLength;
 begin
   result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TVolumeUnit; const ARight: TInvLengthUnit): TMomentOfAreaUnit;
-begin
-  result.Symbol := 'm4';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TVolume;     const ARight: TInvLength    ): TMomentOfArea;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator *(const ALeft: TMomentOfAreaUnit; const ARight: TInvLengthUnit): TVolumeUnit;
-begin
-  result.Symbol := 'm3';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TMomentOfArea;     const ARight: TInvLength    ): TVolume;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvLengthUnit; const ARight: TMomentOfAreaUnit): TVolumeUnit;
-begin
-  result.Symbol := 'm3';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvLength;     const ARight: TMomentOfArea    ): TVolume;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TMomentOfAreaUnit; const ARight: TInvAreaUnit): TAreaUnit;
-begin
-  result.Symbol := 'm2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TMomentOfArea;     const ARight: TInvArea    ): TArea;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvAreaUnit; const ARight: TMomentOfAreaUnit): TAreaUnit;
-begin
-  result.Symbol := 'm2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvArea;     const ARight: TMomentOfArea    ): TArea;
-begin
-  result.Value := ALeft.Value * ARight.Value;
 end;
 
 operator /(const ALeft: TMomentOfAreaUnit; const ARight: TLengthUnit): TVolumeUnit;
@@ -1194,28 +1039,6 @@ end;
 operator /(const ALeft: TMass;     const ARight: TDensity    ): TVolume;
 begin
   result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator *(const ALeft: TForceUnit; const ARight: TInvLengthUnit): TStiffnessUnit;
-begin
-  result.Symbol := 'kg/s2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TForce;     const ARight: TInvLength    ): TStiffness;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvLengthUnit; const ARight: TForceUnit): TStiffnessUnit;
-begin
-  result.Symbol := 'kg/s2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvLength;     const ARight: TForce    ): TStiffness;
-begin
-  result.Value := ALeft.Value * ARight.Value;
 end;
 
 operator *(const ALeft: TForceUnit; const ARight: TInvAreaUnit): TPressureUnit;
@@ -1295,17 +1118,6 @@ begin
   result.Value := ALeft.Value / ARight.Value;
 end;
 
-operator /(const ALeft: TForceUnit; const ARight: TInvLengthUnit): TWorkUnit;
-begin
-  result.Symbol := 'kgm2/s2';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TForce;     const ARight: TInvLength    ): TWork;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
 operator /(const ALeft: TPressureUnit; const ARight: TForceUnit): TInvAreaUnit;
 begin
   result.Symbol := '1/m2';
@@ -1326,50 +1138,6 @@ end;
 operator /(const ALeft: TPressure;     const ARight: TStiffness    ): TInvLength;
 begin
   result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TPressureUnit; const ARight: TInvLengthUnit): TStiffnessUnit;
-begin
-  result.Symbol := 'kg/s2';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TPressure;     const ARight: TInvLength    ): TStiffness;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TPressureUnit; const ARight: TInvAreaUnit): TForceUnit;
-begin
-  result.Symbol := 'kgm/s2';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TPressure;     const ARight: TInvArea    ): TForce;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator *(const ALeft: TStiffnessUnit; const ARight: TInvLengthUnit): TPressureUnit;
-begin
-  result.Symbol := 'kg/ms2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TStiffness;     const ARight: TInvLength    ): TPressure;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvLengthUnit; const ARight: TStiffnessUnit): TPressureUnit;
-begin
-  result.Symbol := 'kg/ms2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvLength;     const ARight: TStiffness    ): TPressure;
-begin
-  result.Value := ALeft.Value * ARight.Value;
 end;
 
 operator /(const ALeft: TStiffnessUnit; const ARight: TLengthUnit): TPressureUnit;
@@ -1416,28 +1184,6 @@ begin
   result.Value := ALeft.Value / ARight.Value;
 end;
 
-operator /(const ALeft: TStiffnessUnit; const ARight: TInvLengthUnit): TForceUnit;
-begin
-  result.Symbol := 'kgm/s2';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TStiffness;     const ARight: TInvLength    ): TForce;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TStiffnessUnit; const ARight: TInvAreaUnit): TWorkUnit;
-begin
-  result.Symbol := 'kgm2/s2';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TStiffness;     const ARight: TInvArea    ): TWork;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
 operator /(const ALeft: TFrequencyUnit; const ARight: TSpeedUnit): TInvLengthUnit;
 begin
   result.Symbol := '1/m';
@@ -1447,61 +1193,6 @@ end;
 operator /(const ALeft: TFrequency;     const ARight: TSpeed    ): TInvLength;
 begin
   result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TFrequencyUnit; const ARight: TInvLengthUnit): TSpeedUnit;
-begin
-  result.Symbol := 'm/s';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TFrequency;     const ARight: TInvLength    ): TSpeed;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator *(const ALeft: TWorkUnit; const ARight: TInvLengthUnit): TForceUnit;
-begin
-  result.Symbol := 'kgm/s2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TWork;     const ARight: TInvLength    ): TForce;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvLengthUnit; const ARight: TWorkUnit): TForceUnit;
-begin
-  result.Symbol := 'kgm/s2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvLength;     const ARight: TWork    ): TForce;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TWorkUnit; const ARight: TInvAreaUnit): TStiffnessUnit;
-begin
-  result.Symbol := 'kg/s2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TWork;     const ARight: TInvArea    ): TStiffness;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
-operator *(const ALeft: TInvAreaUnit; const ARight: TWorkUnit): TStiffnessUnit;
-begin
-  result.Symbol := 'kg/s2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvArea;     const ARight: TWork    ): TStiffness;
-begin
-  result.Value := ALeft.Value * ARight.Value;
 end;
 
 operator /(const ALeft: TWorkUnit; const ARight: TLengthUnit): TForceUnit;
@@ -1570,24 +1261,24 @@ begin
   result.Value := ALeft.Value / ARight.Value;
 end;
 
-operator *(const ALeft: TSpeedUnit; const ARight: TInvLengthUnit): TFrequencyUnit;
+operator *(const ALeft: TSpeedUnit; const ARight: TTimeUnit): TLengthUnit;
 begin
-  result.Symbol := '1/s';
+  result.Symbol := 'm';
   result.Factor := ALeft.Factor * ARight.Factor
 end;
 
-operator *(const ALeft: TSpeed;     const ARight: TInvLength    ): TFrequency;
+operator *(const ALeft: TSpeed;     const ARight: TTime    ): TLength;
 begin
   result.Value := ALeft.Value * ARight.Value;
 end;
 
-operator *(const ALeft: TInvLengthUnit; const ARight: TSpeedUnit): TFrequencyUnit;
+operator *(const ALeft: TTimeUnit; const ARight: TSpeedUnit): TLengthUnit;
 begin
-  result.Symbol := '1/s';
+  result.Symbol := 'm';
   result.Factor := ALeft.Factor * ARight.Factor
 end;
 
-operator *(const ALeft: TInvLength;     const ARight: TSpeed    ): TFrequency;
+operator *(const ALeft: TTime;     const ARight: TSpeed    ): TLength;
 begin
   result.Value := ALeft.Value * ARight.Value;
 end;
@@ -1614,17 +1305,6 @@ begin
   result.Value := ALeft.Value / ARight.Value;
 end;
 
-operator *(const ALeft: TInvLengthUnit; const ARight: TInvLengthUnit): TInvAreaUnit;
-begin
-  result.Symbol := '1/m2';
-  result.Factor := ALeft.Factor * ARight.Factor
-end;
-
-operator *(const ALeft: TInvLength;     const ARight: TInvLength    ): TInvArea;
-begin
-  result.Value := ALeft.Value * ARight.Value;
-end;
-
 operator /(const ALeft: TInvLengthUnit; const ARight: TLengthUnit): TInvAreaUnit;
 begin
   result.Symbol := '1/m2';
@@ -1632,28 +1312,6 @@ begin
 end;
 
 operator /(const ALeft: TInvLength;     const ARight: TLength    ): TInvArea;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TInvLengthUnit; const ARight: TInvAreaUnit): TLengthUnit;
-begin
-  result.Symbol := 'm';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TInvLength;     const ARight: TInvArea    ): TLength;
-begin
-  result.Value := ALeft.Value / ARight.Value;
-end;
-
-operator /(const ALeft: TInvAreaUnit; const ARight: TInvLengthUnit): TInvLengthUnit;
-begin
-  result.Symbol := '1/m';
-  result.Factor := ALeft.Factor / ARight.Factor
-end;
-
-operator /(const ALeft: TInvArea;     const ARight: TInvLength    ): TInvLength;
 begin
   result.Value := ALeft.Value / ARight.Value;
 end;

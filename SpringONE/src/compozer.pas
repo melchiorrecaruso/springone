@@ -5,32 +5,73 @@ unit Compozer;
 interface
 
 uses
-  BGRABitmap, BGRABitmapTypes, Classes, GraphBase, Graphics, IniFiles, Math, SysUtils, UnitOfMeasurement;
+  BGRABitmap,
+  BGRABitmapTypes,
+  Classes,
+  GraphBase,
+  Graphics,
+  IniFiles,
+  Math,
+  SysUtils,
+  UnitOfMeasurement;
 
-procedure DrawQuick1(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile);
-procedure DrawQuick2(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile);
-procedure DrawQuick3(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile);
+type
+  TCompozer = class
+  private
+    FSetting: TIniFile;
+    FDensityUnit: TDensityUnit;
+    FForceUnit: TForceUnit;
+    FFrequencyUnit: TFrequencyUnit;
+    FLengthUnit: TLengthUnit;
+    FAreaUnit: TAreaUnit;
+    FMassUnit: TMassUnit;
+    FPressureUnit: TPressureUnit;
+    FStiffnessUnit: TStiffnessUnit;
+    FTimeUnit: TTimeUnit;
+    FWorkUnit: TWorkUnit;
+    function LoadFontStyle(const ASection, AIdent: string): TFontStyles;
+    function LoadPenStyle(const ASection, AIdent: string): TPenStyle;
+    procedure LoadChart1(Chart: TChart; const ASection: string);
+    procedure LoadChart2(Chart: TChart; const ASection, AIdent: string);
+    procedure LoadTable(Table: TReportTable; const ASection, AIdent: string);
+    procedure LoadSpring(Spring: TSectionSpringDrawing; const ASection, AIdent: string);
 
+    procedure DrawQuickX(var aScreen: TBGRABitmap; const aScreenScale: double; X: longint);
 
+  public
+    constructor Create(aSetting: TIniFile);
+    destructor Destroy; override;
+    procedure DrawQuick1(var aScreen: TBGRABitmap; const aScreenScale: double);
+    procedure DrawQuick2(var aScreen: TBGRABitmap; const aScreenScale: double);
+    procedure DrawQuick3(var aScreen: TBGRABitmap; const aScreenScale: double);
 
-function CreateForceDisplacementChart  (const aScreenScale: double; aSetting: TIniFile): TChart;
-function CreateGoodmanChart            (const aScreenScale: double; aSetting: TIniFile): TChart;
-function CreateBucklingChart           (const aScreenScale: double; aSetting: TIniFile): TChart;
-function CreateLoadF1Chart             (const aScreenScale: double; aSetting: TIniFile): TChart;
-function CreateLoadF2Chart             (const aScreenScale: double; aSetting: TIniFile): TChart;
-function CreateShearModulusChart       (const aScreenScale: double; aSetting: TIniFile): TChart;
-function CreateYoungModulusChart       (const aScreenScale: double; aSetting: TIniFile): TChart;
-function CreateSectionSpringDrawing    (const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
+    function CreateForceDisplacementChart(const aScreenScale: double): TChart;
+    function CreateGoodmanChart          (const aScreenScale: double): TChart;
+    function CreateBucklingChart         (const AScreenScale: double): TChart;
+    function CreateLoadF1Chart           (const AScreenScale: double): TChart;
+    function CreateLoadF2Chart           (const AScreenScale: double): TChart;
+    function CreateShearModulusChart     (const AScreenScale: double): TChart;
+    function CreateYoungModulusChart     (const AScreenScale: double): TChart;
 
+    function CreateSectionSpringDrawing  (const AScreenScale: double): TSectionSpringDrawing;
+    function CreateQualityTable          (const AScreenScale: double): TReportTable;
+    function CreateQuick1Table           (const AScreenScale: double): TReportTable;
+    function CreateQuick1List            (const AScreenScale: double): TReportTable;
+    function CreateMessageList           (const AScreenScale: double): TReportTable;
+    function CreateQuick1AList           (const AScreenScale: double): TReportTable;
 
-function CreateQualityTable            (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-function CreateQuick1Table             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-function CreateQuick1List              (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-function CreateMessageList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-function CreateQuick1AList             (const aScreenScale: double; aSetting: TIniFile): TReportTable;
-
-
-
+  public
+    property AreaUnit: TAreaUnit read FAreaUnit write FAreaUnit;
+    property DensityUnit: TDensityUnit read FDensityUnit write FDensityUnit;
+    property ForceUnit: TForceUnit read FForceUnit write FForceUnit;
+    property FrequencyUnit: TFrequencyUnit read FFrequencyUnit write FFrequencyUnit;
+    property LengthUnit: TLengthUnit read FLengthUnit write FLengthUnit;
+    property MassUnit: TMassUnit read FMassUnit write FMassUnit;
+    property PressureUnit: TPressureUnit read FPressureUnit write FPressureUnit;
+    property StiffnessUnit: TStiffnessUnit read FStiffnessUnit write FStiffnessUnit;
+    property TimeUnit: TTimeUnit read FTimeUnit write FTimeUnit;
+    property WorkUnit: TWorkUnit read FWorkUnit write FWorkUnit;
+  end;
 
 
 implementation
@@ -38,27 +79,47 @@ implementation
 uses
   EN10270, EN13906, EN15800, UtilsBase, ApplicationFrm;
 
+// TCompozer //
 
-function LoadFontStyle(const ASection, AIdent: string; ASetting: TIniFile): TFontStyles;
+constructor TCompozer.Create(aSetting: TIniFile);
+begin
+  inherited Create;
+  FSetting       := aSetting;
+  FAreaUnit      := mm2;
+  FDensityUnit   := g_dm3;
+  FForceUnit     := N;
+  FFrequencyUnit := Hz;
+  FLengthUnit    := mm;
+  FMassUnit      := g;
+  FPressureUnit  := MPa;
+  FStiffnessUnit := N_mm;
+  FTimeUnit      := hr;
+  FWorkUnit      := Nm;
+end;
+
+destructor TCompozer.Destroy;
+begin
+  inherited Destroy;
+end;
+
+function TCompozer.LoadFontStyle(const ASection, AIdent: string): TFontStyles;
 var
   FontStyle: string;
 begin
-  Result := [];
-
-  FontStyle := ASetting.ReadString(ASection, AIdent , 'Bold');
+  Result    := [];
+  FontStyle := FSetting.ReadString(ASection, AIdent , 'Bold');
   if Pos('Bold',      FontStyle) > 0 then Include(Result, fsBold);
   if Pos('Italic',    FontStyle) > 0 then Include(Result, fsItalic);
   if Pos('Underline', FontStyle) > 0 then Include(Result, fsUnderline);
   if Pos('StrikeOut', FontStyle) > 0 then Include(Result, fsStrikeOut);
 end;
 
-function LoadPenStyle(const ASection, AIdent: string; ASetting: TIniFile): TPenStyle;
+function TCompozer.LoadPenStyle(const ASection, AIdent: string): TPenStyle;
 var
   PenStyle: string;
 begin
-  Result := psSolid;
-
-  PenStyle := ASetting.ReadString(ASection, AIdent , 'Solid');
+  Result   := psSolid;
+  PenStyle := FSetting.ReadString(ASection, AIdent , 'Solid');
   if PenStyle = 'Solid'       then Result := psSolid;
   if PenStyle = 'Dash'        then Result := psDash;
   if PenStyle = 'Dot'         then Result := psDot;
@@ -69,426 +130,384 @@ begin
   if PenStyle = 'Clear'       then Result := psClear;
 end;
 
-procedure LoadChart1(Chart: TChart; const ASection: string; ASetting: TIniFile);
+procedure TCompozer.LoadChart1(Chart: TChart; const ASection: string);
 begin
   // Title
-  Chart.TitleFontName   := aSetting.ReadString(ASection, 'TitleFontName', 'default');
-  Chart.TitleFontHeight := aSetting.ReadFloat(ASection, 'TitleFontHeight', 14);
-  Chart.TitleFontStyle  := LoadFontStyle(ASection, 'TitleFontStyle', ASetting);
-  Chart.TitleFontColor.FromString(aSetting.ReadString(ASection, 'TitleFontColor', 'Black'));
+  Chart.TitleFontName   := FSetting.ReadString(ASection, 'TitleFontName', 'default');
+  Chart.TitleFontHeight := FSetting.ReadFloat(ASection, 'TitleFontHeight', 14);
+  Chart.TitleFontStyle  := LoadFontStyle(ASection, 'TitleFontStyle');
+  Chart.TitleFontColor.FromString(FSetting.ReadString(ASection, 'TitleFontColor', 'Black'));
   // X Axis
-  Chart.XAxisFontName   := aSetting.ReadString(ASection, 'XAxisFontName', 'default');
-  Chart.XAxisFontHeight := aSetting.ReadFloat (ASection, 'XAxisFontHeight', 13);
-  Chart.XAxisFontStyle  := LoadFontStyle(ASection, 'XAxisFontStyle', ASetting);
-  Chart.XAxisFontColor.FromString(aSetting.ReadString(ASection, 'XAxisFontColor', 'Black' ));
-  Chart.XAxisLineColor.FromString(aSetting.ReadString(ASection, 'XAxisLineColor', 'Black' ));
-  Chart.XGridLineColor.FromString(aSetting.ReadString(ASection, 'XGridLineColor', 'Silver'));
-  Chart.XAxisLineWidth  := aSetting.ReadFloat(ASection, 'XAxisLineWidth' , 1.0);
-  Chart.XGridLineWidth  := aSetting.ReadFloat(ASection, 'XGridLineWidth' , 1.0);
-  Chart.XAxisLineStyle  := LoadPenStyle(ASection, 'XAxisLineStyle', ASetting);
-  Chart.XGridLineStyle  := LoadPenStyle(ASection, 'XGridLineStyle', ASetting);
+  Chart.XAxisFontName   := FSetting.ReadString(ASection, 'XAxisFontName', 'default');
+  Chart.XAxisFontHeight := FSetting.ReadFloat (ASection, 'XAxisFontHeight', 13);
+  Chart.XAxisFontStyle  := LoadFontStyle(ASection, 'XAxisFontStyle');
+  Chart.XAxisFontColor.FromString(FSetting.ReadString(ASection, 'XAxisFontColor', 'Black' ));
+  Chart.XAxisLineColor.FromString(FSetting.ReadString(ASection, 'XAxisLineColor', 'Black' ));
+  Chart.XGridLineColor.FromString(FSetting.ReadString(ASection, 'XGridLineColor', 'Silver'));
+  Chart.XAxisLineWidth  := FSetting.ReadFloat(ASection, 'XAxisLineWidth' , 1.0);
+  Chart.XGridLineWidth  := FSetting.ReadFloat(ASection, 'XGridLineWidth' , 1.0);
+  Chart.XAxisLineStyle  := LoadPenStyle(ASection, 'XAxisLineStyle');
+  Chart.XGridLineStyle  := LoadPenStyle(ASection, 'XGridLineStyle');
   // Y Axis
-  Chart.YAxisFontName   := aSetting.ReadString(ASection, 'YAxisFontName', 'default');
-  Chart.YAxisFontHeight := aSetting.ReadFloat (ASection, 'YAxisFontHeight', 13);
-  Chart.YAxisFontStyle  := LoadFontStyle(ASection, 'YAxisFontStyle' , ASetting);
-  Chart.YAxisFontColor.FromString(aSetting.ReadString(ASection, 'YAxisFontColor', 'Black' ));
-  Chart.YAxisLineColor.FromString(aSetting.ReadString(ASection, 'YAxisLineColor', 'Black' ));
-  Chart.YGridLineColor.FromString(aSetting.ReadString(ASection, 'YGridLineColor', 'Silver'));
-  Chart.YAxisLineWidth  := aSetting.ReadFloat(ASection, 'YAxisLineWidth' , 1.0);
-  Chart.YGridLineWidth  := aSetting.ReadFloat(ASection, 'YGridLineWidth' , 1.0);
-  Chart.YAxisLineStyle  := LoadPenStyle(ASection, 'YAxisLineStyle' , ASetting);
-  Chart.YGridLineStyle  := LoadPenStyle(ASection, 'YGridLineStyle' , ASetting);
+  Chart.YAxisFontName   := FSetting.ReadString(ASection, 'YAxisFontName', 'default');
+  Chart.YAxisFontHeight := FSetting.ReadFloat (ASection, 'YAxisFontHeight', 13);
+  Chart.YAxisFontStyle  := LoadFontStyle(ASection, 'YAxisFontStyle');
+  Chart.YAxisFontColor.FromString(FSetting.ReadString(ASection, 'YAxisFontColor', 'Black' ));
+  Chart.YAxisLineColor.FromString(FSetting.ReadString(ASection, 'YAxisLineColor', 'Black' ));
+  Chart.YGridLineColor.FromString(FSetting.ReadString(ASection, 'YGridLineColor', 'Silver'));
+  Chart.YAxisLineWidth  := FSetting.ReadFloat(ASection, 'YAxisLineWidth' , 1.0);
+  Chart.YGridLineWidth  := FSetting.ReadFloat(ASection, 'YGridLineWidth' , 1.0);
+  Chart.YAxisLineStyle  := LoadPenStyle(ASection, 'YAxisLineStyle');
+  Chart.YGridLineStyle  := LoadPenStyle(ASection, 'YGridLineStyle');
   // General
-  Chart.Color          .FromString(aSetting.ReadString(ASection, 'Color', 'White'));
-  Chart.BackgroundColor.FromString(aSetting.ReadString(ASection, 'BackgroundColor', 'White'));
+  Chart.Color          .FromString(FSetting.ReadString(ASection, 'Color', 'White'));
+  Chart.BackgroundColor.FromString(FSetting.ReadString(ASection, 'BackgroundColor', 'White'));
 end;
 
-procedure LoadChart2(Chart: TChart; const ASection, AIdent: string; ASetting: TIniFile);
+procedure TCompozer.LoadChart2(Chart: TChart; const ASection, AIdent: string);
 begin
-  Chart.FontName   := aSetting.ReadString(ASection,  AIdent + '.FontName', 'default');
-  Chart.FontHeight := aSetting.ReadFloat (ASection,  AIdent + '.FontHeight', 12);
-  Chart.FontStyle  := LoadFontStyle(ASection, AIdent + '.FontStyle' , ASetting);
-  Chart.FontColor.FromString(aSetting.ReadString(ASection, AIdent + '.FontColor', 'Black' ));
+  Chart.FontName   := FSetting.ReadString(ASection,  AIdent + '.FontName', 'default');
+  Chart.FontHeight := FSetting.ReadFloat (ASection,  AIdent + '.FontHeight', 12);
+  Chart.FontStyle  := LoadFontStyle(ASection, AIdent + '.FontStyle');
+  Chart.FontColor.FromString(FSetting.ReadString(ASection, AIdent + '.FontColor', 'Black' ));
 
-  Chart.PenWidth   := aSetting.ReadFloat(ASection, AIdent + '.PenWidth', 1.0);
-  Chart.PenStyle   := LoadPenStyle(ASection, AIdent + '.PenStyle', ASetting);
-  Chart.PenColor.FromString(aSetting.ReadString (ASection, AIdent + '.PenColor',  'Black'));
+  Chart.PenWidth   := FSetting.ReadFloat(ASection, AIdent + '.PenWidth', 1.0);
+  Chart.PenStyle   := LoadPenStyle(ASection, AIdent + '.PenStyle');
+  Chart.PenColor.FromString(FSetting.ReadString (ASection, AIdent + '.PenColor',  'Black'));
 
   Chart.TextureBackgroundColor.FromString(
-    aSetting.ReadString(ASection, AIdent + '.TextureBackgroundColor', 'White' ));
+    FSetting.ReadString(ASection, AIdent + '.TextureBackgroundColor', 'White' ));
 
   Chart.TextureColor.FromString(
-    aSetting.ReadString(ASection, AIdent + '.TextureColor', 'Black' ));
+    FSetting.ReadString(ASection, AIdent + '.TextureColor', 'Black' ));
 
-  Chart.TextureWidth    := aSetting.ReadInteger(ASection, AIdent + '.TextureWidth',      8);
-  Chart.TextureHeight   := aSetting.ReadInteger(ASection, AIdent + '.TextureHeight',     8);
-  Chart.TexturePenWidth := aSetting.ReadFloat  (ASection, AIdent + '.TexturePenWidth', 1.0);
+  Chart.TextureWidth    := FSetting.ReadInteger(ASection, AIdent + '.TextureWidth',      8);
+  Chart.TextureHeight   := FSetting.ReadInteger(ASection, AIdent + '.TextureHeight',     8);
+  Chart.TexturePenWidth := FSetting.ReadFloat  (ASection, AIdent + '.TexturePenWidth', 1.0);
 end;
 
-procedure LoadTable(Table: TReportTable; const ASection, AIdent: string; ASetting: TIniFile);
+procedure TCompozer.LoadTable(Table: TReportTable; const ASection, AIdent: string);
 begin
-  Table.BackgroundColor.FromString(aSetting.ReadString(ASection, AIdent + '.BackgroundColor', 'White'));
-  Table.BorderWidth:= aSetting.ReadInteger(ASection, AIdent + '.BorderWidth', 0);
+  Table.BackgroundColor.FromString(FSetting.ReadString(ASection, AIdent + '.BackgroundColor', 'White'));
+  Table.BorderWidth:= FSetting.ReadInteger(ASection, AIdent + '.BorderWidth', 0);
 
-  Table.FontName   := aSetting.ReadString(ASection,  AIdent + '.FontName', 'default');
-  Table.FontHeight := aSetting.ReadFloat (ASection,  AIdent + '.FontHeight', 12);
-  Table.FontStyle  := LoadFontStyle(ASection, AIdent + '.FontStyle' , ASetting);
-  Table.FontColor.FromString(aSetting.ReadString(ASection, AIdent + '.FontColor', 'Black' ));
-  Table.PenWidth   := aSetting.ReadFloat(ASection, AIdent + '.PenWidth', 1.0);
-  Table.PenStyle   := LoadPenStyle(ASection, AIdent + '.PenStyle', ASetting);
-  Table.PenColor.FromString(aSetting.ReadString (ASection, AIdent + '.PenColor',  'Black'));
+  Table.FontName   := FSetting.ReadString(ASection,  AIdent + '.FontName', 'default');
+  Table.FontHeight := FSetting.ReadFloat (ASection,  AIdent + '.FontHeight', 12);
+  Table.FontStyle  := LoadFontStyle(ASection, AIdent + '.FontStyle');
+  Table.FontColor.FromString(FSetting.ReadString(ASection, AIdent + '.FontColor', 'Black' ));
+  Table.PenWidth   := FSetting.ReadFloat(ASection, AIdent + '.PenWidth', 1.0);
+  Table.PenStyle   := LoadPenStyle(ASection, AIdent + '.PenStyle');
+  Table.PenColor.FromString(FSetting.ReadString (ASection, AIdent + '.PenColor',  'Black'));
 
-  Table.RowSpacer := aSetting.ReadInteger(ASection, AIdent + '.RowSpacer', 0);
-  Table.ColumnSpacer := aSetting.ReadInteger(ASection, AIdent + '.ColumnSpacer', 0);
+  Table.RowSpacer := FSetting.ReadInteger(ASection, AIdent + '.RowSpacer', 0);
+  Table.ColumnSpacer := FSetting.ReadInteger(ASection, AIdent + '.ColumnSpacer', 0);
 end;
 
-procedure LoadSpring(Spring: TSectionSpringDrawing; const ASection, AIdent: string; ASetting: TIniFile);
+procedure TCompozer.LoadSpring(Spring: TSectionSpringDrawing; const ASection, AIdent: string);
 begin
-  Spring.BackgroundColor.FromString(aSetting.ReadString(ASection, AIdent + '.BackgroundColor', 'White'));
-  Spring.CenterLineColor.FromString(aSetting.ReadString(ASection, AIdent + '.CenterLineColor', 'Black' ));
-  Spring.CenterLineStyle := LoadPenStyle(ASection, AIdent + '.CenterLineStyle', ASetting);
-  Spring.CenterLineWidth := aSetting.ReadFloat(ASection, AIdent + '.CenterLineWidth', 1.0);
+  Spring.BackgroundColor.FromString(FSetting.ReadString(ASection, AIdent + '.BackgroundColor', 'White'));
+  Spring.CenterLineColor.FromString(FSetting.ReadString(ASection, AIdent + '.CenterLineColor', 'Black' ));
+  Spring.CenterLineStyle := LoadPenStyle(ASection, AIdent + '.CenterLineStyle');
+  Spring.CenterLineWidth := FSetting.ReadFloat(ASection, AIdent + '.CenterLineWidth', 1.0);
 
-  Spring.FontColor.FromString(aSetting.ReadString(ASection, AIdent + '.FontColor', 'Black'));
-  Spring.FontName   := aSetting.ReadString(ASection,  AIdent + '.FontName', 'default');
-  Spring.FontHeight := aSetting.ReadFloat(ASection, AIdent + '.FontHeight', 13);
-  Spring.FontStyle  := LoadFontStyle(ASection, AIdent, ASetting);
+  Spring.FontColor.FromString(FSetting.ReadString(ASection, AIdent + '.FontColor', 'Black'));
+  Spring.FontName   := FSetting.ReadString(ASection,  AIdent + '.FontName', 'default');
+  Spring.FontHeight := FSetting.ReadFloat(ASection, AIdent + '.FontHeight', 13);
+  Spring.FontStyle  := LoadFontStyle(ASection, AIdent);
 
-  Spring.PenColor.FromString(aSetting.ReadString(ASection, AIdent + '.PenColor', 'Black'));
-  Spring.PenStyle := LoadPenStyle(ASection, AIdent + '.PenStyle', ASetting);
-  Spring.PenWidth := aSetting.ReadFloat(ASection, AIdent + '.PenWidth', 1.0);
+  Spring.PenColor.FromString(FSetting.ReadString(ASection, AIdent + '.PenColor', 'Black'));
+  Spring.PenStyle := LoadPenStyle(ASection, AIdent + '.PenStyle');
+  Spring.PenWidth := FSetting.ReadFloat(ASection, AIdent + '.PenWidth', 1.0);
 
-  Spring.TextureBackgroundColor.FromString(aSetting.ReadString(ASection, AIdent + '.TextureBackgroundColor', 'White'));
-  Spring.TextureColor.FromString(aSetting.ReadString(ASection, AIdent + '.TextureColor', 'Black'));
-  Spring.TextureHeight   := aSetting.ReadInteger(ASection, AIdent + '.TextureHeight', 8);
-  Spring.TextureWidth    := aSetting.ReadInteger(ASection, AIdent + '.TextureWidth',  8);
-  Spring.TexturePenWidth := aSetting.ReadFloat(ASection, AIdent + '.TexturePenWidth', 1.0);
+  Spring.TextureBackgroundColor.FromString(FSetting.ReadString(ASection, AIdent + '.TextureBackgroundColor', 'White'));
+  Spring.TextureColor.FromString(FSetting.ReadString(ASection, AIdent + '.TextureColor', 'Black'));
+  Spring.TextureHeight   := FSetting.ReadInteger(ASection, AIdent + '.TextureHeight', 8);
+  Spring.TextureWidth    := FSetting.ReadInteger(ASection, AIdent + '.TextureWidth',  8);
+  Spring.TexturePenWidth := FSetting.ReadFloat(ASection, AIdent + '.TexturePenWidth', 1.0);
 end;
 
-//
+// ---
 
-function CreateForceDisplacementChart(const AScreenScale: double; ASetting: TIniFile): TChart;
-const
-  Section1 = 'Custom';
-  Section2 = 'ForceDisplacementChart';
+function TCompozer.CreateForceDisplacementChart(const AScreenScale: double): TChart;
 var
   Points: ArrayOfTPointF = nil;
 begin
-  Result               := TChart.Create;
+  Result := TChart.Create;
   Result.LegendEnabled := False;
-  Result.Title         := 'Force & Displacement Chart';
-  Result.XAxisLabel    := 's[mm]';
-  Result.YAxisLabel    := 'F[N]';
-  Result.Scale          := aScreenScale;
-  LoadChart1(Result, Section1, ASetting);
-
-  // Bisector line
+  Result.Title := 'Force & Displacement Chart';
+  Result.XAxisLabel := 's[' + FLengthUnit.Symbol   + ']';
+  Result.YAxisLabel := 'F[' + FForceUnit.Symbol + ']';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
+  // Draw bisector line
   if SOLVER.LoadFc > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'BisectorLine', ASetting);
-
+    LoadChart2(Result, 'ForceDisplacementChart', 'BisectorLine');
     SetLength(Points, 2);
     Points[0].X := 0;
     Points[0].Y := 0;
-    Points[1].X := mm.Value(SOLVER.StrokeSc);
-    Points[1].Y := N.Value(SOLVER.LoadFc);
+    Points[1].X := LengthUnit.Value(SOLVER.StrokeSc);
+    Points[1].Y := ForceUnit.Value(SOLVER.LoadFc);
     Result.AddPolyLine(Points, True, 'Bisector');
     Points := nil;
   end;
-
-  // Tolerance lines
+  // Draw tolerance lines
   if (TOL.LoadF1 > (0*N)) and (TOL.LoadF2 > (0*N)) then
   begin
-    LoadChart2(Result, Section2, 'ToleranceLine', ASetting);
-
+    LoadChart2(Result, 'ForceDisplacementChart', 'ToleranceLine');
     SetLength(Points, 2);
-    Points[0].X := mm.Value(SOLVER.StrokeS1);
-    Points[0].Y := N.Value(TOL.LoadF1 + TOL.LoadF1Tolerance);
-    Points[1].X := mm.Value(SOLVER.StrokeS2);
-    Points[1].Y := N.Value(TOL.LoadF2 + TOL.LoadF2Tolerance);
+    Points[0].X := LengthUnit.Value(SOLVER.StrokeS1);
+    Points[0].Y := ForceUnit.Value(TOL.LoadF1 + TOL.LoadF1Tolerance);
+    Points[1].X := LengthUnit.Value(SOLVER.StrokeS2);
+    Points[1].Y := ForceUnit.Value(TOL.LoadF2 + TOL.LoadF2Tolerance);
     Result.AddPolyLine(Points, True, 'Tolerance +');
-    Points := nil;
-
-    SetLength(Points, 2);
-    Points[0].X := mm.Value(SOLVER.StrokeS1);
-    Points[0].Y := N.Value(TOL.LoadF1 - TOL.LoadF1Tolerance);
-    Points[1].X := mm.Value(SOLVER.StrokeS2);
-    Points[1].Y := N.Value(TOL.LoadF2 - TOL.LoadF2Tolerance);
+    Points[0].X := LengthUnit.Value(SOLVER.StrokeS1);
+    Points[0].Y := ForceUnit.Value(TOL.LoadF1 - TOL.LoadF1Tolerance);
+    Points[1].X := LengthUnit.Value(SOLVER.StrokeS2);
+    Points[1].Y := ForceUnit.Value(TOL.LoadF2 - TOL.LoadF2Tolerance);
     Result.AddPolyLine(Points, True, 'Tolerance -');
     Points := nil;
   end;
-
-  // Load-F1
+  // Draw Load-F1
   if SOLVER.LoadF1 > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-F1', ASetting);
-
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F1');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := N.Value(SOLVER.LoadF1);
-    Points[1].X := mm.Value(SOLVER.StrokeS1);
-    Points[1].Y := N.Value(SOLVER.LoadF1);
-    Points[2].X := mm.Value(SOLVER.StrokeS1);
+    Points[0].Y := ForceUnit.Value(SOLVER.LoadF1);
+    Points[1].X := LengthUnit.Value(SOLVER.StrokeS1);
+    Points[1].Y := ForceUnit.Value(SOLVER.LoadF1);
+    Points[2].X := LengthUnit.Value(SOLVER.StrokeS1);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'F1');
     Points := nil;
   end;
-
-  // Load F2
+  // Draw  Load F2
   if SOLVER.LoadF2 > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-F2', ASetting);
-
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F2');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := N.Value(SOLVER.LoadF2);
-    Points[1].X := mm.Value(SOLVER.StrokeS2);
-    Points[1].Y := N.Value(SOLVER.LoadF2);
-    Points[2].X := mm.Value(SOLVER.StrokeS2);
+    Points[0].Y := ForceUnit.Value(SOLVER.LoadF2);
+    Points[1].X := LengthUnit.Value(SOLVER.StrokeS2);
+    Points[1].Y := ForceUnit.Value(SOLVER.LoadF2);
+    Points[2].X := LengthUnit.Value(SOLVER.StrokeS2);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'F2');
     Points := nil;
   end;
-
-  // Load Fn
+  // Draw Load Fn
   if SOLVER.LoadFn > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-Fn', ASetting);
-
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fn');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := N.Value(SOLVER.LoadFn);
-    Points[1].X := mm.Value(SOLVER.StrokeSn);
-    Points[1].Y := N.Value(SOLVER.LoadFn);
-    Points[2].X := mm.Value(SOLVER.StrokeSn);
+    Points[0].Y := ForceUnit.Value(SOLVER.LoadFn);
+    Points[1].X := LengthUnit.Value(SOLVER.StrokeSn);
+    Points[1].Y := ForceUnit.Value(SOLVER.LoadFn);
+    Points[2].X := LengthUnit.Value(SOLVER.StrokeSn);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'Fn');
     Points := nil;
   end;
-
-  // Load Fc
+  // Draw Load Fc
   if SOLVER.LoadFc > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-Fc', ASetting);
-
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fc');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := N.Value(SOLVER.LoadFc);
-    Points[1].X := mm.Value(SOLVER.StrokeSc);
-    Points[1].Y := N.Value(SOLVER.LoadFc);
-    Points[2].X := mm.Value(SOLVER.StrokeSc);
+    Points[0].Y := ForceUnit.Value(SOLVER.LoadFc);
+    Points[1].X := LengthUnit.Value(SOLVER.StrokeSc);
+    Points[1].Y := ForceUnit.Value(SOLVER.LoadFc);
+    Points[2].X := LengthUnit.Value(SOLVER.StrokeSc);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'Fc');
     Points := nil;
   end;
-
-  // Label Load-F1
+  // Draw label Load-F1
   if SOLVER.LoadF1 > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-F1', ASetting);
-
-    Result.AddLabel(0, N.Value(SOLVER.LoadF1), Trunc(32*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F1');
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F1');
+    Result.AddLabel(0, ForceUnit.Value(SOLVER.LoadF1),
+      Trunc(32*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F1');
   end;
-
-  // Label Load-F2
+  // Draw label Load-F2
   if SOLVER.LoadF2 > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-F2', ASetting);
-
-    Result.AddLabel(0, N.Value(SOLVER.LoadF2), Trunc(64*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F2');
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F2');
+    Result.AddLabel(0, ForceUnit.Value(SOLVER.LoadF2),
+      Trunc(64*AScreenScale), 0, taLeftJustify, taAlignBottom, 'F2');
   end;
-
-  // Label Load-Fn
+  // Draw label Load-Fn
   if SOLVER.LoadFn > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-Fn', ASetting);
-
-    Result.AddLabel(0, N.Value(SOLVER.LoadFn), Trunc(96*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fn');
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fn');
+    Result.AddLabel(0, ForceUnit.Value(SOLVER.LoadFn),
+      Trunc(96*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fn');
   end;
-
-  // Label Load-Fc
+  // Draw label Load-Fc
   if SOLVER.LoadFc > (0*N) then
   begin
-    LoadChart2(Result, Section2, 'Load-Fc', ASetting);
-
-    Result.AddLabel(0, N.Value(SOLVER.LoadFc), Trunc(128*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fc');
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fc');
+    Result.AddLabel(0, ForceUnit.Value(SOLVER.LoadFc),
+      Trunc(128*AScreenScale), 0, taLeftJustify, taAlignBottom, 'Fc');
   end;
 end;
 
-function CreateGoodmanChart(const aScreenScale: double; aSetting: TIniFile): TChart;
-const
-  Section1 = 'Custom';
-  Section2 = 'GoodmanChart';
+function TCompozer.CreateGoodmanChart(const AScreenScale: double): TChart;
 var
   Points: ArrayOfTPointF = nil;
 begin
-  Result               := TChart.Create;
+  Result := TChart.Create;
   Result.LegendEnabled := False;
   if MAT.ItemIndex <> -1 then
-    Result.Title       := Format('Goodman Chart: %s', [MAT.Items[MAT.ItemIndex]])
+    Result.Title := Format('Goodman Chart: %s', [MAT.Items[MAT.ItemIndex]])
   else
-    Result.Title       := Format('Goodman Chart: %s', ['Custom material']);
-  Result.XAxisLabel    := 'tau U';
-  Result.YAxisLabel    := 'tau O';
-  Result.Scale          := aScreenScale;
-  LoadChart1(Result, Section1, ASetting);
-
-  // Bisector line
+    Result.Title := Format('Goodman Chart: %s', ['Custom material']);
+  Result.XAxisLabel := 'tau U';
+  Result.YAxisLabel := 'tau O';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
+  // Draw bisector line
   if (SOLVER.AdmStaticTorsionalStressTauz > (0*MPa)) then
   begin
-    LoadChart2(Result, Section2, 'BisectorLine', ASetting);
-
+    LoadChart2(Result, 'GoodmanChart', 'BisectorLine');
     SetLength(Points, 2);
     Points[0].X := 0;
     Points[0].Y := 0;
-    Points[1].X := MPa.Value(SOLVER.AdmStaticTorsionalStressTauz);
-    Points[1].Y := MPa.Value(SOLVER.AdmStaticTorsionalStressTauz);
+    Points[1].X := PressureUnit.Value(SOLVER.AdmStaticTorsionalStressTauz);
+    Points[1].Y := PressureUnit.Value(SOLVER.AdmStaticTorsionalStressTauz);
     Result.AddPolyLine(Points, True, 'Bisector');
     Points := nil;
   end;
-
-  // TaukTolerabces
+  // Draw tauk-tolerances
   if (SOLVER.GetTauk(TOL.LoadF1Tolerance) > (0*MPa)) and
      (SOLVER.GetTauk(TOL.LoadF2Tolerance) > (0*MPa)) then
   begin
-    LoadChart2(Result, Section2, 'TaukTol', ASetting);
-
+    LoadChart2(Result, 'GoodmanChart', 'TaukTol');
     SetLength(Points, 4);
-    Points[0].X := MPa.Value(Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
-    Points[0].Y := MPa.Value(Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
-    Points[1].X := MPa.Value(Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
-    Points[1].Y := MPa.Value(Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
-    Points[2].X := MPa.Value(Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
-    Points[2].Y := MPa.Value(Solver.TorsionalStressTauk2 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
-    Points[3].X := MPa.Value(Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
-    Points[3].Y := MPa.Value(Solver.TorsionalStressTauk2 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[0].X := PressureUnit.Value(Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[0].Y := PressureUnit.Value(Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[1].X := PressureUnit.Value(Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[1].Y := PressureUnit.Value(Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[2].X := PressureUnit.Value(Solver.TorsionalStressTauk1 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[2].Y := PressureUnit.Value(Solver.TorsionalStressTauk2 + SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[3].X := PressureUnit.Value(Solver.TorsionalStressTauk1 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
+    Points[3].Y := PressureUnit.Value(Solver.TorsionalStressTauk2 - SOLVER.GetTauk(TOL.LoadF1Tolerance));
     Result.AddPolygon(Points, 'TaukTol');
     Result.AddLabel(Points[1].X, Points[1].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk1');
     Result.AddLabel(Points[2].X, Points[2].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk2');
     Points := nil;
   end;
-
-  if (Solver.TorsionalStressTauk1 > (0*MPa)) and
-     (Solver.TorsionalStressTauk2 > (0*MPa)) then
+  // Draw tauk1-tauk2
+  if (Solver.TorsionalStressTauk1 > (0*Pa)) and
+     (Solver.TorsionalStressTauk2 > (0*Pa)) then
   begin
-    LoadChart2(Result, Section2, 'Tauk', ASetting);
-
+    LoadChart2(Result, 'GoodmanChart', 'Tauk');
     SetLength(Points, 2);
-    Points[0].X := MPa.Value(Solver.TorsionalStressTauk1);
-    Points[0].Y := MPa.Value(Solver.TorsionalStressTauk1);
-    Points[1].X := MPa.Value(Solver.TorsionalStressTauk1);
-    Points[1].Y := MPa.Value(Solver.TorsionalStressTauk2);
+    Points[0].X := PressureUnit.Value(Solver.TorsionalStressTauk1);
+    Points[0].Y := PressureUnit.Value(Solver.TorsionalStressTauk1);
+    Points[1].X := PressureUnit.Value(Solver.TorsionalStressTauk1);
+    Points[1].Y := PressureUnit.Value(Solver.TorsionalStressTauk2);
     Result.AddPolyLine(Points, False, 'Tauk1-Tauk2');
     Points := nil;
   end;
-
+  // Draw Goodmand curve
   if MAT.ItemIndex <> -1 then
   begin
-
-    if (MAT.TorsionalStressTauOE5   > (0*MPa)) and
-       (MAT.TorsionalStressTauUE5   > (0*MPa)) and
-       (MAT.TorsionalStressTauYield > (0*MPa)) and
-       (MAT.TorsionalStressTauUE6   > (0*MPa)) then
+    if (MAT.TorsionalStressTauOE5   > (0*Pa)) and
+       (MAT.TorsionalStressTauUE5   > (0*Pa)) and
+       (MAT.TorsionalStressTauYield > (0*Pa)) and
+       (MAT.TorsionalStressTauUE6   > (0*Pa)) then
     begin
-      LoadChart2(Result, Section2, '1E5', ASetting);
-
+      LoadChart2(Result, 'GoodmanChart', '1E5');
       SetLength(Points, 3);
       Points[0].X := 0;
-      Points[0].Y := MPa.Value(MAT.TorsionalStressTauOE5);
-      Points[1].X := MPa.Value(MAT.TorsionalStressTauUE5);
-      Points[1].Y := MPa.Value(MAT.TorsionalStressTauYield);
-      Points[2].X := MPa.Value(MAT.TorsionalStressTauUE6);
-      Points[2].Y := MPa.Value(MAT.TorsionalStressTauYield);
+      Points[0].Y := PressureUnit.Value(MAT.TorsionalStressTauOE5);
+      Points[1].X := PressureUnit.Value(MAT.TorsionalStressTauUE5);
+      Points[1].Y := PressureUnit.Value(MAT.TorsionalStressTauYield);
+      Points[2].X := PressureUnit.Value(MAT.TorsionalStressTauUE6);
+      Points[2].Y := PressureUnit.Value(MAT.TorsionalStressTauYield);
       Result.AddPolyLine(Points, False, '1E5 Cycles');
       Result.AddLabel(
-        MPa.Value(MAT.TorsionalStressTauUE5),
-        MPa.Value(MAT.TorsionalStressTauYield),
+        PressureUnit.Value(MAT.TorsionalStressTauUE5),
+        PressureUnit.Value(MAT.TorsionalStressTauYield),
         0, 0, taLeftJustify, taAlignBottom, '1E5');
       Points := nil;
     end;
 
-    if (MAT.TorsionalStressTauOE6   > (0*MPa)) and
-       (MAT.TorsionalStressTauUE6   > (0*MPa)) and
-       (MAT.TorsionalStressTauYield > (0*MPa)) and
-       (MAT.TorsionalStressTauUE7   > (0*MPa)) then
+    if (MAT.TorsionalStressTauOE6   > (0*Pa)) and
+       (MAT.TorsionalStressTauUE6   > (0*Pa)) and
+       (MAT.TorsionalStressTauYield > (0*Pa)) and
+       (MAT.TorsionalStressTauUE7   > (0*Pa)) then
      begin
-      LoadChart2(Result, Section2, '1E6', ASetting);
-
+      LoadChart2(Result, 'GoodmanChart', '1E6');
       SetLength(Points, 3);
       Points[0].X := 0;
-      Points[0].Y := MPa.Value(MAT.TorsionalStressTauOE6);
-      Points[1].X := MPa.Value(MAT.TorsionalStressTauUE6);
-      Points[1].Y := MPa.Value(MAT.TorsionalStressTauYield);
-      Points[2].X := MPa.Value(MAT.TorsionalStressTauUE7);
-      Points[2].Y := MPa.Value(MAT.TorsionalStressTauYield);
+      Points[0].Y := PressureUnit.Value(MAT.TorsionalStressTauOE6);
+      Points[1].X := PressureUnit.Value(MAT.TorsionalStressTauUE6);
+      Points[1].Y := PressureUnit.Value(MAT.TorsionalStressTauYield);
+      Points[2].X := PressureUnit.Value(MAT.TorsionalStressTauUE7);
+      Points[2].Y := PressureUnit.Value(MAT.TorsionalStressTauYield);
       Result.AddPolyLine(Points, False, '1E6 Cycles');
       Result.AddLabel(
-        MPa.Value(MAT.TorsionalStressTauUE6),
-        MPa.Value(MAT.TorsionalStressTauYield),
+        PressureUnit.Value(MAT.TorsionalStressTauUE6),
+        PressureUnit.Value(MAT.TorsionalStressTauYield),
         0, 0, taLeftJustify, taAlignBottom, '1E6');
       Points := nil;
      end;
 
-    if (MAT.TorsionalStressTauOE7   > (0*MPa)) and
-       (MAT.TorsionalStressTauUE7   > (0*MPa)) and
-       (MAT.TorsionalStressTauYield > (0*MPa)) then
+    if (MAT.TorsionalStressTauOE7   > (0*Pa)) and
+       (MAT.TorsionalStressTauUE7   > (0*Pa)) and
+       (MAT.TorsionalStressTauYield > (0*Pa)) then
     begin
-      LoadChart2(Result, Section2, '1E7', ASetting);
-
+      LoadChart2(Result, 'GoodmanChart', '1E7');
       SetLength(Points, 3);
       Points[0].X := 0;
-      Points[0].Y := MPa.Value(MAT.TorsionalStressTauOE7);
-      Points[1].X := MPa.Value(MAT.TorsionalStressTauUE7);
-      Points[1].Y := MPa.Value(MAT.TorsionalStressTauYield);
-      Points[2].X := MPa.Value(MAT.TorsionalStressTauYield);
-      Points[2].Y := MPa.Value(MAT.TorsionalStressTauYield);
+      Points[0].Y := PressureUnit.Value(MAT.TorsionalStressTauOE7);
+      Points[1].X := PressureUnit.Value(MAT.TorsionalStressTauUE7);
+      Points[1].Y := PressureUnit.Value(MAT.TorsionalStressTauYield);
+      Points[2].X := PressureUnit.Value(MAT.TorsionalStressTauYield);
+      Points[2].Y := PressureUnit.Value(MAT.TorsionalStressTauYield);
       Result.AddPolyLine(Points, False, '1E7 Cycles');
       Result.AddLabel(
-        MPa.Value(MAT.TorsionalStressTauUE7),
-        MPa.Value(MAT.TorsionalStressTauYield),
+        PressureUnit.Value(MAT.TorsionalStressTauUE7),
+        PressureUnit.Value(MAT.TorsionalStressTauYield),
         0, 0, taLeftJustify, taAlignBottom, '1E7 Cycles');
       Points := nil;
     end;
-
   end;
 end;
 
-function CreateBucklingChart(const aScreenScale: double; aSetting: TIniFile): TChart;
-const
-  Section1 = 'Custom';
-  Section2 = 'BucklingChart';
+function TCompozer.CreateBucklingChart(const AScreenScale: double): TChart;
 var
   X, Y: single;
   Points: ArrayOfTPointF = nil;
 begin
-  Result               := TChart.Create;
+  Result := TChart.Create;
   Result.LegendEnabled := False;
-  Result.Title         := 'Buckling diagram';
-  Result.XAxisLabel    := 'nu*L0/D';
-  Result.YAxisLabel    := 's/L0';
-  Result.Scale          := aScreenScale;
-  LoadChart1(Result, Section1, ASetting);
-
-  // Buckling Curve
+  Result.Title := 'Buckling diagram';
+  Result.XAxisLabel := 'nu*L0/D';
+  Result.YAxisLabel := 's/L0';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
+  // Draw buckling curve
   SOLVER.GetBucklingCurve(Points);
   if (Length(Points) > 0) then
   begin
-    LoadChart2(Result, Section2, 'BucklingCurve', ASetting);
-
+    LoadChart2(Result, 'BucklingChart', 'BucklingCurve');
     Result.XMinF   := 0.0;
     Result.YMinF   := 0.0;
     Result.YMaxF   := 1.0;
     Result.YDeltaF := 0.1;
     Result.YCount  := 10;
-
     Result.AddPolyLine(Points, False, 'Buckling-Curve');
     Points := nil;
   end;
 
-  if (SOLVER.Dm > (0*mm)) and (SOLVER.LengthL0 > (0*mm)) then
+  if (SOLVER.Dm > (0*m)) and (SOLVER.LengthL0 > (0*m)) then
   begin
-    LoadChart2(Result, Section2, 'Sc', ASetting);
-
+    LoadChart2(Result, 'BucklingChart', 'Sc');
     X := SOLVER.SeatingCoefficent*SOLVER.LengthL0/SOLVER.Dm;
     if SOLVER.StrokeSc > SOLVER.DeflectionSk then
       Y := SOLVER.StrokeSc / SOLVER.LengthL0
@@ -501,122 +520,109 @@ begin
     Points[1].x := X;
     Points[1].y := Y;
     Result.AddPolyLine(Points, False, 'Sc');
-    Result.AddDotLabel(X, SOLVER.StrokeSc/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'Sc');
+    Result.AddDotLabel(X, SOLVER.StrokeSc/SOLVER.LengthL0,
+      5, 10, 0, taLeftJustify, taVerticalCenter, 'Sc');
     Points := nil;
-
-    LoadChart2(Result, Section2, 'Sx', ASetting);
-
+    LoadChart2(Result, 'BucklingChart', 'Sx');
     Result.AddDotLabel(X, SOLVER.StrokeS1/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'S1');
     Result.AddDotLabel(X, SOLVER.StrokeS2/SOLVER.LengthL0, 5, 10, 0, taLeftJustify, taVerticalCenter, 'S2');
   end;
 end;
 
-function CreateLoadF1Chart(const aScreenScale: double; aSetting: TIniFile): TChart;
+function TCompozer.CreateLoadF1Chart(const AScreenScale: double): TChart;
 const
   DT = 50;
-  Section1 = 'Custom';
-  Section2 = 'LinearChart';
 var
   Points: ArrayOfTPointF = nil;
 begin
-  Result               := TChart.Create;
+  Result := TChart.Create;
   Result.LegendEnabled := False;
-  Result.Title         := 'Load F1-Temperature Chart';
-  Result.XAxisLabel    := 'T [C°]';
-  Result.YAxisLabel    := 'F1 [N]';
-  Result.Scale          := aScreenScale;
-  LoadChart1(Result, Section1, ASetting);
+  Result.Title := 'Load F1-Temperature Chart';
+  Result.XAxisLabel := 'T[C°]';
+  Result.YAxisLabel := 'F1[' + ForceUnit.Symbol + ']';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
 
   if (SOLVER.GetF1(MAT.Tempetature - DT) > (0*N)) and
      (SOLVER.GetF1(MAT.Tempetature + DT) > (0*N)) then
   begin
-    LoadChart2(Result, Section2, 'Line', ASetting);
-
+    LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
     Points[0].x:= MAT.Tempetature - DT;
-    Points[0].y:= N.Value(SOLVER.GetF1(Points[0].x));
+    Points[0].y:= ForceUnit.Value(SOLVER.GetF1(Points[0].x));
     Points[1].x:= MAT.Tempetature + DT;
-    Points[1].y:= N.Value(SOLVER.GetF1(Points[1].x));
+    Points[1].y:= ForceUnit.Value(SOLVER.GetF1(Points[1].x));
     Result.AddPolyLine(Points, True, 'F1(T°)');
     Points := nil;
-
     Result.AddDotLabel(MAT.Tempetature,
-      N.Value(SOLVER.GetF1(MAT.Tempetature)),
+      ForceUnit.Value(SOLVER.GetF1(MAT.Tempetature)),
       5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
   end;
 end;
 
-function CreateLoadF2Chart(const aScreenScale: double; aSetting: TIniFile): TChart;
+function TCompozer.CreateLoadF2Chart(const AScreenScale: double): TChart;
 const
   DT = 50;
-  Section1 = 'Custom';
-  Section2 = 'LinearChart';
 var
   Points: ArrayOfTPointF = nil;
 begin
-  Result               := TChart.Create;
+  Result := TChart.Create;
   Result.LegendEnabled := False;
-  Result.Title         := 'Load F2-Temperature Chart';
-  Result.XAxisLabel    := 'T [C°]';
-  Result.YAxisLabel    := 'F2 [N]';
-  Result.Scale          := aScreenScale;
-  LoadChart1(Result, Section1, ASetting);
+  Result.Title := 'Load F2-Temperature Chart';
+  Result.XAxisLabel := 'T[C°]';
+  Result.YAxisLabel := 'F2[' + ForceUnit.Symbol + ']';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
 
   if (SOLVER.GetF2(MAT.Tempetature - DT) > (0*N)) and
      (SOLVER.GetF2(MAT.Tempetature + DT) > (0*N)) then
   begin
-    LoadChart2(Result, Section2, 'Line', ASetting);
-
+    LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
     Points[0].x:= MAT.Tempetature - DT;
-    Points[0].y:= N.Value(SOLVER.GetF2(Points[0].x));
+    Points[0].y:= ForceUnit.Value(SOLVER.GetF2(Points[0].x));
     Points[1].x:= MAT.Tempetature + DT;
-    Points[1].y:= N.Value(SOLVER.GetF2(Points[1].x));
+    Points[1].y:= ForceUnit.Value(SOLVER.GetF2(Points[1].x));
     Result.AddPolyLine(Points, True, 'F2(T°)');
     Points := nil;
-
     Result.AddDotLabel(MAT.Tempetature,
-      N.Value(SOLVER.GetF2(MAT.Tempetature)),
+      ForceUnit.Value(SOLVER.GetF2(MAT.Tempetature)),
       5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
   end;
 end;
 
-function CreateShearModulusChart(const aScreenScale: double; aSetting: TIniFile): TChart;
+function TCompozer.CreateShearModulusChart(const AScreenScale: double): TChart;
 const
   DT = 50;
-  Section1 = 'Custom';
-  Section2 = 'LinearChart';
 var
   Points: ArrayOfTPointF = nil;
 begin
-  Result               := TChart.Create;
+  Result := TChart.Create;
   Result.LegendEnabled := False;
-  Result.Title         := 'Shear Modulus G-Temperature Chart';
-  Result.XAxisLabel    := 'T [C°]';
-  Result.YAxisLabel    := 'G [MPa]';
-  Result.Scale          := aScreenScale;
-  LoadChart1(Result, Section1, ASetting);
+  Result.Title := 'Shear Modulus G-Temperature Chart';
+  Result.XAxisLabel := 'T[C°]';
+  Result.YAxisLabel := 'G[' + PressureUnit.Symbol + ']';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
 
-  if (MAT.GetG(MAT.Tempetature - DT) > (0*MPa)) and
-     (MAT.GetG(MAT.Tempetature + DT) > (0*MPa)) then
+  if (MAT.GetG(MAT.Tempetature - DT) > (0*Pa)) and
+     (MAT.GetG(MAT.Tempetature + DT) > (0*Pa)) then
   begin
-    LoadChart2(Result, Section2, 'Line', ASetting);
-
+    LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
     Points[0].x:= MAT.Tempetature - DT;
-    Points[0].y:= MPa.Value(MAT.GetG(Points[0].x));
+    Points[0].y:= PressureUnit.Value(MAT.GetG(Points[0].x));
     Points[1].x:= MAT.Tempetature + DT;
-    Points[1].y:= MPa.Value(MAT.GetG(Points[1].x));
+    Points[1].y:= PressureUnit.Value(MAT.GetG(Points[1].x));
     Result.AddPolyLine(Points, True, 'G(T°)');
     Points := nil;
-
     Result.AddDotLabel(MAT.Tempetature,
-      MPa.Value(MAT.GetG(MAT.Tempetature)),
+      PressureUnit.Value(MAT.GetG(MAT.Tempetature)),
       5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
   end;
 end;
 
-function CreateYoungModulusChart(const aScreenScale: double; aSetting: TIniFile): TChart;
+function TCompozer.CreateYoungModulusChart(const AScreenScale: double): TChart;
 const
   DT = 50;
   Section1 = 'Custom';
@@ -624,63 +630,55 @@ const
 var
   Points: ArrayOfTPointF = nil;
 begin
-  Result               := TChart.Create;
+  Result := TChart.Create;
   Result.LegendEnabled := False;
-  Result.Title         := 'Young Modulus G-Temperature Chart';
-  Result.XAxisLabel    := 'T [C°]';
-  Result.YAxisLabel    := 'E [MPa]';
-  Result.Scale          := aScreenScale;
-  LoadChart1(Result, Section1, ASetting);
+  Result.Title := 'Young Modulus G-Temperature Chart';
+  Result.XAxisLabel := 'T [C°]';
+  Result.YAxisLabel := 'E [' + PressureUnit.Symbol + ']';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, Section1);
 
-  if (MAT.GetE(MAT.Tempetature - DT) > (0*MPa)) and
-     (MAT.GetE(MAT.Tempetature + DT) > (0*MPa)) then
+  if (MAT.GetE(MAT.Tempetature - DT) > (0*Pa)) and
+     (MAT.GetE(MAT.Tempetature + DT) > (0*Pa)) then
   begin
-    LoadChart2(Result, Section2, 'Line', ASetting);
+    LoadChart2(Result, Section2, 'Line');
     SetLength(Points, 2);
     Points[0].x:= MAT.Tempetature - DT;
-    Points[0].y:= MPa.Value(MAT.GetE(Points[0].x));
+    Points[0].y:= PressureUnit.Value(MAT.GetE(Points[0].x));
     Points[1].x:= MAT.Tempetature + DT;
-    Points[1].y:= MPa.Value(MAT.GetE(Points[1].x));
+    Points[1].y:= PressureUnit.Value(MAT.GetE(Points[1].x));
     Result.AddPolyLine(Points, True, 'E(T°)');
     Points := nil;
 
     Result.AddDotLabel(MAT.Tempetature,
-      MPa.Value(MAT.GetE(MAT.Tempetature)),
+      PressureUnit.Value(MAT.GetE(MAT.Tempetature)),
       5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
   end;
 end;
 
-function CreateSectionSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
-const
-  Section1 = 'SpringDrawing';
+function TCompozer.CreateSectionSpringDrawing(const AScreenScale: double): TSectionSpringDrawing;
 begin
   Result := TSectionSpringDrawing.Create;
-
-  LoadSpring(Result, Section1, 'Spring', aSetting);
-
-  Result.d   := mm.Value(SOLVER.WireDiameter);
-  Result.Dm  := mm.Value(SOLVER.Dm);
-  Result.Lc  := mm.Value(SOLVER.LengthLc);
-  Result.n   := SOLVER.ActiveColis;
+  LoadSpring(Result, 'SpringDrawing', 'Spring');
+  Result.d := FLengthUnit.Value(SOLVER.WireDiameter);
+  Result.Dm := FLengthUnit.Value(SOLVER.Dm);
+  Result.Lc := FLengthUnit.Value(SOLVER.LengthLc);
+  Result.n := SOLVER.ActiveColis;
   Result.nt1 := (SOLVER.TotalCoils - SOLVER.ActiveColis) / 2;
   Result.nt2 := (SOLVER.TotalCoils - SOLVER.ActiveColis) / 2;
   Result.ClosedEnds := False;
   Result.GroundEnds := False;
-  Result.Spacer     := DefaultSpacer;
-  Result.Scale      := aScreenScale;
+  Result.Spacer := DefaultSpacer;
+  Result.Scale  := AScreenScale;
 end;
 
-//
-
-function CreateQualityTable(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-const
-  Section1 = 'CommonTable';
+function TCompozer.CreateQualityTable(const AScreenScale: double): TReportTable;
 begin
   Result := TReportTable.Create;
   Result.ColumnCount := 5;
-  Result.RowCount    := 7;
-  Result.Zoom        := aScreenScale;
-  LoadTable(Result, Section1, 'Table', ASetting);
+  Result.RowCount := 7;
+  Result.Zoom := AScreenScale;
+  LoadTable(Result, 'CommonTable', 'Table');
 
   Result[0, 0] := 'Quality Grade';
   Result[1, 0] := 'De, Di';
@@ -715,51 +713,49 @@ begin
   Result[6, 3] := TryFormatBool('x', ' ', TOL.E2QualityGrade = 3);
 
   Result[0, 4] := 'Tol.';
-  Result[1, 4] := TryFormatFloat('%s mm', ' --- ',  mm.Value(TOL.CoilDiameterTolerance));
-  Result[2, 4] := TryFormatFloat('%s mm', ' --- ',  mm.Value(TOL.LengthL0Tolerance));
-  Result[3, 4] := TryFormatFloat('%s N',  ' --- ',   N.Value(TOL.LoadF1Tolerance));
-  Result[4, 4] := TryFormatFloat('%s N',  ' --- ',   N.Value(TOL.LoadF2Tolerance));
-  Result[5, 4] := TryFormatFloat('%s mm', ' --- ',  mm.Value(TOL.EccentricityE1));
-  Result[6, 4] := TryFormatFloat('%s mm', ' --- ',  mm.Value(TOL.EccentricityE2));
+  Result[1, 4] := TryFormatFloat('%s ' + LengthUnit.Symbol, ' --- ', LengthUnit.Value(TOL.CoilDiameterTolerance));
+  Result[2, 4] := TryFormatFloat('%s ' + LengthUnit.Symbol, ' --- ', LengthUnit.Value(TOL.LengthL0Tolerance));
+  Result[3, 4] := TryFormatFloat('%s ' + ForceUnit .Symbol, ' --- ', ForceUnit .Value(TOL.LoadF1Tolerance));
+  Result[4, 4] := TryFormatFloat('%s ' + ForceUnit .Symbol, ' --- ', ForceUnit .Value(TOL.LoadF2Tolerance));
+  Result[5, 4] := TryFormatFloat('%s ' + LengthUnit.Symbol, ' --- ', LengthUnit.Value(TOL.EccentricityE1));
+  Result[6, 4] := TryFormatFloat('%s ' + LengthUnit.Symbol, ' --- ', LengthUnit.Value(TOL.EccentricityE2));
 end;
 
-function CreateQuick1Table(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-const
-  Section1 = 'CommonTable';
+function TCompozer.CreateQuick1Table(const AScreenScale: double): TReportTable;
 begin
   Result := TReportTable.Create;
-  Result.ColumnCount  := 7;
-  Result.RowCount     := 6;
-  Result.Zoom         := aScreenScale;
-  LoadTable(Result, Section1, 'Table', ASetting);
+  Result.ColumnCount := 7;
+  Result.RowCount := 6;
+  Result.Zoom := AScreenScale;
+  LoadTable(Result, 'CommonTable', 'Table');
 
-  Result[0, 0] := 'L [mm]';
-  Result[1, 0] := TryFormatFloat('L0: %s', 'L0: ---', mm.Value(SOLVER.LengthL0));
-  Result[2, 0] := TryFormatFloat('L1: %s', 'L1: ---', mm.Value(SOLVER.LengthL1));
-  Result[3, 0] := TryFormatFloat('L2: %s', 'L2: ---', mm.Value(SOLVER.LengthL2));
-  Result[4, 0] := TryFormatFloat('Ln: %s', 'Ln: ---', mm.Value(SOLVER.LengthLn));
-  Result[5, 0] := TryFormatFloat('Lc: %s', 'Lc: ---', mm.Value(SOLVER.LengthLc));
+  Result[0, 0] := 'L [' + LengthUnit.Symbol + ']';
+  Result[1, 0] := TryFormatFloat('L0: %s', 'L0: ---', LengthUnit.Value(SOLVER.LengthL0));
+  Result[2, 0] := TryFormatFloat('L1: %s', 'L1: ---', LengthUnit.Value(SOLVER.LengthL1));
+  Result[3, 0] := TryFormatFloat('L2: %s', 'L2: ---', LengthUnit.Value(SOLVER.LengthL2));
+  Result[4, 0] := TryFormatFloat('Ln: %s', 'Ln: ---', LengthUnit.Value(SOLVER.LengthLn));
+  Result[5, 0] := TryFormatFloat('Lc: %s', 'Lc: ---', LengthUnit.Value(SOLVER.LengthLc));
 
-  Result[0, 1] := 'F [N]';
+  Result[0, 1] := 'F [' + ForceUnit.Symbol + ']';
   Result[1, 1] := '';
-  Result[2, 1] := TryFormatFloat('F1: %s', 'F1: ---', N.Value(SOLVER.LoadF1));
-  Result[3, 1] := TryFormatFloat('F2: %s', 'F2: ---', N.Value(SOLVER.LoadF2));
-  Result[4, 1] := TryFormatFloat('Fn: %s', 'Fn: ---', N.Value(SOLVER.LoadFn));
-  Result[5, 1] := TryFormatFloat('Fc: %s', 'Fc: ---', N.Value(SOLVER.LoadFc));
+  Result[2, 1] := TryFormatFloat('F1: %s', 'F1: ---', ForceUnit.Value(SOLVER.LoadF1));
+  Result[3, 1] := TryFormatFloat('F2: %s', 'F2: ---', ForceUnit.Value(SOLVER.LoadF2));
+  Result[4, 1] := TryFormatFloat('Fn: %s', 'Fn: ---', ForceUnit.Value(SOLVER.LoadFn));
+  Result[5, 1] := TryFormatFloat('Fc: %s', 'Fc: ---', ForceUnit.Value(SOLVER.LoadFc));
 
-  Result[0, 2] := 'tau [MPa]';
+  Result[0, 2] := 'tau [' + PressureUnit.Symbol + ']';
   Result[1, 2] := '';
-  Result[2, 2] := TryFormatFloat('tauk1: %s', 'tauk1: ---', MPa.Value(SOLVER.TorsionalStressTauk1));
-  Result[3, 2] := TryFormatFloat('tauk2: %s', 'tauk2: ---', MPa.Value(SOLVER.TorsionalStressTauk2));
-  Result[4, 2] := TryFormatFloat('tau n: %s', 'tau n: ---', MPa.Value(SOLVER.TorsionalStressTaun));
-  Result[5, 2] := TryFormatFloat('tau c: %s', 'tau c: ---', MPa.Value(SOLVER.TorsionalStressTauc));
+  Result[2, 2] := TryFormatFloat('tauk1: %s', 'tauk1: ---', PressureUnit.Value(SOLVER.TorsionalStressTauk1));
+  Result[3, 2] := TryFormatFloat('tauk2: %s', 'tauk2: ---', PressureUnit.Value(SOLVER.TorsionalStressTauk2));
+  Result[4, 2] := TryFormatFloat('tau n: %s', 'tau n: ---', PressureUnit.Value(SOLVER.TorsionalStressTaun));
+  Result[5, 2] := TryFormatFloat('tau c: %s', 'tau c: ---', PressureUnit.Value(SOLVER.TorsionalStressTauc));
 
-  Result[0, 3] := 's [mm]';
+  Result[0, 3] := 's [' + LengthUnit.Symbol + ']';
   Result[1, 3] := '';
-  Result[2, 3] := TryFormatFloat('s1: %s', 's1: ---', mm.Value(SOLVER.StrokeS1));
-  Result[3, 3] := TryFormatFloat('s2: %s', 's2: ---', mm.Value(SOLVER.StrokeS2));
-  Result[4, 3] := TryFormatFloat('sn: %s', 'sn: ---', mm.Value(SOLVER.StrokeSn));
-  Result[5, 3] := TryFormatFloat('sc: %s', 'sc: ---', mm.Value(SOLVER.StrokeSc));
+  Result[2, 3] := TryFormatFloat('s1: %s', 's1: ---', LengthUnit.Value(SOLVER.StrokeS1));
+  Result[3, 3] := TryFormatFloat('s2: %s', 's2: ---', LengthUnit.Value(SOLVER.StrokeS2));
+  Result[4, 3] := TryFormatFloat('sn: %s', 'sn: ---', LengthUnit.Value(SOLVER.StrokeSn));
+  Result[5, 3] := TryFormatFloat('sc: %s', 'sc: ---', LengthUnit.Value(SOLVER.StrokeSc));
 
   Result[0, 4] := 'tau/tauz';
   Result[1, 4] := '';
@@ -775,45 +771,43 @@ begin
   Result[4, 5] := TryFormatFloatDiv('%s', '---', SOLVER.TorsionalStressTaun.Value, SOLVER.TensileStrengthRm.Value);
   Result[5, 5] := TryFormatFloatDiv('%s', '---', SOLVER.TorsionalStressTauc.Value, SOLVER.TensileStrengthRm.Value);
 
-  Result[0, 6] := 'De';
-  Result[1, 6] := TryFormatFloat      ('%s', '---', mm.Value(SOLVER.De));
-  Result[2, 6] := TryFormatFloatSumDiv('%s', '---', mm.Value(SOLVER.De), mm2.Value(SOLVER.DeltaDe*SOLVER.StrokeS1), mm.Value(SOLVER.StrokeSc));
-  Result[3, 6] := TryFormatFloatSumDiv('%s', '---', mm.Value(SOLVER.De), mm2.Value(SOLVER.DeltaDe*SOLVER.StrokeS2), mm.Value(SOLVER.StrokeSc));
-  Result[4, 6] := TryFormatFloatSumDiv('%s', '---', mm.Value(SOLVER.De), mm2.Value(SOLVER.DeltaDe*SOLVER.StrokeSn), mm.Value(SOLVER.StrokeSc));
-  Result[5, 6] := TryFormatFloatSumDiv('%s', '---', mm.Value(SOLVER.De), mm2.Value(SOLVER.DeltaDe*SOLVER.StrokeSc), mm.Value(SOLVER.StrokeSc));
+  Result[0, 6] := 'De [' + LengthUnit.Symbol + ']';
+  Result[1, 6] := TryFormatFloat      ('%s', '---', LengthUnit.Value(SOLVER.De));
+  Result[2, 6] := TryFormatFloatSumDiv('%s', '---', LengthUnit.Value(SOLVER.De), FAreaUnit.Value(SOLVER.DeltaDe*SOLVER.StrokeS1), LengthUnit.Value(SOLVER.StrokeSc));
+  Result[3, 6] := TryFormatFloatSumDiv('%s', '---', LengthUnit.Value(SOLVER.De), FAreaUnit.Value(SOLVER.DeltaDe*SOLVER.StrokeS2), LengthUnit.Value(SOLVER.StrokeSc));
+  Result[4, 6] := TryFormatFloatSumDiv('%s', '---', LengthUnit.Value(SOLVER.De), FAreaUnit.Value(SOLVER.DeltaDe*SOLVER.StrokeSn), LengthUnit.Value(SOLVER.StrokeSc));
+  Result[5, 6] := TryFormatFloatSumDiv('%s', '---', LengthUnit.Value(SOLVER.De), FAreaUnit.Value(SOLVER.DeltaDe*SOLVER.StrokeSc), LengthUnit.Value(SOLVER.StrokeSc));
 end;
 
-function CreateQuick1List(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-const
-  Section1 = 'CommonTable';
+function TCompozer.CreateQuick1List(const AScreenScale: double): TReportTable;
 begin
-  Result := TReportTable.Create;
+  Result             := TReportTable.Create;
   Result.ColumnCount := 3;
   Result.RowCount    := 20;
-  Result.Zoom        := aScreenScale;
-  LoadTable(Result, Section1, 'Table', ASetting);
+  Result.Zoom        := AScreenScale;
 
+  LoadTable(Result, 'CommonTable', 'Table');
   Result.ColumnAlignments[0] := taRightJustify;
   Result.ColumnAlignments[1] := taCenter;
   Result.ColumnAlignments[2] := taLeftJustify;
 
   Result.Items[ 0, 0] := 'd';
   Result.Items[ 0, 1] := '=';
-  Result.Items[ 0, 2] := TryFormatFloat('%s', '---', mm.Value(SOLVER.WireDiameter)) +
-    TryFormatFloat(' ± %s mm', '', mm.Value(SOLVER.WireDiameterMax - SOLVER.WireDiameter));
+  Result.Items[ 0, 2] := TryFormatFloat('%s', '---', LengthUnit.Value(SOLVER.WireDiameter)) +
+    TryFormatFloat(' ± %s ' + LengthUnit.Symbol, '', LengthUnit.Value(SOLVER.WireDiameterMax - SOLVER.WireDiameter));
 
   Result.Items[ 1, 0] := 'Di';
   Result.Items[ 1, 1] := '=';
-  Result.Items[ 1, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.Di));
+  Result.Items[ 1, 2] := TryFormatFloat('%s ' + LengthUnit.Symbol, '---', LengthUnit.Value(SOLVER.Di));
 
   Result.Items[ 2, 0] := 'Dm';
   Result.Items[ 2, 1] := '=';
-  Result.Items[ 2, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.Dm));
+  Result.Items[ 2, 2] := TryFormatFloat('%s ' + LengthUnit.Symbol, '---', LengthUnit.Value(SOLVER.Dm));
 
   Result.Items[ 3, 0] := 'De';
   Result.Items[ 3, 1] := '=';
-  Result.Items[ 3, 2] := TryFormatFloat('%s', '---', mm.Value(SOLVER.De)) +
-    TryFormatFloat(' ± %s mm', '', mm.Value(TOL.CoilDiameterTolerance));
+  Result.Items[ 3, 2] := TryFormatFloat('%s', '---', LengthUnit.Value(SOLVER.De)) +
+    TryFormatFloat(' ± %s ' + LengthUnit.Symbol, '', LengthUnit.Value(TOL.CoilDiameterTolerance));
 
   Result.Items[ 4, 0] := 'n';
   Result.Items[ 4, 1] := '=';
@@ -823,49 +817,49 @@ begin
   Result.Items[ 5, 1] := '=';
   Result.Items[ 5, 2] := TryFormatFloat('%s coils', '---', SOLVER.TotalCoils);
 
-  Result.Items[ 6, 0] := 'nt';
+  Result.Items[ 6, 0] := 'R';
   Result.Items[ 6, 1] := '=';
-  Result.Items[ 6, 2] := TryFormatFloat('%s N/mm',  '---', N_mm.Value(SOLVER.SpringRateR));
+  Result.Items[ 6, 2] := TryFormatFloat('%s ' + FStiffnessUnit.Symbol,  '---', FStiffnessUnit.Value(SOLVER.SpringRateR));
 
   Result.Items[ 7, 0] := 'Dec';
   Result.Items[ 7, 1] := '=';
-  Result.Items[ 7, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.De + SOLVER.DeltaDe));
+  Result.Items[ 7, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', LengthUnit.Value(SOLVER.De + SOLVER.DeltaDe));
 
   Result.Items[ 8, 0] := 'Di.min';
   Result.Items[ 8, 1] := '=';
-  Result.Items[ 8, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.DiMin));
+  Result.Items[ 8, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', LengthUnit.Value(SOLVER.DiMin));
 
   Result.Items[ 9, 0] := 'De.max';
   Result.Items[ 9, 1] := '=';
-  Result.Items[ 9, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.DeMax));
+  Result.Items[ 9, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', LengthUnit.Value(SOLVER.DeMax));
 
   Result.Items[10, 0] := 'sk';
   Result.Items[10, 1] := '=';
-  Result.Items[10, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.DeflectionSk));
+  Result.Items[10, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', LengthUnit.Value(SOLVER.DeflectionSk));
 
   Result.Items[11, 0] := 'L';
   Result.Items[11, 1] := '=';
-  Result.Items[11, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.WireLength));
+  Result.Items[11, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', LengthUnit.Value(SOLVER.WireLength));
 
   Result.Items[12, 0] := 'm';
   Result.Items[12, 1] := '=';
-  Result.Items[12, 2] := TryFormatFloat('%s g', '---', g.Value(SOLVER.Mass));
+  Result.Items[12, 2] := TryFormatFloat('%s g', '---', FMassUnit.Value(SOLVER.Mass));
 
   Result.Items[13, 0] := 'W12';
   Result.Items[13, 1] := '=';
-  Result.Items[13, 2] := TryFormatFloat('%s Nmm', '---', Nmm.Value(SOLVER.SpringWorkW12));
+  Result.Items[13, 2] := TryFormatFloat('%s Nmm', '---', FWorkUnit.Value(SOLVER.SpringWorkW12));
 
   Result.Items[14, 0] := 'W0n';
   Result.Items[14, 1] := '=';
-  Result.Items[14, 2] := TryFormatFloat('%s Nmm', '---', Nmm.Value(SOLVER.SpringWorkW0n));
+  Result.Items[14, 2] := TryFormatFloat('%s Nmm', '---', FWorkUnit.Value(SOLVER.SpringWorkW0n));
 
   Result.Items[15, 0] := 'fe';
   Result.Items[15, 1] := '=';
-  Result.Items[15, 2] := TryFormatFloat('%s Hz', '---' ,Hz.Value(SOLVER.NaturalFrequency));
+  Result.Items[15, 2] := TryFormatFloat('%s Hz', '---' , FFrequencyUnit.Value(SOLVER.NaturalFrequency));
 
   Result.Items[16, 0] := 'Pitch';
   Result.Items[16, 1] := '=';
-  Result.Items[16, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.Pitch));
+  Result.Items[16, 2] := TryFormatFloat('%s mm', '---', FLengthUnit.Value(SOLVER.Pitch));
 
   Result.Items[17, 0] := 'PitchRatio';
   Result.Items[17, 1] := '=';
@@ -885,17 +879,15 @@ begin
 
 end;
 
-function CreateMessageList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-const
-  Section1 = 'MessageList';
+function TCompozer.CreateMessageList(const AScreenScale: double): TReportTable;
 var
   i, j: longint;
 begin
   Result := TReportTable.Create;
-  Result.ColumnCount  := 1;
-  Result.RowCount     := 1 + ErrorMessage.Count + WarningMessage.Count;
-  Result.Zoom         := aScreenScale;
-  LoadTable(Result, Section1, 'Table', ASetting);
+  Result.ColumnCount := 1;
+  Result.RowCount := 1 + ErrorMessage.Count + WarningMessage.Count;
+  Result.Zoom := AScreenScale;
+  LoadTable(Result, 'MessageList', 'Table');
 
   Result.Items[0, 0] := TryFormatBool('Messages:', '', (ErrorMessage.Count + WarningMessage.Count) > 0);
 
@@ -913,17 +905,15 @@ begin
   end;
 end;
 
-function CreateQuick1AList(const aScreenScale: double; aSetting: TIniFile): TReportTable;
-const
-  Section1 = 'Quick1List';
+function TCompozer.CreateQuick1AList(const AScreenScale: double): TReportTable;
 var
   i, j: longint;
 begin
   Result := TReportTable.Create;
   Result.ColumnCount := 3;
-  Result.RowCount    := 38;
-  Result.Zoom        := aScreenScale;
-  LoadTable(Result, Section1, 'Table', ASetting);
+  Result.RowCount := 38;
+  Result.Zoom := aScreenScale;
+  LoadTable(Result, 'Quick1List', 'Table');
 
   Result.ColumnAlignments[0] := taRightJustify;
   Result.ColumnAlignments[1] := taCenter;
@@ -937,21 +927,21 @@ begin
 
   Result.Items[ 0, 0] := 'd';
   Result.Items[ 0, 1] := '=';
-  Result.Items[ 0, 2] := TryFormatFloat('%s', '---', mm.Value(SOLVER.WireDiameter)) +
-    TryFormatFloat(' ± %s mm', '', mm.Value(SOLVER.WireDiameterMax - SOLVER.WireDiameter));
+  Result.Items[ 0, 2] := TryFormatFloat('%s', '---', FLengthUnit.Value(SOLVER.WireDiameter)) +
+    TryFormatFloat(' ± %s ' + FLengthUnit.Symbol, '', FLengthUnit.Value(SOLVER.WireDiameterMax - SOLVER.WireDiameter));
 
   Result.Items[ 1, 0] := 'Di';
   Result.Items[ 1, 1] := '=';
-  Result.Items[ 1, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.Di));
+  Result.Items[ 1, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.Di));
 
   Result.Items[ 2, 0] := 'Dm';
   Result.Items[ 2, 1] := '=';
-  Result.Items[ 2, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.Dm));
+  Result.Items[ 2, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.Dm));
 
   Result.Items[ 3, 0] := 'De';
   Result.Items[ 3, 1] := '=';
-  Result.Items[ 3, 2] := TryFormatFloat('%s', '---', mm.Value(SOLVER.De)) +
-    TryFormatFloat(' ± %s mm', '', mm.Value(TOL.CoilDiameterTolerance));
+  Result.Items[ 3, 2] := TryFormatFloat('%s', '---', FLengthUnit.Value(SOLVER.De)) +
+    TryFormatFloat(' ± %s ' + FLengthUnit.Symbol, '', FLengthUnit.Value(TOL.CoilDiameterTolerance));
 
   Result.Items[ 4, 0] := 'n';
   Result.Items[ 4, 1] := '=';
@@ -963,47 +953,47 @@ begin
 
   Result.Items[ 6, 0] := 'nt';
   Result.Items[ 6, 1] := '=';
-  Result.Items[ 6, 2] := TryFormatFloat('%s N/mm',  '---', N_mm.Value(SOLVER.SpringRateR));
+  Result.Items[ 6, 2] := TryFormatFloat('%s ',  '---', FStiffnessUnit.Value(SOLVER.SpringRateR));
 
   Result.Items[ 7, 0] := 'Dec';
   Result.Items[ 7, 1] := '=';
-  Result.Items[ 7, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.De + SOLVER.DeltaDe));
+  Result.Items[ 7, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.De + SOLVER.DeltaDe));
 
   Result.Items[ 8, 0] := 'Di.min';
   Result.Items[ 8, 1] := '=';
-  Result.Items[ 8, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.DiMin));
+  Result.Items[ 8, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.DiMin));
 
   Result.Items[ 9, 0] := 'De.max';
   Result.Items[ 9, 1] := '=';
-  Result.Items[ 9, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.DeMax));
+  Result.Items[ 9, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.DeMax));
 
   Result.Items[10, 0] := 'sk';
   Result.Items[10, 1] := '=';
-  Result.Items[10, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.DeflectionSk));
+  Result.Items[10, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.DeflectionSk));
 
   Result.Items[11, 0] := 'L';
   Result.Items[11, 1] := '=';
-  Result.Items[11, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.WireLength));
+  Result.Items[11, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.WireLength));
 
   Result.Items[12, 0] := 'm';
   Result.Items[12, 1] := '=';
-  Result.Items[12, 2] := TryFormatFloat('%s g', '---', g.Value(SOLVER.Mass));
+  Result.Items[12, 2] := TryFormatFloat('%s ' + FMassUnit.Symbol, '---', FMassUnit.Value(SOLVER.Mass));
 
   Result.Items[13, 0] := 'W12';
   Result.Items[13, 1] := '=';
-  Result.Items[13, 2] := TryFormatFloat('%s Nmm', '---', Nmm.Value(SOLVER.SpringWorkW12));
+  Result.Items[13, 2] := TryFormatFloat('%s ' + FWorkUnit.Symbol, '---', FWorkUnit.Value(SOLVER.SpringWorkW12));
 
   Result.Items[14, 0] := 'W0n';
   Result.Items[14, 1] := '=';
-  Result.Items[14, 2] := TryFormatFloat('%s Nmm', '---', Nmm.Value(SOLVER.SpringWorkW0n));
+  Result.Items[14, 2] := TryFormatFloat('%s ' + FWorkUnit.Symbol, '---', FWorkUnit.Value(SOLVER.SpringWorkW0n));
 
   Result.Items[15, 0] := 'fe';
   Result.Items[15, 1] := '=';
-  Result.Items[15, 2] := TryFormatFloat('%s Hz', '---' , Hz.Value(SOLVER.NaturalFrequency));
+  Result.Items[15, 2] := TryFormatFloat('%s ' + FFrequencyUnit.Symbol, '---' , FFrequencyUnit.Value(SOLVER.NaturalFrequency));
 
   Result.Items[16, 0] := 'Pitch';
   Result.Items[16, 1] := '=';
-  Result.Items[16, 2] := TryFormatFloat('%s mm', '---',  mm.Value(SOLVER.Pitch));
+  Result.Items[16, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', FLengthUnit.Value(SOLVER.Pitch));
 
   Result.Items[17, 0] := 'PitchRatio';
   Result.Items[17, 1] := '=';
@@ -1023,35 +1013,35 @@ begin
 
   Result.Items[22, 0] := 'tauk1';
   Result.Items[22, 1] := '=';
-  Result.Items[22, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.TorsionalStressTauk1));
+  Result.Items[22, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.TorsionalStressTauk1));
 
   Result.Items[23, 0] := 'tauk2';
   Result.Items[23, 1] := '=';
-  Result.Items[23, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.TorsionalStressTauk2));
+  Result.Items[23, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.TorsionalStressTauk2));
 
   Result.Items[24, 0] := 'taukh';
   Result.Items[24, 1] := '=';
-  Result.Items[24, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.TorsionalStressTaukh));
+  Result.Items[24, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.TorsionalStressTaukh));
 
   Result.Items[26, 0] := 'E';
   Result.Items[26, 1] := '=';
-  Result.Items[26, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.YoungModulus));
+  Result.Items[26, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.YoungModulus));
 
   Result.Items[27, 0] := 'G';
   Result.Items[27, 1] := '=';
-  Result.Items[27, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.ShearModulus));
+  Result.Items[27, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.ShearModulus));
 
   Result.Items[28, 0] := 'rho';
   Result.Items[28, 1] := '=';
-  Result.Items[28, 2] := TryFormatFloat('%s kg/dm3', '---', kg_dm3.Value(SOLVER.MaterialDensity));
+  Result.Items[28, 2] := TryFormatFloat('%s ' + FDensityUnit.Symbol, '---', FDensityUnit.Value(SOLVER.MaterialDensity));
 
   Result.Items[29, 0] := 'Rm';
   Result.Items[29, 1] := '=';
-  Result.Items[29, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.TensileStrengthRm));
+  Result.Items[29, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.TensileStrengthRm));
 
   Result.Items[30, 0] := 'tauz';
   Result.Items[30, 1] := '=';
-  Result.Items[30, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.AdmStaticTorsionalStressTauz));
+  Result.Items[30, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.AdmStaticTorsionalStressTauz));
 
   Result.Items[31, 0] := 'ns';
   Result.Items[31, 1] := '=';
@@ -1061,11 +1051,11 @@ begin
   begin
     Result.Items[33, 0] := 'tauoz';
     Result.Items[33, 1] := '=';
-    Result.Items[33, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.AdmDynamicTorsionalStressTauoz));
+    Result.Items[33, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.AdmDynamicTorsionalStressTauoz));
 
     Result.Items[34, 0] := 'tauhz';
     Result.Items[34, 1] := '=';
-    Result.Items[34, 2] := TryFormatFloat('%s MPa', '---', MPa.Value(SOLVER.AdmDynamicTorsionalStressRangeTauhz));
+    Result.Items[34, 2] := TryFormatFloat('%s ' + FPressureUnit.Symbol, '---', FPressureUnit.Value(SOLVER.AdmDynamicTorsionalStressRangeTauhz));
 
     Result.Items[35, 0] := 'nf';
     Result.Items[35, 1] := '=';
@@ -1093,7 +1083,7 @@ begin
   end;
 end;
 
-procedure DrawQuick1(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile);
+procedure TCompozer.DrawQuick1(var AScreen: TBGRABitmap; const AScreenScale: double);
 var
   i: longint;
   Bit: array of TBGRABitmap = nil;
@@ -1110,21 +1100,21 @@ begin
     Bit[i] := TBGRABitmap.Create;
 
   // 0-Force & Displacement Chart
-  ForceDiagram := CreateForceDisplacementChart(aScreenScale, aSetting);
+  ForceDiagram := CreateForceDisplacementChart(aScreenScale);
   Bit[0].SetSize(Trunc(aScreen.Width * 0.35), aScreen.Height div 2);
   ForceDiagram.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
   Bit[0].Draw(aScreen.Canvas, 0, 0, True);
   ForceDiagram.Destroy;
 
   // 1-Goodman Chart
-  GoodmanDiagram := CreateGoodmanChart(aScreenScale, aSetting);
+  GoodmanDiagram := CreateGoodmanChart(aScreenScale);
   Bit[1].SetSize(Bit[0].Width, Bit[0].Height);
   GoodmanDiagram.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
   Bit[1].Draw(aScreen.Canvas, 0, Bit[0].Height, True);
   GoodmanDiagram.Destroy;
 
   // 2-Quick-1 List
-  Quick1List := CreateQuick1AList(aScreenScale, aSetting);
+  Quick1List := CreateQuick1AList(aScreenScale);
   while Quick1List.Height < (aScreen.Height) do
   begin
     Quick1List.RowSpacer := Quick1List.RowSpacer + 1;
@@ -1136,7 +1126,7 @@ begin
   Quick1List.Destroy;
 
   // 3-Quick-1 Table
-  Quick1Table := CreateQuick1Table(aScreenScale, aSetting);
+  Quick1Table := CreateQuick1Table(aScreenScale);
   while Quick1Table.Width < (aScreen.Width - Bit[0].Width - Bit[2].Width) do
   begin
     Quick1Table.ColumnSpacer := Quick1Table.ColumnSpacer + 1;
@@ -1148,21 +1138,21 @@ begin
   Quick1Table.Destroy;
 
   // 4-Quality Table
-  QualityTable := CreateQualityTable(aScreenScale, aSetting);
+  QualityTable := CreateQualityTable(aScreenScale);
   Bit[4].SetSize(QualityTable.Width, QualityTable.Height);
   QualityTable.Draw(Bit[4].Canvas);
   Bit[4].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width, Bit[3].Height, True);
   QualityTable.Destroy;
 
   // 5-Message List
-  MessageList := CreateMessageList(aScreenScale, aSetting);
+  MessageList := CreateMessageList(aScreenScale);
   Bit[5].SetSize(MessageList.Width, MessageList.Height);
   MessageList.Draw(Bit[5].Canvas);
   Bit[5].Draw(aScreen.Canvas, Bit[0].Width + Bit[2].Width + Bit[4].Width, Bit[3].Height, True);
   MessageList.Destroy;
 
   // 6-Spring Drawings
-  SpringDrawing := CreateSectionSpringDrawing(AScreenScale, ASetting);
+  SpringDrawing := CreateSectionSpringDrawing(AScreenScale);
   Bit[6].SetSize((aScreen.Width  - Bit[1].Width  - Bit[2].Width) div 3,
                   aScreen.Height - Bit[3].Height - Bit[4].Height);
 
@@ -1197,9 +1187,7 @@ begin
   Bit := nil
 end;
 
-procedure DrawQuickX(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile; X: longint);
-const
-  Section1 = 'QuickXList';
+procedure TCompozer.DrawQuickX(var aScreen: TBGRABitmap; const aScreenScale: double; X: longint);
 var
   i, j: longint;
   Bit: array of TBGRABitmap = nil;
@@ -1217,7 +1205,7 @@ begin
   QuickXList.ColumnCount := 7;
   QuickXList.RowCount    := 26;
   QuickXList.Zoom        := aScreenScale;
-  LoadTable(QuickXList, Section1, 'Table', ASetting);
+  LoadTable(QuickXList, 'QuickXList', 'Table');
   QuickXList.ColumnAlignments[0] := taLeftJustify;
   QuickXList.ColumnAlignments[1] := taCenter;
   QuickXList.ColumnAlignments[2] := taLeftJustify;
@@ -1234,7 +1222,7 @@ begin
   Row := 0;
   QuickXList.Items[Row, 0] := 'd';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s mm', '---', mm.Value(SOLVER.WireDiameter)) +
+  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' + FLengthUnit.Symbol, '---', mm.Value(SOLVER.WireDiameter)) +
     TryFormatFloat(' ± %s mm', '', mm.Value(SOLVER.WireDiameterMax - SOLVER.WireDiameter));
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Di';
@@ -1439,7 +1427,7 @@ begin
   QuickXList.Destroy;
 
   // 1-Messages
-  MessageList := CreateMessageList(aScreenScale, aSetting);
+  MessageList := CreateMessageList(aScreenScale);
   Bit[1].SetSize(Bit[0].Width, aScreen.Width - Bit[0].Height);
   MessageList.Draw(Bit[1].Canvas);
   Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, Bit[0].Height, True);
@@ -1447,9 +1435,9 @@ begin
 
   // 2-Force or Goodman chart
   if X = 3 then
-    CustomChart := CreateGoodmanChart(aScreenScale, aSetting)
+    CustomChart := CreateGoodmanChart(aScreenScale)
   else
-    CustomChart := CreateForceDisplacementChart(aScreenScale, aSetting);
+    CustomChart := CreateForceDisplacementChart(aScreenScale);
 
   Bit[2].SetSize(aScreen.Width - Bit[0].Width, aScreen.Height);
   CustomChart.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
@@ -1461,14 +1449,14 @@ begin
   Bit := nil;
 end;
 
-procedure DrawQuick2(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile);
+procedure TCompozer.DrawQuick2(var aScreen: TBGRABitmap; const aScreenScale: double);
 begin
-  DrawQuickX(aScreen, aScreenScale, aSetting, 2);
+  DrawQuickX(aScreen, aScreenScale, 2);
 end;
 
-procedure DrawQuick3(var aScreen: TBGRABitmap; const aScreenScale: double; aSetting: TIniFile);
+procedure TCompozer.DrawQuick3(var aScreen: TBGRABitmap; const aScreenScale: double);
 begin
-  DrawQuickX(aScreen, aScreenScale, aSetting, 3);
+  DrawQuickX(aScreen, aScreenScale, 3);
 end;
 
 end.
