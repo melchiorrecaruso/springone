@@ -75,7 +75,7 @@ implementation
 
 uses
   ApplicationFrm, GeometryFrm, EN10270, EN13906, EN15800,
-  MainFrm, ProductionFrm, QualityFrm, UtilsBase, UnitOfMeasurement;
+  MainFrm, ProductionFrm, QualityFrm, UtilsBase, Dim;
 
 // TMaterialForm
 
@@ -124,7 +124,7 @@ begin
     YoungModulusUnit    .ItemIndex := 0; // N/mm2
     ShearModulusUnit    .ItemIndex := 0; // N/mm2
     TensileStrengthUnit .ItemIndex := 0; // N/mm2
-    MaterialDensityUnit .ItemIndex := 0; // kg/dm3
+    MaterialDensityUnit .ItemIndex := 0; // kg/m3
 
     YoungModulus        .Value := 0;
     ShearModulus        .Value := 0;
@@ -144,15 +144,15 @@ begin
 
       if MAT.ItemIndex <> -1 then
       begin
-        YoungModulus   .Value := MPa.Value(MAT.YoungModulusE20);
-        ShearModulus   .Value := MPa.Value(MAT.ShearModulusG20);
-        TensileStrength.Value := MPa.Value(MAT.TensileStrengthRm);
-        MaterialDensity.Value := kg_dm3.Value(MAT.DensityRho);
+        YoungModulus   .Value := MPa.From(MAT.YoungModulusE20).Value;
+        ShearModulus   .Value := MPa.From(MAT.ShearModulusG20).Value;
+        TensileStrength.Value := MPa.From(MAT.TensileStrengthRm).Value;
+        MaterialDensity.Value := MAT.DensityRho.Value;
 
-        TOL.WireDiameterTolerance.Search(Material.Text, GeometryForm.WireDiameter.Value);
+        TOL.WireDiameterTolerance.Search(Material.Text, GeometryForm.WireDiameter.Value*mm);
         if Assigned(QualityForm) then
         begin
-          QualityForm.ToleranceWireDiameter.Value := TOL.WireDiameterTolerance.Value;
+          QualityForm.ToleranceWireDiameter.Value := mm.From(TOL.WireDiameterTolerance.Value).Value;
         end;
       end;
     end;
@@ -223,7 +223,7 @@ begin
   end;
 
   case MaterialForm.MaterialDensityUnit.ItemIndex of
-    0: SOLVER.MaterialDensity := MaterialForm.MaterialDensity.Value*kg_dm3;
+    0: SOLVER.MaterialDensity := MaterialForm.MaterialDensity.Value*(kg/m3);
   end;
 
   case MaterialForm.CoilingType.ItemIndex of

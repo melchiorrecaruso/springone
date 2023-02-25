@@ -82,7 +82,7 @@ implementation
 {$R *.lfm}
 
 uses
-  MainFrm, UtilsBase, UnitOfMeasurement;
+  MainFrm, UtilsBase, Dim;
 
 // TGeometryForm
 
@@ -153,12 +153,12 @@ procedure TGeometryForm.SaveToSolver;
 begin
   case WireDiameterUnit.ItemIndex of
     0: SOLVER.WireDiameter := WireDiameter.Value*mm;
-    1: SOLVER.WireDiameter := WireDiameter.Value*inch;
+    1: SOLVER.WireDiameter := WireDiameter.Value*25.4*mm;
   end;
 
   case CoilDiameterUnit.ItemIndex of
     0: SOLVER.Dm := CoilDiameter.Value*mm;
-    1: SOLVER.Dm := CoilDiameter.Value*inch;
+    1: SOLVER.Dm := CoilDiameter.Value*25.4*mm;
   end;
 
   case CoilDiameterIndex.ItemIndex of
@@ -175,17 +175,17 @@ begin
 
   case LengthL0Unit.ItemIndex of
     0: SOLVER.LengthL0 := LengthL0.Value*mm;
-    1: SOLVER.LengthL0 := LengthL0.Value*inch;
+    1: SOLVER.LengthL0 := LengthL0.Value*25.4*mm;
   end;
 
   case LengthL1Unit.ItemIndex of
     0: SOLVER.LengthL1 := LengthL1.Value*mm;
-    1: SOLVER.LengthL1 := LengthL1.Value*inch;
+    1: SOLVER.LengthL1 := LengthL1.Value*25.4*mm;
   end;
 
   case LengthL2Unit.ItemIndex of
     0: SOLVER.LengthL2 := LengthL2.Value*mm;
-    1: SOLVER.LengthL2 := LengthL2.Value*inch;
+    1: SOLVER.LengthL2 := LengthL2.Value*25.4*mm;
   end;
 end;
 

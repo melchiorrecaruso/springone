@@ -7,19 +7,19 @@ Note1=
 Note2=
 
 [TGeometryForm]
-WireDiameter=2,6
+WireDiameter=2.6
 WireDiameterUnit=0
 CoilDiameterIndex=1
 CoilDiameter=18
 CoilDiameterUnit=0
 ActiveCoil=50
-InactiveCoil1=0,75
-InactiveCoil2=0,75
+InactiveCoil1=0.75
+InactiveCoil2=0.75
 LengthL0=325
 LengthL0Unit=0
 LengthL1=227
 LengthL1Unit=0
-LengthL2=142,5
+LengthL2=142.5
 LengthL2Unit=0
 EndCoilType=1
 
@@ -31,12 +31,12 @@ ShearModulus=82000
 ShearModulusUnit=0
 TensileStrength=1710
 TensileStrengthUnit=0
-MaterialDensity=7,85
+MaterialDensity=7850
 MaterialDensityUnit=0
 CoilingType=0
 
 [TQualityForm]
-ToleranceWireDiameter=0,025
+ToleranceWireDiameter=0.025
 ToleranceWireDiameterUnit=0
 ToleranceCoilDiameter=1
 ToleranceLengthL0=1
@@ -58,8 +58,8 @@ BurringEndsIndex=1
 WireSurfaceIndex=0
 LengthLsIndex=0
 LengthLs=0
-L0=0
-nAndd=0
-nAndDeDi=0
-L0nAndd=0
-L0nAndDeDi=1
+L0=false
+nAndd=false
+nAndDeDi=false
+L0nAndd=false
+L0nAndDeDi=true

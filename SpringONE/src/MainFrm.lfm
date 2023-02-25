@@ -158,6 +158,13 @@ object MainForm: TMainForm
         Caption = 'Design mode'
         Enabled = False
       end
+      object Separator7: TMenuItem
+        Caption = '-'
+      end
+      object UseImperialSystemMenuItem: TMenuItem
+        Caption = 'Use Imperial System'
+        OnClick = UseImperialSystemMenuItemClick
+      end
     end
     object ViewMenuItem: TMenuItem
       Caption = '&View'

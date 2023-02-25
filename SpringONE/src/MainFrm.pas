@@ -49,6 +49,8 @@ type
     GeometryMenuItem: TMenuItem;
 
     MaterialMenuItem: TMenuItem;
+    Separator7: TMenuItem;
+    UseImperialSystemMenuItem: TMenuItem;
 
 
     PageSetupDialog: TPageSetupDialog;
@@ -144,6 +146,7 @@ type
     procedure ExitMenuItemClick(Sender: TObject);
     procedure ApplicationMenuItemClick(Sender: TObject);
     procedure CustomSectionMenuItemClick(Sender: TObject);
+    procedure UseImperialSystemMenuItemClick(Sender: TObject);
     procedure VirtualScreenDblClick(Sender: TObject);
     procedure VirtualScreenMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -192,8 +195,8 @@ implementation
 {$R *.lfm}
 
 uses
-  AboutFrm, ApplicationFrm, Compozer, DrawingFrm, TextFrm, GeometryFrm, LCLIntf, LCLType,
-  MaterialFrm, Printers, ProductionFrm, QualityFrm, ReportFrm, UtilsBase, UnitOfMeasurement;
+  AboutFrm, ApplicationFrm, Compozer, DrawingFrm, TextFrm, GeometryFrm, GeometryFrmThree,
+  LCLIntf, LCLType, MaterialFrm, Printers, ProductionFrm, QualityFrm, ReportFrm, UtilsBase, Dim;
 
 { Solve routine }
 
@@ -219,7 +222,7 @@ var
   Logo: TBGRABitmap;
   {$endif}
 begin
-  Caption    := ApplicationVer;
+  Caption := ApplicationVer;
   ClientFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
   PrinterFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'printer.ini',
@@ -243,7 +246,9 @@ begin
     PageSetupDialog.MarginRight  := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginRight',  '0'));
     PageSetupDialog.MarginBottom := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginBottom', '0'));
   end;
+  UseImperialSystem := UseImperialSystemMenuItem.Checked;
   WindowState := wsMaximized;
+
 
   MoveX := 0;
   MoveY := 0;
@@ -601,6 +606,20 @@ begin
   SessionIniFile.Destroy;
   SessionStream.Destroy;
   Solve();
+
+
+  SessionStream  := TMemoryStream.Create;
+  SessionIniFile := TIniFile.Create(SessionStream,
+    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+
+  GeometryFormThree.Save(SessionIniFile);
+  if GeometryFormThree.ShowModal <> mrOk then
+  begin
+    GeometryFormThree.Load(SessionIniFile);
+  end;
+  SessionIniFile.Destroy;
+  SessionStream.Destroy;
+  Solve();
 end;
 
 procedure TMainForm.MaterialMenuItemClick(Sender: TObject);
@@ -708,8 +727,8 @@ var
 begin
   if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
   begin
-    DrawingForm.SpringLength.MinValue := mm.Value(SOLVER.LengthLc);
-    DrawingForm.SpringLength.MaxValue := mm.Value(SOLVER.LengthL0);
+    DrawingForm.SpringLength.MinValue := mm.From(SOLVER.LengthLc).Value;
+    DrawingForm.SpringLength.MaxValue := mm.From(SOLVER.LengthL0).Value;
 
     Value := DrawingForm.SpringLength.Value;
     if DrawingForm.ShowModal = mrOk then
@@ -725,6 +744,30 @@ begin
 
     FormPaint(Sender);
   end;
+end;
+
+procedure TMainForm.UseImperialSystemMenuItemClick(Sender: TObject);
+var
+  I: longint;
+  Item: TMenuItem = nil;
+begin
+  UseImperialSystem                := not UseImperialSystem;
+  UseImperialSystemMenuItem.Checked :=     UseImperialSystem;
+
+  for I := 0 to ViewMenuItem.Count -1 do
+      if ViewMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
+
+  for I := 0 to TempMenuItem.Count -1 do
+    if TempMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
+
+  for I := 0 to DrawMenuItem.Count -1 do
+    if DrawMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
+
+  for I := 0 to DocsMenuItem.Count -1 do
+    if DocsMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
+
+  if Assigned(Item) then
+    ViewMenuItemClick(Item);
 end;
 
 // Menu Documentation
@@ -813,22 +856,13 @@ var
   SpringDrawing: TSectionSpringDrawing;
   SVG: TBGRASvg;
 begin
-  SOLVER.Solve;
   ErrorMessage.Clear;
   WarningMessage.Clear;
+  begin
+    SOLVER.Solve;
+  end;
   aScreen.Fill(aScreenColor);
-
   Compozer := TCompozer.Create(aSetting);
-  Compozer.AreaUnit      := mm2;
-  Compozer.DensityUnit   := g_dm3;
-  Compozer.ForceUnit     := N;
-  Compozer.FrequencyUnit := Hz;
-  Compozer.LengthUnit    := mm;
-  Compozer.MassUnit      := g;
-  Compozer.PressureUnit  := MPa;
-  Compozer.StiffnessUnit := N_mm;
-  Compozer.TimeUnit      := hr;
-  Compozer.WorkUnit      := Nm;
 
   // Quick1
   if Quick1MenuItem.Checked then
@@ -906,17 +940,17 @@ begin
 
     SpringDrawing         := Compozer.CreateSectionSpringDrawing(aScreenScale);
     SpringDrawing.AutoFit := True;
-    SpringDrawing.Lx      := mm.Value(SOLVER.LengthL0);
+    SpringDrawing.Lx      := mm.From(SOLVER.LengthL0).Value;
     SpringDrawing.Caption := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
     SpringDrawing.AutoFit := False;
-    SpringDrawing.Lx      := mm.Value(SOLVER.LengthL1);
+    SpringDrawing.Lx      := mm.From(SOLVER.LengthL1).Value;
     SpringDrawing.Caption := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
     SpringDrawing.AutoFit := False;
-    SpringDrawing.Lx      := mm.Value(SOLVER.LengthL2);
+    SpringDrawing.Lx      := mm.From(SOLVER.LengthL2).Value;
     SpringDrawing.Caption := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
     SpringDrawing.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
@@ -976,9 +1010,9 @@ end;
 function TMainForm.CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
 begin
   Result            := TSectionSpringDrawing.Create;
-  Result.d          := mm.Value(SOLVER.WireDiameter);
-  Result.Dm         := mm.Value(SOLVER.Dm);
-  Result.Lc         := mm.Value(SOLVER.LengthLc);
+  Result.d          := mm.From(SOLVER.WireDiameter).Value;
+  Result.Dm         := mm.From(SOLVER.Dm).Value;
+  Result.Lc         := mm.From(SOLVER.LengthLc).Value;
   Result.Lx         := DrawingForm.SpringLength.Value;
   Result.Caption       := TryFormatFloat('L = %s', 'L = ---', Result.Lx);
   Result.n          := SOLVER.ActiveColis;
@@ -995,27 +1029,62 @@ function TMainForm.CreateProductionDrawing(const Tx: string; aSetting: TIniFile)
 begin
 //Solve();
   Result := Tx;
-  Result := StringReplace(Result, '@0.00', Format('e1=%s mm', [TryFloatToText(mm.Value(SOLVER.EccentricityE1))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.01', Format('e2=%s mm', [TryFloatToText(mm.Value(SOLVER.EccentricityE2))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.02', Format('d=%s mm',  [TryFloatToText(mm.Value(SOLVER.WireDiameter  ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.03', Format('Di=%s mm', [TryFloatToText(mm.Value(SOLVER.Di            ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.04', Format('Dm=%s mm', [TryFloatToText(mm.Value(SOLVER.Dm            ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.05', Format('De=%s mm', [TryFloatToText(mm.Value(SOLVER.De            ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.06', Format('L0=%s mm', [TryFloatToText(mm.Value(SOLVER.LengthL0      ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.07', Format('L1=%s mm', [TryFloatToText(mm.Value(SOLVER.LengthL1      ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.08', Format('L2=%s mm', [TryFloatToText(mm.Value(SOLVER.LengthL2      ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.09', Format('Ln=%s mm', [TryFloatToText(mm.Value(SOLVER.LengthLn      ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.10', Format('Lc=%s mm', [TryFloatToText(mm.Value(SOLVER.LengthLc      ))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.00', Format('e1=%s ' + GetSymbol(SOLVER.EccentricityE1),
+    [TryFloatToText(GetValue(SOLVER.EccentricityE1))]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.11', Format('F1=%s',    [TryFloatToText( N.Value(SOLVER.LoadF1        ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.13', Format('F2=%s',    [TryFloatToText( N.Value(SOLVER.LoadF2        ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.15', Format('Fn=%s',    [TryFloatToText( N.Value(SOLVER.LoadFn        ))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.17', Format('Fc=%s',    [TryFloatToText( N.Value(SOLVER.LoadFc        ))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.01', Format('e2=%s ' + GetSymbol(SOLVER.EccentricityE2),
+    [TryFloatToText(GetValue(SOLVER.EccentricityE2))]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s', [TryFloatToText(MPa.Value(SOLVER.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s', [TryFloatToText(MPa.Value(SOLVER.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.16', Format('Taukn=%s', [TryFloatToText(MPa.Value(SOLVER.TorsionalStressTaukn))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@0.18', Format('Tauc=%s',  [TryFloatToText(MPa.Value(SOLVER.TorsionalStressTauc ))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.02', Format('d=%s ' + GetSymbol(SOLVER.WireDiameter),
+    [TryFloatToText(GetValue(SOLVER.WireDiameter))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.03', Format('Di=%s ' + GetSymbol(SOLVER.Di),
+    [TryFloatToText(GetValue(SOLVER.Di))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.04', Format('Dm=%s ' + GetSymbol(SOLVER.Dm),
+    [TryFloatToText(GetValue(SOLVER.Dm))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.05', Format('De=%s ' + GetSymbol(SOLVER.De),
+    [TryFloatToText(GetValue(SOLVER.De))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.06', Format('L0=%s ' + GetSymbol(SOLVER.LengthL0),
+    [TryFloatToText(GetValue(SOLVER.LengthL0))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.07', Format('L1=%s ' + GetSymbol(SOLVER.LengthL1),
+    [TryFloatToText(GetValue(SOLVER.LengthL1))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.08', Format('L2=%s ' + GetSymbol(SOLVER.LengthL2),
+    [TryFloatToText(GetValue(SOLVER.LengthL2))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.09', Format('Ln=%s ' + GetSymbol(SOLVER.LengthLn),
+    [TryFloatToText(GetValue(SOLVER.LengthLn))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.10', Format('Lc=%s ' + GetSymbol(SOLVER.LengthLc),
+    [TryFloatToText(GetValue(SOLVER.LengthLc))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.11', Format('F1=%s ' + GetSymbol(SOLVER.LoadF1),
+    [TryFloatToText(GetValue(SOLVER.LoadF1))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.13', Format('F2=%s ' + GetSymbol(SOLVER.LoadF2),
+    [TryFloatToText(GetValue(SOLVER.LoadF2))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.15', Format('Fn=%s ' + GetSymbol(SOLVER.LoadFn),
+    [TryFloatToText(GetValue(SOLVER.LoadFn))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.17', Format('Fc=%s ' + GetSymbol(SOLVER.LoadFc),
+    [TryFloatToText(GetValue(SOLVER.LoadFc))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s ' + GetSymbol(SOLVER.TorsionalStressTauk1),
+    [TryFloatToText(GetValue(SOLVER.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s ' + GetSymbol(SOLVER.TorsionalStressTauk1),
+    [TryFloatToText(GetValue(SOLVER.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.16', Format('Taukn=%s ' + GetSymbol(SOLVER.TorsionalStressTaukn),
+    [TryFloatToText(GetValue(SOLVER.TorsionalStressTaukn))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@0.18', Format('Tauc=%s ' + GetSymbol(SOLVER.TorsionalStressTauc),
+    [TryFloatToText(GetValue(SOLVER.TorsionalStressTauc ))]), [rfReplaceAll, rfIgnoreCase]);
 
   if SOLVER.ClosedEnds and (SOLVER.GroundEnds = True) then
   begin
@@ -1031,9 +1100,14 @@ begin
     Result := StringReplace(Result, '@0.22', ' ', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  Result := StringReplace(Result, '@1.0', Format('n=%s',      [TryFloatToText(           SOLVER.ActiveColis )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@1.1', Format('nt=%s',     [TryFloatToText(           SOLVER.TotalCoils  )]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@2.0', Format('R=%s N/mm', [TryFloatToText(N_mm.Value(SOLVER.SpringRateR))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@1.0', Format('n=%s',
+    [TryFloatToText(SOLVER.ActiveColis)]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@1.1', Format('nt=%s',
+    [TryFloatToText(SOLVER.TotalCoils )]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@2.0', Format('R=%s ' + GetSymbol(SOLVER.SpringRateR),
+    [TryFloatToText(GetValue(SOLVER.SpringRateR))]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.DirectionCoils.ItemIndex of
     0: ;
@@ -1043,8 +1117,11 @@ begin
   Result := StringReplace(Result, '@3.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@3.1', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@4.0', Format('Dd=%s mm', [TryFloatToText(mm.Value(SOLVER.DiMin))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@4.1', Format('Dh=%s mm', [TryFloatToText(mm.Value(SOLVER.DeMax))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@4.0', Format('Dd=%s ' + GetSymbol(SOLVER.DiMin),
+    [TryFloatToText(GetValue(SOLVER.DiMin))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@4.1', Format('Dh=%s ' + GetSymbol(SOLVER.DeMax),
+    [TryFloatToText(GetValue(SOLVER.DeMax))]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.BurringEnds.ItemIndex of
     0: Result := StringReplace(Result, '@5.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1055,11 +1132,12 @@ begin
   Result := StringReplace(Result, '@5.1', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@5.2', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@6.0', Format('fe=%s Hz', [TryFloatToText(mm.Value(SOLVER.DeMax))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@6.0', Format('fe=%s ' + GetSymbol(SOLVER.NaturalFrequency),
+    [TryFloatToText(GetValue(SOLVER.NaturalFrequency))]), [rfReplaceAll, rfIgnoreCase]);
+
   Result := StringReplace(Result, '@7.0', Format('%s C° / %s C°',
     [TryFloatToText(MAT.TempetatureMin),
-     TryFloatToText(MAT.TempetatureMax), MAT.TempetatureMax
-    ]), [rfReplaceAll, rfIgnoreCase]);
+     TryFloatToText(MAT.TempetatureMax)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.WireSurface.ItemIndex of
     0: Result := StringReplace(Result, '@8.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1074,8 +1152,12 @@ begin
 
   Result := StringReplace(Result, '@9.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@10.0', MAT.Items[MAT.ItemIndex], [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@10.1', Format('tauz=%s Mpa', [TryFloatToText(MPa.Value(SOLVER.AdmStaticTorsionalStressTauz))]), [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@10.2', Format('G=%s Mpa',    [TryFloatToText(MPa.Value(MAT.ShearModulusG20                ))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@10.1', Format('tauz=%s ' + GetSymbol(SOLVER.AdmStaticTorsionalStressTauz),
+    [TryFloatToText(GetValue(SOLVER.AdmStaticTorsionalStressTauz))]), [rfReplaceAll, rfIgnoreCase]);
+
+  Result := StringReplace(Result, '@10.2', Format('G=%s ' + GetSymbol(MAT.ShearModulusG20),
+    [TryFloatToText(GetValue(MAT.ShearModulusG20))]), [rfReplaceAll, rfIgnoreCase]);
 
   case TOL.DmQualityGrade of
     1: Result := StringReplace(Result, '@11.00', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1144,12 +1226,14 @@ begin
 
   if ProductionForm.LengthLs.Value > 0 then
   begin
-    Result := StringReplace(Result, '@13.0', Format('Ls=%s mm', [TryFloatToText(ProductionForm.LengthLs.Value)]), [rfReplaceAll, rfIgnoreCase]);
+    Result := StringReplace(Result, '@13.0', Format('Ls=%s ' + ProductionForm.LengthLsUnit.Text,
+      [TryFloatToText(ProductionForm.LengthLs.Value)]), [rfReplaceAll, rfIgnoreCase]);
+
     Result := StringReplace(Result, '@13.1', 'X', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@13.2', ' ', [rfReplaceAll, rfIgnoreCase]);
   end else
   begin
-    Result := StringReplace(Result, '@13.0', 'Ls= --- mm', [rfReplaceAll, rfIgnoreCase]);
+    Result := StringReplace(Result, '@13.0', 'Ls= ---', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@13.1', ' ', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@13.2', 'X', [rfReplaceAll, rfIgnoreCase]);
   end;
@@ -1161,13 +1245,23 @@ begin
   Result := StringReplace(Result, '@15.2', TextForm.CompanyName  .Text, [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@15.3', ApplicationVer,              [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '#ff0',    aSetting.ReadString('Printer', 'Page.Color4', '#ff0'),     [rfReplaceAll, rfIgnoreCase]); // Yellow line
-  Result := StringReplace(Result, '#f00',    aSetting.ReadString('Printer', 'Page.Color5', '#f00'),     [rfReplaceAll, rfIgnoreCase]); // Red    line
-  Result := StringReplace(Result, '#0f0',    aSetting.ReadString('Printer', 'Page.Color6', '#0f0'),     [rfReplaceAll, rfIgnoreCase]); // Green  line
+  Result := StringReplace(Result, '#ff0', aSetting.ReadString('Printer', 'Page.Color4', '#ff0'),
+    [rfReplaceAll, rfIgnoreCase]); // Yellow line
 
-  Result := StringReplace(Result, '#ffff00', aSetting.ReadString('Printer', 'Page.Color1', '#ffff00'),  [rfReplaceAll, rfIgnoreCase]); // Yellow
-  Result := StringReplace(Result, '#ff0000', aSetting.ReadString('Printer', 'Page.Color2', '#ff0000'),  [rfReplaceAll, rfIgnoreCase]); // Red
-  Result := StringReplace(Result, '#00ff00', aSetting.ReadString('Printer', 'Page.Color3', '#00ff00'),  [rfReplaceAll, rfIgnoreCase]); // Green
+  Result := StringReplace(Result, '#f00',    aSetting.ReadString('Printer', 'Page.Color5', '#f00'),
+    [rfReplaceAll, rfIgnoreCase]); // Red    line
+
+  Result := StringReplace(Result, '#0f0',    aSetting.ReadString('Printer', 'Page.Color6', '#0f0'),
+    [rfReplaceAll, rfIgnoreCase]); // Green  line
+
+  Result := StringReplace(Result, '#ffff00', aSetting.ReadString('Printer', 'Page.Color1', '#ffff00'),
+    [rfReplaceAll, rfIgnoreCase]); // Yellow
+
+  Result := StringReplace(Result, '#ff0000', aSetting.ReadString('Printer', 'Page.Color2', '#ff0000'),
+    [rfReplaceAll, rfIgnoreCase]); // Red
+
+  Result := StringReplace(Result, '#00ff00', aSetting.ReadString('Printer', 'Page.Color3', '#00ff00'),
+    [rfReplaceAll, rfIgnoreCase]); // Green
 end;
 
 function TMainForm.CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;

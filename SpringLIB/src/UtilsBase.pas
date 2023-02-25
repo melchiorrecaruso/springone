@@ -25,7 +25,7 @@ unit UtilsBase;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, Dim, SysUtils;
 
 function TryFormatFloatSumDiv(const S1, S2 :string; const A0, A1, A2: double): string;
 function TryFormatFloatDiv(const S1, S2 :string; const A1, A2: double): string;
@@ -40,6 +40,36 @@ function TryFloatToText(const Value: double; Precision, Digits: longint): string
 function TryTextToFloat(S: string): double;
 function TryTextToInt(S: string): longint;
 
+
+
+
+
+
+function GetSymbol(const AValue: TMeters): string;
+function GetValue (const AValue: TMeters): double;
+
+function GetSymbol(const AValue: TNewtons): string;
+function GetValue (const AValue: TNewtons): double;
+
+function GetSymbol(const AValue: TPascals): string;
+function GetValue (const AValue: TPascals): double;
+
+function GetSymbol(const AValue: TNewtonsPerMeter): string;
+function GetValue (const AValue: TNewtonsPerMeter): double;
+
+function GetSymbol(const AValue: TKilograms): string;
+function GetValue (const AValue: TKilograms): double;
+
+function GetSymbol(const AValue: TJoules): string;
+function GetValue (const AValue: TJoules): double;
+
+function GetSymbol(const AValue: THertz): string;
+function GetValue (const AValue: THertz): double;
+
+function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
+function GetValue (const AValue: TKilogramsPerCubicMeter): double;
+
+
 var
   ApplicationName: string;
   ApplicationVer:  string;
@@ -47,7 +77,139 @@ var
   ErrorMessage:    TStringList;
   WarningMessage:  TStringList;
 
+  UseImperialSystem: boolean = False;
+
 implementation
+
+function GetSymbol(const AValue: TMeters): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'in';
+    False: result := 'mm';
+  end;
+end;
+
+function GetValue(const AValue: TMeters): double;
+begin
+  case UseImperialSystem of
+    True:  result := mm.From(AValue).Value;
+    False: result := mm.From(AValue).Value;
+  end;
+end;
+
+function GetSymbol(const AValue: TNewtons): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'lbf';
+    False: result := 'N';
+  end;
+end;
+
+function GetValue(const AValue: TNewtons): double;
+begin
+  case UseImperialSystem of
+    True:  result := N.From(AValue).Value;
+    False: result := N.From(AValue).Value;
+  end;
+end;
+
+function GetSymbol(const AValue: TPascals): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'psi';
+    False: result := 'MPa';
+  end;
+end;
+
+function GetValue(const AValue: TPascals): double;
+begin
+  case UseImperialSystem of
+    True:  result := MPa.From(AValue).Value;
+    False: result := MPa.From(AValue).Value;
+  end;
+end;
+
+function GetSymbol(const AValue: TNewtonsPerMeter): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'lbf/in';
+    False: result := 'N/mm';
+  end;
+end;
+
+function GetValue(const AValue: TNewtonsPerMeter): double;
+begin
+  case UseImperialSystem of
+    True:  result := (N/mm).From(AValue).Value;
+    False: result := (N/mm).From(AValue).Value;
+  end;
+end;
+
+function GetSymbol(const AValue: TKilograms): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'lb';
+    False: result := 'g';
+  end;
+end;
+
+function GetValue(const AValue: TKilograms): double;
+begin
+  case UseImperialSystem of
+    True:  result := g.From(AValue).Value;
+    False: result := g.From(AValue).Value;
+  end;
+end;
+
+function GetSymbol(const AValue: TJoules): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'lb';
+    False: result := 'J';
+  end;
+end;
+
+function GetValue(const AValue: TJoules): double;
+begin
+  case UseImperialSystem of
+    True:  result := J.From(AValue).Value;
+    False: result := J.From(AValue).Value;
+  end;
+end;
+
+function GetSymbol(const AValue: THertz): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'Hz';
+    False: result := 'Hz';
+  end;
+end;
+
+function GetValue(const AValue: THertz): double;
+begin
+  case UseImperialSystem of
+    True:  result := Hz.From(AValue).Value;
+    False: result := Hz.From(AValue).Value;
+  end;
+end;
+
+function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
+begin
+  case UseImperialSystem of
+    True:  result := 'kg/m3';
+    False: result := 'kg/m3';
+  end;
+end;
+
+function GetValue(const AValue: TKilogramsPerCubicMeter): double;
+begin
+  case UseImperialSystem of
+    True:  result := (kg/m3).From(AValue).Value;
+    False: result := (kg/m3).From(AValue).Value;
+  end;
+end;
+
+// ---
 
 function TryFormatFloatSumDiv(const S1, S2 :string; const A0, A1, A2: double): string;
 begin

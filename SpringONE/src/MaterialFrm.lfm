@@ -215,13 +215,13 @@ object MaterialForm: TMaterialForm
     ItemHeight = 15
     ItemIndex = 0
     Items.Strings = (
-      'kg/dm3'
+      'kg/m3'
     )
     ParentBidiMode = False
     ReadOnly = True
     Style = csDropDownList
     TabOrder = 6
-    Text = 'kg/dm3'
+    Text = 'kg/m3'
   end
   object MaterialDensity: TFloatSpinEdit
     AnchorSideTop.Control = MaterialDensityUnit
@@ -235,7 +235,7 @@ object MaterialForm: TMaterialForm
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
-    DecimalPlaces = 5
+    DecimalPlaces = 1
     Increment = 0.00001
     OnChange = SpinEditChange
     TabOrder = 7

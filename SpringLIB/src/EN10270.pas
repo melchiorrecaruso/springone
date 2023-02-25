@@ -25,7 +25,7 @@ unit EN10270;
 interface
 
 uses
-  Classes, CsvDocument, LCLType, SysUtils, UtilsBase, UnitOfMeasurement;
+  Classes, CsvDocument, LCLType, SysUtils, UtilsBase, Dim;
 
 type
   TMaterialDB = class
@@ -33,30 +33,30 @@ type
     fItemIndex: longint;
     fMatFile: TCsvDocument;
     fSurfaceTreatment: string;
-    fTensileStrengthRm: TPressure;
-    fYoungModulusE20: TPressure;
-    fYoungModulusE: TPressure;
-    fShearModulusG20: TPressure;
-    fShearModulusG: TPressure;
+    fTensileStrengthRm: TPascals;
+    fYoungModulusE20: TPascals;
+    fYoungModulusE: TPascals;
+    fShearModulusG20: TPascals;
+    fShearModulusG: TPascals;
     fPoissonRatio: double;
-    fWireDiameter: TLength;
-    fDensityRho: TDensity;
+    fWireDiameter: TMeters;
+    fDensityRho: TKilogramsPerCubicMeter;
     fTemperature: double;
     fTemperatureMin: double;
     fTemperatureMax: double;
 
-    fFatigueFactorA: TPressure;
+    fFatigueFactorA: TPascals;
     fFatigueFactorB: double;
-    fTorsionalStressTauStar: TPressure;
-    fTorsionalStressTauUT: TPressure;
-    fTorsionalStressTauYield: TPressure;
-    fTorsionalStressTauOE7: TPressure;
-    fTorsionalStressTauOE6: TPressure;
-    fTorsionalStressTauOE5: TPressure;
-    fTorsionalStressTauOE3: TPressure;
-    fTorsionalStressTauUE7: TPressure;
-    fTorsionalStressTauUE6: TPressure;
-    fTorsionalStressTauUE5: TPressure;
+    fTorsionalStressTauStar: TPascals;
+    fTorsionalStressTauUT: TPascals;
+    fTorsionalStressTauYield: TPascals;
+    fTorsionalStressTauOE7: TPascals;
+    fTorsionalStressTauOE6: TPascals;
+    fTorsionalStressTauOE5: TPascals;
+    fTorsionalStressTauOE3: TPascals;
+    fTorsionalStressTauUE7: TPascals;
+    fTorsionalStressTauUE6: TPascals;
+    fTorsionalStressTauUE5: TPascals;
     fNumOfCyclesE7: double;
     fNumOfCyclesE6: double;
     fNumOfCyclesE5: double;
@@ -66,41 +66,41 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GetG(const aTemperature: double): TPressure;
-    function GetE(const aTemperature: double): TPressure;
+    function GetG(const aTemperature: double): TPascals;
+    function GetE(const aTemperature: double): TPascals;
     procedure Clear;
 
-    function Search (const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
-    function SetItem(const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
+    function Search (const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
+    function SetItem(const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
   public
     property SurfaceTreatment: string read fSurfaceTreatment;
     property Tempetature: double read fTemperature;
     property TempetatureMin: double read fTemperatureMin;
     property TempetatureMax: double read fTemperatureMax;
-    property TensileStrengthRm: TPressure read fTensileStrengthRm;
-    property YoungModulusE20: TPressure read fYoungModulusE20;
-    property YoungModulusE: TPressure read fYoungModulusE;
-    property ShearModulusG20: TPressure read fShearModulusG20;
-    property ShearModulusG: TPressure read fShearModulusG;
-    property WireDiameter: TLength read fWireDiameter;
+    property TensileStrengthRm: TPascals read fTensileStrengthRm;
+    property YoungModulusE20: TPascals read fYoungModulusE20;
+    property YoungModulusE: TPascals read fYoungModulusE;
+    property ShearModulusG20: TPascals read fShearModulusG20;
+    property ShearModulusG: TPascals read fShearModulusG;
+    property WireDiameter: TMeters read fWireDiameter;
     property PoissonRatio: double read fPoissonRatio;
-    property DensityRho: TDensity read fDensityRho;
+    property DensityRho: TKilogramsPerCubicMeter read fDensityRho;
     property ItemIndex: longint read fItemIndex;
     property Items[Index: longint]: string read GetItem; default;
     property Count: longint read GetCount;
 
-    property FatigueFactorA: TPressure read fFatigueFactorA;
+    property FatigueFactorA: TPascals read fFatigueFactorA;
     property FatigueFactorB: double read fFatigueFactorB;
-    property TorsionalStressTauStar: TPressure read fTorsionalStressTauStar;
-    property TorsionalStressTauUT: TPressure read fTorsionalStressTauUT;
-    property TorsionalStressTauYield: TPressure read fTorsionalStressTauYield;
-    property TorsionalStressTauOE7: TPressure read fTorsionalStressTauOE7;
-    property TorsionalStressTauOE6: TPressure read fTorsionalStressTauOE6;
-    property TorsionalStressTauOE5: TPressure read fTorsionalStressTauOE5;
-    property TorsionalStressTauOE3: TPressure read fTorsionalStressTauOE3;
-    property TorsionalStressTauUE7: TPressure read fTorsionalStressTauUE7;
-    property TorsionalStressTauUE6: TPressure read fTorsionalStressTauUE6;
-    property TorsionalStressTauUE5: TPressure read fTorsionalStressTauUE5;
+    property TorsionalStressTauStar: TPascals read fTorsionalStressTauStar;
+    property TorsionalStressTauUT: TPascals read fTorsionalStressTauUT;
+    property TorsionalStressTauYield: TPascals read fTorsionalStressTauYield;
+    property TorsionalStressTauOE7: TPascals read fTorsionalStressTauOE7;
+    property TorsionalStressTauOE6: TPascals read fTorsionalStressTauOE6;
+    property TorsionalStressTauOE5: TPascals read fTorsionalStressTauOE5;
+    property TorsionalStressTauOE3: TPascals read fTorsionalStressTauOE3;
+    property TorsionalStressTauUE7: TPascals read fTorsionalStressTauUE7;
+    property TorsionalStressTauUE6: TPascals read fTorsionalStressTauUE6;
+    property TorsionalStressTauUE5: TPascals read fTorsionalStressTauUE5;
     property NumOfCyclesE7: double read fNumOfCyclesE7;
     property NumOfCyclesE6: double read fNumOfCyclesE6;
     property NumOfCyclesE5: double read fNumOfCyclesE5;
@@ -147,7 +147,7 @@ begin
   Result := fMatFile.RowCount;
 end;
 
-function TMaterialDB.GetG(const aTemperature: double): TPressure;
+function TMaterialDB.GetG(const aTemperature: double): TPascals;
 var
   Ratio: double;
 begin
@@ -166,41 +166,41 @@ begin
   Result := Result * (1 - Ratio*(aTemperature - 20));
 end;
 
-function TMaterialDB.GetE(const aTemperature: double): TPressure;
+function TMaterialDB.GetE(const aTemperature: double): TPascals;
 begin
   Result := GetG(aTemperature) * (2*(1 + fPoissonRatio));
 end;
 
 procedure TMaterialDB.Clear;
 begin
-  fItemIndex               := -1;
-  fFatigueFactorA          := 0*MPa;
-  fFatigueFactorB          := 0;
-  fSurfaceTreatment        := '';
-  fTensileStrengthRm       := 0*MPa;
-  fYoungModulusE20         := 0*MPa;
-  fYoungModulusE           := 0*MPa;
-  fShearModulusG20         := 0*MPa;
-  fShearModulusG           := 0*MPa;
-  fPoissonRatio            := 0;
-  fWireDiameter            := 0*mm;
-  fDensityRho              := 0*kg_m3;
-  fTemperature             := 0;
-  fTemperatureMin          := 0;
-  fTemperatureMax          := 0;
-  fTorsionalStressTauStar  := 0*MPa;
-  fTorsionalStressTauYield := 0*MPa;
-  fTorsionalStressTauOE7   := 0*MPa;
-  fTorsionalStressTauOE6   := 0*MPa;
-  fTorsionalStressTauOE5   := 0*MPa;
-  fTorsionalStressTauOE3   := 0*MPa;
-  fTorsionalStressTauUE7   := 0*MPa;
-  fTorsionalStressTauUE6   := 0*MPa;
-  fTorsionalStressTauUE5   := 0*MPa;
-  fNumOfCyclesE7           := 0;
-  fNumOfCyclesE6           := 0;
-  fNumOfCyclesE5           := 0;
-  fNumOfCyclesE3           := 0;
+  fItemIndex                     := -1;
+  fFatigueFactorA.Value          := 0;
+  fFatigueFactorB                := 0;
+  fSurfaceTreatment              := '';
+  fTensileStrengthRm.Value       := 0;
+  fYoungModulusE20.Value         := 0;
+  fYoungModulusE.Value           := 0;
+  fShearModulusG20.Value         := 0;
+  fShearModulusG.Value           := 0;
+  fPoissonRatio                  := 0;
+  fWireDiameter.Value            := 0;
+  fDensityRho.Value              := 0;
+  fTemperature                   := 0;
+  fTemperatureMin                := 0;
+  fTemperatureMax                := 0;
+  fTorsionalStressTauStar.Value  := 0;
+  fTorsionalStressTauYield.Value := 0;
+  fTorsionalStressTauOE7.Value   := 0;
+  fTorsionalStressTauOE6.Value   := 0;
+  fTorsionalStressTauOE5.Value   := 0;
+  fTorsionalStressTauOE3.Value   := 0;
+  fTorsionalStressTauUE7.Value   := 0;
+  fTorsionalStressTauUE6.Value   := 0;
+  fTorsionalStressTauUE5.Value   := 0;
+  fNumOfCyclesE7                 := 0;
+  fNumOfCyclesE6                 := 0;
+  fNumOfCyclesE5                 := 0;
+  fNumOfCyclesE3                 := 0;
 end;
 
 function TMaterialDB.GetItem(Index: longint): string;
@@ -213,7 +213,7 @@ begin
     Result := '';
 end;
 
-function TMaterialDB.Search(const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
+function TMaterialDB.Search(const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
 var
   i: longint;
 begin
@@ -232,11 +232,11 @@ begin
     end;
 end;
 
-function TMaterialDB.SetItem(const aID: string; const aWireDiameter: TLength; const aTemperature: double; const aSurfaceTreatment: string): longint;
+function TMaterialDB.SetItem(const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
 var
-  TO0, DTO0, TO1, DTO1, TU1, DTU1: TPressure;
-  RM0, DRM, RMMAX: TPressure;
-  DR0, DT0: TLength;
+  TO0, DTO0, TO1, DTO1, TU1, DTU1: TPascals;
+  RM0, DRM, RMMAX: TPascals;
+  DR0, DT0: TMeters;
 begin
   Clear;
 
@@ -250,7 +250,7 @@ begin
     fWireDiameter         := aWireDiameter;
     fYoungModulusE20      := TryTextToFloat(fMatFile.Cells[5,  fItemIndex])*MPa;
     fShearModulusG20      := TryTextToFloat(fMatFile.Cells[6,  fItemIndex])*MPa;
-    fDensityRho           := TryTextToFloat(fMatFile.Cells[7,  fItemIndex])*kg_dm3;
+    fDensityRho           := TryTextToFloat(fMatFile.Cells[7,  fItemIndex])*(kg/m3);
 
     RM0                   := TryTextToFloat(fMatFile.Cells[8,  fItemIndex])*MPa;
     DRM                   := TryTextToFloat(fMatFile.Cells[9,  fItemIndex])*MPa;

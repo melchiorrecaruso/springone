@@ -25,39 +25,39 @@ unit EN15800;
 interface
 
 uses
-  BGRABitmapTypes, Classes, CsvDocument, Math, SysUtils, UtilsBase, UnitOfMeasurement;
+  BGRABitmapTypes, Classes, CsvDocument, Math, SysUtils, UtilsBase, Dim;
 
 type
   TWireDiameterToleranceDB = class
   private
     fTolFile: TCsvDocument;
-    fValue: double;
+    fValue: TMeters;
   public
     constructor Create;
     destructor Destroy; override;
-    function Search(const aID: string; const aWireDiameter: double): boolean;
+    function Search(const aID: string; const aWireDiameter: TMeters): boolean;
     procedure Clear;
   public
-    property Value: double read fValue;
+    property Value: TMeters read fValue;
   end;
 
   TToleranceDB = class
   private
     fCheck: boolean;
-    fAD: TLength;
-    fAF1: TForce;
-    fAF2: TForce;
-    fAL0: TLength;
-    fFactorAlphaF: TForce;
-    fWireDiameter:  TLength;
+    fAD: TMeters;
+    fAF1: TNewtons;
+    fAF2: TNewtons;
+    fAL0: TMeters;
+    fFactorAlphaF: TNewtons;
+    fWireDiameter:  TMeters;
     fWireDiameterTolerance: TWireDiameterToleranceDB;
-    fCoilDiameterDm: TLength;
-    fLoadF1:  TForce;
-    fLoadF2:  TForce;
-    fEccentricityE1: TLength;
-    fEccentricityE2: TLength;
+    fCoilDiameterDm: TMeters;
+    fLoadF1:  TNewtons;
+    fLoadF2:  TNewtons;
+    fEccentricityE1: TMeters;
+    fEccentricityE2: TMeters;
     fFactorKF: double;
-    fLengthL0: TLength;
+    fLengthL0: TMeters;
     fActiveCoils: double;
     fDmQualityGrade: longint;
     fL0QualityGrade: longint;
@@ -65,7 +65,7 @@ type
     fF2QualityGrade: longint;
     fE1QualityGrade: longint;
     fE2QualityGrade: longint;
-    fSpringRateR: TStiffness;
+    fSpringRateR: TNewtonsPerMeter;
     fSpringIndexW: double;
   public
     constructor Create;
@@ -73,14 +73,14 @@ type
     procedure Solve;
     procedure Clear;
   public
-    property WireDiameter: TLength  write fWireDiameter;
+    property WireDiameter: TMeters  write fWireDiameter;
     property WireDiameterTolerance: TWireDiameterToleranceDB read fWireDiameterTolerance;
-    property CoilDiameterDm: TLength write fCoilDiameterDm;
-    property EccentricityE1: TLength read fEccentricityE1;
-    property EccentricityE2: TLength read fEccentricityE2;
-    property LoadF1: TForce read fLoadF1 write fLoadF1;
-    property LoadF2: TForce read fLoadF2 write fLoadF2;
-    property LengthL0: TLength write fLengthL0;
+    property CoilDiameterDm: TMeters write fCoilDiameterDm;
+    property EccentricityE1: TMeters read fEccentricityE1;
+    property EccentricityE2: TMeters read fEccentricityE2;
+    property LoadF1: TNewtons read fLoadF1 write fLoadF1;
+    property LoadF2: TNewtons read fLoadF2 write fLoadF2;
+    property LengthL0: TMeters write fLengthL0;
     property ActiveCoils: double write fActiveCoils;
     property DmQualityGrade: longint read fDmQualityGrade write fDmQualityGrade;
     property L0QualityGrade: longint read fL0QualityGrade write fL0QualityGrade;
@@ -88,11 +88,11 @@ type
     property F2QualityGrade: longint read fF2QualityGrade write fF2QualityGrade;
     property E1QualityGrade: longint read fE1QualityGrade write fE1QualityGrade;
     property E2QualityGrade: longint read fE2QualityGrade write fE2QualityGrade;
-    property SpringRateR: TStiffness write fSpringRateR;
-    property CoilDiameterTolerance: TLength read fAD;
-    property LoadF1Tolerance: TForce read fAF1;
-    property LoadF2Tolerance: TForce read fAF2;
-    property LengthL0Tolerance: TLength read fAL0;
+    property SpringRateR: TNewtonsPerMeter write fSpringRateR;
+    property CoilDiameterTolerance: TMeters read fAD;
+    property LoadF1Tolerance: TNewtons read fAF1;
+    property LoadF2Tolerance: TNewtons read fAF2;
+    property LengthL0Tolerance: TMeters read fAL0;
     property SpringIndexW: double write fSpringIndexW;
   end;
 
@@ -141,29 +141,29 @@ end;
 
 procedure TToleranceDB.Clear;
 begin
-  fCheck          := False;
-  fAD             := 0*m;
-  fAF1            := 0*N;
-  fAF2            := 0*N;
-  fAL0            := 0*m;
-  fFactorAlphaF   := 0*N;
-  fWireDiameter   := 0*m;
-  fCoilDiameterDm := 0*m;
-  fLoadF1         := 0*N;
-  fLoadF2         := 0*N;
-  fEccentricityE1 := 0*m;
-  fEccentricityE2 := 0*m;
-  fFactorKF       := 0;
-  fLengthL0       := 0*m;
-  fActiveCoils    := 0;
-  fSpringRateR    := 0*(N_m);
-  fSpringIndexW   := 0;
-  fDmQualityGrade := 0;
-  fL0QualityGrade := 0;
-  fF1QualityGrade := 0;
-  fF2QualityGrade := 0;
-  fE1QualityGrade := 0;
-  fE2QualityGrade := 0;
+  fCheck                := False;
+  fAD.Value             := 0;
+  fAF1.Value            := 0;
+  fAF2.Value            := 0;
+  fAL0.Value            := 0;
+  fFactorAlphaF.Value   := 0;
+  fWireDiameter.Value   := 0;
+  fCoilDiameterDm.Value := 0;
+  fLoadF1.Value         := 0;
+  fLoadF2.Value         := 0;
+  fEccentricityE1.Value := 0;
+  fEccentricityE2.Value := 0;
+  fFactorKF             := 0;
+  fLengthL0.Value       := 0;
+  fActiveCoils          := 0;
+  fSpringRateR.Value    := 0;
+  fSpringIndexW         := 0;
+  fDmQualityGrade       := 0;
+  fL0QualityGrade       := 0;
+  fF1QualityGrade       := 0;
+  fF2QualityGrade       := 0;
+  fE1QualityGrade       := 0;
+  fE2QualityGrade       := 0;
 end;
 
 procedure TToleranceDB.Solve;
@@ -211,7 +211,8 @@ begin
     if (fSpringIndexW >  14.0) and (fSpringIndexW <= 20.0) then Index2 := 4 + 3*(fDmQualityGrade - 1);
     fAD := AD_TABLE[Index1][Index2]*mm;
     // alphaF
-    fFactorAlphaF := (65.92*(Power(mm.Value(FWireDiameter),3.3)/Power(mm.Value(FCoilDiameterDm),1.6))*(-0.84*Power(fSpringIndexW/10,3)+3.781*Power(fSpringIndexW/10,2)-4.244*(fSpringIndexW/10)+2.274))*N;
+    fFactorAlphaF := (65.92*(Power(1000*FWireDiameter.Value, 3.3))/(Power(1000*FCoilDiameterDm.Value, 1.6))*
+      (-0.84*Power(fSpringIndexW/10, 3) + 3.781*Power(fSpringIndexW/10,2) - 4.244*(fSpringIndexW/10) + 2.274))*N;
     // kF
     fFactorKF := 1/(3*Sqr(fActiveCoils))+8/(5*fActiveCoils)+0.803;
     // Tolleranza AF1 sul carico della molla LoadF1 ad una lunghezza data della molla L1
@@ -278,10 +279,10 @@ end;
 
 procedure TWireDiameterToleranceDB.Clear;
 begin
-  fValue := 0;
+  fValue := 0*mm;
 end;
 
-function TWireDiameterToleranceDB.Search(const aID: string; const aWireDiameter: double): boolean;
+function TWireDiameterToleranceDB.Search(const aID: string; const aWireDiameter: TMeters): boolean;
 var
   i: longint;
 begin
@@ -289,14 +290,14 @@ begin
   for i := 0 to fTolFile.RowCount -1 do
   begin
     if Pos(fTolFile.Cells[0, 0], aID) = 1 then
-      if (aWireDiameter >  TryTextToFloat(fTolFile.Cells[1, i])) and
-         (aWireDiameter <= TryTextToFloat(fTolFile.Cells[2, i])) then
+      if (aWireDiameter >  TryTextToFloat(fTolFile.Cells[1, i])*mm) and
+         (aWireDiameter <= TryTextToFloat(fTolFile.Cells[2, i])*mm) then
       begin
-        fValue := TryTextToFloat(fTolFile.Cells[3, i]);
+        fValue := TryTextToFloat(fTolFile.Cells[3, i])*mm;
         Break;
       end;
   end;
-  Result := (fValue > 0);
+  Result := (fValue > (0*mm));
 end;
 
 

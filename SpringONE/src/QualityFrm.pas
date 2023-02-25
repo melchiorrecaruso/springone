@@ -72,7 +72,7 @@ implementation
 {$R *.lfm}
 
 uses
-  GeometryFrm, UtilsBase, UnitOfMeasurement;
+  GeometryFrm, UtilsBase, Dim;
 
 // TQualityForm
 
@@ -129,11 +129,11 @@ begin
     SOLVER.WireDiameterMax := (0*mm);
     case GeometryForm.WireDiameterUnit.ItemIndex of
       0: SOLVER.WireDiameterMax := GeometryForm.WireDiameter.Value*mm;
-      1: SOLVER.WireDiameterMax := GeometryForm.WireDiameter.Value*inch;
+      1: SOLVER.WireDiameterMax := (GeometryForm.WireDiameter.Value*25.4)*mm;
     end;
     case ToleranceWireDiameterUnit.ItemIndex of
       0: SOLVER.WireDiameterMax := SOLVER.WireDiameterMax + ToleranceWireDiameter.Value*mm;
-      1: SOLVER.WireDiameterMax := SOLVER.WireDiameterMax + ToleranceWireDiameter.Value*inch;
+      1: SOLVER.WireDiameterMax := SOLVER.WireDiameterMax + (ToleranceWireDiameter.Value*25.4)*mm;
     end;
   end;
 

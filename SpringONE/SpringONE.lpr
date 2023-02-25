@@ -29,19 +29,19 @@ uses
   {$IFDEF HASAMIGA}
   athreads,
   {$ENDIF}
-  Interfaces, Forms, ApplicationFrm, DrawingFrm, TextFrm, AboutFrm,
-  GeometryFrm, MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm,
-  SpringLib, LazControls, SysUtils, UtilsBase, Compozer;
+  Interfaces, Forms, ApplicationFrm, DrawingFrm, TextFrm, AboutFrm, GeometryFrm,
+  MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm, GeometryFrmThree,
+  SpringLib, LazControls, SysUtils, UtilsBase;
 
 {$R *.res}
 
 begin
   ApplicationName := 'SpringONE';
-  ApplicationVer  := 'SpringONE v0.28';
+  ApplicationVer  := 'SpringONE v0.34';
 
   RequireDerivedFormResource:=True;
-  Application.Title:='SpringOne';
-  Application.Scaled:=True;
+  Application.Title := 'SpringOne';
+  Application.Scaled := True;
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TAboutForm, AboutForm);
@@ -53,6 +53,7 @@ begin
   Application.CreateForm(TQualityForm, QualityForm);
   Application.CreateForm(TReportForm, ReportForm);
   Application.CreateForm(TTextForm, TextForm);
+  Application.CreateForm(TGeometryFormThree, GeometryFormThree);
   Application.Run;
 end.
 

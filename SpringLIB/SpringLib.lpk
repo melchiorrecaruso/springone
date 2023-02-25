@@ -10,15 +10,10 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="src"/>
-        <UnitOutputDirectory Value="build\$(TargetCPU)-$(TargetOS)"/>
+        <Libraries Value="src"/>
+        <OtherUnitFiles Value="src;..\..\DimPas"/>
+        <UnitOutputDirectory Value="build\lib"/>
       </SearchPaths>
-      <CodeGeneration>
-        <SmartLinkUnit Value="True"/>
-        <Optimizations>
-          <OptimizationLevel Value="3"/>
-        </Optimizations>
-      </CodeGeneration>
       <Linking>
         <Debugging>
           <GenerateDebugInfo Value="False"/>
@@ -33,6 +28,14 @@
     <Version Minor="1"/>
     <Files>
       <Item>
+        <Filename Value="src\UtilsBase.pas"/>
+        <UnitName Value="UtilsBase"/>
+      </Item>
+      <Item>
+        <Filename Value="src\EN15800.pas"/>
+        <UnitName Value="EN15800"/>
+      </Item>
+      <Item>
         <Filename Value="src\EN10270.pas"/>
         <UnitName Value="EN10270"/>
       </Item>
@@ -41,20 +44,16 @@
         <UnitName Value="EN13906"/>
       </Item>
       <Item>
-        <Filename Value="src\EN15800.pas"/>
-        <UnitName Value="EN15800"/>
-      </Item>
-      <Item>
-        <Filename Value="src\UtilsBase.pas"/>
-        <UnitName Value="UtilsBase"/>
-      </Item>
-      <Item>
         <Filename Value="src\GraphBase.pas"/>
         <UnitName Value="GraphBase"/>
       </Item>
       <Item>
-        <Filename Value="src\UnitOfMeasurement.pas"/>
-        <UnitName Value="UnitOfMeasurement"/>
+        <Filename Value="src\Compozer.pas"/>
+        <UnitName Value="Compozer"/>
+      </Item>
+      <Item>
+        <Filename Value="..\..\DimPas\dim.pas"/>
+        <UnitName Value="Dim"/>
       </Item>
     </Files>
     <RequiredPkgs>
