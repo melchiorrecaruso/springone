@@ -48,12 +48,8 @@
         <UnitName Value="GraphBase"/>
       </Item>
       <Item>
-        <Filename Value="src\Compozer.pas"/>
-        <UnitName Value="Compozer"/>
-      </Item>
-      <Item>
-        <Filename Value="..\..\DimPas\dim.pas"/>
-        <UnitName Value="Dim"/>
+        <Filename Value="src\ADim.pas"/>
+        <UnitName Value="ADim"/>
       </Item>
     </Files>
     <RequiredPkgs>

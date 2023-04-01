@@ -8,8 +8,7 @@ unit SpringLib;
 interface
 
 uses
-  UtilsBase, EN15800, EN10270, EN13906, GraphBase, Compozer, Dim, 
-  LazarusPackageIntf;
+  UtilsBase, EN15800, EN10270, EN13906, GraphBase, ADim, LazarusPackageIntf;
 
 implementation
 

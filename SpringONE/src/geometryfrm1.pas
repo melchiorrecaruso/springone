@@ -1,0 +1,202 @@
+{ EN13906-1 Helical Compression Spring Designer
+
+  Copyright (C) 2022 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+
+  This source is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free
+  Software Foundation; either version 2 of the License, or (at your option)
+  any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  A copy of the GNU General Public License is available on the World Wide Web
+  at <http://www.gnu.org/copyleft/gpl.html>. You can also obtain it by writing
+  to the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+  Boston, MA 02110-1335, USA.
+}
+
+unit GeometryFrm1;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Buttons, Classes, Controls, Dialogs, ExtCtrls, EN13906,
+  Forms, Graphics, IniFiles, Spin, StdCtrls, SysUtils;
+
+type
+
+  { TGeometryForm1 }
+
+  TGeometryForm1 = class(TForm)
+    ActiveCoilLabel: TLabel;
+    ActiveCoil: TFloatSpinEdit;
+    Bevel1: TBevel;
+    CoilDiameterIndex: TComboBox;
+    CoilDiameter: TFloatSpinEdit;
+    CoilDiameterUnit: TComboBox;
+    EndCoilTypeLabel: TLabel;
+    EndCoilType: TComboBox;
+    InactiveCoil1Label: TLabel;
+    InactiveCoil1: TFloatSpinEdit;
+    InactiveCoil2Label: TLabel;
+    InactiveCoil2: TFloatSpinEdit;
+    LengthL0Label: TLabel;
+    LengthL0: TFloatSpinEdit;
+    LengthL0Unit: TComboBox;
+    LengthL1Label: TLabel;
+    LengthL1: TFloatSpinEdit;
+    LengthL1Unit: TComboBox;
+    LengthL2Label: TLabel;
+    LengthL2: TFloatSpinEdit;
+    LengthL2Unit: TComboBox;
+    WireDiameterLabel: TLabel;
+    WireDiameter: TFloatSpinEdit;
+    WireDiameterUnit: TComboBox;
+    ApplyBtn: TBitBtn;
+    CancelBtn: TBitBtn;
+    OkBtn: TBitBtn;
+    procedure FormCreate(Sender: TObject);
+    procedure SpinEditChange(Sender: TObject);
+    procedure ApplyBtnClick(Sender: TObject);
+  private
+
+  public
+    procedure Clear;
+    procedure Load(IniFile: TIniFile);
+    procedure Save(IniFile: TIniFile);
+    procedure SaveToSolver;
+  end;
+
+
+var
+  GeometryForm1: TGeometryForm1;
+
+
+implementation
+
+{$R *.lfm}
+
+uses
+  ADim, MainFrm, UtilsBase;
+
+// TGeometryForm1
+
+procedure TGeometryForm1.FormCreate(Sender: TObject);
+begin
+  Clear;
+end;
+
+procedure TGeometryForm1.Clear;
+begin
+  WireDiameter     .Value     := 0;
+  WireDiameterUnit .ItemIndex := 0;
+  CoilDiameterIndex.ItemIndex := 1;
+  CoilDiameter     .Value     := 0;
+  CoilDiameterUnit .ItemIndex := 0;
+  ActiveCoil       .Value     := 0;
+  InactiveCoil1    .Value     := 0;
+  InactiveCoil2    .Value     := 0;
+  LengthL0         .Value     := 0;
+  LengthL0Unit     .ItemIndex := 0;
+  LengthL1         .Value     := 0;
+  LengthL1Unit     .ItemIndex := 0;
+  LengthL2         .Value     := 0;
+  LengthL2Unit     .ItemIndex := 0;
+  EndCoilType      .ItemIndex := 1;
+end;
+
+procedure TGeometryForm1.Load(IniFile: TIniFile);
+begin
+  WireDiameter     .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'WireDiameter',      '0'));
+  WireDiameterUnit .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'WireDiameterUnit',  '0'));
+  CoilDiameterIndex.ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'CoilDiameterIndex', '0'));
+  CoilDiameter     .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'CoilDiameter',      '0'));
+  CoilDiameterUnit .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'CoilDiameterUnit',  '0'));
+  ActiveCoil       .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'ActiveCoil',        '0'));
+  InactiveCoil1    .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'InactiveCoil1',     '0'));
+  InactiveCoil2    .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'InactiveCoil2',     '0'));
+  LengthL0         .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'LengthL0',          '0'));
+  LengthL0Unit     .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'LengthL0Unit',      '0'));
+  LengthL1         .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'LengthL1',          '0'));
+  LengthL1Unit     .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'LengthL1Unit',      '0'));
+  LengthL2         .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'LengthL2',          '0'));
+  LengthL2Unit     .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'LengthL2Unit',      '0'));
+  EndCoilType      .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'EndCoilType',       '0'));
+end;
+
+procedure TGeometryForm1.Save(IniFile: TIniFile);
+begin
+  IniFile.WriteFloat  ('TGeometryForm1', 'WireDiameter',      WireDiameter     .Value    );
+  IniFile.WriteInteger('TGeometryForm1', 'WireDiameterUnit',  WireDiameterUnit .ItemIndex);
+  IniFile.WriteInteger('TGeometryForm1', 'CoilDiameterIndex', CoilDiameterIndex.ItemIndex);
+  IniFile.WriteFloat  ('TGeometryForm1', 'CoilDiameter',      CoilDiameter     .Value    );
+  IniFile.WriteInteger('TGeometryForm1', 'CoilDiameterUnit',  CoilDiameterUnit .ItemIndex);
+  IniFile.WriteFloat  ('TGeometryForm1', 'ActiveCoil',        ActiveCoil       .Value    );
+  IniFile.WriteFloat  ('TGeometryForm1', 'InactiveCoil1',     InactiveCoil1    .Value    );
+  IniFile.WriteFloat  ('TGeometryForm1', 'InactiveCoil2',     InactiveCoil2    .Value    );
+  IniFile.WriteFloat  ('TGeometryForm1', 'LengthL0',          LengthL0         .Value    );
+  IniFile.WriteInteger('TGeometryForm1', 'LengthL0Unit',      LengthL0Unit     .ItemIndex);
+  IniFile.WriteFloat  ('TGeometryForm1', 'LengthL1',          LengthL1         .Value    );
+  IniFile.WriteInteger('TGeometryForm1', 'LengthL1Unit',      LengthL1Unit     .ItemIndex);
+  IniFile.WriteFloat  ('TGeometryForm1', 'LengthL2',          LengthL2         .Value    );
+  IniFile.WriteInteger('TGeometryForm1', 'LengthL2Unit',      LengthL2Unit     .ItemIndex);
+  IniFile.WriteInteger('TGeometryForm1', 'EndCoilType',       EndCoilType      .ItemIndex);
+end;
+
+procedure TGeometryForm1.SaveToSolver;
+begin
+  case WireDiameterUnit.ItemIndex of
+    0: SOLVER1.WireDiameter := WireDiameter.Value*mm;
+    1: SOLVER1.WireDiameter := WireDiameter.Value*25.4*mm;
+  end;
+
+  case CoilDiameterUnit.ItemIndex of
+    0: SOLVER1.Dm := CoilDiameter.Value*mm;
+    1: SOLVER1.Dm := CoilDiameter.Value*25.4*mm;
+  end;
+
+  case CoilDiameterIndex.ItemIndex of
+    0: SOLVER1.Dm := SOLVER1.Dm + SOLVER1.WireDiameter;  // Input Di
+    1: SOLVER1.Dm := SOLVER1.Dm;                         // Input Dm
+    2: SOLVER1.Dm := SOLVER1.Dm - SOLVER1.WireDiameter;  // Input De
+  end;
+
+  SOLVER1.ActiveColis := ActiveCoil.Value;
+  SOLVER1.TotalCoils  := ActiveCoil.Value + InactiveCoil1.Value + InactiveCoil2.Value;
+
+  SOLVER1.ClosedEnds := EndCoilType.ItemIndex in [0, 1];
+  SOLVER1.GroundEnds := EndCoilType.ItemIndex in [   1];
+
+  case LengthL0Unit.ItemIndex of
+    0: SOLVER1.LengthL0 := LengthL0.Value*mm;
+    1: SOLVER1.LengthL0 := LengthL0.Value*25.4*mm;
+  end;
+
+  case LengthL1Unit.ItemIndex of
+    0: SOLVER1.LengthL1 := LengthL1.Value*mm;
+    1: SOLVER1.LengthL1 := LengthL1.Value*25.4*mm;
+  end;
+
+  case LengthL2Unit.ItemIndex of
+    0: SOLVER1.LengthL2 := LengthL2.Value*mm;
+    1: SOLVER1.LengthL2 := LengthL2.Value*25.4*mm;
+  end;
+end;
+
+procedure TGeometryForm1.SpinEditChange(Sender: TObject);
+begin
+  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
+end;
+
+procedure TGeometryForm1.ApplyBtnClick(Sender: TObject);
+begin
+  MainForm.Solve();
+end;
+
+end.
+

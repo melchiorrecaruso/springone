@@ -64,13 +64,18 @@ implementation
 {$R *.lfm}
 
 uses
-  Dim;
+  ADim;
 
 // TDrawingForm
 
 procedure TDrawingForm.FormCreate(Sender: TObject);
 begin
   Clear;
+end;
+
+procedure TDrawingForm.SpinEditChange(Sender: TObject);
+begin
+  if TFloatSpinedit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
 procedure TDrawingForm.Clear;
@@ -80,10 +85,10 @@ end;
 
 procedure TDrawingForm.BtnClick(Sender: TObject);
 begin
-  if Sender = L0Btn  then SpringLength.Value := mm.From(SOLVER.LengthL0).Value;
-  if Sender = L1Btn  then SpringLength.Value := mm.From(SOLVER.LengthL1).Value;
-  if Sender = L2Btn  then SpringLength.Value := mm.From(SOLVER.LengthL2).Value;
-  if Sender = LcBtn  then SpringLength.Value := mm.From(SOLVER.LengthLc).Value;
+  if Sender = L0Btn  then SpringLength.Value := mm.From(SOLVER1.LengthL0).Value;
+  if Sender = L1Btn  then SpringLength.Value := mm.From(SOLVER1.LengthL1).Value;
+  if Sender = L2Btn  then SpringLength.Value := mm.From(SOLVER1.LengthL2).Value;
+  if Sender = LcBtn  then SpringLength.Value := mm.From(SOLVER1.LengthLc).Value;
 end;
 
 procedure TDrawingForm.Load(IniFile: TIniFile);
@@ -95,12 +100,6 @@ procedure TDrawingForm.Save(IniFile: TIniFile);
 begin
 
 end;
-
-procedure TDrawingForm.SpinEditChange(Sender: TObject);
-begin
-  if TFloatSpinedit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
-end;
-
 
 end.
 

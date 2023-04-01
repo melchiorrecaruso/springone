@@ -18,7 +18,7 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit ApplicationFrm;
+unit ApplicationFrm1;
 
 {$mode objfpc}{$H+}
 
@@ -30,9 +30,9 @@ uses
 
 type
 
-  { TApplicationForm }
+  { TApplicationForm1 }
 
-  TApplicationForm = class(TForm)
+  TApplicationForm1 = class(TForm)
     Bevel: TBevel;
     CycleFrequencyLabel: TLabel;
     CycleFrequency: TFloatSpinEdit;
@@ -57,7 +57,7 @@ type
 
 
 var
-  ApplicationForm: TApplicationForm;
+  ApplicationForm1: TApplicationForm1;
 
 
 implementation
@@ -67,14 +67,19 @@ implementation
 uses
   EN13906, MaterialFrm, Math, UtilsBase;
 
-// TApplicationForm
+// TApplicationForm1
 
-procedure TApplicationForm.FormCreate(Sender: TObject);
+procedure TApplicationForm1.FormCreate(Sender: TObject);
 begin
   Clear;
 end;
 
-procedure TApplicationForm.Clear;
+procedure TApplicationForm1.SpinEditChange(Sender: TObject);
+begin
+  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
+end;
+
+procedure TApplicationForm1.Clear;
 begin
   LoadType         .ItemIndex := 0;
   Temperature      .Value     := 20;
@@ -82,36 +87,39 @@ begin
   SeatingCoefficent.ItemIndex := 1;
 end;
 
-procedure TApplicationForm.Load(IniFile: TIniFile);
+procedure TApplicationForm1.Load(IniFile: TIniFile);
 begin
-  LoadType         .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm', 'LoadType',          '0'));
-  CycleFrequency   .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm', 'CycleFrequency',    '1'));
-  Temperature      .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm', 'Temperature',       '0'));
-  TemperatureUnit  .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm', 'TemperatureUnit',   '0'));
-  SeatingCoefficent.ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm', 'SeatingCoefficent', '0'));
+  LoadType         .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm1', 'LoadType',          '0'));
+  CycleFrequency   .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm1', 'CycleFrequency',    '1'));
+  Temperature      .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm1', 'Temperature',       '0'));
+  TemperatureUnit  .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm1', 'TemperatureUnit',   '0'));
+  SeatingCoefficent.ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm1', 'SeatingCoefficent', '0'));
 end;
 
-procedure TApplicationForm.Save(IniFile: TIniFile);
+procedure TApplicationForm1.Save(IniFile: TIniFile);
 begin
-  IniFile.WriteInteger('TApplicationForm', 'LoadType',          LoadType         .ItemIndex);
-  IniFile.WriteFloat  ('TApplicationForm', 'CycleFrequency',    CycleFrequency   .Value    );
-  IniFile.WriteFloat  ('TApplicationForm', 'Temperature',       Temperature      .Value    );
-  IniFile.WriteInteger('TApplicationForm', 'TemperatureUnit',   TemperatureUnit  .ItemIndex);
-  IniFile.WriteInteger('TApplicationForm', 'SeatingCoefficent', SeatingCoefficent.ItemIndex);
+  IniFile.WriteInteger('TApplicationForm1', 'LoadType',          LoadType         .ItemIndex);
+  IniFile.WriteFloat  ('TApplicationForm1', 'CycleFrequency',    CycleFrequency   .Value    );
+  IniFile.WriteFloat  ('TApplicationForm1', 'Temperature',       Temperature      .Value    );
+  IniFile.WriteInteger('TApplicationForm1', 'TemperatureUnit',   TemperatureUnit  .ItemIndex);
+  IniFile.WriteInteger('TApplicationForm1', 'SeatingCoefficent', SeatingCoefficent.ItemIndex);
 end;
 
-procedure TApplicationForm.SaveToSolver;
+procedure TApplicationForm1.SaveToSolver;
 begin
+  {$IFDEF MODULE1}
   case LoadType.ItemIndex of
-   0: SOLVER.DynamicLoad := True;
-   1: SOLVER.DynamicLoad := False;
+   0: SOLVER1.DynamicLoad := True;
+   1: SOLVER1.DynamicLoad := False;
   end;
-  SOLVER.SeatingCoefficent := TryTextToFloat(Self.SeatingCoefficent.Text);
-end;
-
-procedure TApplicationForm.SpinEditChange(Sender: TObject);
-begin
-  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
+  SOLVER1.SeatingCoefficent := TryTextToFloat(Self.SeatingCoefficent.Text);
+  {$ENDIF}
+  {$IFDEF MODULE3}
+  case LoadType.ItemIndex of
+   0: SOLVER3.DynamicLoad := True;
+   1: SOLVER3.DynamicLoad := False;
+  end;
+  {$ENDIF}
 end;
 
 end.

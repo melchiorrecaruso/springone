@@ -1,4 +1,4 @@
-object GeometryForm: TGeometryForm
+object GeometryForm1: TGeometryForm1
   Left = 542
   Height = 360
   Top = 144

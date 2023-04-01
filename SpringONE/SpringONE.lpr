@@ -29,31 +29,33 @@ uses
   {$IFDEF HASAMIGA}
   athreads,
   {$ENDIF}
-  Interfaces, Forms, ApplicationFrm, DrawingFrm, TextFrm, AboutFrm, GeometryFrm,
-  MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm, GeometryFrmThree,
-  SpringLib, LazControls, SysUtils, UtilsBase;
+  Interfaces, Forms, ApplicationFrm1, DrawingFrm, TextFrm, AboutFrm,
+  GeometryFrm1, GeometryFrm3, MainFrm, MaterialFrm, ProductionFrm, QualityFrm,
+  ReportFrm, ApplicationFrm3, Compozer, SpringLib, LazControls, SysUtils,
+  UtilsBase;
 
 {$R *.res}
 
 begin
   ApplicationName := 'SpringONE';
-  ApplicationVer  := 'SpringONE v0.34';
+  ApplicationVer  := 'SpringONE v0.36';
 
   RequireDerivedFormResource:=True;
-  Application.Title := 'SpringOne';
-  Application.Scaled := True;
+  Application.Title:='SpringOne';
+  Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TAboutForm, AboutForm);
-  Application.CreateForm(TApplicationForm, ApplicationForm);
+  Application.CreateForm(TApplicationForm1, ApplicationForm1);
+  Application.CreateForm(TApplicationForm3, ApplicationForm3);
   Application.CreateForm(TDrawingForm, DrawingForm);
-  Application.CreateForm(TGeometryForm, GeometryForm);
+  Application.CreateForm(TGeometryForm1, GeometryForm1);
+  Application.CreateForm(TGeometryForm3, GeometryForm3);
   Application.CreateForm(TMaterialForm, MaterialForm);
   Application.CreateForm(TProductionForm, ProductionForm);
   Application.CreateForm(TQualityForm, QualityForm);
   Application.CreateForm(TReportForm, ReportForm);
   Application.CreateForm(TTextForm, TextForm);
-  Application.CreateForm(TGeometryFormThree, GeometryFormThree);
   Application.Run;
 end.
 

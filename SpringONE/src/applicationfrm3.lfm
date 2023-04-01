@@ -1,0 +1,261 @@
+object ApplicationForm3: TApplicationForm3
+  Left = 247
+  Height = 215
+  Top = 157
+  Width = 400
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Analisys'
+  ClientHeight = 215
+  ClientWidth = 400
+  OnCreate = FormCreate
+  ParentBiDiMode = False
+  Position = poMainFormCenter
+  LCLVersion = '2.3.0.0'
+  object OkBtn: TBitBtn
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 288
+    Height = 28
+    Top = 175
+    Width = 100
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 12
+    BorderSpacing.Bottom = 12
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object Bevel: TBevel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = StressDirection
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = OkBtn
+    Left = 6
+    Height = 2
+    Top = 161
+    Width = 388
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 6
+    BorderSpacing.Bottom = 12
+    Constraints.MaxHeight = 2
+    Constraints.MinHeight = 2
+  end
+  object StressDirection: TComboBox
+    AnchorSideLeft.Control = Temperature
+    AnchorSideTop.Control = Temperature
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = TemperatureUnit
+    AnchorSideRight.Side = asrBottom
+    Left = 150
+    Height = 23
+    Top = 105
+    Width = 238
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 8
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'stress in coiling direction'
+      'stress against coiling direction'
+    )
+    Style = csDropDownList
+    TabOrder = 1
+    Text = 'stress in coiling direction'
+  end
+  object StressDirectionLabel: TLabel
+    AnchorSideTop.Control = StressDirection
+    AnchorSideRight.Control = StressDirection
+    AnchorSideBottom.Control = StressDirection
+    AnchorSideBottom.Side = asrBottom
+    Left = 47
+    Height = 23
+    Top = 105
+    Width = 93
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'direction of stress'
+    Layout = tlCenter
+  end
+  object CancelBtn: TBitBtn
+    AnchorSideTop.Control = OkBtn
+    AnchorSideRight.Control = OkBtn
+    AnchorSideBottom.Control = OkBtn
+    AnchorSideBottom.Side = asrBottom
+    Left = 178
+    Height = 28
+    Top = 175
+    Width = 100
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object LoadTypeLabel: TLabel
+    AnchorSideTop.Control = LoadType
+    AnchorSideRight.Control = LoadType
+    AnchorSideBottom.Control = LoadType
+    AnchorSideBottom.Side = asrBottom
+    Left = 71
+    Height = 23
+    Top = 12
+    Width = 69
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'type of stress'
+    Layout = tlCenter
+  end
+  object LoadType: TComboBox
+    AnchorSideLeft.Control = Temperature
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 150
+    Height = 23
+    Top = 12
+    Width = 238
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 12
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'dynamic'
+      'static or quasistatic'
+    )
+    Style = csDropDownList
+    TabOrder = 3
+    Text = 'dynamic'
+  end
+  object TemperatureUnit: TComboBox
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Temperature
+    AnchorSideRight.Control = LoadType
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Temperature
+    AnchorSideBottom.Side = asrBottom
+    Left = 318
+    Height = 23
+    Top = 74
+    Width = 70
+    Anchors = [akTop, akRight, akBottom]
+    BidiMode = bdRightToLeftReadingOnly
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'C°'
+      'F°'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 4
+    Text = 'C°'
+  end
+  object TemperatureLabel: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Temperature
+    AnchorSideRight.Control = Temperature
+    AnchorSideBottom.Control = Temperature
+    AnchorSideBottom.Side = asrBottom
+    Left = 12
+    Height = 23
+    Top = 74
+    Width = 128
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akBottom]
+    BorderSpacing.Left = 12
+    Caption = 'operating temperature T'
+    Layout = tlCenter
+  end
+  object Temperature: TFloatSpinEdit
+    AnchorSideLeft.Control = TemperatureLabel
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = CycleFrequency
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = TemperatureUnit
+    Left = 150
+    Height = 23
+    Top = 74
+    Width = 158
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 10
+    DecimalPlaces = 1
+    OnChange = SpinEditChange
+    TabOrder = 5
+    Value = 20
+  end
+  object CycleFrequencyUnit: TComboBox
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = CycleFrequency
+    AnchorSideRight.Control = LoadType
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = CycleFrequency
+    AnchorSideBottom.Side = asrBottom
+    Left = 318
+    Height = 23
+    Top = 43
+    Width = 70
+    Anchors = [akTop, akRight, akBottom]
+    BidiMode = bdRightToLeftReadingOnly
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'Hz'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 6
+    Text = 'Hz'
+  end
+  object CycleFrequency: TFloatSpinEdit
+    AnchorSideLeft.Control = TemperatureLabel
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = LoadType
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = CycleFrequencyUnit
+    Left = 150
+    Height = 23
+    Top = 43
+    Width = 158
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 10
+    DecimalPlaces = 1
+    OnChange = SpinEditChange
+    TabOrder = 7
+    Value = 1
+  end
+  object CycleFrequencyLabel: TLabel
+    AnchorSideTop.Control = CycleFrequency
+    AnchorSideRight.Control = CycleFrequency
+    AnchorSideBottom.Control = CycleFrequency
+    AnchorSideBottom.Side = asrBottom
+    Left = 25
+    Height = 23
+    Top = 43
+    Width = 115
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'stress cycle frequency'
+    Layout = tlCenter
+  end
+end

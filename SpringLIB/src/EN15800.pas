@@ -25,7 +25,7 @@ unit EN15800;
 interface
 
 uses
-  BGRABitmapTypes, Classes, CsvDocument, Math, SysUtils, UtilsBase, Dim;
+  BGRABitmapTypes, Classes, CsvDocument, Math, SysUtils, UtilsBase, ADim;
 
 type
   TWireDiameterToleranceDB = class

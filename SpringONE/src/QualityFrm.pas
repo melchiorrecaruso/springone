@@ -72,7 +72,10 @@ implementation
 {$R *.lfm}
 
 uses
-  GeometryFrm, UtilsBase, Dim;
+  ADim,
+  {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
+  {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
+  UtilsBase;
 
 // TQualityForm
 
@@ -124,18 +127,35 @@ end;
 
 procedure TQualityForm.SaveToSolver;
 begin
-  if Assigned(GeometryForm) then
+  {$IFDEF MODULE1}
+  if Assigned(GeometryForm1) then
   begin
-    SOLVER.WireDiameterMax := (0*mm);
-    case GeometryForm.WireDiameterUnit.ItemIndex of
-      0: SOLVER.WireDiameterMax := GeometryForm.WireDiameter.Value*mm;
-      1: SOLVER.WireDiameterMax := (GeometryForm.WireDiameter.Value*25.4)*mm;
+    SOLVER1.WireDiameterMax := (0*mm);
+    case GeometryForm1.WireDiameterUnit.ItemIndex of
+      0: SOLVER1.WireDiameterMax := GeometryForm1.WireDiameter.Value*mm;
+      1: SOLVER1.WireDiameterMax := GeometryForm1.WireDiameter.Value*25.4*mm;
     end;
     case ToleranceWireDiameterUnit.ItemIndex of
-      0: SOLVER.WireDiameterMax := SOLVER.WireDiameterMax + ToleranceWireDiameter.Value*mm;
-      1: SOLVER.WireDiameterMax := SOLVER.WireDiameterMax + (ToleranceWireDiameter.Value*25.4)*mm;
+      0: SOLVER1.WireDiameterMax := SOLVER1.WireDiameterMax + ToleranceWireDiameter.Value*mm;
+      1: SOLVER1.WireDiameterMax := SOLVER1.WireDiameterMax + ToleranceWireDiameter.Value*25.4*mm;
     end;
   end;
+  {$ENDIF}
+
+  {$IFDEF MODULE3}
+  if Assigned(GeometryForm3) then
+  begin
+    SOLVER3.WireDiameterMax := (0*mm);
+    case GeometryForm3.WireDiameterUnit.ItemIndex of
+      0: SOLVER3.WireDiameterMax := GeometryForm3.WireDiameter.Value*mm;
+      1: SOLVER3.WireDiameterMax := GeometryForm3.WireDiameter.Value*25.4*mm;
+    end;
+    case ToleranceWireDiameterUnit.ItemIndex of
+      0: SOLVER3.WireDiameterMax := SOLVER3.WireDiameterMax + ToleranceWireDiameter.Value*mm;
+      1: SOLVER3.WireDiameterMax := SOLVER3.WireDiameterMax + ToleranceWireDiameter.Value*25.4*mm;
+    end;
+  end;
+  {$ENDIF}
 
   case ToleranceCoilDiameter.ItemIndex of
     0: TOL.DmQualityGrade := 1;

@@ -1,13 +1,13 @@
-object GeometryFormThree: TGeometryFormThree
-  Left = 479
+object GeometryForm3: TGeometryForm3
+  Left = 474
   Height = 574
-  Top = 92
-  Width = 420
+  Top = 99
+  Width = 450
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Geometry & working angle'
   ClientHeight = 574
-  ClientWidth = 420
+  ClientWidth = 450
   OnCreate = FormCreate
   LCLVersion = '2.3.0.0'
   object WireDiameterLabel: TLabel
@@ -33,7 +33,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 12
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 12
@@ -48,7 +48,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 12
     Width = 70
@@ -75,7 +75,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Control = WireDiameterUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 43
     Width = 70
@@ -104,7 +104,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 43
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
@@ -162,7 +162,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 101
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
@@ -195,7 +195,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 74
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
@@ -211,7 +211,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 6
     Height = 2
     Top = 520
-    Width = 408
+    Width = 438
     Anchors = [akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
@@ -224,7 +224,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 308
+    Left = 338
     Height = 28
     Top = 534
     Width = 100
@@ -235,6 +235,7 @@ object GeometryFormThree: TGeometryFormThree
     DefaultCaption = True
     Kind = bkOK
     ModalResult = 1
+    OnClick = OkBtnClick
     TabOrder = 7
   end
   object CancelBtn: TBitBtn
@@ -242,7 +243,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Control = OkBtn
     AnchorSideBottom.Control = OkBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 198
+    Left = 228
     Height = 28
     Top = 534
     Width = 100
@@ -281,7 +282,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 132
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
@@ -295,7 +296,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = AngleAlpha1
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 132
     Width = 70
@@ -320,7 +321,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = AngleAlpha2
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 163
     Width = 70
@@ -348,7 +349,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 163
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
@@ -376,7 +377,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Control = CancelBtn
     AnchorSideBottom.Control = CancelBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 88
+    Left = 118
     Height = 28
     Top = 534
     Width = 100
@@ -385,21 +386,21 @@ object GeometryFormThree: TGeometryFormThree
     Caption = '&Apply'
     TabOrder = 13
   end
-  object Leg1LengthLabel: TLabel
-    AnchorSideTop.Control = Leg1Length
-    AnchorSideRight.Control = Leg1Length
-    AnchorSideBottom.Control = Leg1Length
+  object LengthLegALabel: TLabel
+    AnchorSideTop.Control = LengthLegA
+    AnchorSideRight.Control = LengthLegA
+    AnchorSideBottom.Control = LengthLegA
     AnchorSideBottom.Side = asrBottom
-    Left = 119
+    Left = 120
     Height = 23
     Top = 223
-    Width = 65
+    Width = 64
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'leg length l1'
+    Caption = 'length leg A'
     Layout = tlCenter
   end
-  object Leg1Length: TFloatSpinEdit
+  object LengthLegA: TFloatSpinEdit
     AnchorSideLeft.Control = AngleAlpha2
     AnchorSideTop.Control = DividerBevel1
     AnchorSideTop.Side = asrBottom
@@ -408,21 +409,21 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 223
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 10
     OnChange = SpinEditChange
     TabOrder = 14
   end
-  object Leg1LengthUnit: TComboBox
+  object LengthLegAUnit: TComboBox
     AnchorSideLeft.Control = AngleAlpha2Unit
     AnchorSideTop.Control = DividerBevel1
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = AngleAlpha2Unit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 223
     Width = 70
@@ -441,32 +442,32 @@ object GeometryFormThree: TGeometryFormThree
     TabOrder = 15
     Text = 'mm'
   end
-  object LeverArmLength1: TFloatSpinEdit
-    AnchorSideLeft.Control = Leg1Type
-    AnchorSideTop.Control = Leg1Type
+  object LengthArmLegA: TFloatSpinEdit
+    AnchorSideLeft.Control = TypeLegA
+    AnchorSideTop.Control = TypeLegA
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Leg1Type
+    AnchorSideRight.Control = TypeLegA
     AnchorSideRight.Side = asrBottom
     Left = 194
     Height = 23
     Top = 285
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     OnChange = SpinEditChange
     TabOrder = 16
   end
-  object Leg1Type: TComboBox
-    AnchorSideLeft.Control = Leg1Length
-    AnchorSideTop.Control = Leg1Length
+  object TypeLegA: TComboBox
+    AnchorSideLeft.Control = LengthLegA
+    AnchorSideTop.Control = LengthLegA
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Leg1Length
+    AnchorSideRight.Control = LengthLegA
     AnchorSideRight.Side = asrBottom
     Left = 194
     Height = 23
     Top = 254
-    Width = 134
+    Width = 164
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     ItemHeight = 15
@@ -477,28 +478,29 @@ object GeometryFormThree: TGeometryFormThree
       'Bended, fixed clamped'
       'Bended, holded'
     )
+    OnChange = TypeLegAChange
     Style = csDropDownList
     TabOrder = 17
     Text = 'Tangential, fixed clamped'
   end
-  object LeverArmLength1Label: TLabel
-    AnchorSideTop.Control = LeverArmLength1
-    AnchorSideRight.Control = LeverArmLength1
-    AnchorSideBottom.Control = LeverArmLength1
+  object LengthArmLegALabel: TLabel
+    AnchorSideTop.Control = LengthArmLegA
+    AnchorSideRight.Control = LengthArmLegA
+    AnchorSideBottom.Control = LengthArmLegA
     AnchorSideBottom.Side = asrBottom
-    Left = 82
+    Left = 96
     Height = 23
     Top = 285
-    Width = 102
+    Width = 88
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'lever arm length R1'
+    Caption = 'length arm leg A'
     Layout = tlCenter
   end
-  object Leg1TypeLabel: TLabel
-    AnchorSideTop.Control = Leg1Type
-    AnchorSideRight.Control = Leg1Type
-    AnchorSideBottom.Control = Leg1Type
+  object TypeLegALabel: TLabel
+    AnchorSideTop.Control = TypeLegA
+    AnchorSideRight.Control = TypeLegA
+    AnchorSideBottom.Control = TypeLegA
     AnchorSideBottom.Side = asrBottom
     Left = 73
     Height = 23
@@ -509,44 +511,44 @@ object GeometryFormThree: TGeometryFormThree
     Caption = 'leg type and fixation '
     Layout = tlCenter
   end
-  object BendInnerRadius1UnitLabel: TLabel
-    AnchorSideTop.Control = BendInnerRadius1
-    AnchorSideRight.Control = BendInnerRadius1
-    AnchorSideBottom.Control = BendInnerRadius1
+  object BendRadiusLegALabel: TLabel
+    AnchorSideTop.Control = BendRadiusLegA
+    AnchorSideRight.Control = BendRadiusLegA
+    AnchorSideBottom.Control = BendRadiusLegA
     AnchorSideBottom.Side = asrBottom
-    Left = 109
+    Left = 107
     Height = 23
     Top = 316
-    Width = 75
+    Width = 77
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'inner radius r1'
+    Caption = 'inner radius rA'
     Layout = tlCenter
   end
-  object BendInnerRadius1: TFloatSpinEdit
-    AnchorSideLeft.Control = LeverArmLength1
-    AnchorSideTop.Control = LeverArmLength1
+  object BendRadiusLegA: TFloatSpinEdit
+    AnchorSideLeft.Control = LengthArmLegA
+    AnchorSideTop.Control = LengthArmLegA
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = LeverArmLength1
+    AnchorSideRight.Control = LengthArmLegA
     AnchorSideRight.Side = asrBottom
     Left = 194
     Height = 23
     Top = 316
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     OnChange = SpinEditChange
     TabOrder = 18
   end
-  object LeverArmLength1Unit: TComboBox
-    AnchorSideLeft.Control = Leg1LengthUnit
-    AnchorSideTop.Control = Leg1Type
+  object LengthArmLegAUnit: TComboBox
+    AnchorSideLeft.Control = LengthLegAUnit
+    AnchorSideTop.Control = TypeLegA
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Leg1LengthUnit
+    AnchorSideRight.Control = LengthLegAUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 285
     Width = 70
@@ -565,14 +567,14 @@ object GeometryFormThree: TGeometryFormThree
     TabOrder = 19
     Text = 'mm'
   end
-  object BendInnerRadius1Unit: TComboBox
-    AnchorSideLeft.Control = LeverArmLength1Unit
-    AnchorSideTop.Control = LeverArmLength1Unit
+  object BendRadiusLegAUnit: TComboBox
+    AnchorSideLeft.Control = LengthArmLegAUnit
+    AnchorSideTop.Control = LengthArmLegAUnit
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = LeverArmLength1Unit
+    AnchorSideRight.Control = LengthArmLegAUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 316
     Width = 70
@@ -600,7 +602,7 @@ object GeometryFormThree: TGeometryFormThree
     Left = 12
     Height = 15
     Top = 198
-    Width = 396
+    Width = 426
     Caption = 'Clamped leg'
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 12
@@ -609,21 +611,21 @@ object GeometryFormThree: TGeometryFormThree
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Leg2LengthLabel: TLabel
-    AnchorSideTop.Control = Leg2Length
-    AnchorSideRight.Control = Leg2Length
-    AnchorSideBottom.Control = Leg2Length
+  object LengthLegBLabel: TLabel
+    AnchorSideTop.Control = LengthLegB
+    AnchorSideRight.Control = LengthLegB
+    AnchorSideBottom.Control = LengthLegB
     AnchorSideBottom.Side = asrBottom
-    Left = 119
+    Left = 121
     Height = 23
     Top = 376
-    Width = 65
+    Width = 63
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'leg length l2'
+    Caption = 'length leg B'
     Layout = tlCenter
   end
-  object Leg2Length: TFloatSpinEdit
+  object LengthLegB: TFloatSpinEdit
     AnchorSideLeft.Control = AngleAlpha2
     AnchorSideTop.Control = DividerBevel2
     AnchorSideTop.Side = asrBottom
@@ -632,21 +634,21 @@ object GeometryFormThree: TGeometryFormThree
     Left = 194
     Height = 23
     Top = 376
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 10
     OnChange = SpinEditChange
     TabOrder = 21
   end
-  object Leg2LengthUnit: TComboBox
+  object LengthLegBUnit: TComboBox
     AnchorSideLeft.Control = AngleAlpha2Unit
     AnchorSideTop.Control = DividerBevel2
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = AngleAlpha2Unit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 376
     Width = 70
@@ -665,32 +667,32 @@ object GeometryFormThree: TGeometryFormThree
     TabOrder = 22
     Text = 'mm'
   end
-  object LeverArmLength2: TFloatSpinEdit
-    AnchorSideLeft.Control = Leg2Type
-    AnchorSideTop.Control = Leg2Type
+  object LengthArmLegB: TFloatSpinEdit
+    AnchorSideLeft.Control = TypeLegB
+    AnchorSideTop.Control = TypeLegB
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Leg2Type
+    AnchorSideRight.Control = TypeLegB
     AnchorSideRight.Side = asrBottom
     Left = 194
     Height = 23
     Top = 438
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     OnChange = SpinEditChange
     TabOrder = 23
   end
-  object Leg2Type: TComboBox
-    AnchorSideLeft.Control = Leg2Length
-    AnchorSideTop.Control = Leg2Length
+  object TypeLegB: TComboBox
+    AnchorSideLeft.Control = LengthLegB
+    AnchorSideTop.Control = LengthLegB
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Leg2Length
+    AnchorSideRight.Control = LengthLegB
     AnchorSideRight.Side = asrBottom
     Left = 194
     Height = 23
     Top = 407
-    Width = 134
+    Width = 164
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     ItemHeight = 15
@@ -701,28 +703,29 @@ object GeometryFormThree: TGeometryFormThree
       'Bended, fixed clamped'
       'Bended, holded'
     )
+    OnChange = TypeLegBChange
     Style = csDropDownList
     TabOrder = 24
     Text = 'Tangential, fixed clamped'
   end
-  object LeverArmLength2Label: TLabel
-    AnchorSideTop.Control = LeverArmLength2
-    AnchorSideRight.Control = LeverArmLength2
-    AnchorSideBottom.Control = LeverArmLength2
+  object LengthArmLegBLabel: TLabel
+    AnchorSideTop.Control = LengthArmLegB
+    AnchorSideRight.Control = LengthArmLegB
+    AnchorSideBottom.Control = LengthArmLegB
     AnchorSideBottom.Side = asrBottom
-    Left = 82
+    Left = 97
     Height = 23
     Top = 438
-    Width = 102
+    Width = 87
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'lever arm length R2'
+    Caption = 'length arm leg B'
     Layout = tlCenter
   end
-  object Leg2TypeLabel: TLabel
-    AnchorSideTop.Control = Leg2Type
-    AnchorSideRight.Control = Leg2Type
-    AnchorSideBottom.Control = Leg2Type
+  object TypeLegBLabel: TLabel
+    AnchorSideTop.Control = TypeLegB
+    AnchorSideRight.Control = TypeLegB
+    AnchorSideBottom.Control = TypeLegB
     AnchorSideBottom.Side = asrBottom
     Left = 73
     Height = 23
@@ -733,44 +736,44 @@ object GeometryFormThree: TGeometryFormThree
     Caption = 'leg type and fixation '
     Layout = tlCenter
   end
-  object BendInnerRadius2UnitLabel: TLabel
-    AnchorSideTop.Control = BendInnerRadius2
-    AnchorSideRight.Control = BendInnerRadius2
-    AnchorSideBottom.Control = BendInnerRadius2
+  object BendRadiusLegBLabel: TLabel
+    AnchorSideTop.Control = BendRadiusLegB
+    AnchorSideRight.Control = BendRadiusLegB
+    AnchorSideBottom.Control = BendRadiusLegB
     AnchorSideBottom.Side = asrBottom
-    Left = 109
+    Left = 108
     Height = 23
     Top = 469
-    Width = 75
+    Width = 76
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'inner radius r2'
+    Caption = 'inner radius rB'
     Layout = tlCenter
   end
-  object BendInnerRadius2: TFloatSpinEdit
-    AnchorSideLeft.Control = LeverArmLength2
-    AnchorSideTop.Control = LeverArmLength2
+  object BendRadiusLegB: TFloatSpinEdit
+    AnchorSideLeft.Control = LengthArmLegB
+    AnchorSideTop.Control = LengthArmLegB
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = LeverArmLength2
+    AnchorSideRight.Control = LengthArmLegB
     AnchorSideRight.Side = asrBottom
     Left = 194
     Height = 23
     Top = 469
-    Width = 134
+    Width = 164
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     OnChange = SpinEditChange
     TabOrder = 25
   end
-  object LeverArmLength2Unit: TComboBox
-    AnchorSideLeft.Control = Leg2LengthUnit
-    AnchorSideTop.Control = Leg2Type
+  object LengthArmLegBUnit: TComboBox
+    AnchorSideLeft.Control = LengthLegBUnit
+    AnchorSideTop.Control = TypeLegB
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Leg2LengthUnit
+    AnchorSideRight.Control = LengthLegBUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 438
     Width = 70
@@ -789,14 +792,14 @@ object GeometryFormThree: TGeometryFormThree
     TabOrder = 26
     Text = 'mm'
   end
-  object BendInnerRadius2Unit: TComboBox
-    AnchorSideLeft.Control = LeverArmLength2Unit
-    AnchorSideTop.Control = LeverArmLength2Unit
+  object BendRadiusLegBUnit: TComboBox
+    AnchorSideLeft.Control = LengthArmLegBUnit
+    AnchorSideTop.Control = LengthArmLegBUnit
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = LeverArmLength2Unit
+    AnchorSideRight.Control = LengthArmLegBUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 469
     Width = 70
@@ -817,14 +820,14 @@ object GeometryFormThree: TGeometryFormThree
   end
   object DividerBevel2: TDividerBevel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = BendInnerRadius1
+    AnchorSideTop.Control = BendRadiusLegA
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 12
     Height = 15
     Top = 351
-    Width = 396
+    Width = 426
     Caption = 'Moved leg'
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 12
@@ -840,7 +843,7 @@ object GeometryFormThree: TGeometryFormThree
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = DistanceBetweenCoils
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 368
     Height = 23
     Top = 101
     Width = 70

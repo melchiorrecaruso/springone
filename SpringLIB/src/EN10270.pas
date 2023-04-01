@@ -25,7 +25,7 @@ unit EN10270;
 interface
 
 uses
-  Classes, CsvDocument, LCLType, SysUtils, UtilsBase, Dim;
+  Classes, CsvDocument, LCLType, SysUtils, UtilsBase, ADim;
 
 type
   TMaterialDB = class

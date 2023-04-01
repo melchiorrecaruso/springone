@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -74,8 +74,16 @@ implementation
 {$R *.lfm}
 
 uses
-  ApplicationFrm, GeometryFrm, EN10270, EN13906, EN15800,
-  MainFrm, ProductionFrm, QualityFrm, UtilsBase, Dim;
+  ADim,
+  {$IFDEF MODULE1} ApplicationFrm1, {$ENDIF}
+  {$IFDEF MODULE3} ApplicationFrm3, {$ENDIF}
+  {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
+  {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
+  EN10270, EN13906, EN15800,
+  MainFrm,
+  ProductionFrm,
+  QualityFrm,
+  UtilsBase;
 
 // TMaterialForm
 
@@ -103,10 +111,10 @@ end;
 
 procedure TMaterialForm.Change(Sender: TObject);
 begin
-  YoungModulus       .Enabled := Material.Text = '';
-  ShearModulus       .Enabled := YoungModulus.Enabled;
-  TensileStrength    .Enabled := YoungModulus.Enabled;
-  MaterialDensity    .Enabled := YoungModulus.Enabled;
+  YoungModulus   .Enabled := Material.Text = '';
+  ShearModulus   .Enabled := YoungModulus.Enabled;
+  TensileStrength.Enabled := YoungModulus.Enabled;
+  MaterialDensity.Enabled := YoungModulus.Enabled;
 
   YoungModulusUnit   .Enabled := YoungModulus.Enabled;
   ShearModulusUnit   .Enabled := YoungModulus.Enabled;
@@ -121,41 +129,62 @@ begin
   MAT.Clear;
   if Material.Text <> '' then
   begin
-    YoungModulusUnit    .ItemIndex := 0; // N/mm2
-    ShearModulusUnit    .ItemIndex := 0; // N/mm2
-    TensileStrengthUnit .ItemIndex := 0; // N/mm2
-    MaterialDensityUnit .ItemIndex := 0; // kg/m3
+    YoungModulusUnit   .ItemIndex := 0; // MPa
+    ShearModulusUnit   .ItemIndex := 0; // MPa
+    TensileStrengthUnit.ItemIndex := 0; // MPa
+    MaterialDensityUnit.ItemIndex := 0; // kg/m3
 
-    YoungModulus        .Value := 0;
-    ShearModulus        .Value := 0;
-    TensileStrength     .Value := 0;
-    MaterialDensity     .Value := 0;
+    YoungModulus   .Value := 0;
+    ShearModulus   .Value := 0;
+    TensileStrength.Value := 0;
+    MaterialDensity.Value := 0;
 
-    GeometryForm.SaveToSolver;
-    if SOLVER.WireDiameter > (0*mm) then
+    {$IFDEF MODULE1}
+    GeometryForm1.SaveToSolver;
+    if SOLVER1.WireDiameter.Value > 0 then
+    {$ENDIF}
+    {$IFDEF MODULE3}
+    GeometryForm3.SaveToSolver;
+    if SOLVER3.WireDiameter.Value > 0 then
+    {$ENDIF}
     begin
-      MAT.SetItem(Material.Text, SOLVER.WireDiameter ,
-        ApplicationForm.Temperature.Value, ProductionForm.WireSurface.Text);
+      MAT.SetItem(Material.Text,
+        {$IFDEF MODULE1} SOLVER1.WireDiameter, {$ENDIF}
+        {$IFDEF MODULE3} SOLVER3.WireDiameter, {$ENDIF}
+        {$IFDEF MODULE1} ApplicationForm1.Temperature.Value, {$ENDIF}
+        {$IFDEF MODULE3} ApplicationForm3.Temperature.Value, {$ENDIF}
+        ProductionForm.WireSurface.Text);
 
       if MAT.ItemIndex = -1 then
-      begin
-        MAT.SetItem(Material.Text, SOLVER.WireDiameter, ApplicationForm.Temperature.Value, '');
-      end;
+        MAT.SetItem(Material.Text,
+          {$IFDEF MODULE1} SOLVER1.WireDiameter, {$ENDIF}
+          {$IFDEF MODULE3} SOLVER3.WireDiameter, {$ENDIF}
+          {$IFDEF MODULE1} ApplicationForm1.Temperature.Value,  {$ENDIF}
+          {$IFDEF MODULE3} ApplicationForm3.Temperature.Value,  {$ENDIF}
+          '');
 
       if MAT.ItemIndex <> -1 then
       begin
-        YoungModulus   .Value := MPa.From(MAT.YoungModulusE20).Value;
-        ShearModulus   .Value := MPa.From(MAT.ShearModulusG20).Value;
+        YoungModulus   .Value := MPa.From(MAT.YoungModulusE20  ).Value;
+        ShearModulus   .Value := MPa.From(MAT.ShearModulusG20  ).Value;
         TensileStrength.Value := MPa.From(MAT.TensileStrengthRm).Value;
         MaterialDensity.Value := MAT.DensityRho.Value;
 
-        TOL.WireDiameterTolerance.Search(Material.Text, GeometryForm.WireDiameter.Value*mm);
+
+        TOL.WireDiameterTolerance.Search(Material.Text,
+          {$IFDEF MODULE1} GeometryForm1.WireDiameter.Value*mm); {$ENDIF}
+          {$IFDEF MODULE3} GeometryForm3.WireDiameter.Value*mm); {$ENDIF}
+
         if Assigned(QualityForm) then
         begin
-          QualityForm.ToleranceWireDiameter.Value := mm.From(TOL.WireDiameterTolerance.Value).Value;
+          case QualityForm.ToleranceWireDiameterUnit.ItemIndex of
+            0: QualityForm.ToleranceWireDiameter.Value := mm.From(TOL.WireDiameterTolerance.Value).Value;
+            1: QualityForm.ToleranceWireDiameter.Value := mm.From(TOL.WireDiameterTolerance.Value).Value/25.4;
+          end;
         end;
       end;
     end;
+
   end;
 end;
 
@@ -207,28 +236,44 @@ begin
   if Material.Text = '' then
   begin
     case YoungModulusUnit.ItemIndex of
-      0: SOLVER.YoungModulus := YoungModulus.Value*MPa;
+      {$IFDEF MODULE1} 0: SOLVER1.YoungModulus := YoungModulus.Value*MPa; {$ENDIF}
+      {$IFDEF MODULE3} 0: SOLVER3.YoungModulus := YoungModulus.Value*MPa; {$ENDIF}
     end;
     case ShearModulusUnit.ItemIndex of
-      0: SOLVER.ShearModulus := ShearModulus.Value*MPa;
+      {$IFDEF MODULE1} 0: SOLVER1.ShearModulus := ShearModulus.Value*MPa; {$ENDIF}
+      {$IFDEF MODULE3} 0: SOLVER3.ShearModulus := ShearModulus.Value*MPa; {$ENDIF}
     end;
   end else
   begin
-    SOLVER.YoungModulus := MAT.YoungModulusE;
-    SOLVER.ShearModulus := MAT.ShearModulusG;
+    {$IFDEF MODULE1}
+    SOLVER1.YoungModulus := MAT.YoungModulusE;
+    SOLVER1.ShearModulus := MAT.ShearModulusG;
+    {$ENDIF}
+    {$IFDEF MODULE3}
+    SOLVER3.YoungModulus := MAT.YoungModulusE;
+    SOLVER3.ShearModulus := MAT.ShearModulusG;
+    {$ENDIF}
   end;
 
   case MaterialForm.TensileStrengthUnit.ItemIndex of
-    0: SOLVER.TensileStrengthRm := MaterialForm.TensileStrength.Value*MPa;
+    {$IFDEF MODULE1} 0: SOLVER1.TensileStrengthRm := MaterialForm.TensileStrength.Value*MPa; {$ENDIF}
+    {$IFDEF MODULE3} 0: SOLVER3.TensileStrengthRm := MaterialForm.TensileStrength.Value*MPa; {$ENDIF}
   end;
 
   case MaterialForm.MaterialDensityUnit.ItemIndex of
-    0: SOLVER.MaterialDensity := MaterialForm.MaterialDensity.Value*(kg/m3);
+    {$IFDEF MODULE1} 0: SOLVER1.MaterialDensity := MaterialForm.MaterialDensity.Value*(kg/m3); {$ENDIF}
+    {$IFDEF MODULE3} 0: SOLVER3.MaterialDensity := MaterialForm.MaterialDensity.Value*(kg/m3); {$ENDIF}
   end;
 
   case MaterialForm.CoilingType.ItemIndex of
-    0: SOLVER.ColdCoiled := True;
-    1: SOLVER.ColdCoiled := False;
+    {$IFDEF MODULE1}
+    0: SOLVER1.ColdCoiled := True;
+    1: SOLVER1.ColdCoiled := False;
+    {$ENDIF}
+    {$IFDEF MODULE3}
+    0: SOLVER3.ColdCoiled := True;
+    1: SOLVER3.ColdCoiled := False;
+    {$ENDIF}
   end;
 end;
 
