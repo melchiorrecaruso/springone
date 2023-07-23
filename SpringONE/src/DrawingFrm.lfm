@@ -10,7 +10,7 @@ object DrawingForm: TDrawingForm
   ClientWidth = 340
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '3.99.0.0'
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom

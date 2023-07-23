@@ -10,7 +10,7 @@ object GeometryForm1: TGeometryForm1
   ClientWidth = 420
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '3.99.0.0'
   object WireDiameterLabel: TLabel
     AnchorSideTop.Control = WireDiameter
     AnchorSideRight.Control = WireDiameter

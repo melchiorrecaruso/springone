@@ -9,7 +9,7 @@ object AboutForm: TAboutForm
   ClientHeight = 320
   ClientWidth = 400
   Color = clWhite
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '3.99.0.0'
   object Image: TImage
     AnchorSideLeft.Control = Owner
     AnchorSideRight.Control = Owner
@@ -290,7 +290,7 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 6
-    Caption = 'Build 20230402'
+    Caption = 'Build 20230715'
     Layout = tlCenter
     ParentFont = False
   end

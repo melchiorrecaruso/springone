@@ -26,7 +26,7 @@ interface
 
 uses
   Buttons, Classes, ComCtrls, Controls, Dialogs, Forms, ExtCtrls,
-  Graphics, IniFiles, Menus,  Spin, StdCtrls, SysUtils;
+  Graphics, IniFiles, Menus, Spin, StdCtrls, SysUtils;
 
 type
 
@@ -65,7 +65,7 @@ implementation
 {$R *.lfm}
 
 uses
-  EN13906, MaterialFrm, Math, UtilsBase;
+  LibLink, EN13906, MaterialFrm, Math, UtilsBase;
 
 // TApplicationForm1
 
@@ -109,15 +109,15 @@ procedure TApplicationForm1.SaveToSolver;
 begin
   {$IFDEF MODULE1}
   case LoadType.ItemIndex of
-   0: SOLVER1.DynamicLoad := True;
-   1: SOLVER1.DynamicLoad := False;
+   0: SpringSolver.DynamicLoad := True;
+   1: SpringSolver.DynamicLoad := False;
   end;
-  SOLVER1.SeatingCoefficent := TryTextToFloat(Self.SeatingCoefficent.Text);
+  SpringSolver.SeatingCoefficent := TryTextToFloat(Self.SeatingCoefficent.Text);
   {$ENDIF}
   {$IFDEF MODULE3}
   case LoadType.ItemIndex of
-   0: SOLVER3.DynamicLoad := True;
-   1: SOLVER3.DynamicLoad := False;
+   0: SpringSolver.DynamicLoad := True;
+   1: SpringSolver.DynamicLoad := False;
   end;
   {$ENDIF}
 end;

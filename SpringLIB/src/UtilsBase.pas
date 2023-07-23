@@ -42,9 +42,6 @@ function TryTextToInt(S: string): longint;
 
 
 
-
-
-
 function GetSymbol(const AValue: TMeters): string;
 function GetValue (const AValue: TMeters): double;
 
@@ -60,8 +57,8 @@ function GetValue (const AValue: TNewtonsPerMeter): double;
 function GetSymbol(const AValue: TKilograms): string;
 function GetValue (const AValue: TKilograms): double;
 
-function GetSymbol(const AValue: TNewtonsMeter): string;
-function GetValue (const AValue: TNewtonsMeter): double;
+function GetSymbol(const AValue: TJoules): string;
+function GetValue (const AValue: TJoules): double;
 
 function GetSymbol(const AValue: THertz): string;
 function GetValue (const AValue: THertz): double;
@@ -97,8 +94,8 @@ const
   Factor = 39.3700787401575;
 begin
   case UseImperialSystem of
-    True:  result := Factor*AValue.Value;
-    False: result := mm.From(AValue).Value;
+    True:  result := AValue.Value * Factor;
+    False: result := AValue.Value([pMilli]);
   end;
 end;
 
@@ -115,7 +112,7 @@ const
   Factor = 0.22480894309971;
 begin
   case UseImperialSystem of
-    True:  result := Factor*AValue.Value;
+    True:  result := AValue.Value * Factor;
     False: result := AValue.Value;
   end;
 end;
@@ -133,8 +130,8 @@ const
   Factor = 0.00014503773773;
 begin
   case UseImperialSystem of
-    True:  result := Factor*AValue.Value;
-    False: result := MPa.From(AValue).Value;
+    True:  result := AValue.Value * Factor;
+    False: result := AValue.Value([pMega]);
   end;
 end;
 
@@ -151,8 +148,8 @@ const
   Factor = 0.005710147154733;
 begin
   case UseImperialSystem of
-    True:  result := Factor*AValue.Value;
-    False: result := (N/mm).From(AValue).Value;
+    True:  result := AValue.Value * Factor;
+    False: result := AValue.Value([pNone, pMilli]);
   end;
 end;
 
@@ -169,26 +166,26 @@ const
   Factor = 2.20462262184878;
 begin
   case UseImperialSystem of
-    True:  result := Factor*AValue.Value;
-    False: result := g.From(AValue).Value;
+    True:  result := AValue.Value * Factor;
+    False: result := AValue.Value([pNone]);
   end;
 end;
 
-function GetSymbol(const AValue: TNewtonsMeter): string;
+function GetSymbol(const AValue: TJoules): string;
 begin
   case UseImperialSystem of
-    True:  result := 'lbf.in';
-    False: result := 'N.m';
+    True:  result := 'lbf·in';
+    False: result := 'N.mm';
   end;
 end;
 
-function GetValue(const AValue: TNewtonsMeter): double;
+function GetValue(const AValue: TJoules): double;
 const
   Factor = 0.112984829027617;
 begin
   case UseImperialSystem of
-    True:  result := Factor*AValue.Value;
-    False: result := (N*m).From(AValue).Value;
+    True:  result := AValue.Value * Factor;
+    False: result := AValue.ToNewtonMeter.Value([pNone, pMilli]);
   end;
 end;
 
@@ -203,8 +200,8 @@ end;
 function GetValue(const AValue: THertz): double;
 begin
   case UseImperialSystem of
-    True:  result := Hz.From(AValue).Value;
-    False: result := Hz.From(AValue).Value;
+    True:  result := AValue.Value;
+    False: result := AValue.Value;
   end;
 end;
 
@@ -219,8 +216,8 @@ end;
 function GetValue(const AValue: TKilogramsPerCubicMeter): double;
 begin
   case UseImperialSystem of
-    True:  result := (kg/m3).From(AValue).Value;
-    False: result := (kg/m3).From(AValue).Value;
+    True:  result := AValue.Value;
+    False: result := AValue.Value;
   end;
 end;
 
@@ -235,8 +232,8 @@ end;
 function GetValue(const AValue: TRadians): double;
 begin
   case UseImperialSystem of
-    True:  result := (deg).From(AValue).Value;
-    False: result := (deg).From(AValue).Value;
+    True:  result := AValue.ToDegree.Value;
+    False: result := AValue.ToDegree.Value;
   end;
 end;
 

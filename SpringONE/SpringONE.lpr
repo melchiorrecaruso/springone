@@ -30,9 +30,15 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, Forms, ApplicationFrm1, DrawingFrm, TextFrm, AboutFrm,
-  GeometryFrm1, GeometryFrm3, MainFrm, MaterialFrm, ProductionFrm, QualityFrm,
+
+  {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
+  {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
+
+
+
+  MainFrm, MaterialFrm, ProductionFrm, QualityFrm,
   ReportFrm, ApplicationFrm3, Compozer, SpringLib, LazControls, SysUtils,
-  UtilsBase;
+  UtilsBase, LibLink;
 
 {$R *.res}
 
@@ -49,13 +55,17 @@ begin
   Application.CreateForm(TApplicationForm1, ApplicationForm1);
   Application.CreateForm(TApplicationForm3, ApplicationForm3);
   Application.CreateForm(TDrawingForm, DrawingForm);
-  Application.CreateForm(TGeometryForm1, GeometryForm1);
   Application.CreateForm(TGeometryForm3, GeometryForm3);
   Application.CreateForm(TMaterialForm, MaterialForm);
   Application.CreateForm(TProductionForm, ProductionForm);
   Application.CreateForm(TQualityForm, QualityForm);
   Application.CreateForm(TReportForm, ReportForm);
   Application.CreateForm(TTextForm, TextForm);
+  {$IFDEF MODULE1}
+  {$ENDIF}
+  {$IFDEF MODULE3}
+  Application.CreateForm(TGeometryForm3, GeometryForm3);
+  {$ENDIF}
   Application.Run;
 end.
 

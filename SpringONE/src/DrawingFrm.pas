@@ -26,7 +26,7 @@ interface
 
 uses
   Buttons, Classes, ComCtrls, Controls, Dialogs, EN13906, ExtCtrls,
-  Forms, Graphics, IniFiles, Spin, StdCtrls, SysUtils;
+  Forms, Graphics, IniFiles, LibLink, Spin, StdCtrls, SysUtils;
 
 type
 
@@ -85,10 +85,12 @@ end;
 
 procedure TDrawingForm.BtnClick(Sender: TObject);
 begin
-  if Sender = L0Btn  then SpringLength.Value := mm.From(SOLVER1.LengthL0).Value;
-  if Sender = L1Btn  then SpringLength.Value := mm.From(SOLVER1.LengthL1).Value;
-  if Sender = L2Btn  then SpringLength.Value := mm.From(SOLVER1.LengthL2).Value;
-  if Sender = LcBtn  then SpringLength.Value := mm.From(SOLVER1.LengthLc).Value;
+  {$IFDEF MODULE1}
+  if Sender = L0Btn  then SpringLength.Value := SpringSolver.LengthL0.Value([pMilli]);
+  if Sender = L1Btn  then SpringLength.Value := SpringSolver.LengthL1.Value([pMilli]);
+  if Sender = L2Btn  then SpringLength.Value := SpringSolver.LengthL2.Value([pMilli]);
+  if Sender = LcBtn  then SpringLength.Value := SpringSolver.LengthLc.Value([pMilli]);
+  {$ENDIF}
 end;
 
 procedure TDrawingForm.Load(IniFile: TIniFile);

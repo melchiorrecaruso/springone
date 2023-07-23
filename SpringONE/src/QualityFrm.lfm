@@ -9,7 +9,7 @@ object QualityForm: TQualityForm
   ClientHeight = 275
   ClientWidth = 330
   OnCreate = FormCreate
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '3.99.0.0'
   object ToleranceWireDiameterLabel: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = ToleranceWireDiameter

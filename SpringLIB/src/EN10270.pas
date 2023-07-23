@@ -174,29 +174,29 @@ end;
 procedure TMaterialDB.Clear;
 begin
   fItemIndex                     := -1;
-  fFatigueFactorA.Value          := 0;
+  fFatigueFactorA                := 0*Pa;
   fFatigueFactorB                := 0;
   fSurfaceTreatment              := '';
-  fTensileStrengthRm.Value       := 0;
-  fYoungModulusE20.Value         := 0;
-  fYoungModulusE.Value           := 0;
-  fShearModulusG20.Value         := 0;
-  fShearModulusG.Value           := 0;
+  fTensileStrengthRm             := 0*Pa;
+  fYoungModulusE20               := 0*Pa;
+  fYoungModulusE                 := 0*Pa;
+  fShearModulusG20               := 0*Pa;
+  fShearModulusG                 := 0*Pa;
   fPoissonRatio                  := 0;
-  fWireDiameter.Value            := 0;
-  fDensityRho.Value              := 0;
+  fWireDiameter                  := 0*m;
+  fDensityRho                    := 0*kg/m3;
   fTemperature                   := 0;
   fTemperatureMin                := 0;
   fTemperatureMax                := 0;
-  fTorsionalStressTauStar.Value  := 0;
-  fTorsionalStressTauYield.Value := 0;
-  fTorsionalStressTauOE7.Value   := 0;
-  fTorsionalStressTauOE6.Value   := 0;
-  fTorsionalStressTauOE5.Value   := 0;
-  fTorsionalStressTauOE3.Value   := 0;
-  fTorsionalStressTauUE7.Value   := 0;
-  fTorsionalStressTauUE6.Value   := 0;
-  fTorsionalStressTauUE5.Value   := 0;
+  fTorsionalStressTauStar        := 0*Pa;
+  fTorsionalStressTauYield       := 0*Pa;
+  fTorsionalStressTauOE7         := 0*Pa;
+  fTorsionalStressTauOE6         := 0*Pa;
+  fTorsionalStressTauOE5         := 0*Pa;
+  fTorsionalStressTauOE3         := 0*Pa;
+  fTorsionalStressTauUE7         := 0*Pa;
+  fTorsionalStressTauUE6         := 0*Pa;
+  fTorsionalStressTauUE5         := 0*Pa;
   fNumOfCyclesE7                 := 0;
   fNumOfCyclesE6                 := 0;
   fNumOfCyclesE5                 := 0;
@@ -250,7 +250,7 @@ begin
     fWireDiameter         := aWireDiameter;
     fYoungModulusE20      := TryTextToFloat(fMatFile.Cells[5,  fItemIndex])*MPa;
     fShearModulusG20      := TryTextToFloat(fMatFile.Cells[6,  fItemIndex])*MPa;
-    fDensityRho           := TryTextToFloat(fMatFile.Cells[7,  fItemIndex])*(kg/m3);
+    fDensityRho           := TryTextToFloat(fMatFile.Cells[7,  fItemIndex])*kg/m3;
 
     RM0                   := TryTextToFloat(fMatFile.Cells[8,  fItemIndex])*MPa;
     DRM                   := TryTextToFloat(fMatFile.Cells[9,  fItemIndex])*MPa;
@@ -271,7 +271,7 @@ begin
     TU1                   := TryTextToFloat(fMatFile.Cells[17, fItemIndex])*MPa;
     DTU1                  := TryTextToFloat(fMatFile.Cells[18, fItemIndex])*MPa;
 
-    fNumOfCyclesE7        := TryTextToFloat(fMatFile.Cells[19, fItemIndex]); ;
+    fNumOfCyclesE7        := TryTextToFloat(fMatFile.Cells[19, fItemIndex]);
 
     fTemperature          := aTemperature;
     fTemperatureMin       := TryTextToFloat(fMatFile.Cells[20, fItemIndex]);

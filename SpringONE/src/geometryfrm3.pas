@@ -25,7 +25,7 @@ unit GeometryFrm3;
 interface
 
 uses
-  Buttons, Classes, Controls, Dialogs, DividerBevel, EN13906,
+  Buttons, Classes, Controls, Dialogs, DividerBevel,
   ExtCtrls, Forms, Graphics, IniFiles, Spin, StdCtrls, SysUtils;
 
 type
@@ -100,7 +100,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ConvUtils, ADim, MainFrm, UtilsBase;
+  ADim, ConvUtils, LibLink, MainFrm, UtilsBase;
 
 { TGeometryForm3 }
 
@@ -208,74 +208,74 @@ end;
 procedure TGeometryForm3.SaveToSolver;
 begin
   case WireDiameterUnit.ItemIndex of
-    0: SOLVER3.WireDiameter := WireDiameter.Value*mm;
-    1: SOLVER3.WireDiameter := WireDiameter.Value*25.4*mm;
+    0: SpringSolver.WireDiameter := WireDiameter.Value*mm;
+    1: SpringSolver.WireDiameter := WireDiameter.Value*25.4*mm;
   end;
 
   case CoilDiameterUnit.ItemIndex of
-    0: SOLVER3.Dm := CoilDiameter.Value*mm;
-    1: SOLVER3.Dm := CoilDiameter.Value*25.4*mm;
+    0: SpringSolver.Dm := CoilDiameter.Value*mm;
+    1: SpringSolver.Dm := CoilDiameter.Value*25.4*mm;
   end;
 
   case CoilDiameterIndex.ItemIndex of
-    0: SOLVER3.Dm := SOLVER3.Dm + SOLVER3.WireDiameter;  // Input Di
-    1: SOLVER3.Dm := SOLVER3.Dm;                         // Input Dm
-    2: SOLVER3.Dm := SOLVER3.Dm - SOLVER3.WireDiameter;  // Input De
+    0: SpringSolver.Dm := SpringSolver.Dm + SpringSolver.WireDiameter;  // Input Di
+    1: SpringSolver.Dm := SpringSolver.Dm;                              // Input Dm
+    2: SpringSolver.Dm := SpringSolver.Dm - SpringSolver.WireDiameter;  // Input De
   end;
 
-  SOLVER3.ActiveColis := ActiveCoil.Value;
+  SpringSolver.ActiveColis := ActiveCoil.Value;
 
   case DistanceBetweenCoilsUnit.ItemIndex of
-    0: SOLVER3.CoilsGap := DistanceBetweenCoils.Value*mm;
-    1: SOLVER3.CoilsGap := DistanceBetweenCoils.Value*25.4*mm;
+    0: SpringSolver.CoilsGap := DistanceBetweenCoils.Value*mm;
+    1: SpringSolver.CoilsGap := DistanceBetweenCoils.Value*25.4*mm;
   end;
 
   case AngleAlpha1Unit.ItemIndex of
-    0: SOLVER3.Alpha1 := AngleAlpha1.Value*deg;
-    1: SOLVER3.Alpha1 := AngleAlpha1.Value*rad;
+    0: SpringSolver.Alpha1 := AngleAlpha1.Value*deg;
+    1: SpringSolver.Alpha1 := AngleAlpha1.Value*rad;
   end;
 
   case AngleAlpha2Unit.ItemIndex of
-    0: SOLVER3.Alpha2 := AngleAlpha2.Value*deg;
-    1: SOLVER3.Alpha2 := AngleAlpha2.Value*rad;
+    0: SpringSolver.Alpha2 := AngleAlpha2.Value*deg;
+    1: SpringSolver.Alpha2 := AngleAlpha2.Value*rad;
   end;
 
   // Leg-A
   case LengthLegAUnit.ItemIndex of
-    0: SOLVER3.LengthLegA := LengthLegA.Value*mm;
-    1: SOLVER3.LengthLegA := LengthLegA.Value*25.4*mm;
+    0: SpringSolver.LengthLegA := LengthLegA.Value*mm;
+    1: SpringSolver.LengthLegA := LengthLegA.Value*25.4*mm;
   end;
 
   case LengthArmLegAUnit.ItemIndex of
-    0: SOLVER3.LengthArmLegA := LengthArmLegA.Value*mm;
-    1: SOLVER3.LengthArmLegA := LengthArmLegA.Value*25.4*mm;
+    0: SpringSolver.LengthArmLegA := LengthArmLegA.Value*mm;
+    1: SpringSolver.LengthArmLegA := LengthArmLegA.Value*25.4*mm;
   end;
 
-  SOLVER3.BentLegA  := TypeLegA.ItemIndex in [2, 3];
-  SOLVER3.FixedEndA := TypeLegA.ItemIndex in [0, 2];
-  if SOLVER3.BentLegA then
+  SpringSolver.BentLegA  := TypeLegA.ItemIndex in [2, 3];
+  SpringSolver.FixedEndA := TypeLegA.ItemIndex in [0, 2];
+  if SpringSolver.BentLegA then
     case BendRadiusLegAUnit.ItemIndex of
-      0: SOLVER3.BendRadiusLegA := BendRadiusLegA.Value*mm;
-      1: SOLVER3.BendRadiusLegA := BendRadiusLegA.Value*25.4*mm;
+      0: SpringSolver.BendRadiusLegA := BendRadiusLegA.Value*mm;
+      1: SpringSolver.BendRadiusLegA := BendRadiusLegA.Value*25.4*mm;
     end;
 
   // Leg-B
   case LengthLegBUnit.ItemIndex of
-    0: SOLVER3.LengthLegB := LengthLegB.Value*mm;
-    1: SOLVER3.LengthLegB := LengthLegB.Value*25.4*mm;
+    0: SpringSolver.LengthLegB := LengthLegB.Value*mm;
+    1: SpringSolver.LengthLegB := LengthLegB.Value*25.4*mm;
   end;
 
   case LengthArmLegBUnit.ItemIndex of
-    0: SOLVER3.LengthArmLegB := LengthArmLegB.Value*mm;
-    1: SOLVER3.LengthArmLegB := LengthArmLegB.Value*25.4*mm;
+    0: SpringSolver.LengthArmLegB := LengthArmLegB.Value*mm;
+    1: SpringSolver.LengthArmLegB := LengthArmLegB.Value*25.4*mm;
   end;
 
-  SOLVER3.BentLegB  := TypeLegB.ItemIndex in [2, 3];
-  SOLVER3.FixedEndB := TypeLegB.ItemIndex in [0, 2];
-  if SOLVER3.BentLegB then
+  SpringSolver.BentLegB  := TypeLegB.ItemIndex in [2, 3];
+  SpringSolver.FixedEndB := TypeLegB.ItemIndex in [0, 2];
+  if SpringSolver.BentLegB then
     case BendRadiusLegBUnit.ItemIndex of
-      0: SOLVER3.BendRadiusLegB := BendRadiusLegB.Value*mm;
-      1: SOLVER3.BendRadiusLegB := BendRadiusLegB.Value*25.4*mm;
+      0: SpringSolver.BendRadiusLegB := BendRadiusLegB.Value*mm;
+      1: SpringSolver.BendRadiusLegB := BendRadiusLegB.Value*25.4*mm;
     end;
 end;
 

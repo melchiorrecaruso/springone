@@ -25,8 +25,8 @@ unit QualityFrm;
 interface
 
 uses
-  Buttons, Classes, Controls, Dialogs, EN13906, EN15800, ExtCtrls,
-  Forms, Graphics, IniFiles, Spin,StdCtrls, SysUtils;
+  Buttons, Classes, Controls, Dialogs, ExtCtrls,
+  Forms, Graphics, LibLink, IniFiles, Spin,StdCtrls, SysUtils;
 
 type
 
@@ -73,6 +73,7 @@ implementation
 
 uses
   ADim,
+  EN15800,
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
   UtilsBase;
@@ -130,14 +131,14 @@ begin
   {$IFDEF MODULE1}
   if Assigned(GeometryForm1) then
   begin
-    SOLVER1.WireDiameterMax := (0*mm);
+    SpringSolver.WireDiameterMax := (0*mm);
     case GeometryForm1.WireDiameterUnit.ItemIndex of
-      0: SOLVER1.WireDiameterMax := GeometryForm1.WireDiameter.Value*mm;
-      1: SOLVER1.WireDiameterMax := GeometryForm1.WireDiameter.Value*25.4*mm;
+      0: SpringSolver.WireDiameterMax := GeometryForm1.WireDiameter.Value*mm;
+      1: SpringSolver.WireDiameterMax := GeometryForm1.WireDiameter.Value*25.4*mm;
     end;
     case ToleranceWireDiameterUnit.ItemIndex of
-      0: SOLVER1.WireDiameterMax := SOLVER1.WireDiameterMax + ToleranceWireDiameter.Value*mm;
-      1: SOLVER1.WireDiameterMax := SOLVER1.WireDiameterMax + ToleranceWireDiameter.Value*25.4*mm;
+      0: SpringSolver.WireDiameterMax := SpringSolver.WireDiameterMax + ToleranceWireDiameter.Value*mm;
+      1: SpringSolver.WireDiameterMax := SpringSolver.WireDiameterMax + ToleranceWireDiameter.Value*25.4*mm;
     end;
   end;
   {$ENDIF}
@@ -145,48 +146,51 @@ begin
   {$IFDEF MODULE3}
   if Assigned(GeometryForm3) then
   begin
-    SOLVER3.WireDiameterMax := (0*mm);
+    SpringSolver.WireDiameterMax := (0*mm);
     case GeometryForm3.WireDiameterUnit.ItemIndex of
-      0: SOLVER3.WireDiameterMax := GeometryForm3.WireDiameter.Value*mm;
-      1: SOLVER3.WireDiameterMax := GeometryForm3.WireDiameter.Value*25.4*mm;
+      0: SpringSolver.WireDiameterMax := GeometryForm3.WireDiameter.Value*mm;
+      1: SpringSolver.WireDiameterMax := GeometryForm3.WireDiameter.Value*25.4*mm;
     end;
     case ToleranceWireDiameterUnit.ItemIndex of
-      0: SOLVER3.WireDiameterMax := SOLVER3.WireDiameterMax + ToleranceWireDiameter.Value*mm;
-      1: SOLVER3.WireDiameterMax := SOLVER3.WireDiameterMax + ToleranceWireDiameter.Value*25.4*mm;
+      0: SpringSolver.WireDiameterMax := SpringSolver.WireDiameterMax + ToleranceWireDiameter.Value*mm;
+      1: SpringSolver.WireDiameterMax := SpringSolver.WireDiameterMax + ToleranceWireDiameter.Value*25.4*mm;
     end;
   end;
   {$ENDIF}
 
+  {$IFDEF MODULE1}
   case ToleranceCoilDiameter.ItemIndex of
-    0: TOL.DmQualityGrade := 1;
-    1: TOL.DmQualityGrade := 2;
-    2: TOL.DmQualityGrade := 3;
+    0: SpringTolerance.QualityGradeOnCoilDiameter := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnCoilDiameter := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnCoilDiameter := QualityGrade3;
   end;
   case ToleranceLengthL0.ItemIndex of
-    0: TOL.L0QualityGrade := 1;
-    1: TOL.L0QualityGrade := 2;
-    2: TOL.L0QualityGrade := 3;
+    0: SpringTolerance.QualityGradeOnFreeBodyLength := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnFreeBodyLength := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnFreeBodyLength := QualityGrade3;
   end;
   case ToleranceLoadF1.ItemIndex of
-    0: TOL.F1QualityGrade := 1;
-    1: TOL.F1QualityGrade := 2;
-    2: TOL.F1QualityGrade := 3;
+    0: SpringTolerance.QualityGradeOnLoad1 := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnLoad1 := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnLoad1 := QualityGrade3;
   end;
   case ToleranceLoadF2.ItemIndex of
-    0: TOL.F2QualityGrade := 1;
-    1: TOL.F2QualityGrade := 2;
-    2: TOL.F2QualityGrade := 3;
+    0: SpringTolerance.QualityGradeOnLoad2 := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnLoad2 := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnLoad2 := QualityGrade3;
   end;
   case ToleranceEccentricitye1.ItemIndex of
-    0: TOL.E1QualityGrade := 1;
-    1: TOL.E1QualityGrade := 2;
-    2: TOL.E1QualityGrade := 3;
+    0: SpringTolerance.QualityGradeOnPerpendicularity := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnPerpendicularity := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnPerpendicularity := QualityGrade3;
   end;
   case ToleranceEccentricitye2.ItemIndex of
-    0: TOL.E2QualityGrade := 1;
-    1: TOL.E2QualityGrade := 2;
-    2: TOL.E2QualityGrade := 3;
+    0: SpringTolerance.QualityGradeOnParallelism := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnParallelism := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnParallelism := QualityGrade3;
   end;
+  {$ENDIF}
+
 end;
 
 end.

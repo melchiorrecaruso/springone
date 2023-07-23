@@ -112,7 +112,7 @@ BendInnerRadius2Unit=0
 [TApplicationForm1]
 LoadType=0
 CycleFrequency=1
-Temperature=0
+Temperature=20
 TemperatureUnit=0
 SeatingCoefficent=0
 

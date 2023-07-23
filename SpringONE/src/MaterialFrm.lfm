@@ -9,7 +9,7 @@ object MaterialForm: TMaterialForm
   ClientHeight = 260
   ClientWidth = 420
   OnCreate = FormCreate
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '3.99.0.0'
   object Material: TComboBox
     AnchorSideLeft.Control = MaterialLabel
     AnchorSideLeft.Side = asrBottom

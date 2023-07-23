@@ -8,14 +8,8 @@ unit SpringLib;
 interface
 
 uses
-  UtilsBase, EN15800, EN10270, EN13906, GraphBase, ADim, LazarusPackageIntf;
+  UtilsBase, EN15800, EN10270, EN13906, GraphBase;
 
 implementation
 
-procedure Register;
-begin
-end;
-
-initialization
-  RegisterPackage('SpringLib', @Register);
 end.

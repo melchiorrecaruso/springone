@@ -26,7 +26,7 @@ interface
 
 uses
   Buttons, Classes, ComCtrls, Controls, Dialogs, Forms, ExtCtrls,
-  Graphics, IniFiles, Menus,  Spin, StdCtrls, SysUtils;
+  Graphics, IniFiles, LibLink, Menus,  Spin, StdCtrls, SysUtils;
 
 type
 
@@ -108,10 +108,12 @@ end;
 procedure TApplicationForm3.SaveToSolver;
 begin
   case LoadType.ItemIndex of
-   0: SOLVER3.DynamicLoad := True;
-   1: SOLVER3.DynamicLoad := False;
+   0: SpringSolver.DynamicLoad := True;
+   1: SpringSolver.DynamicLoad := False;
   end;
-  SOLVER3.StressInCoilingDirection := StressDirection.ItemIndex = 0;
+  {$IFDEF MODULE3}
+  SpringSolver.StressInCoilingDirection := StressDirection.ItemIndex = 0;
+  {$ENDIF}
 end;
 
 end.

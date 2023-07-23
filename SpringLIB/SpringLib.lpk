@@ -3,7 +3,7 @@
   <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="SpringLib"/>
-    <Type Value="RunAndDesignTime"/>
+    <Type Value="RunTimeOnly"/>
     <AddToProjectUsesSection Value="True"/>
     <Author Value="Melchiorre Caruso"/>
     <CompilerOptions>
@@ -47,12 +47,11 @@
         <Filename Value="src\GraphBase.pas"/>
         <UnitName Value="GraphBase"/>
       </Item>
-      <Item>
-        <Filename Value="src\ADim.pas"/>
-        <UnitName Value="ADim"/>
-      </Item>
     </Files>
     <RequiredPkgs>
+      <Item>
+        <PackageName Value="adimpack"/>
+      </Item>
       <Item>
         <PackageName Value="BGRABitmapPack"/>
       </Item>

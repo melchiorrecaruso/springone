@@ -13,7 +13,7 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnWindowStateChange = FormWindowStateChange
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '3.99.0.0'
   object VirtualScreen: TBGRAVirtualScreen
     Left = 0
     Height = 500

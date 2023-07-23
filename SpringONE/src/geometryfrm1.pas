@@ -25,7 +25,7 @@ unit GeometryFrm1;
 interface
 
 uses
-  Buttons, Classes, Controls, Dialogs, ExtCtrls, EN13906,
+  Buttons, Classes, Controls, Dialogs, ExtCtrls,
   Forms, Graphics, IniFiles, Spin, StdCtrls, SysUtils;
 
 type
@@ -82,7 +82,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, MainFrm, UtilsBase;
+  ADim, LibLink, MainFrm, UtilsBase;
 
 // TGeometryForm1
 
@@ -151,40 +151,40 @@ end;
 procedure TGeometryForm1.SaveToSolver;
 begin
   case WireDiameterUnit.ItemIndex of
-    0: SOLVER1.WireDiameter := WireDiameter.Value*mm;
-    1: SOLVER1.WireDiameter := WireDiameter.Value*25.4*mm;
+    0: SpringSolver.WireDiameter := WireDiameter.Value*mm;
+    1: SpringSolver.WireDiameter := WireDiameter.Value*25.4*mm;
   end;
 
   case CoilDiameterUnit.ItemIndex of
-    0: SOLVER1.Dm := CoilDiameter.Value*mm;
-    1: SOLVER1.Dm := CoilDiameter.Value*25.4*mm;
+    0: SpringSolver.Dm := CoilDiameter.Value*mm;
+    1: SpringSolver.Dm := CoilDiameter.Value*25.4*mm;
   end;
 
   case CoilDiameterIndex.ItemIndex of
-    0: SOLVER1.Dm := SOLVER1.Dm + SOLVER1.WireDiameter;  // Input Di
-    1: SOLVER1.Dm := SOLVER1.Dm;                         // Input Dm
-    2: SOLVER1.Dm := SOLVER1.Dm - SOLVER1.WireDiameter;  // Input De
+    0: SpringSolver.Dm := SpringSolver.Dm + SpringSolver.WireDiameter;  // Input Di
+    1: SpringSolver.Dm := SpringSolver.Dm;                         // Input Dm
+    2: SpringSolver.Dm := SpringSolver.Dm - SpringSolver.WireDiameter;  // Input De
   end;
 
-  SOLVER1.ActiveColis := ActiveCoil.Value;
-  SOLVER1.TotalCoils  := ActiveCoil.Value + InactiveCoil1.Value + InactiveCoil2.Value;
+  SpringSolver.ActiveColis := ActiveCoil.Value;
+  SpringSolver.TotalCoils  := ActiveCoil.Value + InactiveCoil1.Value + InactiveCoil2.Value;
 
-  SOLVER1.ClosedEnds := EndCoilType.ItemIndex in [0, 1];
-  SOLVER1.GroundEnds := EndCoilType.ItemIndex in [   1];
+  SpringSolver.ClosedEnds := EndCoilType.ItemIndex in [0, 1];
+  SpringSolver.GroundEnds := EndCoilType.ItemIndex in [   1];
 
   case LengthL0Unit.ItemIndex of
-    0: SOLVER1.LengthL0 := LengthL0.Value*mm;
-    1: SOLVER1.LengthL0 := LengthL0.Value*25.4*mm;
+    0: SpringSolver.LengthL0 := LengthL0.Value*mm;
+    1: SpringSolver.LengthL0 := LengthL0.Value*25.4*mm;
   end;
 
   case LengthL1Unit.ItemIndex of
-    0: SOLVER1.LengthL1 := LengthL1.Value*mm;
-    1: SOLVER1.LengthL1 := LengthL1.Value*25.4*mm;
+    0: SpringSolver.LengthL1 := LengthL1.Value*mm;
+    1: SpringSolver.LengthL1 := LengthL1.Value*25.4*mm;
   end;
 
   case LengthL2Unit.ItemIndex of
-    0: SOLVER1.LengthL2 := LengthL2.Value*mm;
-    1: SOLVER1.LengthL2 := LengthL2.Value*25.4*mm;
+    0: SpringSolver.LengthL2 := LengthL2.Value*mm;
+    1: SpringSolver.LengthL2 := LengthL2.Value*25.4*mm;
   end;
 end;
 
