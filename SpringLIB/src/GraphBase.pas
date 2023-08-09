@@ -26,8 +26,8 @@ unit GraphBase;
 interface
 
 uses
-  BGRABitmap, BGRABitmapTypes, BGRATextFX, Classes,
-  Graphics, IniFiles, Math, SysUtils, UtilsBase;
+  BGRABitmap, BGRABitmapTypes, BGRATextFX, BGRACanvas2D,
+  Classes, Graphics, IniFiles, SysUtils, UtilsBase;
 
 type
   TChart = class
@@ -291,7 +291,7 @@ type
     property Height: longint read GetHeight;
   end;
 
-  TSectionSpringDrawing = class
+  TSpringDrawing = class
   private
     Fd: double;
     FDm: double;
@@ -306,7 +306,7 @@ type
     FGroundEnds: boolean;
 
     FCaption: string;
-    fAutoFit: boolean;
+    FAutoFit: boolean;
     FAutoScale: double;
     FScale: single;
     FSpacer: longint;
@@ -343,8 +343,11 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Draw(aCanvas: TCanvas);
-    procedure Draw(aCanvas: TCanvas; aWidth, aHeight: longint);
+    procedure DrawInSection(aCanvas: TCanvas);
+    procedure DrawInSection(aCanvas: TCanvas; aWidth, aHeight: longint);
+
+    procedure DrawInProfile(aCanvas: TCanvas);
+    procedure DrawInProfile(aCanvas: TCanvas; aWidth, aHeight: longint);
   public
     property d: double read Fd write Fd;
     property Dm: double read FDm write FDm;
@@ -391,12 +394,12 @@ type
 
 procedure DrawLogo(aCanvas: TCanvas; aWidth, aHeight: longint);
 
-
 const
   DefaultSpacer = 16;
 
-
 implementation
+
+uses ADim, Math;
 
 type
   TChartItem = class
@@ -1637,9 +1640,9 @@ begin
   Result := FBit.Height - Y;
 end;
 
-// TSectionSpringDrawing
+// TSpringDrawing
 
-constructor TSectionSpringDrawing.Create;
+constructor TSpringDrawing.Create;
 begin
   inherited Create;
   Fd := 0;
@@ -1662,22 +1665,22 @@ begin
   FAutoScale := 1.0;
 end;
 
-destructor TSectionSpringDrawing.Destroy;
+destructor TSpringDrawing.Destroy;
 begin
   inherited Destroy;
 end;
 
-function TSectionSpringDrawing.xt(const t: double): double;
+function TSpringDrawing.xt(const t: double): double;
 begin
-  Result := (FDm / 2) * cos(2 * pi * t);
+  Result := (FDm / 2) * System.Cos(2 * pi * t);
 end;
 
-function TSectionSpringDrawing.yt(const t: double): double;
+function TSpringDrawing.yt(const t: double): double;
 begin
-  Result := (FDm / 2) * sin(2 * pi * t);
+  Result := (FDm / 2) * System.Sin(2 * pi * t);
 end;
 
-function TSectionSpringDrawing.zt(const t: double): double;
+function TSpringDrawing.zt(const t: double): double;
 begin
   Result := 0;
   if (t > 0) and (t <= Fnt2) then
@@ -1696,7 +1699,7 @@ begin
   end;
 end;
 
-function TSectionSpringDrawing.PreCheck: boolean;
+function TSpringDrawing.PreCheck: boolean;
 begin
   Result := True;
   if Fd     <= 0  then Result := False;
@@ -1709,29 +1712,36 @@ begin
   if FScale <= 0  then Result := False;
 end;
 
-procedure TSectionSpringDrawing.Draw(aCanvas: TCanvas; aWidth, aHeight: longint);
+procedure TSpringDrawing.DrawInSection(aCanvas: TCanvas; aWidth, aHeight: longint);
 begin
   FWidth  := aWidth;
   FHeight := aHeight;
-  Draw(aCanvas);
+  DrawInSection(aCanvas);
 end;
 
-function TSectionSpringDrawing.XToCanvas(X: single): single;
+procedure TSpringDrawing.DrawInProfile(aCanvas: TCanvas; aWidth, aHeight: longint);
+begin
+  FWidth  := aWidth;
+  FHeight := aHeight;
+  DrawInProfile(aCanvas);
+end;
+
+function TSpringDrawing.XToCanvas(X: single): single;
 begin
   Result := X;
 end;
 
-function TSectionSpringDrawing.YToCanvas(Y: single): single;
+function TSpringDrawing.YToCanvas(Y: single): single;
 begin
   Result := FHeight - Y;
 end;
 
-procedure TSectionSpringDrawing.Draw(aCanvas: TCanvas);
+procedure TSpringDrawing.DrawInSection(aCanvas: TCanvas);
 var
   CenterPosition: double;
   x0, x1: double;
   y0, y1: double;
-  t: double;
+  alpha, t: double;
   Tex: TBGRABitmap;
 
   FXMin: longint;
@@ -1781,13 +1791,13 @@ begin
     begin
       t := t + 0.5;
       if fClockWise then
-        x1 := CenterPosition + xt(t) * FAutoScale
+        x1 := CenterPosition + xt(t + 0.5) * FAutoScale
       else
-        x1 := CenterPosition + xt(t + 0.5) * FAutoScale;
+        x1 := CenterPosition + xt(t) * FAutoScale;
       y1 := FYMin + (zt(t) + Fd / 2) * FAutoScale;
 
       Tex := FBit.CreateBrushTexture(bsFDiagonal, FTextureColor, FTextureBackgroundColor,
-        Trunc(FTextureWidth*FScale), Trunc(FTextureHeight*FScale), FTexturePenWidth*FScale) as TBGRABitmap;
+        Trunc(FTextureWidth*FScale), Trunc(FTextureHeight*FScale), FTexturePenWidth * Min(2, FScale)) as TBGRABitmap;
       FBit.FillEllipseAntialias(
         XToCanvas(x1),
         YToCanvas(y1),
@@ -1800,23 +1810,25 @@ begin
         Fd / 2 * FAutoScale,
         Fd / 2 * FAutoScale,
         FPenColor,
-        FPenWidth * FScale, BGRA(255, 255, 255, 0));
+        FPenWidth * Min(2, FScale), BGRA(255, 255, 255, 0));
 
       if (t > 0) and ((t mod 1) > 0) then
       begin
-        FBit.DrawLineAntialias(
-          XToCanvas(x0),
-          YToCanvas(y0 + Fd / 2 * FAutoScale),
-          XToCanvas(x1),
-          YToCanvas(y1 + Fd / 2 * FAutoScale),
-          FPenColor, FPenWidth * FScale, False);
+        alpha := arctan2((y1 - y0), -(x1 - x0));
 
         FBit.DrawLineAntialias(
-          XToCanvas(x0),
-          YToCanvas(y0 - Fd / 2 * FAutoScale),
-          XToCanvas(x1),
-          YToCanvas(y1 - Fd / 2 * FAutoScale),
-          FPenColor, FPenWidth * FScale, False);
+          XToCanvas(x0 + (Fd/2) * System.Sin(alpha) * FAutoScale),
+          YToCanvas(y0 + (Fd/2) * System.Cos(alpha) * FAutoScale),
+          XToCanvas(x1 + (Fd/2) * System.Sin(alpha) * FAutoScale),
+          YToCanvas(y1 + (Fd/2) * System.Cos(alpha) * FAutoScale),
+          FPenColor, FPenWidth * Min(2.0, FScale), False);
+
+        FBit.DrawLineAntialias(
+          XToCanvas(x0 - (Fd/2) * System.Sin(alpha) * FAutoScale),
+          YToCanvas(y0 - (Fd/2) * System.Cos(alpha) * FAutoScale),
+          XToCanvas(x1 - (Fd/2) * System.Sin(alpha) * FAutoScale),
+          YToCanvas(y1 - (Fd/2) * System.Cos(alpha) * FAutoScale),
+          FPenColor, FPenWidth * Min(2.0, FScale), False);
       end;
       x0 := x1;
       y0 := y1;
@@ -1845,7 +1857,7 @@ begin
         Trunc(YToCanvas(y0)),
         Trunc(XToCanvas(x1)),
         Trunc(YToCanvas(y1)),
-        FPenColor, FPenWidth, False);
+        FPenColor, FPenWidth * Min(2, FScale), False);
     end;
 
     x0 := CenterPosition - (FDm + Fd) / 2 * FAutoScale;
@@ -1870,7 +1882,7 @@ begin
         Trunc(YToCanvas(y0)),
         Trunc(XToCanvas(x1)),
         Trunc(YToCanvas(y1)),
-        FPenColor, FPenWidth*FScale, False);
+        FPenColor, FPenWidth * Min(2, FScale), False);
     end;
     // Draw center line
     FBit.PenStyle := psDashDot;
@@ -1879,7 +1891,234 @@ begin
       YToCanvas(FYMin),
       XToCanvas(CenterPosition),
       YToCanvas(FYMin + (FYMaxF - FYMinF) * FAutoScale),
-      FCenterLineColor, FCenterLineWidth*FScale, False);
+      FCenterLineColor, FCenterLineWidth * Min(2, FScale), False);
+    // Draw caption
+    x0 := CenterPosition;
+    y0 := FSpacer*FScale + FBit.TextSize(FCaption).Height;
+    FBit.TextOut(
+      XToCanvas(x0),
+      YToCanvas(y0),
+      FCaption, FFontColor, taCenter);
+    // Draw
+  end;
+  FBit.InvalidateBitmap;
+  FBit.Draw(aCanvas, 0, 0, True);
+  FBit.Destroy;
+end;
+
+procedure TSpringDrawing.DrawInProfile(aCanvas: TCanvas);
+var
+  CenterPosition: double;
+  x0, x1: double;
+  y0, y1: double;
+  t: double;
+  alpha: double;
+  Tex: TBGRABitmap;
+  ctx: TBGRACanvas2D;
+
+  FXMin: longint;
+  FYMin: longint;
+  FXMax: longint;
+  FYMax: longint;
+
+  FXMinF: double;
+  FYMinF: double;
+  FXMaxF: double;
+  FYMaxF: double;
+begin
+  CenterPosition := FWidth div 2;
+  FBit := TBGRABitmap.Create;
+  FBit.SetSize(FWidth, FHeight);
+  FBit.Fill(FBackgroundColor);
+
+  FBit.FontAntialias := True;
+  FBit.FontQuality   := fqSystemClearType;
+  FBit.FontName      := FFontName;
+  FBit.FontStyle     := FFontStyle;
+  FBit.FontHeight    := Trunc(FFontHeight * FScale);
+
+  FXMin := FSpacer;
+  FXMax := FWidth - Trunc(FSpacer*FScale * 0.5);
+
+  FYMin := FBit.TextSize(FCaption).Height + Trunc(FSpacer*FScale * 1.5);
+  FYMax := FHeight - Trunc(FSpacer*FScale * 0.5);
+
+  if PreCheck then
+  begin
+    FPitchF := (Lx - Lc) / Fn + Fd;
+    FXMinF  := 0;
+    FXMaxF  := FDm + Fd;
+    FYMinF  := 0;
+    FYMaxF  := zt(Fnt2 + Fn + Fnt1) + Fd;
+
+    if FAutoFit then
+    begin
+      FAutoScale := Min((FXMax - FXMin)/(FXMaxF - FXMinF),
+                        (FYMax - FYMin)/(FYMaxF - FYMinF));
+    end;
+
+    x0 := 0;
+    y0 := 0;
+    t  := -0.5;
+    while t < (Fnt2 + Fn + Fnt1) do
+    begin
+      t := t + 0.5;
+      if fClockWise then
+        x1 := CenterPosition + xt(t) * FAutoScale
+      else
+        x1 := CenterPosition + xt(t + 0.5) * FAutoScale;
+      y1 := FYMin + (zt(t) + Fd / 2) * FAutoScale;
+
+      alpha := arctan2((y1 - y0), -(x1 - x0));
+
+      if (t > 0) and (not ((t mod 1) > 0)) then
+      begin
+        ctx := FBit.Canvas2D;
+        ctx.fillStyle(BGRA(0, 0, 0, 255));
+        ctx.strokeStyle(BGRA(255, 0, 0, 255));
+        ctx.lineWidth := FPenWidth * Min(2.0, FScale);
+        ctx.beginPath();
+
+        ctx.moveTo(
+          XToCanvas(x0 + (Fd/2) * System.Cos(-alpha + pi/2) * FAutoScale),
+          YToCanvas(y0 + (Fd/2) * System.Sin(+alpha + pi/2) * FAutoScale));
+
+        ctx.arc(
+          XToCanvas(x0),
+          YToCanvas(y0),
+          Fd/2 * FAutoScale,
+          +alpha - pi/2,
+          +alpha + pi/2);
+
+        ctx.lineTo(
+          XToCanvas(x1 + (Fd/2) * System.Cos(+alpha + pi/2) * FAutoScale),
+          YToCanvas(y1 - (Fd/2) * System.Sin(+alpha + pi/2) * FAutoScale));
+
+        ctx.arc(
+          XToCanvas(x1),
+          YToCanvas(y1),
+          Fd/2 * FAutoScale,
+          +alpha + pi/2,
+          +alpha - pi/2);
+
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      end;
+      x0 := x1;
+      y0 := y1;
+    end;
+
+    x0 := 0;
+    y0 := 0;
+    t  := -0.5;
+    while t < (Fnt2 + Fn + Fnt1) do
+    begin
+      t := t + 0.5;
+      if fClockWise then
+        x1 := CenterPosition + xt(t) * FAutoScale
+      else
+        x1 := CenterPosition + xt(t + 0.5) * FAutoScale;
+      y1 := FYMin + (zt(t) + Fd / 2) * FAutoScale;
+
+      alpha := arctan2((y1 - y0), -(x1 - x0));
+
+      if (t > 0) and ((t mod 1) > 0) then
+      begin
+        ctx := FBit.Canvas2D;
+        ctx.fillStyle(BGRA(0, 0, 0, 255));
+        ctx.strokeStyle(BGRA(255, 0, 0, 255));
+        ctx.lineWidth := FPenWidth * Min(2.0, FScale);
+        ctx.beginPath();
+
+        ctx.moveTo(
+          XToCanvas(x0 + (Fd/2) * System.Cos(-alpha + pi/2) * FAutoScale),
+          YToCanvas(y0 + (Fd/2) * System.Sin(+alpha + pi/2) * FAutoScale));
+
+        ctx.arc(
+          XToCanvas(x0),
+          YToCanvas(y0),
+          Fd/2 * FAutoScale,
+          +alpha - pi/2,
+          +alpha + pi/2);
+
+        ctx.lineTo(
+          XToCanvas(x1 + (Fd/2) * System.Cos(+alpha + pi/2) * FAutoScale),
+          YToCanvas(y1 - (Fd/2) * System.Sin(+alpha + pi/2) * FAutoScale));
+
+        ctx.arc(
+          XToCanvas(x1),
+          YToCanvas(y1),
+          Fd/2 * FAutoScale,
+          +alpha + pi/2,
+          +alpha - pi/2);
+
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      end;
+      x0 := x1;
+      y0 := y1;
+    end;
+
+    // Draw Ends
+    x0 := CenterPosition - (FDm + Fd) / 2 * FAutoScale;
+    x1 := CenterPosition + (FDm + Fd) / 2 * FAutoScale;
+    if FGroundEnds then
+      y0 := FYMin + Fd / 2 * FAutoScale
+    else
+      y0 := FYMin;
+    y1 := y0;
+
+    if FGroundEnds then
+    begin
+      FBit.FillRect(
+        Trunc(XToCanvas(x0 - 2)),
+        Trunc(YToCanvas(0)),
+        Trunc(XToCanvas(x1 + 2)),
+        Trunc(YToCanvas(y1)),
+        FBackgroundColor);
+
+      FBit.DrawLineAntialias(
+        Trunc(XToCanvas(x0)),
+        Trunc(YToCanvas(y0)),
+        Trunc(XToCanvas(x1)),
+        Trunc(YToCanvas(y1)),
+        FPenColor, FPenWidth * Min(2, FScale), False);
+    end;
+
+    x0 := CenterPosition - (FDm + Fd) / 2 * FAutoScale;
+    x1 := CenterPosition + (FDm + Fd) / 2 * FAutoScale;
+    if FGroundEnds then
+      y0 := FYMin + (zt(Fnt2 + Fn + Fnt1)) * FAutoScale
+    else
+      y0 := FYMin + (zt(Fnt2 + Fn + Fnt1) + Fd / 2) * FAutoScale;
+    y1 := y0;
+
+    if FGroundEnds then
+    begin
+      FBit.FillRect(
+        Trunc(XToCanvas(x0 - 2)),
+        Trunc(YToCanvas(fHeight)),
+        Trunc(XToCanvas(x1 + 2)),
+        Trunc(YToCanvas(y1)),
+        FBackgroundColor);
+
+      FBit.DrawLineAntialias(
+        Trunc(XToCanvas(x0)),
+        Trunc(YToCanvas(y0)),
+        Trunc(XToCanvas(x1)),
+        Trunc(YToCanvas(y1)),
+        FPenColor, FPenWidth * Min(2, FScale), False);
+    end;
+    // Draw center line
+    FBit.PenStyle := psDashDot;
+    FBit.DrawLineAntialias(
+      XToCanvas(CenterPosition),
+      YToCanvas(FYMin),
+      XToCanvas(CenterPosition),
+      YToCanvas(FYMin + (FYMaxF - FYMinF) * FAutoScale),
+      FCenterLineColor, FCenterLineWidth * Min(2, FScale), False);
     // Draw caption
     x0 := CenterPosition;
     y0 := FSpacer*FScale + FBit.TextSize(FCaption).Height;
@@ -1915,9 +2154,7 @@ begin
     y := -50;
     while y < (aHeight + 50) do
     begin
-      Bit.TextOutAngle(x, y, 250, ApplicationName, BGRA(150, 150, 150, 255),
-        taLeftJustify);
-
+      Bit.TextOutAngle(x, y, 250, ApplicationName, BGRA(150, 150, 150, 255), taLeftJustify);
       Inc(y, Bit.TextSize(ApplicationName).Height + DefaultSpacer div 4);
     end;
     Inc(x, Bit.TextSize(ApplicationName).Width + DefaultSpacer div 4);

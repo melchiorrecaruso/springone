@@ -17,7 +17,7 @@ type
     procedure LoadChart1(Chart: TChart; const ASection: string);
     procedure LoadChart2(Chart: TChart; const ASection, AIdent: string);
     procedure LoadTable(Table: TReportTable; const ASection, AIdent: string);
-    procedure LoadSpring(Spring: TSectionSpringDrawing; const ASection, AIdent: string);
+    procedure LoadSpring(Spring: TSpringDrawing; const ASection, AIdent: string);
 
     procedure DrawQuickX(var aScreen: TBGRABitmap; const aScreenScale: double; X: longint);
   public
@@ -35,7 +35,7 @@ type
     function CreateShearModulusChart(const AScreenScale: double): TChart;
     function CreateYoungModulusChart(const AScreenScale: double): TChart;
 
-    function CreateSectionSpringDrawing(const AScreenScale: double): TSectionSpringDrawing;
+    function CreateSectionSpringDrawing(const AScreenScale: double): TSpringDrawing;
     function CreateQualityTable(const AScreenScale: double): TReportTable;
     function CreateQuick1Table(const AScreenScale: double): TReportTable;
     function CreateQuick1List1(const AScreenScale: double): TReportTable;
@@ -178,7 +178,7 @@ begin
   Table.ColumnSpacer := FSetting.ReadInteger(ASection, AIdent + '.ColumnSpacer', 0);
 end;
 
-procedure TCompozer.LoadSpring(Spring: TSectionSpringDrawing;
+procedure TCompozer.LoadSpring(Spring: TSpringDrawing;
   const ASection, AIdent: string);
 begin
   Spring.BackgroundColor.FromString(FSetting.ReadString(ASection,
@@ -741,9 +741,9 @@ begin
 end;
 
 function TCompozer.CreateSectionSpringDrawing(
-  const AScreenScale: double): TSectionSpringDrawing;
+  const AScreenScale: double): TSpringDrawing;
 begin
-  Result := TSectionSpringDrawing.Create;
+  Result := TSpringDrawing.Create;
   LoadSpring(Result, 'SpringDrawing', 'Spring');
 
   {$IFDEF MODULE1}
@@ -1426,7 +1426,7 @@ var
   Quick1List: TReportTable;
   Quick1Table: TReportTable;
   QualityTable: TReportTable;
-  SpringDrawing: TSectionSpringDrawing;
+  SpringDrawing: TSpringDrawing;
 begin
   SetLength(Bit, 9);
   for i := Low(Bit) to High(Bit) do
@@ -1490,17 +1490,17 @@ begin
   SpringDrawing.AutoFit := True;
   SpringDrawing.Lx := GetValue(SpringSolver.LengthL0);
   SpringDrawing.Caption := TryFormatFloat('L0 = %s', 'L0 = ---', SpringDrawing.Lx);
-  SpringDrawing.Draw(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
+  SpringDrawing.DrawInSection(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
 
   SpringDrawing.AutoFit := False;
   SpringDrawing.Lx := GetValue(SpringSolver.LengthL1);
   SpringDrawing.Caption := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
-  SpringDrawing.Draw(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
+  SpringDrawing.DrawInSection(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
 
   SpringDrawing.AutoFit := False;
   SpringDrawing.Lx := GetValue(SpringSolver.LengthL2);
   SpringDrawing.Caption := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
-  SpringDrawing.Draw(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
+  SpringDrawing.DrawInSection(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
 
   Bit[6].Draw(aScreen.Canvas, 0, 0, True);
   Bit[7].Draw(aScreen.Canvas, Bit[6].Width, 0, True);

@@ -11,7 +11,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <Libraries Value="src"/>
-        <OtherUnitFiles Value="src;..\..\DimPas"/>
+        <OtherUnitFiles Value="src"/>
         <UnitOutputDirectory Value="build\lib"/>
       </SearchPaths>
       <Linking>

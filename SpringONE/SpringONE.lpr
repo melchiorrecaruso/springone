@@ -55,17 +55,19 @@ begin
   Application.CreateForm(TApplicationForm1, ApplicationForm1);
   Application.CreateForm(TApplicationForm3, ApplicationForm3);
   Application.CreateForm(TDrawingForm, DrawingForm);
+  {$IFDEF MODULE1}
+  Application.CreateForm(TGeometryForm1, GeometryForm1);
+  {$ENDIF}
+  {$IFDEF MODULE3}
   Application.CreateForm(TGeometryForm3, GeometryForm3);
+  {$ENDIF}
+
   Application.CreateForm(TMaterialForm, MaterialForm);
   Application.CreateForm(TProductionForm, ProductionForm);
   Application.CreateForm(TQualityForm, QualityForm);
   Application.CreateForm(TReportForm, ReportForm);
   Application.CreateForm(TTextForm, TextForm);
-  {$IFDEF MODULE1}
-  {$ENDIF}
-  {$IFDEF MODULE3}
-  Application.CreateForm(TGeometryForm3, GeometryForm3);
-  {$ENDIF}
+
   Application.Run;
 end.
 

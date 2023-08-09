@@ -171,7 +171,7 @@ type
     ScreenScale: double;
     SessionFileName: string;
   public
-    function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
+    function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSpringDrawing;
     function CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
     function CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
 
@@ -417,7 +417,7 @@ end;
 
 procedure TMainForm.VirtualScreenMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 const
-  MaxScale = 5;
+  MaxScale = 10;
 var
   NewScale: double;
 begin
@@ -912,7 +912,7 @@ var
   Chart: TChart;
   Compozer: TCompozer;
   Bit: array of TBGRABitmap = nil;
-  SpringDrawing: TSectionSpringDrawing;
+  SpringDrawing: TSpringDrawing;
   SVG: TBGRASvg;
 begin
   ErrorMessage.Clear;
@@ -991,7 +991,8 @@ begin
   end else
   // Spring section drawing
   if SectionMenuItem.Checked then
-  begin    SetLength(Bit, 3);
+  begin
+    SetLength(Bit, 3);
     for i := Low(Bit) to High(Bit) do
       Bit[i] := TBGRABitmap.Create;
 
@@ -1000,21 +1001,24 @@ begin
     Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
 
     {$IFDEF MODULE1}
-    SpringDrawing         := Compozer.CreateSectionSpringDrawing(aScreenScale);
-    SpringDrawing.AutoFit := True;
-    SpringDrawing.Lx      := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
-    SpringDrawing.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+    SpringDrawing           := Compozer.CreateSectionSpringDrawing(aScreenScale);
+    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.AutoFit   := True;
+    SpringDrawing.Lx        := SpringSolver.LengthL0.Value([pMilli]);
+    SpringDrawing.Caption   := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
-    SpringDrawing.AutoFit := False;
-    SpringDrawing.Lx      := SpringSolver.LengthL1.Value([pMilli]);
-    SpringDrawing.Caption := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
-    SpringDrawing.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.AutoFit   := False;
+    SpringDrawing.Lx        := SpringSolver.LengthL1.Value([pMilli]);
+    SpringDrawing.Caption   := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+    SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
-    SpringDrawing.AutoFit := False;
-    SpringDrawing.Lx      := SpringSolver.LengthL2.Value([pMilli]);
-    SpringDrawing.Caption := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
-    SpringDrawing.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.AutoFit   := False;
+    SpringDrawing.Lx        := SpringSolver.LengthL2.Value([pMilli]);
+    SpringDrawing.Caption   := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+    SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
     Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
     Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
@@ -1030,7 +1034,43 @@ begin
   // Spring profile drawing
   if ProfileMenuItem.Checked then
   begin
+    SetLength(Bit, 3);
+    for i := Low(Bit) to High(Bit) do
+      Bit[i] := TBGRABitmap.Create;
 
+    Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
+    Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
+    Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
+
+    {$IFDEF MODULE1}
+    SpringDrawing           := Compozer.CreateSectionSpringDrawing(aScreenScale);
+    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.AutoFit   := True;
+    SpringDrawing.Lx        := SpringSolver.LengthL0.Value([pMilli]);
+    SpringDrawing.Caption   := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.AutoFit   := False;
+    SpringDrawing.Lx        := SpringSolver.LengthL1.Value([pMilli]);
+    SpringDrawing.Caption   := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+    SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.AutoFit   := False;
+    SpringDrawing.Lx        := SpringSolver.LengthL2.Value([pMilli]);
+    SpringDrawing.Caption   := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+    SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+
+    Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
+    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
+    Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
+    SpringDrawing.Destroy;
+    {$ENDIF}
+
+    for i := Low(Bit) to High(Bit) do
+      Bit[i].Destroy;
+    Bit := nil;
   end else
 
   // Custom section spring drawing
@@ -1071,10 +1111,10 @@ end;
 
 // Create Diagrams
 
-function TMainForm.CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSectionSpringDrawing;
+function TMainForm.CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSpringDrawing;
 begin
   {$IFDEF MODULE1}
-  Result            := TSectionSpringDrawing.Create;
+  Result            := TSpringDrawing.Create;
   Result.d          := SpringSolver.WireDiameter.Value([pMilli]);
   Result.Dm         := SpringSolver.Dm.Value([pMilli]);
   Result.Lc         := SpringSolver.LengthLc.Value([pMilli]);
