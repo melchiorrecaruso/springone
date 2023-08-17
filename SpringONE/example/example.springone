@@ -71,15 +71,15 @@ CoilDiameterIndex=1
 CoilDiameter=18
 CoilDiameterUnit=0
 ActiveCoil=50
-InactiveCoil1=0.75
-InactiveCoil2=0.75
+InactiveCoil1=1
+InactiveCoil2=1
 LengthL0=325
 LengthL0Unit=0
 LengthL1=227
 LengthL1Unit=0
 LengthL2=142.5
 LengthL2Unit=0
-EndCoilType=1
+EndCoilType=0
 
 [TGeometryForm3]
 WireDiameter=0

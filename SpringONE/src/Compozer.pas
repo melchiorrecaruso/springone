@@ -35,7 +35,7 @@ type
     function CreateShearModulusChart(const AScreenScale: double): TChart;
     function CreateYoungModulusChart(const AScreenScale: double): TChart;
 
-    function CreateSectionSpringDrawing(const AScreenScale: double): TSpringDrawing;
+    function CreateSpringDrawing(const AScreenScale: double): TSpringDrawing;
     function CreateQualityTable(const AScreenScale: double): TReportTable;
     function CreateQuick1Table(const AScreenScale: double): TReportTable;
     function CreateQuick1List1(const AScreenScale: double): TReportTable;
@@ -740,7 +740,7 @@ begin
   end;
 end;
 
-function TCompozer.CreateSectionSpringDrawing(
+function TCompozer.CreateSpringDrawing(
   const AScreenScale: double): TSpringDrawing;
 begin
   Result := TSpringDrawing.Create;
@@ -1481,7 +1481,7 @@ begin
   MessageList.Destroy;
 
   // 6-Spring Drawings
-  SpringDrawing := CreateSectionSpringDrawing(AScreenScale);
+  SpringDrawing := CreateSpringDrawing(AScreenScale);
   Bit[6].SetSize(Bit[2].Width div 3, Bit[0].Height);
   Bit[7].SetSize(Bit[2].Width div 3, Bit[0].Height);
   Bit[8].SetSize(Bit[2].Width - Bit[6].Width - Bit[7].Width, Bit[0].Height);

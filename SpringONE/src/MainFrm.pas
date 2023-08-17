@@ -918,9 +918,7 @@ begin
   ErrorMessage.Clear;
   WarningMessage.Clear;
 
-  SpringSolver.Solve(
-    SpringTolerance,
-    WireTolerance);
+  SpringSolver.Solve(SpringTolerance, WireTolerance);
 
   aScreen.Fill(aScreenColor);
   Compozer := TCompozer.Create(aSetting);
@@ -1001,23 +999,26 @@ begin
     Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
 
     {$IFDEF MODULE1}
-    SpringDrawing           := Compozer.CreateSectionSpringDrawing(aScreenScale);
-    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.AutoFit   := True;
-    SpringDrawing.Lx        := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption   := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := True;
+    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
     SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
-    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.AutoFit   := False;
-    SpringDrawing.Lx        := SpringSolver.LengthL1.Value([pMilli]);
-    SpringDrawing.Caption   := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := False;
+    SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
     SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
-    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.AutoFit   := False;
-    SpringDrawing.Lx        := SpringSolver.LengthL2.Value([pMilli]);
-    SpringDrawing.Caption   := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := False;
+    SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
     SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
     Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
@@ -1043,23 +1044,26 @@ begin
     Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
 
     {$IFDEF MODULE1}
-    SpringDrawing           := Compozer.CreateSectionSpringDrawing(aScreenScale);
-    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.AutoFit   := True;
-    SpringDrawing.Lx        := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption   := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := True;
+    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
     SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
-    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.AutoFit   := False;
-    SpringDrawing.Lx        := SpringSolver.LengthL1.Value([pMilli]);
-    SpringDrawing.Caption   := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := False;
+    SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
     SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
-    SpringDrawing.ClockWise := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.AutoFit   := False;
-    SpringDrawing.Lx        := SpringSolver.LengthL2.Value([pMilli]);
-    SpringDrawing.Caption   := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := False;
+    SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
     SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
     Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
