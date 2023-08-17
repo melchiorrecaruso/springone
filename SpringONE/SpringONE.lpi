@@ -45,9 +45,8 @@
             <UnitOutputDirectory Value="build\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <Optimizations>
-              <OptimizationLevel Value="3"/>
+              <OptimizationLevel Value="0"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
@@ -57,12 +56,6 @@
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseLineInfoUnit Value="False"/>
             </Debugging>
-            <LinkSmart Value="True"/>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
           <Other>
             <CustomOptions Value="-dMODULE1"/>
@@ -109,8 +102,8 @@
       <Unit>
         <Filename Value="SpringONE.lpr"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="19"/>
-        <CursorPos X="20" Y="34"/>
+        <TopLine Value="34"/>
+        <CursorPos X="72" Y="52"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -122,35 +115,35 @@
         <UnitName Value="ApplicationFrm"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="49"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="EN13906_1.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="116"/>
         <CursorPos X="14" Y="135"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="GraphBase.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="806"/>
         <CursorPos X="70" Y="362"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="EN15800.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="13"/>
         <CursorPos X="34" Y="213"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="EN10270.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="277"/>
         <CursorPos X="91" Y="288"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="MainFrm.pas"/>
@@ -159,20 +152,20 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="69" Y="21"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="Log.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="15" Y="31"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="UtilsBase.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="29"/>
         <CursorPos X="17" Y="47"/>
-        <UsageCount Value="188"/>
+        <UsageCount Value="187"/>
       </Unit>
       <Unit>
         <Filename Value="DrawingTextFrm.pas"/>
@@ -181,7 +174,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="49"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="GeometryFrm.pas"/>
@@ -191,7 +184,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="106"/>
         <CursorPos Y="115"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="MaterialFrm.pas"/>
@@ -201,7 +194,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="42"/>
         <CursorPos X="79" Y="141"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="qualityfrm.pas"/>
@@ -212,7 +205,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="9"/>
         <CursorPos X="49"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="AboutFrm.pas"/>
@@ -222,7 +215,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="24"/>
         <CursorPos X="49"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="ReportFrm.pas"/>
@@ -232,7 +225,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <CursorPos X="70" Y="67"/>
-        <UsageCount Value="186"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="drawingfrm.pas"/>
@@ -242,7 +235,7 @@
         <UnitName Value="DrawingFrm"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="58" Y="55"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="87"/>
       </Unit>
       <Unit>
         <Filename Value="setting.pas"/>
@@ -250,7 +243,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="19" Y="21"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="32"/>
       </Unit>
       <Unit>
         <Filename Value="forcedisplacementfrm.pas"/>
@@ -261,7 +254,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="35"/>
         <CursorPos X="47" Y="53"/>
-        <UsageCount Value="183"/>
+        <UsageCount Value="182"/>
       </Unit>
       <Unit>
         <Filename Value="bucklingfrm.pas"/>
@@ -272,7 +265,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="37"/>
         <CursorPos X="31" Y="49"/>
-        <UsageCount Value="181"/>
+        <UsageCount Value="180"/>
       </Unit>
       <Unit>
         <Filename Value="goodmanfrm.pas"/>
@@ -283,21 +276,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="39"/>
         <CursorPos X="52" Y="52"/>
-        <UsageCount Value="181"/>
+        <UsageCount Value="180"/>
       </Unit>
       <Unit>
         <Filename Value="graph2.pas"/>
         <UnitName Value="Graph2"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="22"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\inc\mathh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="101"/>
         <CursorPos X="14" Y="105"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrabitmap.pas"/>
@@ -305,7 +298,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="69"/>
         <CursorPos X="9" Y="79"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\graphics.pp"/>
@@ -313,28 +306,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="100"/>
         <CursorPos X="35" Y="115"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrapixel.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="164"/>
         <CursorPos X="27" Y="184"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\unibitmapgeneric.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="44"/>
         <CursorPos X="15" Y="53"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgracustombitmap.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="201"/>
         <CursorPos X="15" Y="216"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgragraphics.pas"/>
@@ -342,7 +335,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="54"/>
         <CursorPos X="3" Y="69"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrabitmaptypes.pas"/>
@@ -350,21 +343,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="258"/>
         <CursorPos X="22" Y="280"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\objpas\classes\classesh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="75"/>
         <CursorPos X="68" Y="94"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\inc\objpash.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="179"/>
         <CursorPos X="23" Y="206"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\objpas\types.pp"/>
@@ -372,14 +365,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="64"/>
         <CursorPos X="3" Y="83"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\inc\typshrdh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="21"/>
         <CursorPos X="3" Y="38"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgradefaultbitmap.pas"/>
@@ -387,21 +380,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="155"/>
         <CursorPos X="14" Y="171"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgratransform.pas"/>
         <UnitName Value="BGRATransform"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="17"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\geometrytypes.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="104"/>
         <CursorPos X="17" Y="117"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgraclasses.pas"/>
@@ -409,14 +402,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="9"/>
         <CursorPos X="3" Y="23"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\csscolorconst.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="461"/>
         <CursorPos X="3" Y="382"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\objpas\math.pp"/>
@@ -424,24 +417,24 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="56"/>
         <CursorPos X="7" Y="73"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\unibitmap.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="457"/>
         <CursorPos X="14" Y="472"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\inc\genmath.inc"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\inc\flt_core.inc"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrawinbitmap.pas"/>
@@ -449,26 +442,26 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="48"/>
         <CursorPos X="3" Y="23"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\packages\graph\src\win32\graph.pp"/>
         <UnitName Value="Graph"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
       </Unit>
       <Unit>
         <Filename Value="drawingtextfrm.lfm"/>
         <HasResources Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="40" Y="9"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
         <Filename Value="generalfrm.lfm"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
@@ -477,7 +470,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="95"/>
         <CursorPos X="5" Y="123"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\packages\fcl-base\src\inifiles.pp"/>
@@ -485,21 +478,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="230"/>
         <CursorPos X="3" Y="215"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\inc\typshrd.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="305"/>
         <CursorPos X="3" Y="309"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\include\menuitem.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="525"/>
         <CursorPos X="20" Y="540"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\controls.pp"/>
@@ -507,7 +500,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2355"/>
         <CursorPos X="15" Y="2374"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="settingfrm.pas"/>
@@ -515,27 +508,27 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="SettingFrm"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrascanner.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="18"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgralclbitmap.pas"/>
         <UnitName Value="BGRALCLBitmap"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="14"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="springdbg.ini"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="277"/>
         <CursorPos X="14" Y="297"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="Ini"/>
       </Unit>
       <Unit>
@@ -543,14 +536,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="307"/>
         <CursorPos X="3" Y="309"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="client.ini"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="115"/>
         <CursorPos X="10" Y="129"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="Ini"/>
       </Unit>
       <Unit>
@@ -559,7 +552,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="9"/>
         <CursorPos X="31" Y="28"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\interfacebase.pp"/>
@@ -567,14 +560,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="31" Y="28"/>
-        <UsageCount Value="1"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\objpas\sysutils\osutilsh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="30"/>
         <CursorPos X="10" Y="49"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\printers.pas"/>
@@ -582,7 +575,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="292"/>
         <CursorPos X="47" Y="304"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\xy-plot\src\aboutfrm.pas"/>
@@ -590,7 +583,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="2"/>
+        <UsageCount Value="1"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\dialogs.pp"/>
@@ -598,7 +591,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="30"/>
         <CursorPos X="10" Y="42"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="33"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\packages\fcl-pdf\src\fppdf.pp"/>
@@ -606,14 +599,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1028"/>
         <CursorPos X="38" Y="1038"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\packages\fcl-base\src\csvdocument.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="23"/>
         <CursorPos X="17" Y="38"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\lresources.pp"/>
@@ -621,7 +614,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="74"/>
         <CursorPos X="44" Y="82"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\bcsvgviewer.pas"/>
@@ -629,7 +622,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="57"/>
         <CursorPos X="14" Y="72"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\bgragraphiccontrol.pas"/>
@@ -637,7 +630,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos X="3" Y="31"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgracontrols-master\bctypes.pas"/>
@@ -645,7 +638,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="96"/>
         <CursorPos X="48" Y="110"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgraunits.pas"/>
@@ -653,7 +646,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="5"/>
         <CursorPos Y="19"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrasvgtype.pas"/>
@@ -661,7 +654,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="448"/>
         <CursorPos X="9" Y="448"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgratextfx.pas"/>
@@ -669,7 +662,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="57"/>
         <CursorPos X="36" Y="79"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="4"/>
       </Unit>
       <Unit>
         <Filename Value="ProductionFrm.pas"/>
@@ -679,20 +672,20 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="86"/>
         <CursorPos X="10" Y="110"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="17"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrasvgshapes.pas"/>
         <UnitName Value="BGRASVGShapes"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgracanvas2d.pas"/>
         <UnitName Value="BGRACanvas2D"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="70"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="src\AboutFrm.pas"/>
@@ -700,10 +693,11 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="44"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="30"/>
         <CursorPos Y="51"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\MainFrm.pas"/>
@@ -712,8 +706,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="1075"/>
-        <CursorPos X="19" Y="1098"/>
+        <TopLine Value="21"/>
+        <CursorPos X="60" Y="1026"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -723,7 +717,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="395"/>
         <CursorPos X="15" Y="409"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="189"/>
       </Unit>
       <Unit>
         <Filename Value="src\ReportFrm.pas"/>
@@ -731,9 +725,9 @@
         <ComponentName Value="ReportForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="249"/>
-        <CursorPos X="11" Y="264"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="73"/>
+        <CursorPos X="105" Y="88"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -742,14 +736,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="21"/>
         <CursorPos Y="30"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="src\UtilsBase.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="44"/>
         <CursorPos X="52" Y="54"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="189"/>
       </Unit>
       <Unit>
         <Filename Value="src\applicationfrm1.pas"/>
@@ -758,7 +752,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ApplicationFrm1"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="89"/>
         <CursorPos X="19" Y="120"/>
@@ -794,7 +787,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="15"/>
         <CursorPos X="52" Y="77"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="189"/>
       </Unit>
       <Unit>
         <Filename Value="src\en13906.pas"/>
@@ -802,14 +795,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="879"/>
         <CursorPos X="17" Y="888"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="189"/>
       </Unit>
       <Unit>
         <Filename Value="src\EN15800.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="255"/>
         <CursorPos Y="302"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="189"/>
       </Unit>
       <Unit>
         <Filename Value="src\geometryfrm1.pas"/>
@@ -817,9 +810,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GeometryFrm1"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="14"/>
-        <CursorPos X="18" Y="21"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="166"/>
+        <CursorPos Y="168"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -831,8 +824,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="241"/>
-        <CursorPos X="20" Y="274"/>
+        <TopLine Value="41"/>
+        <CursorPos X="34" Y="43"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -852,7 +845,7 @@
         <ComponentName Value="QualityForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="58"/>
         <CursorPos X="20" Y="77"/>
         <UsageCount Value="200"/>
@@ -865,7 +858,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="13"/>
         <CursorPos X="13" Y="38"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\components\printers\printersdlgs.pp"/>
@@ -873,35 +866,35 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="76"/>
         <CursorPos X="14" Y="89"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\lazarus\lcl\include\wincontrol.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="5085"/>
         <CursorPos X="10" Y="5087"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\unibitmap.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="445"/>
         <CursorPos X="14" Y="461"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringTHREE\13906_3.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="6"/>
         <CursorPos X="84" Y="19"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="13"/>
       </Unit>
       <Unit>
         <Filename Value="src\composer.pas"/>
         <UnitName Value="Composer"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="16" Y="13"/>
-        <UsageCount Value="67"/>
+        <UsageCount Value="66"/>
       </Unit>
       <Unit>
         <Filename Value="src\geometryfrm3.pas"/>
@@ -913,7 +906,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="211"/>
         <CursorPos X="21" Y="229"/>
-        <UsageCount Value="150"/>
+        <UsageCount Value="172"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\lazarus\lcl\forms.pp"/>
@@ -921,14 +914,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="753"/>
         <CursorPos X="44" Y="781"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\rtl\objpas\classes\streams.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="729"/>
         <CursorPos X="3" Y="732"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="src\MainFrmRoutines.inc"/>
@@ -936,46 +929,49 @@
         <TopLine Value="280"/>
         <CursorPos Y="676"/>
         <FoldState Value=" T3nf0F5 pjWkG0X2 PlLiA0U"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="src\OptMainForm.pas"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="src\SimulatedAnnealing.pas"/>
         <UnitName Value="simulatedannealing"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\SpringLib.pas"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="94"/>
-        <CursorPos X="26" Y="51"/>
+        <EditorIndex Value="14"/>
+        <TopLine Value="29"/>
+        <CursorPos Y="212"/>
         <UsageCount Value="100"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\Compozer.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="1569"/>
-        <CursorPos X="19" Y="1584"/>
+        <TopLine Value="742"/>
+        <CursorPos X="48" Y="752"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="275"/>
-        <CursorPos X="3" Y="294"/>
+        <EditorIndex Value="15"/>
+        <TopLine Value="2072"/>
+        <CursorPos X="31" Y="2079"/>
+        <FoldState Value=" T3~L0}1#"/>
         <UsageCount Value="101"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\lazarus\lcl\graphics.pp"/>
@@ -983,25 +979,26 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="167"/>
         <CursorPos X="12" Y="186"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\geometrytypes.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="19"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="977"/>
-        <CursorPos X="64" Y="978"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="447"/>
+        <CursorPos X="59" Y="463"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN15800.pas"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="16"/>
         <CursorPos X="3" Y="34"/>
         <UsageCount Value="100"/>
@@ -1009,7 +1006,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN10270.pas"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="248"/>
         <CursorPos Y="254"/>
         <UsageCount Value="100"/>
@@ -1021,7 +1018,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="460"/>
         <CursorPos X="15" Y="477"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="3"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgraclasses.pas"/>
@@ -1029,7 +1026,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="3" Y="45"/>
-        <UsageCount Value="3"/>
+        <UsageCount Value="2"/>
       </Unit>
       <Unit>
         <Filename Value="uunit.pas"/>
@@ -1037,32 +1034,32 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="8"/>
         <CursorPos X="41" Y="14"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="24"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\UUnits.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="10"/>
         <CursorPos X="49" Y="182"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="23"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\UnitOfMeasurement.pas"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\ADim.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="106"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="12"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\qk2\SpringLIB\src\EN13906.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="913"/>
         <CursorPos X="5" Y="947"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="5"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\lazarus\lcl\spin.pp"/>
@@ -1070,7 +1067,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="123"/>
         <CursorPos X="14" Y="137"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\DimPas\dim.pas"/>
@@ -1078,33 +1075,33 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="361"/>
         <CursorPos X="20" Y="376"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\Compozer.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="696"/>
         <CursorPos X="3" Y="720"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="28"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\packages\rtl-objpas\src\inc\convutil.pp"/>
         <UnitName Value="ConvUtils"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\packages\rtl-objpas\src\inc\convutil.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="15"/>
         <CursorPos X="15" Y="21"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="C:\FPC\3.2.2\source\packages\rtl-objpas\src\inc\convutils.pp"/>
         <UnitName Value="ConvUtils"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="6"/>
       </Unit>
       <Unit>
         <Filename Value="C:\fpcupdeluxe\config_lazarus\onlinepackagemanager\packages\bgracontrols-master\bgravirtualscreen.pas"/>
@@ -1112,7 +1109,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="46"/>
         <CursorPos X="15" Y="64"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="src\applicationfrm3.pas"/>
@@ -1124,21 +1121,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="83"/>
         <CursorPos Y="114"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="95"/>
       </Unit>
       <Unit>
         <Filename Value="C:\fpcupdeluxe\fpcsrc\rtl\objpas\sysutils\sysstrh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="185"/>
         <CursorPos X="10" Y="202"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="C:\fpcupdeluxe\config_lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\unibitmap.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="425"/>
         <CursorPos X="14" Y="444"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="C:\fpcupdeluxe\fpcsrc\packages\fcl-image\src\fpimage.pp"/>
@@ -1146,24 +1143,46 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="304"/>
         <CursorPos X="3" Y="226"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="C:\fpcupdeluxe\config_lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\extendedcolorspace.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="34"/>
         <CursorPos X="3" Y="47"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="src\liblink.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LibLink"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="18"/>
+        <EditorIndex Value="10"/>
         <CursorPos X="28" Y="37"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="53"/>
         <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="src\AboutFrm.lfm"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\ADimPas\adim.pas"/>
+        <UnitName Value="ADim"/>
+        <EditorIndex Value="16"/>
+        <TopLine Value="270"/>
+        <CursorPos X="3" Y="236"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\bgrabitmap\bgrabitmap\bgracanvas2d.pas"/>
+        <UnitName Value="BGRACanvas2D"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="257"/>
+        <CursorPos X="15" Y="272"/>
+        <UsageCount Value="13"/>
       </Unit>
     </Units>
     <OtherDefines Count="2">
@@ -1172,124 +1191,124 @@
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="src\liblink.pas"/>
-        <Caret Line="38" Column="3" TopLine="23"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2003" Column="9" TopLine="1989"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="180" Column="3" TopLine="13"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1965" Column="3" TopLine="1960"/>
       </Position>
       <Position>
-        <Filename Value="src\geometryfrm1.pas"/>
-        <Caret Line="170" Column="16" TopLine="155"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2022" TopLine="2004"/>
       </Position>
       <Position>
-        <Filename Value="src\liblink.pas"/>
-        <Caret Line="38" Column="3" TopLine="22"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2068" Column="23" TopLine="2056"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="180" Column="3" TopLine="164"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2057" Column="41" TopLine="2048"/>
       </Position>
       <Position>
-        <Filename Value="src\geometryfrm1.pas"/>
-        <Caret Line="21" Column="18" TopLine="14"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2120" Column="28" TopLine="2093"/>
       </Position>
       <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="57" Column="46" TopLine="47"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2166" Column="30" TopLine="2146"/>
       </Position>
       <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="98" Column="108" TopLine="24"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2017" Column="9" TopLine="2005"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="191" Column="32" TopLine="184"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1964" Column="5" TopLine="1790"/>
       </Position>
       <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="98" Column="3" TopLine="86"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2018" Column="9" TopLine="2006"/>
       </Position>
       <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="264" Column="11" TopLine="249"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1964" Column="9" TopLine="1790"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="804" Column="15" TopLine="778"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2020" Column="9" TopLine="2007"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="103" Column="79" TopLine="92"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1965" Column="5" TopLine="1790"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="923" Column="19" TopLine="904"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2021" Column="9" TopLine="2008"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="103" Column="80" TopLine="83"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1965" Column="9" TopLine="1790"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="923" Column="19" TopLine="904"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2023" Column="14" TopLine="2009"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="255" Column="20" TopLine="236"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1968" Column="19" TopLine="1790"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="978" Column="97" TopLine="977"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2022" Column="70" TopLine="2016"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="257" Column="5" TopLine="169"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1968" Column="8" TopLine="1791"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="255" Column="81" TopLine="238"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2023" Column="12" TopLine="2004"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="908" Column="44" TopLine="903"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2051" Column="22" TopLine="2029"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="255" Column="20" TopLine="238"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2040" Column="22" TopLine="2021"/>
       </Position>
       <Position>
-        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <Caret Line="978" Column="64" TopLine="977"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2114" Column="51" TopLine="2080"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="787" Column="23" TopLine="781"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="1966" Column="14" TopLine="1964"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="1023" Column="14" TopLine="992"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2093" Column="11" TopLine="2072"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="1076" Column="19" TopLine="1064"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2085" Column="22" TopLine="2079"/>
       </Position>
       <Position>
-        <Filename Value="src\MainFrm.pas"/>
-        <Caret Line="1098" Column="19" TopLine="1075"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2083" Column="15" TopLine="2046"/>
       </Position>
       <Position>
-        <Filename Value="src\MaterialFrm.pas"/>
-        <Caret Line="161" Column="40" TopLine="131"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2131" TopLine="2114"/>
       </Position>
       <Position>
-        <Filename Value="src\MaterialFrm.pas"/>
-        <Caret Line="253" Column="17" TopLine="221"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2083" Column="53" TopLine="2065"/>
       </Position>
       <Position>
-        <Filename Value="src\MaterialFrm.pas"/>
-        <Caret Line="274" Column="20" TopLine="241"/>
+        <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
+        <Caret Line="2093" Column="41" TopLine="2075"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>

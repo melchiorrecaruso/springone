@@ -34,8 +34,6 @@ uses
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
 
-
-
   MainFrm, MaterialFrm, ProductionFrm, QualityFrm,
   ReportFrm, ApplicationFrm3, Compozer, SpringLib, LazControls, SysUtils,
   UtilsBase, LibLink;
@@ -44,7 +42,7 @@ uses
 
 begin
   ApplicationName := 'SpringONE';
-  ApplicationVer  := 'SpringONE v0.36';
+  ApplicationVer  := 'SpringONE v0.38';
 
   RequireDerivedFormResource:=True;
   Application.Title:='SpringOne';

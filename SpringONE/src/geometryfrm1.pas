@@ -162,7 +162,7 @@ begin
 
   case CoilDiameterIndex.ItemIndex of
     0: SpringSolver.Dm := SpringSolver.Dm + SpringSolver.WireDiameter;  // Input Di
-    1: SpringSolver.Dm := SpringSolver.Dm;                         // Input Dm
+    1: SpringSolver.Dm := SpringSolver.Dm;                              // Input Dm
     2: SpringSolver.Dm := SpringSolver.Dm - SpringSolver.WireDiameter;  // Input De
   end;
 

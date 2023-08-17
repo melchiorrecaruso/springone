@@ -8,9 +8,9 @@ object GeometryForm1: TGeometryForm1
   Caption = 'Geometry & working length'
   ClientHeight = 360
   ClientWidth = 420
-  OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
   object WireDiameterLabel: TLabel
     AnchorSideTop.Control = WireDiameter
     AnchorSideRight.Control = WireDiameter
@@ -40,8 +40,8 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Top = 12
     BorderSpacing.Right = 10
     Increment = 0.05
-    OnChange = SpinEditChange
     TabOrder = 0
+    OnChange = SpinEditChange
   end
   object WireDiameterUnit: TComboBox
     AnchorSideLeft.Side = asrBottom
@@ -111,8 +111,8 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Left = 10
     BorderSpacing.Right = 10
     Increment = 0.5
-    OnChange = SpinEditChange
     TabOrder = 3
+    OnChange = SpinEditChange
   end
   object CoilDiameterIndex: TComboBox
     AnchorSideLeft.Control = Owner
@@ -168,8 +168,8 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
     Increment = 0.1
-    OnChange = SpinEditChange
     TabOrder = 6
+    OnChange = SpinEditChange
   end
   object InactiveCoil1Label: TLabel
     AnchorSideTop.Control = InactiveCoil1
@@ -217,8 +217,8 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     Increment = 0.1
-    OnChange = SpinEditChange
     TabOrder = 7
+    OnChange = SpinEditChange
   end
   object EndCoilType: TComboBox
     AnchorSideLeft.Control = LengthL2
@@ -290,8 +290,8 @@ object GeometryForm1: TGeometryForm1
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    OnChange = SpinEditChange
     TabOrder = 8
+    OnChange = SpinEditChange
   end
   object LengthL0Unit: TComboBox
     AnchorSideLeft.Control = CoilDiameterUnit
@@ -332,8 +332,8 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     Increment = 0.1
-    OnChange = SpinEditChange
     TabOrder = 5
+    OnChange = SpinEditChange
   end
   object Bevel1: TBevel
     AnchorSideLeft.Control = Owner
@@ -417,8 +417,8 @@ object GeometryForm1: TGeometryForm1
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    OnChange = SpinEditChange
     TabOrder = 10
+    OnChange = SpinEditChange
   end
   object LengthL1Unit: TComboBox
     AnchorSideLeft.Control = LengthL0Unit
@@ -484,8 +484,8 @@ object GeometryForm1: TGeometryForm1
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    OnChange = SpinEditChange
     TabOrder = 12
+    OnChange = SpinEditChange
   end
   object LengthL2Label: TLabel
     AnchorSideTop.Control = LengthL2
@@ -515,7 +515,7 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = '&Apply'
-    OnClick = ApplyBtnClick
     TabOrder = 15
+    OnClick = ApplyBtnClick
   end
 end
