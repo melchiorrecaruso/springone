@@ -465,7 +465,7 @@ begin
 
     if (fClosedEnds <> GroundEnds = True) then
     begin
-      ErrorMessage.Add('"DeltaDE" undefined.');
+      WarningMessage.Add('"DeltaDE" undefined.');
     end;
 
     fCheck := ErrorMessage.Count = 0;
@@ -516,7 +516,7 @@ begin
           if (FColdCoiled = False) and (fGroundEnds = True) then
             FLengthLc := (fnt - 0.3) * Fdmax
           else
-           FLengthLc := (0*mm);
+            FLengthLc := (0*mm);
     end else
     begin
       if (FColdCoiled = False) and (fGroundEnds = False) then
@@ -583,7 +583,7 @@ begin
   begin
     // Quando la molla è sottoposta a compressione, il diametro della spira aumenta leggermente.
     // L'incremento del diamtro esterno della molla sotto carico, DeltaDe, è determinato usando la
-    // formula sottostante, valida per molla a pacco LengthLc YoungModulus per estremità della molla
+    // formula sottostante, valida per molla a pacco Lc e per estremità della molla
     // liberamente appoggiate.
     if (fClosedEnds) and (GroundEnds) then
       mDe := (FStrokeSc + fn * Fd) / fn
@@ -591,9 +591,10 @@ begin
       if (not fClosedEnds) and (not GroundEnds) then
         mDe := (FStrokeSc + (fn + 1.5) * Fd) / fn
       else
-        mDe := 0*mm;
+        // negli altri casi le considero i terminali aperti non molati
+        mDe := 0*m;
 
-    if mDe = (0*mm) then
+    if mDe.Value = 0 then
     begin
       WarningMessage.Add('DeltaDe undefined. Please change kind spring ends.');
     end else
