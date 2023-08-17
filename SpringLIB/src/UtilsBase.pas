@@ -84,17 +84,15 @@ implementation
 function GetSymbol(const AValue: TMeters): string;
 begin
   case UseImperialSystem of
-    True:  result := 'in';
-    False: result := 'mm';
+    True:  result := TInchUnit.GetSymbol([]);
+    False: result := TMeterUnit.GetSymbol([pMilli]);
   end;
 end;
 
 function GetValue(const AValue: TMeters): double;
-const
-  Factor = 39.3700787401575;
 begin
   case UseImperialSystem of
-    True:  result := AValue.Value * Factor;
+    True:  result := AValue.ToInch.Value;
     False: result := AValue.Value([pMilli]);
   end;
 end;
@@ -102,17 +100,15 @@ end;
 function GetSymbol(const AValue: TNewtons): string;
 begin
   case UseImperialSystem of
-    True:  result := 'lbf';
-    False: result := 'N';
+    True:  result := TPoundUnit.GetSymbol([]);
+    False: result := TNewtonUnit.GetSymbol([]);
   end;
 end;
 
 function GetValue(const AValue: TNewtons): double;
-const
-  Factor = 0.22480894309971;
 begin
   case UseImperialSystem of
-    True:  result := AValue.Value * Factor;
+    True:  result := AValue.ToPoundForce.Value;
     False: result := AValue.Value;
   end;
 end;
@@ -120,17 +116,15 @@ end;
 function GetSymbol(const AValue: TPascals): string;
 begin
   case UseImperialSystem of
-    True:  result := 'psi';
-    False: result := 'MPa';
+    True:  result := TPoundPerSquareInchUnit.GetSymbol([]);
+    False: result := TPascalUnit.GetSymbol([pMega]);
   end;
 end;
 
 function GetValue(const AValue: TPascals): double;
-const
-  Factor = 0.00014503773773;
 begin
   case UseImperialSystem of
-    True:  result := AValue.Value * Factor;
+    True:  result := AValue.ToPoundPerSquareInch.Value;
     False: result := AValue.Value([pMega]);
   end;
 end;
@@ -138,17 +132,15 @@ end;
 function GetSymbol(const AValue: TNewtonsPerMeter): string;
 begin
   case UseImperialSystem of
-    True:  result := 'lbf/in';
-    False: result := 'N/mm';
+    True:  result := TPoundForcePerInchUnit.GetSymbol([]);
+    False: result := TNewtonPerMeterUnit.GetSymbol([pNone, pMilli]);
   end;
 end;
 
 function GetValue(const AValue: TNewtonsPerMeter): double;
-const
-  Factor = 0.005710147154733;
 begin
   case UseImperialSystem of
-    True:  result := AValue.Value * Factor;
+    True:  result := AValue.ToPoundForcePerInch.Value;
     False: result := AValue.Value([pNone, pMilli]);
   end;
 end;
@@ -156,35 +148,31 @@ end;
 function GetSymbol(const AValue: TKilograms): string;
 begin
   case UseImperialSystem of
-    True:  result := 'lb';
-    False: result := 'g';
+    True:  result := TPoundUnit.GetSymbol([]);
+    False: result := TKilogramUnit.GetSymbol([pNone]);
   end;
 end;
 
 function GetValue(const AValue: TKilograms): double;
-const
-  Factor = 2.20462262184878;
 begin
   case UseImperialSystem of
-    True:  result := AValue.Value * Factor;
-    False: result := AValue.Value([pNone]);
+    True:  result := AValue.ToPound.Value;
+    False: result := AValue.Value;
   end;
 end;
 
 function GetSymbol(const AValue: TJoules): string;
 begin
   case UseImperialSystem of
-    True:  result := 'lbf·in';
-    False: result := 'N.mm';
+    True:  result := TPoundForceInchUnit.GetSymbol([]);
+    False: result := TNewtonMeterUnit.GetSymbol([pMilli]);
   end;
 end;
 
 function GetValue(const AValue: TJoules): double;
-const
-  Factor = 0.112984829027617;
 begin
   case UseImperialSystem of
-    True:  result := AValue.Value * Factor;
+    True:  result := AValue.ToPoundForceInch.Value;
     False: result := AValue.ToNewtonMeter.Value([pNone, pMilli]);
   end;
 end;
@@ -192,8 +180,8 @@ end;
 function GetSymbol(const AValue: THertz): string;
 begin
   case UseImperialSystem of
-    True:  result := 'Hz';
-    False: result := 'Hz';
+    True:  result := THertzUnit.GetSymbol([]);
+    False: result := THertzUnit.GetSymbol([]);
   end;
 end;
 
@@ -208,8 +196,8 @@ end;
 function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
 begin
   case UseImperialSystem of
-    True:  result := 'kg/m3';
-    False: result := 'kg/m3';
+    True:  result := TKilogramPerCubicMeterUnit.GetSymbol([pNone, pNone]);
+    False: result := TKilogramPerCubicMeterUnit.GetSymbol([pNone, pNone]);
   end;
 end;
 
@@ -224,8 +212,8 @@ end;
 function GetSymbol(const AValue: TRadians): string;
 begin
   case UseImperialSystem of
-    True:  result := 'deg';
-    False: result := 'deg';
+    True:  result := TDegreeUnit.GetSymbol([]);
+    False: result := TDegreeUnit.GetSymbol([]);
   end;
 end;
 
