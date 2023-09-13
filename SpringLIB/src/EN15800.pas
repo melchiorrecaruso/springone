@@ -439,8 +439,8 @@ begin
   Check := ErrorMessage.Count = 0;
   if Check then
   begin
-    d  := fWireDiameter.Value/PrefixTable[pMilli].Factor;
-    Dm := fCoilDiameter.Value/PrefixTable[pMilli].Factor;
+    d  := fWireDiameter.Value([pMilli]);
+    Dm := fCoilDiameter.Value([pMilli]);
 
     // tolerance on coil diameter (unloaded spring)
     fToleranceOnCoilDiameter := (0.025 * Dm/Power(d, 0.17) * QualityFactor(fQualityGradeOnDm))*mm;
@@ -471,15 +471,15 @@ begin
 
     // tolerance on bend radii (unloaded spring)
 
-    fToleranceOnBendRadius1 := (0.6 + 0.2*PrefixTable[pMilli].Factor * fBendRadius1.Value)*QualityFactor(fQualityGradeOnBendRadii)*mm;
-    fToleranceOnBendRadius2 := (0.6 + 0.2*PrefixTable[pMilli].Factor * fBendRadius2.Value)*QualityFactor(fQualityGradeOnBendRadii)*mm;
-    fToleranceOnBendRadius3 := (0.6 + 0.2*PrefixTable[pMilli].Factor * fBendRadius3.Value)*QualityFactor(fQualityGradeOnBendRadii)*mm;
+    fToleranceOnBendRadius1 := (0.6 + 0.2*fBendRadius1.Value([pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
+    fToleranceOnBendRadius2 := (0.6 + 0.2*fBendRadius2.Value([pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
+    fToleranceOnBendRadius3 := (0.6 + 0.2*fBendRadius3.Value([pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
 
     // tolerance on angles of bends on leg
 
-    fToleranceOnBendAngle1 := 4*sqrt(PrefixTable[pMilli].Factor * fBendRadius1.Value/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
-    fToleranceOnBendAngle2 := 4*sqrt(PrefixTable[pMilli].Factor * fBendRadius2.Value/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
-    fToleranceOnBendAngle3 := 4*sqrt(PrefixTable[pMilli].Factor * fBendRadius3.Value/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
+    fToleranceOnBendAngle1 := 4*sqrt(fBendRadius1.Value([pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
+    fToleranceOnBendAngle2 := 4*sqrt(fBendRadius2.Value([pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
+    fToleranceOnBendAngle3 := 4*sqrt(fBendRadius3.Value([pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
   end;
 
   if fFreeBodyLengthLk > (630*mm) then ErrorMessage.Add('Free body length Lk > 630 mm.');
@@ -489,7 +489,7 @@ function TDIN2194.LegLengthCoefficent(LegLength: TMeters): double;
 var
   LegLen: double;
 begin
-  LegLen := PrefixTable[pMilli].Factor * LegLength.Value;
+  LegLen := LegLength.Value([pMilli]);
   if (LegLen >= 0.5) and (LegLen <=    6) then result := 0.3 else
   if (LegLen >    6) and (LegLen <=   30) then result := 0.8 else
   if (LegLen >   30) and (LegLen <=  120) then result := 1.3 else

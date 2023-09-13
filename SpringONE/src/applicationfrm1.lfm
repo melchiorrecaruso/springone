@@ -8,10 +8,10 @@ object ApplicationForm1: TApplicationForm1
   Caption = 'Analisys'
   ClientHeight = 215
   ClientWidth = 400
-  OnCreate = FormCreate
   ParentBiDiMode = False
   Position = poMainFormCenter
-  LCLVersion = '2.3.0.0'
+  LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -199,9 +199,9 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Top = 8
     BorderSpacing.Right = 10
     DecimalPlaces = 1
-    OnChange = SpinEditChange
     TabOrder = 5
     Value = 20
+    OnChange = SpinEditChange
   end
   object CycleFrequencyUnit: TComboBox
     AnchorSideLeft.Side = asrBottom
@@ -243,9 +243,9 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Top = 8
     BorderSpacing.Right = 10
     DecimalPlaces = 1
-    OnChange = SpinEditChange
     TabOrder = 7
     Value = 1
+    OnChange = SpinEditChange
   end
   object CycleFrequencyLabel: TLabel
     AnchorSideTop.Control = CycleFrequency

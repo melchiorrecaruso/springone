@@ -91,6 +91,7 @@ type
     fTauhz: TPascals;
     fTauoz: TPascals;
     fTauz: TPascals;
+    fTemperature: TKelvins;
     fw: double;
     fW0n: TJoules;
     fW12: TJoules;
@@ -171,6 +172,7 @@ type
     property TorsionalStressTaukh: TPascals read fTaukh;
     property TorsionalStressTaukn: TPascals read fTaukn;
     property TotalCoils: double read fnt write fnt;
+    property Temperature: TKelvins read fTemperature write fTemperature;
     property YoungModulus: TPascals read fE write fE;
     property WireDiameter: TMeters read Fd write Fd;
     property WireDiameterMax: TMeters read Fdmax write Fdmax;

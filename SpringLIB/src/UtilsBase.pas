@@ -41,33 +41,52 @@ function TryTextToFloat(S: string): double;
 function TryTextToInt(S: string): longint;
 
 
-
 function GetSymbol(const AValue: TMeters): string;
 function GetValue (const AValue: TMeters): double;
+function TryFormat(const AValue, AToll: TMeters): string;
+function TryFormat(const AValue: TMeters): string;
+function TryFormat(const AValue: double): string;
+
+
+
+
 
 function GetSymbol(const AValue: TNewtons): string;
 function GetValue (const AValue: TNewtons): double;
+function TryFormat(const AValue, AToll: TNewtons): string;
+function TryFormat(const AValue: TNewtons): string;
 
 function GetSymbol(const AValue: TPascals): string;
 function GetValue (const AValue: TPascals): double;
+function TryFormat(const AValue: TPascals): string;
 
 function GetSymbol(const AValue: TNewtonsPerMeter): string;
 function GetValue (const AValue: TNewtonsPerMeter): double;
+function TryFormat(const AValue: TNewtonsPerMeter): string;
 
 function GetSymbol(const AValue: TKilograms): string;
 function GetValue (const AValue: TKilograms): double;
+function TryFormat(const AValue: TKilograms): string;
 
 function GetSymbol(const AValue: TJoules): string;
 function GetValue (const AValue: TJoules): double;
+function TryFormat(const AValue: TJoules): string;
 
 function GetSymbol(const AValue: THertz): string;
 function GetValue (const AValue: THertz): double;
+function TryFormat(const AValue: THertz): string;
 
 function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
 function GetValue (const AValue: TKilogramsPerCubicMeter): double;
+function TryFormat(const AValue: TKilogramsPerCubicMeter): string;
 
 function GetSymbol(const AValue: TRadians): string;
 function GetValue (const AValue: TRadians): double;
+
+function GetSymbol(const AValue: TKelvins): string;
+function GetValue (const AValue: TKelvins): double;
+function TryFormat(const AValue: TKelvins): string;
+
 
 
 var
@@ -81,11 +100,20 @@ var
 
 implementation
 
+const
+  S1 = '%-6s %s';
+  S2 = '%-6s %s ± %s';
+
+function TryFormat(const AValue: double): string;
+begin
+  Result := TryFloatToText(AValue);
+end;
+
 function GetSymbol(const AValue: TMeters): string;
 begin
   case UseImperialSystem of
-    True:  result := TInchUnit.GetSymbol([]);
-    False: result := TMeterUnit.GetSymbol([pMilli]);
+    True:  result := ADim.GetSymbol(TInchUnit.Symbol, []);
+    False: result := ADim.GetSymbol(TMeterUnit.Symbol, [pMilli]);
   end;
 end;
 
@@ -97,11 +125,29 @@ begin
   end;
 end;
 
+function TryFormat(const AValue: TMeters): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
+function TryFormat(const AValue, AToll: TMeters): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S2, [GetSymbol(AValue), TryFormat(GetValue(AValue)), TryFormat(GetValue(AToll))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
+
+
 function GetSymbol(const AValue: TNewtons): string;
 begin
   case UseImperialSystem of
-    True:  result := TPoundUnit.GetSymbol([]);
-    False: result := TNewtonUnit.GetSymbol([]);
+    True:  result := ADim.GetSymbol(TPoundUnit.Symbol, []);
+    False: result := ADim.GetSymbol(TNewtonUnit.Symbol, [pNone]);
   end;
 end;
 
@@ -113,27 +159,51 @@ begin
   end;
 end;
 
+function TryFormat(const AValue, AToll: TNewtons): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S2, [GetSymbol(AValue), TryFormat(GetValue(AValue)), TryFormat(GetValue(AToll))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
+function TryFormat(const AValue: TNewtons): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
 function GetSymbol(const AValue: TPascals): string;
 begin
   case UseImperialSystem of
-    True:  result := TPoundPerSquareInchUnit.GetSymbol([]);
-    False: result := TPascalUnit.GetSymbol([pMega]);
+    True:  result := ADim.GetSymbol(TPoundPerSquareInchUnit.Symbol, [pKilo]);
+    False: result := ADim.GetSymbol(TPascalUnit.Symbol, [pMega]);
   end;
 end;
 
 function GetValue(const AValue: TPascals): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToPoundPerSquareInch.Value;
+    True:  result := AValue.ToPoundPerSquareInch.Value([pKilo]);
     False: result := AValue.Value([pMega]);
   end;
+end;
+
+function TryFormat(const AValue: TPascals): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
 end;
 
 function GetSymbol(const AValue: TNewtonsPerMeter): string;
 begin
   case UseImperialSystem of
-    True:  result := TPoundForcePerInchUnit.GetSymbol([]);
-    False: result := TNewtonPerMeterUnit.GetSymbol([pNone, pMilli]);
+    True:  result := Adim.GetSymbol(TPoundForcePerInchUnit.Symbol,[]);
+    False: result := ADim.GetSymbol(TNewtonPerMeterUnit.Symbol, [pNone, pMilli]);
   end;
 end;
 
@@ -145,11 +215,19 @@ begin
   end;
 end;
 
+function TryFormat(const AValue: TNewtonsPerMeter): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
 function GetSymbol(const AValue: TKilograms): string;
 begin
   case UseImperialSystem of
-    True:  result := TPoundUnit.GetSymbol([]);
-    False: result := TKilogramUnit.GetSymbol([pNone]);
+    True:  result := ADim.GetSymbol(TPoundUnit.Symbol, []);
+    False: result := ADim.GetSymbol(TKilogramUnit.Symbol, [pNone]);
   end;
 end;
 
@@ -161,11 +239,19 @@ begin
   end;
 end;
 
+function TryFormat(const AValue: TKilograms): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
 function GetSymbol(const AValue: TJoules): string;
 begin
   case UseImperialSystem of
-    True:  result := TPoundForceInchUnit.GetSymbol([]);
-    False: result := TNewtonMeterUnit.GetSymbol([pMilli]);
+    True:  result := ADim.GetSymbol(TPoundForceInchUnit.Symbol, []);
+    False: result := ADim.GetSymbol(TNewtonMeterUnit.Symbol, [pNone, pMilli]);
   end;
 end;
 
@@ -177,11 +263,19 @@ begin
   end;
 end;
 
+function TryFormat(const AValue: TJoules): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
 function GetSymbol(const AValue: THertz): string;
 begin
   case UseImperialSystem of
-    True:  result := THertzUnit.GetSymbol([]);
-    False: result := THertzUnit.GetSymbol([]);
+    True:  result := ADim.GetSymbol(THertzUnit.Symbol, [pNone]);
+    False: result := ADim.GetSymbol(THertzUnit.Symbol, [pNone]);
   end;
 end;
 
@@ -193,11 +287,19 @@ begin
   end;
 end;
 
+function TryFormat(const AValue: THertz): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
 function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
 begin
   case UseImperialSystem of
-    True:  result := TKilogramPerCubicMeterUnit.GetSymbol([pNone, pNone]);
-    False: result := TKilogramPerCubicMeterUnit.GetSymbol([pNone, pNone]);
+    True:  result := ADim.GetSymbol(TKilogramPerCubicMeterUnit.Symbol, [pNone, pNone]);
+    False: result := ADim.GetSymbol(TKilogramPerCubicMeterUnit.Symbol, [pNone, pNone]);
   end;
 end;
 
@@ -209,11 +311,19 @@ begin
   end;
 end;
 
+function TryFormat(const AValue: TKilogramsPerCubicMeter): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
+end;
+
 function GetSymbol(const AValue: TRadians): string;
 begin
   case UseImperialSystem of
-    True:  result := TDegreeUnit.GetSymbol([]);
-    False: result := TDegreeUnit.GetSymbol([]);
+    True:  result := ADim.GetSymbol(TDegreeUnit.Symbol, []);
+    False: result := ADim.GetSymbol(TDegreeUnit.Symbol, []);
   end;
 end;
 
@@ -223,6 +333,30 @@ begin
     True:  result := AValue.ToDegree.Value;
     False: result := AValue.ToDegree.Value;
   end;
+end;
+
+function GetSymbol(const AValue: TKelvins): string;
+begin
+  case UseImperialSystem of
+    True:  result := ADim.GetSymbol(TDegreeFahrenheitUnit.Symbol, []);
+    False: result := ADim.GetSymbol(TDegreeCelsiusUnit.Symbol, []);
+  end;
+end;
+
+function GetValue(const AValue: TKelvins): double;
+begin
+  case UseImperialSystem of
+    True:  result := AValue.ToDegreeFahrenheit.Value;
+    False: result := AValue.ToDegreeCelsius.Value;
+  end;
+end;
+
+function TryFormat(const AValue: TKelvins): string;
+begin
+  if AValue.Value <> 0 then
+    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+  else
+    Result := Format(S1, [GetSymbol(AValue), '---']);
 end;
 
 // ---

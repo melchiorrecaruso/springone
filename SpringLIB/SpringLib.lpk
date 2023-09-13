@@ -14,6 +14,9 @@
         <OtherUnitFiles Value="src"/>
         <UnitOutputDirectory Value="build\lib"/>
       </SearchPaths>
+      <CodeGeneration>
+        <SmartLinkUnit Value="True"/>
+      </CodeGeneration>
       <Linking>
         <Debugging>
           <GenerateDebugInfo Value="False"/>
@@ -24,7 +27,7 @@
         <WriteFPCLogo Value="False"/>
       </Other>
     </CompilerOptions>
-    <Description Value="SpringXXX Application Library"/>
+    <Description Value="SpringONE Application Library"/>
     <Version Minor="1"/>
     <Files>
       <Item>
