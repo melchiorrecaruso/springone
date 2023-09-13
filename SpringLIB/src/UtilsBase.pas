@@ -101,8 +101,8 @@ var
 implementation
 
 const
-  S1 = '%-6s %s';
-  S2 = '%-6s %s ± %s';
+  S1 = '%s %s';
+  S2 = '%s ± %s %s';
 
 function TryFormat(const AValue: double): string;
 begin
@@ -128,20 +128,18 @@ end;
 function TryFormat(const AValue: TMeters): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function TryFormat(const AValue, AToll: TMeters): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S2, [GetSymbol(AValue), TryFormat(GetValue(AValue)), TryFormat(GetValue(AToll))])
+    Result := Format(S2, [TryFormat(GetValue(AValue)), TryFormat(GetValue(AToll)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
-
-
 
 function GetSymbol(const AValue: TNewtons): string;
 begin
@@ -162,17 +160,17 @@ end;
 function TryFormat(const AValue, AToll: TNewtons): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S2, [GetSymbol(AValue), TryFormat(GetValue(AValue)), TryFormat(GetValue(AToll))])
+    Result := Format(S2, [TryFormat(GetValue(AValue)), TryFormat(GetValue(AToll)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function TryFormat(const AValue: TNewtons): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function GetSymbol(const AValue: TPascals): string;
@@ -194,9 +192,9 @@ end;
 function TryFormat(const AValue: TPascals): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function GetSymbol(const AValue: TNewtonsPerMeter): string;
@@ -218,9 +216,9 @@ end;
 function TryFormat(const AValue: TNewtonsPerMeter): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function GetSymbol(const AValue: TKilograms): string;
@@ -242,9 +240,9 @@ end;
 function TryFormat(const AValue: TKilograms): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function GetSymbol(const AValue: TJoules): string;
@@ -266,9 +264,9 @@ end;
 function TryFormat(const AValue: TJoules): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function GetSymbol(const AValue: THertz): string;
@@ -290,9 +288,9 @@ end;
 function TryFormat(const AValue: THertz): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
@@ -314,9 +312,9 @@ end;
 function TryFormat(const AValue: TKilogramsPerCubicMeter): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 function GetSymbol(const AValue: TRadians): string;
@@ -354,9 +352,9 @@ end;
 function TryFormat(const AValue: TKelvins): string;
 begin
   if AValue.Value <> 0 then
-    Result := Format(S1, [GetSymbol(AValue), TryFormat(GetValue(AValue))])
+    Result := Format(S1, [TryFormat(GetValue(AValue)), GetSymbol(AValue)])
   else
-    Result := Format(S1, [GetSymbol(AValue), '---']);
+    Result := Format(S1, ['---', GetSymbol(AValue)]);
 end;
 
 // ---

@@ -79,7 +79,7 @@ LengthL1=227
 LengthL1Unit=0
 LengthL2=142.5
 LengthL2Unit=0
-EndCoilType=0
+EndCoilType=1
 
 [TGeometryForm3]
 WireDiameter=0

@@ -728,8 +728,8 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="9"/>
-        <TopLine Value="242"/>
-        <CursorPos X="55" Y="215"/>
+        <TopLine Value="261"/>
+        <CursorPos X="72" Y="114"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -910,7 +910,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="211"/>
         <CursorPos X="21" Y="229"/>
-        <UsageCount Value="193"/>
+        <UsageCount Value="194"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\lazarus\lcl\forms.pp"/>
@@ -954,9 +954,9 @@
       <Unit>
         <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
         <EditorIndex Value="14"/>
-        <TopLine Value="103"/>
-        <CursorPos X="30" Y="105"/>
-        <FoldState Value=" T3jP0612222 PUiV0Y"/>
+        <TopLine Value="211"/>
+        <CursorPos X="51" Y="357"/>
+        <FoldState Value=" T3jP0612222 PUiT0;"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1123,7 +1123,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="83"/>
         <CursorPos Y="114"/>
-        <UsageCount Value="116"/>
+        <UsageCount Value="117"/>
       </Unit>
       <Unit>
         <Filename Value="C:\fpcupdeluxe\fpcsrc\rtl\objpas\sysutils\sysstrh.inc"/>
@@ -1161,7 +1161,7 @@
         <EditorIndex Value="10"/>
         <TopLine Value="16"/>
         <CursorPos X="3" Y="34"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="75"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
