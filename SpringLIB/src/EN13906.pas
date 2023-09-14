@@ -699,7 +699,7 @@ begin
     end;
     // La sicurezza contro l'instabilità è raggiunta in teoria per un valore immaginario della radice
     // quadrata e per Sk/s > 1.
-    if not ((fSk / FStrokeSc) > 1) then WarningMessage.Add('Warning: Buckling!.');
+    if not ((fSk / FStrokeSc) > 1) then WarningMessage.Add('Warning: Buckling!');
 
     fCheck := ErrorMessage.Count = 0;
   end;
@@ -869,10 +869,10 @@ end;
 
 procedure TCompressionSpringSolver.PostCheck(ASpringTolerance: TEN15800);
 begin
-  if (fnt - fn) < 2 then WarningMessage.Add('Warning: inactive end coild < 1');
+  if (fnt - fn) < 2 then WarningMessage.Add('Warning: inactive end coild < 1.');
 
-  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFn then WarningMessage.Add('Warning: Load F2 max > Fn');
-  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFc then WarningMessage.Add('Warning: Load F2 max > Fc');
+  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFn then WarningMessage.Add('Warning: Load F2 max > Fn.');
+  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFc then WarningMessage.Add('Warning: Load F2 max > Fc.');
 end;
 
 // TTorsionSpringSolver
