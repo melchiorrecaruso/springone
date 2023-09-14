@@ -29,7 +29,7 @@
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Melchiorre Caruso" FileDescription="Helical Compression Spring Designer" ProductName="SpringONE"/>
     </VersionInfo>
-    <BuildModes Active="Debug">
+    <BuildModes Active="Release">
       <Item Name="Debug" Default="True"/>
       <Item Name="Release">
         <CompilerOptions>
@@ -104,7 +104,7 @@
         <Filename Value="SpringONE.lpr"/>
         <IsPartOfProject Value="True"/>
         <TopLine Value="34"/>
-        <CursorPos X="10" Y="42"/>
+        <CursorPos X="38" Y="45"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -694,11 +694,12 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="30"/>
         <CursorPos Y="51"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\MainFrm.pas"/>
@@ -707,8 +708,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="953"/>
-        <CursorPos X="9" Y="920"/>
+        <TopLine Value="1083"/>
+        <CursorPos X="32" Y="1103"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -726,9 +727,8 @@
         <ComponentName Value="ReportForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="261"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="260"/>
         <CursorPos X="72" Y="114"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -755,7 +755,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ApplicationFrm1"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="90"/>
         <CursorPos X="6" Y="109"/>
         <UsageCount Value="200"/>
@@ -768,9 +768,9 @@
         <ComponentName Value="DrawingForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="41"/>
-        <CursorPos X="20" Y="52"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="37"/>
+        <CursorPos X="14" Y="59"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -814,7 +814,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GeometryFrm1"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="27"/>
         <CursorPos X="5" Y="45"/>
         <UsageCount Value="200"/>
@@ -827,7 +827,7 @@
         <ComponentName Value="MaterialForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="41"/>
         <CursorPos X="34" Y="43"/>
         <UsageCount Value="200"/>
@@ -849,7 +849,7 @@
         <ComponentName Value="QualityForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="22"/>
         <CursorPos X="5" Y="40"/>
         <UsageCount Value="200"/>
@@ -910,7 +910,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="211"/>
         <CursorPos X="21" Y="229"/>
-        <UsageCount Value="194"/>
+        <UsageCount Value="195"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\lazarus\lcl\forms.pp"/>
@@ -953,17 +953,16 @@
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <EditorIndex Value="14"/>
-        <TopLine Value="211"/>
-        <CursorPos X="51" Y="357"/>
-        <FoldState Value=" T3jP0612222 PUiT0;"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="15"/>
+        <CursorPos Y="86"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\Compozer.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="742"/>
         <CursorPos X="48" Y="752"/>
         <UsageCount Value="200"/>
@@ -971,10 +970,11 @@
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="2072"/>
-        <CursorPos X="23" Y="2079"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="274"/>
+        <CursorPos X="3" Y="294"/>
         <UsageCount Value="101"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\lazarus\lcl\graphics.pp"/>
@@ -992,15 +992,15 @@
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN13906.pas"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="299"/>
-        <CursorPos X="14" Y="140"/>
+        <EditorIndex Value="13"/>
+        <TopLine Value="855"/>
+        <CursorPos X="81" Y="874"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN15800.pas"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="28"/>
         <CursorPos X="3" Y="47"/>
         <UsageCount Value="100"/>
@@ -1008,7 +1008,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\EN10270.pas"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="248"/>
         <CursorPos Y="254"/>
         <UsageCount Value="100"/>
@@ -1123,7 +1123,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="83"/>
         <CursorPos Y="114"/>
-        <UsageCount Value="117"/>
+        <UsageCount Value="118"/>
       </Unit>
       <Unit>
         <Filename Value="C:\fpcupdeluxe\fpcsrc\rtl\objpas\sysutils\sysstrh.inc"/>
@@ -1158,10 +1158,10 @@
         <Filename Value="src\liblink.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LibLink"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="16"/>
         <CursorPos X="3" Y="34"/>
-        <UsageCount Value="75"/>
+        <UsageCount Value="76"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1211,94 +1211,6 @@
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="90" Column="75" TopLine="70"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="56" Column="10" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="90" Column="75" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="56" Column="19" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="163" Column="68" TopLine="148"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="97" Column="75" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="124" Column="75" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="56" Column="19" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="165" Column="55" TopLine="151"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="168" Column="54" TopLine="139"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="192" Column="54" TopLine="138"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="166" Column="63" TopLine="147"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="190" Column="62" TopLine="162"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="193" Column="5" TopLine="146"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="47" Column="19" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="105" Column="23" TopLine="90"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="101" Column="34" TopLine="96"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="37" Column="24" TopLine="24"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="105" Column="11" TopLine="85"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="143" Column="62" TopLine="87"/>
-      </Position>
-      <Position>
-        <Filename Value="..\SpringLIB\src\UtilsBase.pas"/>
-        <Caret Line="48" Column="19" TopLine="30"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="106" Column="58" TopLine="90"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
         <Caret Line="194" Column="122" TopLine="185"/>
       </Position>
       <Position>
@@ -1328,6 +1240,94 @@
       <Position>
         <Filename Value="src\ReportFrm.pas"/>
         <Caret Line="223" Column="121" TopLine="207"/>
+      </Position>
+      <Position>
+        <Filename Value="..\SpringLIB\src\EN13906.pas"/>
+        <Caret Line="874" Column="112" TopLine="860"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="921" Column="9" TopLine="921"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="922" Column="9" TopLine="922"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="923" Column="9" TopLine="923"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="931" Column="98" TopLine="219"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="158" Column="34" TopLine="140"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="460" Column="3" TopLine="457"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="189" Column="20" TopLine="171"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="230" Column="35" TopLine="210"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="182" Column="22" TopLine="164"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="1095" Column="74" TopLine="1070"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="803" Column="44" TopLine="782"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="788" Column="3" TopLine="782"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="135" Column="24" TopLine="117"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="890" Column="3" TopLine="884"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="182" Column="22" TopLine="164"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="1095" Column="63" TopLine="1078"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="919" Column="3" TopLine="900"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="1106" Column="32" TopLine="1086"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="1105" Column="32" TopLine="1085"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="1104" Column="32" TopLine="1084"/>
+      </Position>
+      <Position>
+        <Filename Value="src\MainFrm.pas"/>
+        <Caret Line="1103" Column="32" TopLine="1083"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>

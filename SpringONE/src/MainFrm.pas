@@ -25,9 +25,10 @@ unit MainFrm;
 interface
 
 uses
-  BGRABitmap, BGRAShape, BGRASVG, BGRATextFX, BGRABitmapTypes, BGRAUnits, BGRAVirtualScreen,
-  Classes, Controls, Dialogs, ExtCtrls, ExtDlgs, Forms, GraphBase, EN10270, EN13906, EN15800,
-  Graphics, IniFiles, LResources, Math, Menus, PrintersDlgs, Spin, StdCtrls, SysUtils;
+  BGRABitmap, BGRAShape, BGRASVG, BGRATextFX, BGRABitmapTypes, BGRAUnits,
+  BGRAVirtualScreen, Classes, Controls, Dialogs, ExtCtrls, ExtDlgs, Forms,
+  GraphBase, EN10270, EN13906, EN15800, Graphics, IniFiles, LResources, Math,
+  Menus, PrintersDlgs, Spin, StdCtrls, ActnList, SysUtils;
 
 type
 
@@ -213,7 +214,7 @@ begin
   MaterialForm.SaveToSolver;      // MaterialForm
   ProductionForm.SaveToSolver;    // ProductionForm
   QualityForm.SaveToSolver;       // QualityForm
-  ApplicationForm1.SaveToSolver;   // ApplicationForm
+  ApplicationForm1.SaveToSolver;  // ApplicationForm
   // Solve
   MainForm.FormPaint(nil);
   {$ENDIF}
@@ -223,7 +224,7 @@ begin
   MaterialForm.SaveToSolver;      // MaterialForm
   ProductionForm.SaveToSolver;    // ProductionForm
   QualityForm.SaveToSolver;       // QualityForm
-  ApplicationForm3.SaveToSolver;   // ApplicationForm
+  ApplicationForm3.SaveToSolver;  // ApplicationForm
   // Solve
   MainForm.FormPaint(nil);
   {$ENDIF}
@@ -1080,12 +1081,66 @@ begin
   // Custom section spring drawing
   if CustomSectionMenuItem.Checked then
   begin
+    SetLength(Bit, 2);
+    Bit[0] := TBGRABitmap.Create;
+    Bit[1] := TBGRABitmap.Create;
+    Bit[0].SetSize(aScreen.Width, aScreen.Height);
+    Bit[1].SetSize(aScreen.Width, aScreen.Height);
+    {$IFDEF MODULE1}
+    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := True;
+    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := False;
+    SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
+    SpringDrawing.Caption    := TryFormatFloat('L = %s', 'L = ---', SpringDrawing.Lx);
+    SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
+    SpringDrawing.Destroy;
+    {$ENDIF}
+    Bit[0].Destroy;
+    Bit[1].Destroy;
+    Bit := nil;
   end else
 
   // Custom profle spring drawing
   if CustomProfileMenuItem.Checked then
   begin
+
+    SetLength(Bit, 2);
+    Bit[0] := TBGRABitmap.Create;
+    Bit[1] := TBGRABitmap.Create;
+    Bit[0].SetSize(aScreen.Width, aScreen.Height);
+    Bit[1].SetSize(aScreen.Width, aScreen.Height);
+    {$IFDEF MODULE1}
+    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := True;
+    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+    SpringDrawing.AutoFit    := False;
+    SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
+    SpringDrawing.Caption    := TryFormatFloat('L = %s', 'L = ---', SpringDrawing.Lx);
+    SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
+    SpringDrawing.Destroy;
+    {$ENDIF}
+    Bit[0].Destroy;
+    Bit[1].Destroy;
+    Bit := nil;
 
   end else
 

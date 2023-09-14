@@ -42,7 +42,7 @@ uses
 
 begin
   ApplicationName := 'SpringONE';
-  ApplicationVer  := 'SpringONE v0.38';
+  ApplicationVer  := 'SpringONE v0.40';
 
   RequireDerivedFormResource:=True;
   Application.Title:='SpringOne';

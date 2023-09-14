@@ -48,9 +48,6 @@ function TryFormat(const AValue: TMeters): string;
 function TryFormat(const AValue: double): string;
 
 
-
-
-
 function GetSymbol(const AValue: TNewtons): string;
 function GetValue (const AValue: TNewtons): double;
 function TryFormat(const AValue, AToll: TNewtons): string;
@@ -86,8 +83,6 @@ function GetValue (const AValue: TRadians): double;
 function GetSymbol(const AValue: TKelvins): string;
 function GetValue (const AValue: TKelvins): double;
 function TryFormat(const AValue: TKelvins): string;
-
-
 
 var
   ApplicationName: string;
