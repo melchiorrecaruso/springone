@@ -41,7 +41,7 @@
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
             <Libraries Value="src"/>
-            <OtherUnitFiles Value="src;library"/>
+            <OtherUnitFiles Value="src"/>
             <UnitOutputDirectory Value="build\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -104,7 +104,6 @@
         <Filename Value="springone.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SpringONE"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="34"/>
         <CursorPos X="38" Y="45"/>
         <UsageCount Value="200"/>
@@ -691,27 +690,29 @@
         <UsageCount Value="5"/>
       </Unit>
       <Unit>
-        <Filename Value="src\AboutFrm.pas"/>
+        <Filename Value="src\aboutfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="6"/>
+        <UnitName Value="AboutFrm"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="30"/>
         <CursorPos Y="51"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="src\MainFrm.pas"/>
+        <Filename Value="src\mainfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="MainFrm"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="1083"/>
-        <CursorPos X="32" Y="1103"/>
+        <TopLine Value="185"/>
+        <CursorPos X="3" Y="199"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -724,16 +725,16 @@
         <UsageCount Value="189"/>
       </Unit>
       <Unit>
-        <Filename Value="src\ReportFrm.pas"/>
+        <Filename Value="src\reportfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="ReportForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="9"/>
+        <UnitName Value="ReportFrm"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="260"/>
         <CursorPos X="72" Y="114"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
@@ -765,11 +766,12 @@
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="src\DrawingFrm.pas"/>
+        <Filename Value="src\drawingfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="DrawingForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="DrawingFrm"/>
         <EditorIndex Value="5"/>
         <TopLine Value="37"/>
         <CursorPos X="14" Y="59"/>
@@ -778,11 +780,12 @@
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="src\TextFrm.pas"/>
+        <Filename Value="src\textfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="TextForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="TextFrm"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="39"/>
         <CursorPos X="24" Y="49"/>
@@ -816,19 +819,19 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GeometryFrm1"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
         <CursorPos X="5" Y="45"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="src\MaterialFrm.pas"/>
+        <Filename Value="src\materialfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MaterialForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="MaterialFrm"/>
         <EditorIndex Value="2"/>
         <TopLine Value="41"/>
         <CursorPos X="34" Y="43"/>
@@ -836,26 +839,27 @@
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="src\ProductionFrm.pas"/>
+        <Filename Value="src\productionfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="ProductionForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ProductionFrm"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="20" Y="21"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
-        <Filename Value="src\QualityFrm.pas"/>
+        <Filename Value="src\qualityfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="QualityForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="7"/>
+        <UnitName Value="QualityFrm"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="22"/>
         <CursorPos X="5" Y="40"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
@@ -960,8 +964,9 @@
         <UsageCount Value="100"/>
       </Unit>
       <Unit>
-        <Filename Value="src\Compozer.pas"/>
+        <Filename Value="src\compozer.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Compozer"/>
         <EditorIndex Value="4"/>
         <TopLine Value="742"/>
         <CursorPos X="48" Y="752"/>
@@ -1154,11 +1159,10 @@
         <Filename Value="src\liblink.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LibLink"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="3" Y="34"/>
         <UsageCount Value="76"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\AboutFrm.lfm"/>
@@ -1198,36 +1202,19 @@
         <CursorPos X="27" Y="64"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="src\aboufrm.pas"/>
+        <UnitName Value="AboutFrm"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <OtherDefines Count="2">
       <Define0 Value="MODULE3"/>
       <Define1 Value="MODULE1"/>
     </OtherDefines>
-    <JumpHistory HistoryIndex="26">
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="194" Column="122" TopLine="185"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="144" Column="58" TopLine="125"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="230" Column="67" TopLine="212"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="225" Column="68" TopLine="213"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="269" Column="101" TopLine="213"/>
-      </Position>
-      <Position>
-        <Filename Value="src\ReportFrm.pas"/>
-        <Caret Line="223" Column="121" TopLine="207"/>
-      </Position>
+    <JumpHistory HistoryIndex="22">
       <Position>
         <Filename Value="src\MainFrm.pas"/>
         <Caret Line="921" Column="9" TopLine="921"/>
@@ -1311,6 +1298,13 @@
       <Position>
         <Filename Value="src\MainFrm.pas"/>
         <Caret Line="1103" Column="32" TopLine="1083"/>
+      </Position>
+      <Position>
+        <Filename Value="src\aboufrm.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="199" Column="3" TopLine="185"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>
