@@ -30,8 +30,9 @@
     </RequiredPackages>
     <Units>
       <Unit>
-        <Filename Value="DBOptimizer.lpr"/>
+        <Filename Value="dboptimizer.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="DBOptimizer"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>

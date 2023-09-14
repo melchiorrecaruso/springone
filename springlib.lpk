@@ -11,7 +11,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <Libraries Value="src"/>
-        <OtherUnitFiles Value="src"/>
+        <OtherUnitFiles Value="src;libsrc"/>
         <UnitOutputDirectory Value="build\lib"/>
       </SearchPaths>
       <CodeGeneration>
@@ -31,24 +31,24 @@
     <Version Minor="1"/>
     <Files>
       <Item>
-        <Filename Value="src\UtilsBase.pas"/>
-        <UnitName Value="UtilsBase"/>
-      </Item>
-      <Item>
-        <Filename Value="src\EN15800.pas"/>
-        <UnitName Value="EN15800"/>
-      </Item>
-      <Item>
-        <Filename Value="src\EN10270.pas"/>
+        <Filename Value="libsrc\en10270.pas"/>
         <UnitName Value="EN10270"/>
       </Item>
       <Item>
-        <Filename Value="src\EN13906.pas"/>
+        <Filename Value="libsrc\en13906.pas"/>
         <UnitName Value="EN13906"/>
       </Item>
       <Item>
-        <Filename Value="src\GraphBase.pas"/>
+        <Filename Value="libsrc\en15800.pas"/>
+        <UnitName Value="EN15800"/>
+      </Item>
+      <Item>
+        <Filename Value="libsrc\graphbase.pas"/>
         <UnitName Value="GraphBase"/>
+      </Item>
+      <Item>
+        <Filename Value="libsrc\utilsbase.pas"/>
+        <UnitName Value="UtilsBase"/>
       </Item>
     </Files>
     <RequiredPkgs>
