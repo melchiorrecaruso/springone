@@ -65,7 +65,7 @@ implementation
 {$R *.lfm}
 
 uses
-  EN13906, MaterialFrm, Math, UtilsBase;
+  SpringSolvers, MaterialFrm, Math, UtilsBase;
 
 // TApplicationForm3
 

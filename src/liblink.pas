@@ -25,7 +25,7 @@ unit LibLink;
 interface
 
 uses
-  Classes, SysUtils, EN10270, EN13906, EN15800;
+  Classes, SysUtils, SpringSolvers, SpringTolerances, SpringMaterials;
 
 var
   WireTolerance: TWireTolerance;

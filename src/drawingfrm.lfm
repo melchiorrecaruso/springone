@@ -8,9 +8,9 @@ object DrawingForm: TDrawingForm
   Caption = 'Drawing spring'
   ClientHeight = 160
   ClientWidth = 340
-  OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -57,8 +57,8 @@ object DrawingForm: TDrawingForm
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'L0'
-    OnClick = BtnClick
     TabOrder = 2
+    OnClick = BtnClick
   end
   object L1Btn: TBitBtn
     AnchorSideLeft.Control = L0Btn
@@ -72,8 +72,8 @@ object DrawingForm: TDrawingForm
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'L1'
-    OnClick = BtnClick
     TabOrder = 3
+    OnClick = BtnClick
   end
   object L2Btn: TBitBtn
     AnchorSideLeft.Control = L1Btn
@@ -87,8 +87,8 @@ object DrawingForm: TDrawingForm
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'L2'
-    OnClick = BtnClick
     TabOrder = 4
+    OnClick = BtnClick
   end
   object LcBtn: TBitBtn
     AnchorSideLeft.Control = L2Btn
@@ -102,8 +102,8 @@ object DrawingForm: TDrawingForm
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'Lc'
-    OnClick = BtnClick
     TabOrder = 5
+    OnClick = BtnClick
   end
   object SpringLength: TFloatSpinEdit
     AnchorSideLeft.Control = SpringLengthLabel
@@ -120,8 +120,8 @@ object DrawingForm: TDrawingForm
     BorderSpacing.Left = 12
     BorderSpacing.Top = 20
     BorderSpacing.Right = 12
-    OnChange = SpinEditChange
     TabOrder = 6
+    OnChange = SpinEditChange
   end
   object SpringLengthLabel: TLabel
     AnchorSideLeft.Control = Owner

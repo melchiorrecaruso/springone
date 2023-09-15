@@ -1,4 +1,4 @@
-{ EN13906 Helical Spring Designer
+{ Helical Spring Designer
 
   Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
@@ -18,14 +18,14 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit EN13906;
+unit springsolvers;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  BGRABitmapTypes, Classes, EN10270, EN15800, Math, UtilsBase, SysUtils, ADim;
+  BGRABitmapTypes, Classes, SpringMaterials, SpringTolerances, Math, UtilsBase, SysUtils, ADim;
 
 type
   TCompressionSpringSolver = class
@@ -409,7 +409,7 @@ procedure TCompressionSpringSolver.PreCheck;
 begin
   fCheck := True;
   // Controllo validità dati inseriti
-  if Fd.Value        <= 0  then ErrorMessage.Add('Wire diameter "d" unassigned.');
+  if Fd.Value        <= 0 then ErrorMessage.Add('Wire diameter "d" unassigned.');
   if FDm.Value       <= 0 then ErrorMessage.Add('Coil diameter "Dm" unassigned.');
   if fE.Value        <= 0 then ErrorMessage.Add('Young''s modulus "E" unassigned.');
   if fG.Value        <= 0 then ErrorMessage.Add('Shear modulus "G" unassigned.');
@@ -482,7 +482,6 @@ var
   Tauh7, Tauh6, Tauh5: TPascals;
 begin
   PreCheck;
-  // Norma EN13906-1:2013
   // Calcolo molla a compressione ad elica cilindrica fabbricate con filo sezione circolare.
 
   if fCheck then

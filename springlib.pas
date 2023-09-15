@@ -8,7 +8,7 @@ unit SpringLib;
 interface
 
 uses
-  EN10270, EN13906, EN15800, GraphBase, UtilsBase;
+  springmaterials, springsolvers, springtolerances, GraphBase, UtilsBase;
 
 implementation
 

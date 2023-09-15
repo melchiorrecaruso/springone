@@ -79,10 +79,12 @@ uses
   {$IFDEF MODULE3} ApplicationFrm3, {$ENDIF}
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
-  EN10270, EN13906, EN15800,
-  MainFrm,
+  SpringTolerances,
+  SpringMaterials,
+  SpringSolvers,
   ProductionFrm,
   QualityFrm,
+  MainFrm,
   UtilsBase;
 
 // TMaterialForm

@@ -1,6 +1,4 @@
-{ EN10270
-
-  Copyright (C) 2022 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+{ Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -18,7 +16,7 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit EN10270;
+unit springmaterials;
 
 {$mode ObjFPC}{$H+}
 
@@ -117,7 +115,7 @@ implementation
 uses
   Math;
 
-// TMaterialDB class. EN10270-1 and EN10270-2 spring wire materials database.
+// TMaterialDB class
 
 constructor TMaterialDB.Create;
 var
@@ -152,16 +150,13 @@ var
   Ratio: double;
 begin
   Result := fShearModulusG20;
-// L'influenza della temperatura di esercizio sul modulo di elasticità e sul modulo di elasticità
-// tangenziale è illustrata dalla formula seguente, per valori di media generale, per i materiali
-// specificati sotto;
-  Ratio := 0;
+  Ratio  := 0;
 
-  if Pos('EN10270-1', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000; // per filo secondo EN10270-1
-  if Pos('EN10270-2', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000; // per filo secondo EN10270-2
-  if Pos('EN10089',   GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000; // per filo secondo EN10089
-  if Pos('EN10270-3', GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000; // per filo secondo EN10270-3
-  if Pos('EN12166',   GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000; // per filo secondo EN12166
+  if Pos('EN10270-1', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000;
+  if Pos('EN10270-2', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000;
+  if Pos('EN10089',   GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000;
+  if Pos('EN10270-3', GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000;
+  if Pos('EN12166',   GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000;
 
   Result := Result * (1 - Ratio*(aTemperature - 20));
 end;

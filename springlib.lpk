@@ -31,16 +31,16 @@
     <Version Minor="1"/>
     <Files>
       <Item>
-        <Filename Value="libsrc\en10270.pas"/>
-        <UnitName Value="EN10270"/>
+        <Filename Value="libsrc\springmaterials.pas"/>
+        <UnitName Value="springmaterials"/>
       </Item>
       <Item>
-        <Filename Value="libsrc\en13906.pas"/>
-        <UnitName Value="EN13906"/>
+        <Filename Value="libsrc\springsolvers.pas"/>
+        <UnitName Value="springsolvers"/>
       </Item>
       <Item>
-        <Filename Value="libsrc\en15800.pas"/>
-        <UnitName Value="EN15800"/>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <UnitName Value="springtolerances"/>
       </Item>
       <Item>
         <Filename Value="libsrc\graphbase.pas"/>

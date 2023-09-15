@@ -1,5 +1,5 @@
 {
-  EN13906 Helical Compression Spring Designer
+  Helical Compression Spring Designer
 
   Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 

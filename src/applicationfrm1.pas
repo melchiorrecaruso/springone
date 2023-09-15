@@ -65,7 +65,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, LibLink, EN13906, MaterialFrm, Math, UtilsBase;
+  ADim, LibLink, SpringSolvers, MaterialFrm, Math, UtilsBase;
 
 // TApplicationForm1
 

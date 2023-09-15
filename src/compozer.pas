@@ -48,7 +48,7 @@ type
 implementation
 
 uses
-  EN10270, EN15800, UtilsBase;
+  springmaterials, springtolerances, UtilsBase;
 
 // TCompozer //
 

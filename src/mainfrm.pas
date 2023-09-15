@@ -27,7 +27,7 @@ interface
 uses
   BGRABitmap, BGRAShape, BGRASVG, BGRATextFX, BGRABitmapTypes, BGRAUnits,
   BGRAVirtualScreen, Classes, Controls, Dialogs, ExtCtrls, ExtDlgs, Forms,
-  GraphBase, EN10270, EN13906, EN15800, Graphics, IniFiles, LResources, Math,
+  GraphBase, SpringMaterials, SpringSolvers, SpringTolerances, Graphics, IniFiles, LResources, Math,
   Menus, PrintersDlgs, Spin, StdCtrls, ActnList, SysUtils;
 
 type

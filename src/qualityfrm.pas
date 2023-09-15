@@ -73,7 +73,7 @@ implementation
 
 uses
   ADim,
-  EN15800,
+  springtolerances,
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
   UtilsBase;

@@ -1,6 +1,6 @@
-{ EN15800 Helical Compression Spring Production Tolerance
+{ Helical Compression Spring Production Tolerance
 
-  Copyright (C) 2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -18,7 +18,7 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit EN15800;
+unit springtolerances;
 
 {$mode ObjFPC}{$H+}
 
@@ -176,11 +176,6 @@ type
     property ToleranceOnTorque2: TJoules read fToleranceOnTorque2;
   end;
 
-
-//var
-//  SpringTolerance: TEN15800;
-//  SpringTolerance: TDIN2194;
-//  WireTolerance: TWireTolerance;
 
 implementation
 
@@ -395,10 +390,6 @@ begin
   fQualityGradeOnRelativeEndAngle  := QualityGrade2;
   fQualityGradeOnLk0               := QualityGrade2;
   fQualityGradeOnLegLengths        := QualityGrade2;
-
-
-
-
 end;
 
 procedure TDIN2194.Solve;
@@ -505,9 +496,6 @@ begin
     QualityGrade3: Result := 1.60;
   end;
 end;
-
-
-
 
 end.
 

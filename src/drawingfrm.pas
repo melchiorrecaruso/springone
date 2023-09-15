@@ -25,7 +25,7 @@ unit DrawingFrm;
 interface
 
 uses
-  Buttons, Classes, ComCtrls, Controls, Dialogs, EN13906, ExtCtrls,
+  Buttons, Classes, ComCtrls, Controls, Dialogs, Springsolvers, ExtCtrls,
   Forms, Graphics, IniFiles, LibLink, Spin, StdCtrls, SysUtils;
 
 type

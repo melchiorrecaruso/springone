@@ -25,7 +25,7 @@ unit ReportFrm;
 interface
 
 uses
-  Buttons, Classes, Controls, Dialogs, EN10270, EN13906, EN15800,
+  Buttons, Classes, Controls, Dialogs, SpringTolerances, SpringSolvers, SpringMaterials,
   Forms, Graphics, LibLink, StdCtrls, SysUtils;
 
 type
