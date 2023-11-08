@@ -345,6 +345,7 @@ begin
   FDeMax               := 0*mm;
   FDeltaDe             := 0*mm;
   FDi                  := 0*mm;
+  FDiMin               := 0*mm;
   FDm                  := 0*mm;
   Fdmax                := 0*mm;
   fDynamicLoad         := False;
