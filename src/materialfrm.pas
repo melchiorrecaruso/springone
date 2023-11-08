@@ -205,16 +205,16 @@ end;
 
 procedure TMaterialForm.Load(IniFile: TIniFile);
 begin
-  Material           .ItemIndex := TryTextToInt  (IniFile.ReadString('TMaterialForm', 'Material',            '0'));
-  YoungModulus       .Value     := TryTextToFloat(IniFile.ReadString('TMaterialForm', 'YoungModulus',        '0'));
-  YoungModulusUnit   .ItemIndex := TryTextToInt  (IniFile.ReadString('TMaterialForm', 'YoungModulusUnit',    '0'));
-  ShearModulus       .Value     := TryTextToFloat(IniFile.ReadString('TMaterialForm', 'ShearModulus',        '0'));
-  ShearModulusUnit   .ItemIndex := TryTextToInt  (IniFile.ReadString('TMaterialForm', 'ShearModulusUnit',    '0'));
-  TensileStrength    .Value     := TryTextToFloat(IniFile.ReadString('TMaterialForm', 'TensileStrength',     '0'));
-  TensileStrengthUnit.ItemIndex := TryTextToInt  (IniFile.ReadString('TMaterialForm', 'TensileStrengthUnit', '0'));
-  MaterialDensity    .Value     := TryTextToFloat(IniFile.ReadString('TMaterialForm', 'MaterialDensity',     '0'));
-  MaterialDensityUnit.ItemIndex := TryTextToInt  (IniFile.ReadString('TMaterialForm', 'MaterialDensityUnit', '0'));
-  CoilingType        .ItemIndex := TryTextToInt  (IniFile.ReadString('TMaterialForm', 'CoilingType',         '0'));
+  Material           .ItemIndex := IniFile.ReadInteger('TMaterialForm', 'Material',            0);
+  YoungModulus       .Value     := IniFile.ReadFloat  ('TMaterialForm', 'YoungModulus',        0);
+  YoungModulusUnit   .ItemIndex := IniFile.ReadInteger('TMaterialForm', 'YoungModulusUnit',    0);
+  ShearModulus       .Value     := IniFile.ReadFloat  ('TMaterialForm', 'ShearModulus',        0);
+  ShearModulusUnit   .ItemIndex := IniFile.ReadInteger('TMaterialForm', 'ShearModulusUnit',    0);
+  TensileStrength    .Value     := IniFile.ReadFloat  ('TMaterialForm', 'TensileStrength',     0);
+  TensileStrengthUnit.ItemIndex := IniFile.ReadInteger('TMaterialForm', 'TensileStrengthUnit', 0);
+  MaterialDensity    .Value     := IniFile.ReadFloat  ('TMaterialForm', 'MaterialDensity',     0);
+  MaterialDensityUnit.ItemIndex := IniFile.ReadInteger('TMaterialForm', 'MaterialDensityUnit', 0);
+  CoilingType        .ItemIndex := IniFile.ReadInteger('TMaterialForm', 'CoilingType',         0);
 end;
 
 procedure TMaterialForm.Save(IniFile: TIniFile);

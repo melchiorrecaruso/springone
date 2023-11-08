@@ -5,8 +5,8 @@ unit Compozer;
 interface
 
 uses
-  BGRABitmap, BGRABitmapTypes, Classes, ADim,
-  GraphBase, Graphics, IniFiles, LibLink, Math, SysUtils;
+  ADim, BGRABitmap, BGRABitmapTypes, Classes,  Dialogs, GraphBase,
+  Graphics, IniFiles, LibLink, Math, SysUtils;
 
 type
   TCompozer = class
@@ -221,12 +221,12 @@ begin
 
   {$IFDEF MODULE1}
   Result.Title := 'Force & Displacement Chart';
-  Result.XAxisLabel := 's[' + GetSymbol(SpringSolver.LengthLc) + ']';
-  Result.YAxisLabel := 'F[' + GetSymbol(SpringSolver.LoadFc) + ']';
+  Result.XAxisLabel := 's [' + GetSymbol(SpringSolver.LengthLc) + ']';
+  Result.YAxisLabel := 'F [' + GetSymbol(SpringSolver.LoadFc) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
   // Drawing bisector line
-  if SpringSolver.LoadFc.Value > 0 then
+  if (SpringSolver.LoadFc.Value > 0) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'BisectorLine');
     SetLength(Points, 2);
@@ -241,7 +241,8 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing tolerance lines
-  if (SpringTolerance.Load1.Value > 0) and (SpringTolerance.Load2.Value > 0) then
+  if (SpringTolerance.Load1.Value > 0) and
+     (SpringTolerance.Load2.Value > 0) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'ToleranceLine');
     SetLength(Points, 2);
@@ -375,8 +376,8 @@ begin
     -1: Result.Title := Format('Goodman Chart: %s', ['Custom material']);
   else  Result.Title := Format('Goodman Chart: %s', [MAT.Items[MAT.ItemIndex]])
   end;
-  Result.XAxisLabel := 'tau U';
-  Result.YAxisLabel := 'tau O';
+  Result.XAxisLabel := 'tauU [' + GetSymbol(SpringSolver.TensileStrengthRm) + ']';
+  Result.YAxisLabel := 'tauO [' + GetSymbol(SpringSolver.TensileStrengthRm) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
@@ -621,8 +622,8 @@ begin
 
   {$IFDEF MODULE1}
   Result.Title := 'Load F1-Temperature Chart';
-  Result.XAxisLabel := 'T[C°]';
-  Result.YAxisLabel := 'F1[' + GetSymbol(SpringSolver.LoadF1) + ']';
+  Result.XAxisLabel := 'T [C°]';
+  Result.YAxisLabel := 'F1 [' + GetSymbol(SpringSolver.LoadF1) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
@@ -641,8 +642,6 @@ begin
       5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
   end;
   {$ENDIF}
-
-
 end;
 
 function TCompozer.CreateLoadF2Chart(const AScreenScale: double): TChart;
@@ -656,8 +655,8 @@ begin
 
   {$IFDEF MODULE1}
   Result.Title := 'Load F2-Temperature Chart';
-  Result.XAxisLabel := 'T[C°]';
-  Result.YAxisLabel := 'F2[' + GetSymbol(SpringSolver.LoadF2) + ']';
+  Result.XAxisLabel := 'T [C°]';
+  Result.YAxisLabel := 'F2 [' + GetSymbol(SpringSolver.LoadF2) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
@@ -688,8 +687,8 @@ begin
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Shear Modulus G-Temperature Chart';
-  Result.XAxisLabel := 'T[C°]';
-  Result.YAxisLabel := 'G[' + GetSymbol(SpringSolver.ShearModulus) + ']';
+  Result.XAxisLabel := 'T [C°]';
+  Result.YAxisLabel := 'G [' + GetSymbol(SpringSolver.ShearModulus) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
@@ -747,9 +746,9 @@ begin
   LoadSpring(Result, 'SpringDrawing', 'Spring');
 
   {$IFDEF MODULE1}
-  Result.d  := GetValue(SpringSolver.WireDiameter);
-  Result.Dm := GetValue(SpringSolver.Dm);
-  Result.Lc := GetValue(SpringSolver.LengthLc);
+  Result.d  := SpringSolver.WireDiameter.Value([pMilli]);
+  Result.Dm := SpringSolver.Dm.Value([pMilli]);
+  Result.Lc := SpringSolver.LengthLc.Value([pMilli]);
   Result.n  := SpringSolver.ActiveColis;
   Result.nt1 := (SpringSolver.TotalCoils - SpringSolver.ActiveColis) / 2;
   Result.nt2 := (SpringSolver.TotalCoils - SpringSolver.ActiveColis) / 2;
@@ -758,7 +757,14 @@ begin
   Result.Spacer := DefaultSpacer;
   Result.Scale  := AScreenScale;
   {$ENDIF}
+end;
 
+function BoolToText(const TrueSymbol, FalseSymbol: string; Value: boolean): string;
+begin
+  if Value then
+    Result := TrueSymbol
+  else
+    Result := FalseSymbol;
 end;
 
 function TCompozer.CreateQualityTable(const AScreenScale: double): TReportTable;
@@ -770,7 +776,6 @@ begin
   LoadTable(Result, 'CommonTable', 'Table');
 
   {$IFDEF MODULE1}
-
   Result[0, 0] := 'Quality Grade';
   Result[1, 0] := 'De, Di';
   Result[2, 0] := 'L0';
@@ -780,36 +785,36 @@ begin
   Result[6, 0] := 'e2';
 
   Result[0, 1] := '1';
-  Result[1, 1] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade1);
-  Result[2, 1] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade1);
-  Result[3, 1] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnLoad1 = QualityGrade1);
-  Result[4, 1] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnLoad2 = QualityGrade1);
-  Result[5, 1] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade1);
-  Result[6, 1] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade1);
+  Result[1, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade1);
+  Result[2, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade1);
+  Result[3, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLoad1 = QualityGrade1);
+  Result[4, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLoad2 = QualityGrade1);
+  Result[5, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade1);
+  Result[6, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade1);
 
   Result[0, 2] := '2';
-  Result[1, 2] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade2);
-  Result[2, 2] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade2);
-  Result[3, 2] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnLoad1 = QualityGrade2);
-  Result[4, 2] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnLoad2 = QualityGrade2);
-  Result[5, 2] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade2);
-  Result[6, 2] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade2);
+  Result[1, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade2);
+  Result[2, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade2);
+  Result[3, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLoad1 = QualityGrade2);
+  Result[4, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLoad2 = QualityGrade2);
+  Result[5, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade2);
+  Result[6, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade2);
 
   Result[0, 3] := '3';
-  Result[1, 3] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade3);
-  Result[2, 3] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade3);
-  Result[3, 3] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnLoad1 = QualityGrade3);
-  Result[4, 3] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnLoad2 = QualityGrade3);
-  Result[5, 3] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade3);
-  Result[6, 3] := TryFormatBool('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade3);
+  Result[1, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade3);
+  Result[2, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade3);
+  Result[3, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLoad1 = QualityGrade3);
+  Result[4, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLoad2 = QualityGrade3);
+  Result[5, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade3);
+  Result[6, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade3);
 
   Result[0, 4] := 'Tol.';
-  Result[1, 4] := '± ' + TryFloatToText(GetValue(SpringTolerance.ToleranceOnCoilDiameter));
-  Result[2, 4] := '± ' + TryFloatToText(GetValue(SpringTolerance.ToleranceFreeBodyLength));
-  Result[3, 4] := '± ' + TryFloatToText(GetValue(SpringTolerance.ToleranceOnLoad1));
-  Result[4, 4] := '± ' + TryFloatToText(GetValue(SpringTolerance.ToleranceOnLoad2));
-  Result[5, 4] := '± ' + TryFloatToText(GetValue(SpringTolerance.ToleranceOnPerpendicularity));
-  Result[6, 4] := '± ' + TryFloatToText(GetValue(SpringTolerance.ToleranceOnParallelism));
+  Result[1, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnCoilDiameter));
+  Result[2, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceFreeBodyLength));
+  Result[3, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnLoad1));
+  Result[4, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnLoad2));
+  Result[5, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnPerpendicularity));
+  Result[6, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnParallelism));
 
   {$ENDIF}
 end;
@@ -819,17 +824,17 @@ begin
   Result := TReportTable.Create;
   {$IFDEF MODULE1} Result.ColumnCount := 7; {$ENDIF}
   {$IFDEF MODULE3} Result.ColumnCount := 7; {$ENDIF}
-  {$IFDEF MODULE1} Result.RowCount := 6;    {$ENDIF}
-  {$IFDEF MODULE3} Result.RowCount := 5;    {$ENDIF}
+  {$IFDEF MODULE1} Result.RowCount    := 6; {$ENDIF}
+  {$IFDEF MODULE3} Result.RowCount    := 5; {$ENDIF}
   Result.Zoom := AScreenScale;
   LoadTable(Result, 'CommonTable', 'Table');
   {$IFDEF MODULE1}
   Result[0, 0] := 'L [' + GetSymbol(SpringSolver.LengthL0) + ']';
-  Result[1, 0] := TryFormatFloat('L0: %s', 'L0: ---', GetValue(SpringSolver.LengthL0));
-  Result[2, 0] := TryFormatFloat('L1: %s', 'L1: ---', GetValue(SpringSolver.LengthL1));
-  Result[3, 0] := TryFormatFloat('L2: %s', 'L2: ---', GetValue(SpringSolver.LengthL2));
-  Result[4, 0] := TryFormatFloat('Ln: %s', 'Ln: ---', GetValue(SpringSolver.LengthLn));
-  Result[5, 0] := TryFormatFloat('Lc: %s', 'Lc: ---', GetValue(SpringSolver.LengthLc));
+  Result[1, 0] := Format('L0: %s', [GetString(GetValue(SpringSolver.LengthL0))]);
+  Result[2, 0] := Format('L1: %s', [GetString(GetValue(SpringSolver.LengthL1))]);
+  Result[3, 0] := Format('L2: %s', [GetString(GetValue(SpringSolver.LengthL2))]);
+  Result[4, 0] := Format('Ln: %s', [GetString(GetValue(SpringSolver.LengthLn))]);
+  Result[5, 0] := Format('Lc: %s', [GetString(GetValue(SpringSolver.LengthLc))]);
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 0] := 'angle [' + GetSymbol(0*deg) + ']';
@@ -842,10 +847,10 @@ begin
   {$IFDEF MODULE1}
   Result[0, 1] := 'F [' + GetSymbol(SpringSolver.LoadF1) + ']';
   Result[1, 1] := '';
-  Result[2, 1] := TryFormatFloat('F1: %s', 'F1: ---', GetValue(SpringSolver.LoadF1));
-  Result[3, 1] := TryFormatFloat('F2: %s', 'F2: ---', GetValue(SpringSolver.LoadF2));
-  Result[4, 1] := TryFormatFloat('Fn: %s', 'Fn: ---', GetValue(SpringSolver.LoadFn));
-  Result[5, 1] := TryFormatFloat('Fc: %s', 'Fc: ---', GetValue(SpringSolver.LoadFc));
+  Result[2, 1] := Format('F1: %s', [GetString(GetValue(SpringSolver.LoadF1))]);
+  Result[3, 1] := Format('F2: %s', [GetString(GetValue(SpringSolver.LoadF2))]);
+  Result[4, 1] := Format('Fn: %s', [GetString(GetValue(SpringSolver.LoadFn))]);
+  Result[5, 1] := Format('Fc: %s', [GetString(GetValue(SpringSolver.LoadFc))]);
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 1] := 'torque [' + GetSymbol(SpringSolver.TorqueT1) + ']';
@@ -858,35 +863,38 @@ begin
   {$IFDEF MODULE1}
   Result[0, 2] := 'tau [' + GetSymbol(SpringSolver.TorsionalStressTauk1) + ']';
   Result[1, 2] := '';
-  Result[2, 2] := TryFormatFloat('tauk1: %s', 'tauk1: ---', GetValue(SpringSolver.TorsionalStressTauk1));
-  Result[3, 2] := TryFormatFloat('tauk2: %s', 'tauk2: ---', GetValue(SpringSolver.TorsionalStressTauk2));
-  Result[4, 2] := TryFormatFloat('tau n: %s', 'tau n: ---', GetValue(SpringSolver.TorsionalStressTaun));
-  Result[5, 2] := TryFormatFloat('tau c: %s', 'tau c: ---', GetValue(SpringSolver.TorsionalStressTauc));
+  Result[2, 2] := Format('tauk1: %s', [GetString(GetValue(SpringSolver.TorsionalStressTauk1))]);
+  Result[3, 2] := Format('tauk2: %s', [GetString(GetValue(SpringSolver.TorsionalStressTauk2))]);
+  Result[4, 2] := Format('tau n: %s', [GetString(GetValue(SpringSolver.TorsionalStressTaun ))]);
+  Result[5, 2] := Format('tau k: %s', [GetString(GetValue(SpringSolver.TorsionalStressTauc ))]);
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 2] := 'σ [' + GetSymbol(SpringSolver.BendingStressSigmaq1) + ']';
   Result[1, 2] := '';
   Result[2, 2] := TryFormatFloat('σ1: %s', 'σ1: ---', GetValue(SpringSolver.BendingStressSigmaq1));
   Result[3, 2] := TryFormatFloat('σ2: %s', 'σ2: ---', GetValue(SpringSolver.BendingStressSigmaq2));
-  Result[4, 2] := TryFormatFloat('σn: %s', 'σn: ---', GetValue(SpringSolver.BendingStressSigman));
+  Result[4, 2] := TryFormatFloat('σn: %s', 'σn: ---', GetValue(SpringSolver.BendingStressSigman ));
   {$ENDIF}
 
   {$IFDEF MODULE1}
   Result[0, 3] := 's [' + GetSymbol(SpringSolver.LengthL1) + ']';
   Result[1, 3] := '';
-  Result[2, 3] := TryFormatFloat('s1: %s', 's1: ---', GetValue(SpringSolver.StrokeS1));
-  Result[3, 3] := TryFormatFloat('s2: %s', 's2: ---', GetValue(SpringSolver.StrokeS2));
-  Result[4, 3] := TryFormatFloat('sn: %s', 'sn: ---', GetValue(SpringSolver.StrokeSn));
-  Result[5, 3] := TryFormatFloat('sc: %s', 'sc: ---', GetValue(SpringSolver.StrokeSc));
+  Result[2, 3] := Format('s1: %s', [GetString(GetValue(SpringSolver.StrokeS1))]);
+  Result[3, 3] := Format('s2: %s', [GetString(GetValue(SpringSolver.StrokeS2))]);
+  Result[4, 3] := Format('sn: %s', [GetString(GetValue(SpringSolver.StrokeSn))]);
+  Result[5, 3] := Format('sc: %s', [GetString(GetValue(SpringSolver.StrokeSc))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
   Result[0, 4] := 'tau/tauz';
-  Result[1, 4] := '';
-  Result[2, 4] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTau1), GetValue(SpringSolver.AdmStaticTorsionalStressTauz));
-  Result[3, 4] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTau2), GetValue(SpringSolver.AdmStaticTorsionalStressTauz));
-  Result[4, 4] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTaun), GetValue(SpringSolver.AdmStaticTorsionalStressTauz));
-  Result[5, 4] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTauc), GetValue(SpringSolver.AdmStaticTorsionalStressTauz));
+  if SpringSolver.AdmStaticTorsionalStressTauz.Value > 0 then
+  begin
+    Result[1, 4] := '';
+    Result[2, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTau1 / SpringSolver.AdmStaticTorsionalStressTauz]);
+    Result[3, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTau2 / SpringSolver.AdmStaticTorsionalStressTauz]);
+    Result[4, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTaun / SpringSolver.AdmStaticTorsionalStressTauz]);
+    Result[5, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTauc / SpringSolver.AdmStaticTorsionalStressTauz]);
+  end;
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 3] := 'σ/σz';
@@ -898,11 +906,14 @@ begin
 
   {$IFDEF MODULE1}
   Result[0, 5] := 'tau/Rm';
-  Result[1, 5] := '';
-  Result[2, 5] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTau1), GetValue(SpringSolver.TensileStrengthRm));
-  Result[3, 5] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTau2), GetValue(SpringSolver.TensileStrengthRm));
-  Result[4, 5] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTaun), GetValue(SpringSolver.TensileStrengthRm));
-  Result[5, 5] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.TorsionalStressTauc), GetValue(SpringSolver.TensileStrengthRm));
+  if SpringSolver.TensileStrengthRm.Value > 0 then
+  begin
+    Result[1, 5] := '';
+    Result[2, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTau1 / SpringSolver.TensileStrengthRm]);
+    Result[3, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTau2 / SpringSolver.TensileStrengthRm]);
+    Result[4, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTaun / SpringSolver.TensileStrengthRm]);
+    Result[5, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTauc / SpringSolver.TensileStrengthRm]);
+  end;
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 4] := 'σ/Rm';
@@ -914,11 +925,14 @@ begin
 
   {$IFDEF MODULE1}
   Result[0, 6] := 'De [' + GetSymbol(SpringSolver.De) + ']';
-  Result[1, 6] := TryFormatFloat('%s', '---', GetValue(SpringSolver.De));
-  Result[2, 6] := TryFormatFloatSumDiv('%s', '---', GetValue(SpringSolver.De), GetValue(SpringSolver.DeltaDe) * GetValue(SpringSolver.StrokeS1), GetValue(SpringSolver.StrokeSc));
-  Result[3, 6] := TryFormatFloatSumDiv('%s', '---', GetValue(SpringSolver.De), GetValue(SpringSolver.DeltaDe) * GetValue(SpringSolver.StrokeS2), GetValue(SpringSolver.StrokeSc));
-  Result[4, 6] := TryFormatFloatSumDiv('%s', '---', GetValue(SpringSolver.De), GetValue(SpringSolver.DeltaDe) * GetValue(SpringSolver.StrokeSn), GetValue(SpringSolver.StrokeSc));
-  Result[5, 6] := TryFormatFloatSumDiv('%s', '---', GetValue(SpringSolver.De), GetValue(SpringSolver.DeltaDe) * GetValue(SpringSolver.StrokeSc), GetValue(SpringSolver.StrokeSc));
+  if SpringSolver.StrokeSc.Value > 0 then
+  begin
+    Result[1, 6] := Format('%s', [GetString(GetValue(SpringSolver.De))]);
+    Result[2, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeS1 / SpringSolver.StrokeSc))]);
+    Result[3, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeS2 / SpringSolver.StrokeSc))]);
+    Result[4, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeSn / SpringSolver.StrokeSc))]);
+    Result[5, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeSc / SpringSolver.StrokeSc))]);
+  end;
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 5] := 'Lk [' + GetSymbol(SpringSolver.Lk(0*rad)) + ']';
@@ -941,100 +955,82 @@ begin
   Result.ColumnAlignments[1] := taCenter;
   Result.ColumnAlignments[2] := taLeftJustify;
 
-
   Result.Items[0, 0] := 'd';
   Result.Items[0, 1] := '=';
-  Result.Items[0, 2] := TryFormatFloat('%s', '---',
-    GetValue(SpringSolver.WireDiameter))  + TryFormatFloat(' ± %s ' + GetSymbol(SpringSolver.WireDiameter), '',
-    GetValue(SpringSolver.WireDiameterMax - SpringSolver.WireDiameter));
+  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterMax - SpringSolver.WireDiameter);
 
   Result.Items[1, 0] := 'Di';
   Result.Items[1, 1] := '=';
-  Result.Items[1, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.Di), '---', GetValue(SpringSolver.Di));
+  Result.Items[1, 2] := GetString(SpringSolver.Di);
 
   Result.Items[2, 0] := 'Dm';
   Result.Items[2, 1] := '=';
-  Result.Items[2, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.Dm), '---', GetValue(SpringSolver.Dm));
+  Result.Items[2, 2] := GetString(SpringSolver.Dm);
 
   Result.Items[3, 0] := 'De';
   Result.Items[3, 1] := '=';
-  Result.Items[3, 2] := TryFormatFloat('%s', '---', GetValue(SpringSolver.De)) +
-    TryFormatFloat(' ± %s ' + GetSymbol(SpringTolerance.ToleranceOnCoilDiameter), '',
-    GetValue(SpringTolerance.ToleranceOnCoilDiameter));
+  Result.Items[3, 2] := GetString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter);
 
   Result.Items[4, 0] := 'n';
   Result.Items[4, 1] := '=';
-  Result.Items[4, 2] := TryFormatFloat('%s coils', '---', SpringSolver.ActiveColis);
-
+  Result.Items[4, 2] := Format('%0.2f coils', [SpringSolver.ActiveColis]);
 
   {$IFDEF MODULE1}
   Result.Items[5, 0] := 'nt';
   Result.Items[5, 1] := '=';
-  Result.Items[5, 2] := TryFormatFloat('%s coils', '---', SpringSolver.TotalCoils);
+  Result.Items[5, 2] := Format('%0.2f coils', [SpringSolver.TotalCoils]);
 
   Result.Items[6, 0] := 'R';
   Result.Items[6, 1] := '=';
-  Result.Items[6, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.SpringRateR), '---', GetValue(SpringSolver.SpringRateR));
+  Result.Items[6, 2] := GetString(SpringSolver.SpringRateR);
 
   Result.Items[7, 0] := 'Dec';
   Result.Items[7, 1] := '=';
-  Result.Items[7, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.De),
-    '---', GetValue(SpringSolver.De + SpringSolver.DeltaDe));
+  Result.Items[7, 2] := GetString(SpringSolver.De + SpringSolver.DeltaDe);
 
   Result.Items[8, 0] := 'Di.min';
   Result.Items[8, 1] := '=';
-  Result.Items[8, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.DiMin),
-    '---', GetValue(SpringSolver.DiMin));
+  Result.Items[8, 2] := GetString(SpringSolver.DiMin);
 
   Result.Items[9, 0] := 'De.max';
   Result.Items[9, 1] := '=';
-  Result.Items[9, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.DeMax),
-    '---', GetValue(SpringSolver.DeMax));
+  Result.Items[9, 2] := GetString(SpringSolver.DeMax);
 
   Result.Items[10, 0] := 'sk';
   Result.Items[10, 1] := '=';
-  Result.Items[10, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.DeflectionSk),
-    '---', GetValue(SpringSolver.DeflectionSk));
+  Result.Items[10, 2] := GetString(SpringSolver.DeflectionSk);
 
   Result.Items[11, 0] := 'L';
   Result.Items[11, 1] := '=';
-  Result.Items[11, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.WireLength),
-    '---', GetValue(SpringSolver.WireLength));
+  Result.Items[11, 2] := GetString(SpringSolver.WireLength);
 
   Result.Items[12, 0] := 'm';
   Result.Items[12, 1] := '=';
-  Result.Items[12, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.Mass),
-    '---', GetValue(SpringSolver.Mass));
+  Result.Items[12, 2] := GetString(SpringSolver.Mass);
 
   Result.Items[13, 0] := 'W12';
   Result.Items[13, 1] := '=';
-  Result.Items[13, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.SpringWorkW12),
-    '---', GetValue(SpringSolver.SpringWorkW12));
+  Result.Items[13, 2] := GetString(SpringSolver.SpringWorkW12);
 
   Result.Items[14, 0] := 'W0n';
   Result.Items[14, 1] := '=';
-  Result.Items[14, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.SpringWorkW0n),
-    '---', GetValue(SpringSolver.SpringWorkW0n));
+  Result.Items[14, 2] := GetString(SpringSolver.SpringWorkW0n);
 
   Result.Items[15, 0] := 'fe';
   Result.Items[15, 1] := '=';
-  Result.Items[15, 2] := TryFormatFloat('%s ' + GetSymbol(SpringSolver.NaturalFrequency),
-    '---', GetValue(SpringSolver.NaturalFrequency));
+  Result.Items[15, 2] := GetString(SpringSolver.NaturalFrequency);
 
   Result.Items[16, 0] := 'nu';
   Result.Items[16, 1] := '=';
-  Result.Items[16, 2] := TryFormatFloat('%s', '---', SpringSolver.SeatingCoefficent);
+  Result.Items[16, 2] := Format('%0.2f', [SpringSolver.SeatingCoefficent]);
 
   Result.Items[17, 0] := 'load';
   Result.Items[17, 1] := '=';
-
   if SpringSolver.DynamicLoad then
     Result.Items[17, 2] := ('dynamic')
   else
     Result.Items[17, 2] := ('static');
   {$ENDIF}
-
 end;
 
 function TCompozer.CreateQuick1List2(const AScreenScale: double): TReportTable;
@@ -1061,98 +1057,76 @@ begin
   k := 2;
   Result.Items[0+k, 0] := 'tauk1';
   Result.Items[0+k, 1] := '=';
-  Result.Items[0+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTauk1), '---',
-    GetValue (SpringSolver.TorsionalStressTauk1));
+  Result.Items[0+k, 2] := GetString(SpringSolver.TorsionalStressTauk1);
 
   Result.Items[1+k, 0] := 'tauk2';
   Result.Items[1+k, 1] := '=';
-  Result.Items[1+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTauk2), '---',
-    GetValue (SpringSolver.TorsionalStressTauk2));
+  Result.Items[1+k, 2] := GetString(SpringSolver.TorsionalStressTauk2);
 
   Result.Items[2+k, 0] := 'taukh';
   Result.Items[2+k, 1] := '=';
-  Result.Items[2+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTaukh), '---',
-    GetValue (SpringSolver.TorsionalStressTaukh));
+  Result.Items[2+k, 2] := GetString(SpringSolver.TorsionalStressTaukh);
 
   Result.Items[3+k, 0] := 'E';
   Result.Items[3+k, 1] := '=';
-  Result.Items[3+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.YoungModulus), '---',
-    GetValue (SpringSolver.YoungModulus));
+  Result.Items[3+k, 2] := GetString(SpringSolver.YoungModulus);
 
   Result.Items[4+k, 0] := 'G';
   Result.Items[4+k, 1] := '=';
-  Result.Items[4+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.ShearModulus), '---',
-    GetValue (SpringSolver.ShearModulus));
+  Result.Items[4+k, 2] := GetString(SpringSolver.ShearModulus);
 
   Result.Items[5+k, 0] := 'rho';
   Result.Items[5+k, 1] := '=';
-  Result.Items[5+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.MaterialDensity), '---',
-    GetValue (SpringSolver.MaterialDensity));
+  Result.Items[5+k, 2] := GetString(SpringSolver.MaterialDensity);
 
   Result.Items[6+k, 0] := 'Rm';
   Result.Items[6+k, 1] := '=';
-  Result.Items[6+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TensileStrengthRm), '---',
-    GetValue (SpringSolver.TensileStrengthRm));
+  Result.Items[6+k, 2] := GetString(SpringSolver.TensileStrengthRm);
 
   Result.Items[7+k, 0] := 'tauz';
   Result.Items[7+k, 1] := '=';
-  Result.Items[7+k, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.AdmStaticTorsionalStressTauz), '---',
-    GetValue (SpringSolver.AdmStaticTorsionalStressTauz));
+  Result.Items[7+k, 2] := GetString(SpringSolver.AdmStaticTorsionalStressTauz);
 
   Result.Items[8+k, 0] := 'ns';
   Result.Items[8+k, 1] := '=';
-  Result.Items[8+k, 2] := TryFormatFloat('%s', '---', SpringSolver.StaticSafetyFactor);
+  Result.Items[8+k, 2] := Format('%0.2f', [SpringSolver.StaticSafetyFactor]);
 
   if SpringSolver.DynamicLoad then
   begin
     Result.Items[9+k, 0] := 'tauoz';
     Result.Items[9+k, 1] := '=';
-    Result.Items[9+k, 2] := TryFormatFloat('%s ' +
-      GetSymbol(SpringSolver.AdmDynamicTorsionalStressTauoz), '---',
-      GetValue (SpringSolver.AdmDynamicTorsionalStressTauoz));
+    Result.Items[9+k, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressTauoz);
 
     Result.Items[10+k, 0] := 'tauhz';
     Result.Items[10+k, 1] := '=';
-    Result.Items[10+k, 2] := TryFormatFloat('%s ' +
-      GetSymbol(SpringSolver.AdmDynamicTorsionalStressRangeTauhz), '---',
-      GetValue (SpringSolver.AdmDynamicTorsionalStressRangeTauhz));
+    Result.Items[10+k, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
 
     Result.Items[11+k, 0] := 'nf';
     Result.Items[11+k, 1] := '=';
-    Result.Items[11+k, 2] := TryFormatFloat('%s', '---', SpringSolver.DynamicSafetyFactor);
+    Result.Items[11+k, 2] := Format('%02f', [SpringSolver.DynamicSafetyFactor]);
 
+
+    Result.Items[13+k, 0] := 'N';
+    Result.Items[13+k, 1] := '=';
+    Result.Items[13+k, 2] := '---';
     if SpringSolver.NumOfCycles > 0 then
     begin
-      Result.Items[12+k, 0] := 'N';
-      Result.Items[12+k, 1] := '=';
-      Result.Items[12+k, 2] := TryFormatText('%s cycles', '---',
-        TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
+      Result.Items[13+k, 0] := 'N';
+      Result.Items[13+k, 1] := '=';
+      Result.Items[13+k, 2] := Format('%0.0f cycles', [SpringSolver.NumOfCycles]);
+    end;
 
-      Result.Items[13+k, 0] := 'Nh';
-      Result.Items[13+k+k, 1] := '=';
-      Result.Items[13, 2] := TryFormatFloatDiv('%s hours', '---',
-        SpringSolver.NumOfCycles, 3600 * SpringSolver.CycleFrequency.Value);
-    end
-    else
+    Result.Items[14+k, 0] := 'Nh';
+    Result.Items[14+k, 1] := '=';
+    Result.Items[14+k, 2] := '---';
+    if SpringSolver.CycleFrequency > (0*Hz) then
     begin
-      Result.Items[14+k, 0] := 'N';
+      Result.Items[14+k, 0] := 'Nh';
       Result.Items[14+k, 1] := '=';
-      Result.Items[14+k, 2] := '---';
-
-      Result.Items[15+k, 0] := 'Nh';
-      Result.Items[15+k, 1] := '=';
-      Result.Items[15+k, 2] := '---';
+      Result.Items[14+k, 2] := (SpringSolver.NumOfCycles / SpringSolver.CycleFrequency).ToHour.ToString(5, 5, []);
     end;
   end;
-   {$ENDIF}
+  {$ENDIF}
 end;
 
 function TCompozer.CreateMessageList(const AScreenScale: double): TReportTable;
@@ -1165,7 +1139,7 @@ begin
   Result.Zoom := AScreenScale;
   LoadTable(Result, 'MessageList', 'Table');
 
-  Result.Items[0, 0] := TryFormatBool('Messages:', '',
+  Result.Items[0, 0] := BoolToText('Messages:', '',
     (ErrorMessage.Count + WarningMessage.Count) > 0);
 
   j := 1;
@@ -1205,116 +1179,82 @@ begin
 
   Result.Items[0, 0] := 'd';
   Result.Items[0, 1] := '=';
-  Result.Items[0, 2] :=
-    TryFormatFloat('%s', '---', GetValue(SpringSolver.WireDiameter)) +
-    TryFormatFloat(' ± %s ' +
-      GetSymbol(SpringSolver.WireDiameter), '',
-      GetValue (SpringSolver.WireDiameterMax - SpringSolver.WireDiameter));
+  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterMax - SpringSolver.WireDiameter);
 
   Result.Items[1, 0] := 'Di';
   Result.Items[1, 1] := '=';
-  Result.Items[1, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.Di), '---',
-    GetValue (SpringSolver.Di));
+  Result.Items[1, 2] := GetString(SpringSolver.Di);
 
   Result.Items[2, 0] := 'Dm';
   Result.Items[2, 1] := '=';
-  Result.Items[2, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.Dm), '---',
-    GetValue (SpringSolver.Dm));
+  Result.Items[2, 2] := GetString(SpringSolver.Dm);
 
   Result.Items[3, 0] := 'De';
   Result.Items[3, 1] := '=';
-  Result.Items[3, 2] :=
-    TryFormatFloat('%s', '---', GetValue(SpringSolver.De)) +
-    TryFormatFloat(' ± %s ' +
-      GetSymbol(SpringTolerance.ToleranceOnCoilDiameter), '',
-      GetValue (SpringTolerance.ToleranceOnCoilDiameter));
+  Result.Items[3, 2] := GetString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter);
 
   Result.Items[4, 0] := 'n';
   Result.Items[4, 1] := '=';
-  Result.Items[4, 2] := TryFormatFloat('%s coils', '---', SpringSolver.ActiveColis);
+  Result.Items[4, 2] := Format('%0.2f coils', [SpringSolver.ActiveColis]);
 
   Result.Items[5, 0] := 'nt';
   Result.Items[5, 1] := '=';
-  Result.Items[5, 2] := TryFormatFloat('%s coils', '---', SpringSolver.TotalCoils);
+  Result.Items[5, 2] := Format('%0.2f coils', [SpringSolver.TotalCoils]);
 
   Result.Items[6, 0] := 'R';
   Result.Items[6, 1] := '=';
-  Result.Items[6, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.SpringRateR), '---',
-    GetValue (SpringSolver.SpringRateR));
+  Result.Items[6, 2] := GetString(SpringSolver.SpringRateR);
 
   Result.Items[7, 0] := 'Dec';
   Result.Items[7, 1] := '=';
-  Result.Items[7, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.De), '---',
-    GetValue (SpringSolver.De + SpringSolver.DeltaDe));
+  Result.Items[7, 2] := GetString(SpringSolver.De + SpringSolver.DeltaDe);
 
   Result.Items[8, 0] := 'Di.min';
   Result.Items[8, 1] := '=';
-  Result.Items[8, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.DiMin), '---',
-    GetValue (SpringSolver.DiMin));
+  Result.Items[8, 2] := GetString(SpringSolver.DiMin);
 
   Result.Items[9, 0] := 'De.max';
   Result.Items[9, 1] := '=';
-  Result.Items[9, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.DeMax), '---',
-    GetValue (SpringSolver.DeMax));
+  Result.Items[9, 2] := GetString(SpringSolver.DeMax);
 
   Result.Items[10, 0] := 'sk';
   Result.Items[10, 1] := '=';
-  Result.Items[10, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.DeflectionSk), '---',
-    GetValue (SpringSolver.DeflectionSk));
+  Result.Items[10, 2] := GetString(SpringSolver.DeflectionSk);
 
   Result.Items[11, 0] := 'L';
   Result.Items[11, 1] := '=';
-  Result.Items[11, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.WireLength), '---',
-    GetValue (SpringSolver.WireLength));
+  Result.Items[11, 2] := GetString(SpringSolver.WireLength);
 
   Result.Items[12, 0] := 'm';
   Result.Items[12, 1] := '=';
-  Result.Items[12, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.Mass), '---',
-    GetValue (SpringSolver.Mass));
+  Result.Items[12, 2] := GetString(SpringSolver.Mass);
 
   Result.Items[13, 0] := 'W12';
   Result.Items[13, 1] := '=';
-  Result.Items[13, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.SpringWorkW12), '---',
-    GetValue (SpringSolver.SpringWorkW12));
+  Result.Items[13, 2] := GetString(SpringSolver.SpringWorkW12);
 
   Result.Items[14, 0] := 'W0n';
   Result.Items[14, 1] := '=';
-  Result.Items[14, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.SpringWorkW0n), '---',
-    GetValue (SpringSolver.SpringWorkW0n));
+  Result.Items[14, 2] := GetString(SpringSolver.SpringWorkW0n);
 
   Result.Items[15, 0] := 'fe';
   Result.Items[15, 1] := '=';
-  Result.Items[15, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.NaturalFrequency), '---',
-    GetValue (SpringSolver.NaturalFrequency));
+  Result.Items[15, 2] := GetString(SpringSolver.NaturalFrequency);
 
   Result.Items[16, 0] := 'Pitch';
   Result.Items[16, 1] := '=';
-  Result.Items[16, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.Pitch), '---', GetValue(SpringSolver.Pitch));
+  Result.Items[16, 2] := GetString(SpringSolver.Pitch);
 
   Result.Items[17, 0] := 'PitchRatio';
   Result.Items[17, 1] := '=';
-  Result.Items[17, 2] := TryFormatFloat('%s', '---', SpringSolver.PitchRatio);
+  Result.Items[17, 2] := Format('%0.4f', [SpringSolver.PitchRatio]);
 
   Result.Items[18, 0] := 'nu';
   Result.Items[18, 1] := '=';
-  Result.Items[18, 2] := TryFormatFloat('%s', '---', SpringSolver.SeatingCoefficent);
+  Result.Items[18, 2] := Format('%0.1f', [SpringSolver.SeatingCoefficent]);
 
   Result.Items[19, 0] := 'load';
   Result.Items[19, 1] := '=';
-
   if SpringSolver.DynamicLoad then
     Result.Items[19, 2] := ('dynamic')
   else
@@ -1322,95 +1262,69 @@ begin
 
   Result.Items[22, 0] := 'tauk1';
   Result.Items[22, 1] := '=';
-  Result.Items[22, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTauk1), '---',
-    GetValue (SpringSolver.TorsionalStressTauk1));
+  Result.Items[22, 2] := GetString(SpringSolver.TorsionalStressTauk1);
 
   Result.Items[23, 0] := 'tauk2';
   Result.Items[23, 1] := '=';
-  Result.Items[23, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTauk2), '---',
-    GetValue (SpringSolver.TorsionalStressTauk2));
+  Result.Items[23, 2] := GetString(SpringSolver.TorsionalStressTauk2);
 
   Result.Items[24, 0] := 'taukh';
   Result.Items[24, 1] := '=';
-  Result.Items[24, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTaukh), '---',
-    GetValue (SpringSolver.TorsionalStressTaukh));
+  Result.Items[24, 2] := GetString(SpringSolver.TorsionalStressTaukh);
 
   Result.Items[26, 0] := 'E';
   Result.Items[26, 1] := '=';
-  Result.Items[26, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.YoungModulus), '---',
-    GetValue (SpringSolver.YoungModulus));
+  Result.Items[26, 2] := SpringSolver.YoungModulus.ToString(5, 5, [pMilli]);
 
   Result.Items[27, 0] := 'G';
   Result.Items[27, 1] := '=';
-  Result.Items[27, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.ShearModulus), '---',
-    GetValue (SpringSolver.ShearModulus));
+  Result.Items[27, 2] := SpringSolver.ShearModulus.ToString(5, 5, [pMega]);
 
   Result.Items[28, 0] := 'rho';
   Result.Items[28, 1] := '=';
-  Result.Items[28, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.MaterialDensity), '---',
-    GetValue (SpringSolver.MaterialDensity));
+  Result.Items[28, 2] := GetString(SpringSolver.MaterialDensity);
 
   Result.Items[29, 0] := 'Rm';
   Result.Items[29, 1] := '=';
-  Result.Items[29, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TensileStrengthRm), '---',
-    GetValue (SpringSolver.TensileStrengthRm));
+  Result.Items[29, 2] := GetString(SpringSolver.TensileStrengthRm);
 
   Result.Items[30, 0] := 'tauz';
   Result.Items[30, 1] := '=';
-  Result.Items[30, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.AdmStaticTorsionalStressTauz), '---',
-    GetValue (SpringSolver.AdmStaticTorsionalStressTauz));
+  Result.Items[30, 2] := GetString(SpringSolver.AdmStaticTorsionalStressTauz);
 
   Result.Items[31, 0] := 'ns';
   Result.Items[31, 1] := '=';
-  Result.Items[31, 2] := TryFormatFloat('%s', '---', SpringSolver.StaticSafetyFactor);
+  Result.Items[31, 2] := Format('%0.2f', [SpringSolver.StaticSafetyFactor]);
 
   if SpringSolver.DynamicLoad then
   begin
     Result.Items[33, 0] := 'tauoz';
     Result.Items[33, 1] := '=';
-    Result.Items[33, 2] := TryFormatFloat('%s ' +
-      GetSymbol(SpringSolver.AdmDynamicTorsionalStressTauoz), '---',
-      GetValue (SpringSolver.AdmDynamicTorsionalStressTauoz));
+    Result.Items[33, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressTauoz);
 
     Result.Items[34, 0] := 'tauhz';
     Result.Items[34, 1] := '=';
-    Result.Items[34, 2] := TryFormatFloat('%s ' +
-      GetSymbol(SpringSolver.AdmDynamicTorsionalStressRangeTauhz), '---',
-      GetValue (SpringSolver.AdmDynamicTorsionalStressRangeTauhz));
+    Result.Items[34, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
 
     Result.Items[35, 0] := 'nf';
     Result.Items[35, 1] := '=';
-    Result.Items[35, 2] := TryFormatFloat('%s', '---', SpringSolver.DynamicSafetyFactor);
+    Result.Items[35, 2] := Format('%0.2f', [SpringSolver.DynamicSafetyFactor]);
 
+
+    Result.Items[36, 0] := 'N';
+    Result.Items[36, 1] := '=';
+    Result.Items[36, 2] := '---';
     if SpringSolver.NumOfCycles > 0 then
     begin
-      Result.Items[36, 0] := 'N';
-      Result.Items[36, 1] := '=';
-      Result.Items[36, 2] := TryFormatText('%s cycles', '---',
-        TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
+      Result.Items[36, 2] := Format('%0.0f cycles', [SpringSolver.NumOfCycles]);
+    end;
 
-      Result.Items[37, 0] := 'Nh';
-      Result.Items[37, 1] := '=';
-      Result.Items[37, 2] := TryFormatFloatDiv('%s hours', '---',
-        SpringSolver.NumOfCycles, 3600 * SpringSolver.CycleFrequency.Value);
-    end
-    else
+    Result.Items[37, 0] := 'Nh';
+    Result.Items[37, 1] := '=';
+    Result.Items[37, 2] := '---';
+    if SpringSolver.CycleFrequency > (0*Hz) then
     begin
-      Result.Items[36, 0] := 'N';
-      Result.Items[36, 1] := '=';
-      Result.Items[36, 2] := '---';
-
-      Result.Items[37, 0] := 'Nh';
-      Result.Items[37, 1] := '=';
-      Result.Items[37, 2] := '---';
+      Result.Items[37, 2] := (SpringSolver.NumOfCycles / SpringSolver.CycleFrequency).ToHour.toString(5, 5, []);
     end;
   end;
   {$ENDIF}
@@ -1488,18 +1402,18 @@ begin
 
   {$IFDEF MODULE1}
   SpringDrawing.AutoFit := True;
-  SpringDrawing.Lx := GetValue(SpringSolver.LengthL0);
-  SpringDrawing.Caption := TryFormatFloat('L0 = %s', 'L0 = ---', SpringDrawing.Lx);
+  SpringDrawing.Lx := SpringSolver.LengthL0.Value([pMilli]);
+  SpringDrawing.Caption := Format('L0 = %s', [GetString(SpringDrawing.Lx)]);
   SpringDrawing.DrawInSection(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
 
   SpringDrawing.AutoFit := False;
-  SpringDrawing.Lx := GetValue(SpringSolver.LengthL1);
-  SpringDrawing.Caption := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+  SpringDrawing.Lx := SpringSolver.LengthL1.Value([pMilli]);
+  SpringDrawing.Caption := Format('L1 = %s', [GetString(SpringDrawing.Lx)]);
   SpringDrawing.DrawInSection(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
 
   SpringDrawing.AutoFit := False;
-  SpringDrawing.Lx := GetValue(SpringSolver.LengthL2);
-  SpringDrawing.Caption := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+  SpringDrawing.Lx := SpringSolver.LengthL2.Value([pMilli]);
+  SpringDrawing.Caption := Format('L2 = %s', [GetString(SpringDrawing.Lx)]);
   SpringDrawing.DrawInSection(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
 
   Bit[6].Draw(aScreen.Canvas, 0, 0, True);
@@ -1552,81 +1466,63 @@ begin
   Row := 0;
   QuickXList.Items[Row, 0] := 'd';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' , '---',
-    GetValue (SpringSolver.WireDiameter)) + TryFormatFloat(' ± %s mm', '',
-    GetValue (SpringSolver.WireDiameterMax - SpringSolver.WireDiameter));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterMax - SpringSolver.WireDiameter);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Di';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.Di), '---', GetValue(SpringSolver.Di));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.Di);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Dm';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' , '---',
-    GetValue (SpringSolver.Dm)) + TryFormatFloat(' ± %s ' +
-    GetSymbol(SpringTolerance.ToleranceOnCoilDiameter), '',
-    GetValue (SpringTolerance.ToleranceOnCoilDiameter));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.Dm, SpringTolerance.ToleranceOnCoilDiameter);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'De';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] :=
-    TryFormatFloat('%s ' + GetSymbol(SpringSolver.De) , '---', GetValue(SpringSolver.De));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.De);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'n';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s coils', '---', SpringSolver.ActiveColis);
+  QuickXList.Items[Row, 2] := Format('%0.2f coils', [SpringSolver.ActiveColis]);
 
   {$IFDEF MODULE1}
   Inc(Row);
   QuickXList.Items[Row, 0] := 'nt';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s colis', '---', SpringSolver.TotalCoils);
+  QuickXList.Items[Row, 2] := Format('%0.2f colis', [SpringSolver.TotalCoils]);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'nu';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s', '---', SpringSolver.SeatingCoefficent);
+  QuickXList.Items[Row, 2] := Format('%0.1f', [SpringSolver.SeatingCoefficent]);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 0] := 'L0';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ', '---',
-    GetValue (SpringSolver.LengthL0)) + TryFormatFloat(' ± %s ' +
-    GetSymbol(SpringTolerance.ToleranceFreeBodyLength), '',
-    GetValue (SpringTolerance.ToleranceFreeBodyLength));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthL0, SpringTolerance.ToleranceFreeBodyLength);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'L1';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.LengthL1), '---',
-    GetValue (SpringSolver.LengthL1));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthL1);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'L2';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.LengthL2), '---',
-    GetValue (SpringSolver.LengthL2));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthL2);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Ln';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.LengthLn), '---',
-    GetValue (SpringSolver.LengthLn));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthLn);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Lc';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.LengthLc), '---',
-    GetValue (SpringSolver.LengthLc));
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthLc);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 0] := 'Quality specs.';
@@ -1635,32 +1531,32 @@ begin
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Di, Dm, De';
   QuickXList.Items[Row, 1] := ' ';
-  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', Ord(SpringTolerance.QualityGradeOnCoilDiameter) + 1);
+  QuickXList.Items[Row, 2] := Format('grade %d', [Ord(SpringTolerance.QualityGradeOnCoilDiameter) + 1]);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'L0';
   QuickXList.Items[Row, 1] := ' ';
-  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', Ord(SpringTolerance.QualityGradeOnFreeBodyLength) + 1);
+  QuickXList.Items[Row, 2] := Format('grade %d', [Ord(SpringTolerance.QualityGradeOnFreeBodyLength) + 1]);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'F1';
   QuickXList.Items[Row, 1] := ' ';
-  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', Ord(SpringTolerance.QualityGradeOnLoad1) + 1);
+  QuickXList.Items[Row, 2] := Format('grade %d', [Ord(SpringTolerance.QualityGradeOnLoad1) + 1]);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'F2';
   QuickXList.Items[Row, 1] := ' ';
-  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', Ord(SpringTolerance.QualityGradeOnLoad2) + 1);
+  QuickXList.Items[Row, 2] := Format('grade %d', [Ord(SpringTolerance.QualityGradeOnLoad2) + 1]);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'e1';
   QuickXList.Items[Row, 1] := ' ';
-  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', Ord(SpringTolerance.QualityGradeOnPerpendicularity) + 1);
+  QuickXList.Items[Row, 2] := Format('grade %d', [Ord(SpringTolerance.QualityGradeOnPerpendicularity) + 1]);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'e2';
   QuickXList.Items[Row, 1] := ' ';
-  QuickXList.Items[Row, 2] := TryFormatInt('grade %s', '---', Ord(SpringTolerance.QualityGradeOnParallelism) + 1);
+  QuickXList.Items[Row, 2] := Format('grade %d', [Ord(SpringTolerance.QualityGradeOnParallelism) + 1]);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 0] := 'Spring ends';
@@ -1695,145 +1591,110 @@ begin
   Row := 2;
   QuickXList.Items[Row, 4] := 'Material';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatText('%s', '---', MAT.Items[MAT.ItemIndex]);
+  QuickXList.Items[Row, 6] := Format('%s', [MAT.Items[MAT.ItemIndex]]);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'Rm';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TensileStrengthRm), '---',
-    GetValue (SpringSolver.TensileStrengthRm));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.TensileStrengthRm);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'G';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.ShearModulus), '---',
-    GetValue (SpringSolver.ShearModulus));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.ShearModulus);
 
   Inc(Row);
-  QuickXList.Items[Row, 4] := Format('G(%s°)', [TryFloatToText(MAT.Tempetature)]);
+  QuickXList.Items[Row, 4] := Format('G(%s°)', [GetString(MAT.Tempetature)]);
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(MAT.GetG(MAT.Tempetature)), '---',
-    GetValue (MAT.GetG(MAT.Tempetature)));
+  QuickXList.Items[Row, 6] := GetString(MAT.GetG(MAT.Tempetature));
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'rho';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.MaterialDensity), '---',
-    GetValue (SpringSolver.MaterialDensity));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.MaterialDensity);
 
   Inc(Row, 3);
   QuickXList.Items[Row, 4] := 'F1';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] :=
-    TryFormatFloat('%s ' , '---', SpringSolver.LoadF1.Value) +
-    TryFormatFloat(' ± %s ' +
-      GetSymbol(SpringTolerance.ToleranceOnLoad1), '',
-      GetValue (SpringTolerance.ToleranceOnLoad1));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadF1, SpringTolerance.ToleranceOnLoad1);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'F2';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] :=
-    TryFormatFloat('%s ', '---', SpringSolver.LoadF2.Value) +
-    TryFormatFloat(' ± %s ' +
-      GetSymbol(SpringTolerance.ToleranceOnLoad2), '',
-      GetValue (SpringTolerance.ToleranceOnLoad2));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadF2, SpringTolerance.ToleranceOnLoad2);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'Fn';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.LoadFn), '---',
-    GetValue (SpringSolver.LoadFn));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadFn);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'Fc';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.LoadFc), '---',
-    GetValue (SpringSolver.LoadFc));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadFc);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 4] := 'tauk1';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTauk1), '---',
-    GetValue (SpringSolver.TorsionalStressTauk1));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.TorsionalStressTauk1);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'tauk2';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTauk2), '---',
-    GetValue (SpringSolver.TorsionalStressTauk2));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.TorsionalStressTauk2);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'taukh';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.TorsionalStressTaukh), '---',
-    GetValue (SpringSolver.TorsionalStressTaukh));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.TorsionalStressTaukh);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 4] := 'tauhz';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.AdmDynamicTorsionalStressRangeTauhz), '---',
-    GetValue (SpringSolver.AdmDynamicTorsionalStressRangeTauhz));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'tauoz';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.AdmDynamicTorsionalStressTauoz), '---',
-    GetValue (SpringSolver.AdmDynamicTorsionalStressTauoz));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.AdmDynamicTorsionalStressTauoz);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'tauz';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s ' +
-    GetSymbol(SpringSolver.AdmStaticTorsionalStressTauz), '---',
-    GetValue (SpringSolver.AdmStaticTorsionalStressTauz));
+  QuickXList.Items[Row, 6] := GetString(SpringSolver.AdmStaticTorsionalStressTauz);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 4] := 'Static safety factor';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := TryFormatFloat('%s', '---', SpringSolver.StaticSafetyFactor);
+  QuickXList.Items[Row, 6] := Format('%0.2f', [SpringSolver.StaticSafetyFactor]);
 
-  Inc(Row);
   if SpringSolver.DynamicLoad then
   begin
+    Inc(Row);
     QuickXList.Items[Row, 4] := 'Dynamic safety factor';
     QuickXList.Items[Row, 5] := '=';
-    QuickXList.Items[Row, 6] := TryFormatFloat('%s', '---', SpringSolver.DynamicSafetyFactor);
+    QuickXList.Items[Row, 6] := Format('%0.2f', [SpringSolver.DynamicSafetyFactor]);
+
+    Inc(Row);
+    QuickXList.Items[Row, 4] := 'N';
+    QuickXList.Items[Row, 5] := '=';
+    QuickXList.Items[Row, 6] := '---';
     if SpringSolver.NumOfCycles > 0 then
     begin
-      Inc(Row);
       QuickXList.Items[Row, 4] := 'N';
       QuickXList.Items[Row, 5] := '=';
-      QuickXList.Items[Row, 6] :=
-        TryFormatText('%s cycles', '---', TryFloatToText(SpringSolver.NumOfCycles, 2, 0));
-      Inc(Row);
-      QuickXList.Items[Row, 4] := 'Nh';
-      QuickXList.Items[Row, 5] := '=';
-      QuickXList.Items[Row, 6] :=
-        TryFormatFloatDiv('%s hours', '---', SpringSolver.NumOfCycles,
-        3600 * SpringSolver.CycleFrequency.Value);
-    end
-    else
+      QuickXList.Items[Row, 6] := Format('%0.0f cycles', [SpringSolver.NumOfCycles]);
+    end;
+
+    Inc(Row);
+    QuickXList.Items[Row, 4] := 'Nh';
+    QuickXList.Items[Row, 5] := '=';
+    QuickXList.Items[Row, 6] := '---';
+    if SpringSolver.CycleFrequency > (0*Hz) then
     begin
-      Inc(Row);
-      QuickXList.Items[Row, 4] := 'N';
-      QuickXList.Items[Row, 5] := '=';
-      QuickXList.Items[Row, 6] := '---';
-      Inc(Row);
       QuickXList.Items[Row, 4] := 'Nh';
       QuickXList.Items[Row, 5] := '=';
-      QuickXList.Items[Row, 6] := '---';
+      QuickXList.Items[Row, 6] := (SpringSolver.NumOfCycles / SpringSolver.CycleFrequency).ToHour.ToString;
     end;
   end;
 

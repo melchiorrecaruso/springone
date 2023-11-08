@@ -8,9 +8,9 @@ object GeometryForm1: TGeometryForm1
   Caption = 'Geometry & working length'
   ClientHeight = 360
   ClientWidth = 420
-  Position = poMainFormCenter
-  LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '2.2.6.0'
   object WireDiameterLabel: TLabel
     AnchorSideTop.Control = WireDiameter
     AnchorSideRight.Control = WireDiameter
@@ -26,6 +26,7 @@ object GeometryForm1: TGeometryForm1
     Caption = 'wire diameter d'
     Layout = tlCenter
     ParentBidiMode = False
+    ParentColor = False
   end
   object WireDiameter: TFloatSpinEdit
     AnchorSideLeft.Control = CoilDiameter
@@ -40,8 +41,8 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Top = 12
     BorderSpacing.Right = 10
     Increment = 0.05
-    TabOrder = 0
     OnChange = SpinEditChange
+    TabOrder = 0
   end
   object WireDiameterUnit: TComboBox
     AnchorSideLeft.Side = asrBottom
@@ -111,8 +112,8 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Left = 10
     BorderSpacing.Right = 10
     Increment = 0.5
-    TabOrder = 3
     OnChange = SpinEditChange
+    TabOrder = 3
   end
   object CoilDiameterIndex: TComboBox
     AnchorSideLeft.Control = Owner
@@ -153,6 +154,7 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Right = 10
     Caption = 'number of active coil n'
     Layout = tlCenter
+    ParentColor = False
   end
   object InactiveCoil1: TFloatSpinEdit
     AnchorSideLeft.Control = ActiveCoil
@@ -168,8 +170,8 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
     Increment = 0.1
-    TabOrder = 6
     OnChange = SpinEditChange
+    TabOrder = 6
   end
   object InactiveCoil1Label: TLabel
     AnchorSideTop.Control = InactiveCoil1
@@ -186,6 +188,7 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Right = 10
     Caption = 'inactive end coil 1 (upper)'
     Layout = tlCenter
+    ParentColor = False
   end
   object InactiveCoil2Label: TLabel
     AnchorSideTop.Control = InactiveCoil2
@@ -202,6 +205,7 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Right = 10
     Caption = 'inactive end coil 2 (lower)'
     Layout = tlCenter
+    ParentColor = False
   end
   object InactiveCoil2: TFloatSpinEdit
     AnchorSideLeft.Control = InactiveCoil1
@@ -217,8 +221,8 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     Increment = 0.1
-    TabOrder = 7
     OnChange = SpinEditChange
+    TabOrder = 7
   end
   object EndCoilType: TComboBox
     AnchorSideLeft.Control = LengthL2
@@ -259,6 +263,7 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Right = 10
     Caption = 'end coil type'
     Layout = tlCenter
+    ParentColor = False
   end
   object LengthL0Label: TLabel
     AnchorSideTop.Control = LengthL0
@@ -275,6 +280,7 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Right = 10
     Caption = 'unloaded spring length L0'
     Layout = tlCenter
+    ParentColor = False
   end
   object LengthL0: TFloatSpinEdit
     AnchorSideLeft.Control = InactiveCoil2
@@ -290,8 +296,8 @@ object GeometryForm1: TGeometryForm1
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    TabOrder = 8
     OnChange = SpinEditChange
+    TabOrder = 8
   end
   object LengthL0Unit: TComboBox
     AnchorSideLeft.Control = CoilDiameterUnit
@@ -332,8 +338,8 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     Increment = 0.1
-    TabOrder = 5
     OnChange = SpinEditChange
+    TabOrder = 5
   end
   object Bevel1: TBevel
     AnchorSideLeft.Control = Owner
@@ -401,6 +407,7 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Right = 10
     Caption = 'length L1'
     Layout = tlCenter
+    ParentColor = False
   end
   object LengthL1: TFloatSpinEdit
     AnchorSideLeft.Control = LengthL0
@@ -417,8 +424,8 @@ object GeometryForm1: TGeometryForm1
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    TabOrder = 10
     OnChange = SpinEditChange
+    TabOrder = 10
   end
   object LengthL1Unit: TComboBox
     AnchorSideLeft.Control = LengthL0Unit
@@ -484,8 +491,8 @@ object GeometryForm1: TGeometryForm1
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
-    TabOrder = 12
     OnChange = SpinEditChange
+    TabOrder = 12
   end
   object LengthL2Label: TLabel
     AnchorSideTop.Control = LengthL2
@@ -502,6 +509,7 @@ object GeometryForm1: TGeometryForm1
     BorderSpacing.Right = 10
     Caption = 'length L2'
     Layout = tlCenter
+    ParentColor = False
   end
   object ApplyBtn: TBitBtn
     AnchorSideTop.Control = CancelBtn
@@ -515,7 +523,7 @@ object GeometryForm1: TGeometryForm1
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = '&Apply'
-    TabOrder = 15
     OnClick = ApplyBtnClick
+    TabOrder = 15
   end
 end

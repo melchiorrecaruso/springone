@@ -89,11 +89,11 @@ end;
 
 procedure TApplicationForm1.Load(IniFile: TIniFile);
 begin
-  LoadType         .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm1', 'LoadType',          '0'));
-  CycleFrequency   .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm1', 'CycleFrequency',    '1'));
-  Temperature      .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm1', 'Temperature',       '0'));
-  TemperatureUnit  .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm1', 'TemperatureUnit',   '0'));
-  SeatingCoefficent.ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm1', 'SeatingCoefficent', '0'));
+  LoadType         .ItemIndex := IniFile.ReadInteger('TApplicationForm1', 'LoadType',          0);
+  CycleFrequency   .Value     := IniFile.ReadFloat  ('TApplicationForm1', 'CycleFrequency',    1);
+  Temperature      .Value     := IniFile.ReadFloat  ('TApplicationForm1', 'Temperature',       0);
+  TemperatureUnit  .ItemIndex := IniFile.ReadInteger('TApplicationForm1', 'TemperatureUnit',   0);
+  SeatingCoefficent.ItemIndex := IniFile.ReadInteger('TApplicationForm1', 'SeatingCoefficent', 0);
 end;
 
 procedure TApplicationForm1.Save(IniFile: TIniFile);
@@ -112,7 +112,7 @@ begin
    0: SpringSolver.DynamicLoad := True;
    1: SpringSolver.DynamicLoad := False;
   end;
-  SpringSolver.SeatingCoefficent := TryTextToFloat(SeatingCoefficent.Text);
+  SpringSolver.SeatingCoefficent := StrToFloat(SeatingCoefficent.Text);
   SpringSolver.Temperature       := (Temperature.Value * degC).ToKelvin;
   {$ENDIF}
   {$IFDEF MODULE3}

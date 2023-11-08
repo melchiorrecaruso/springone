@@ -104,14 +104,14 @@ end;
 
 procedure TQualityForm.Load(IniFile: TIniFile);
 begin
-  ToleranceWireDiameter    .Value     := TryTextToFloat(IniFile.ReadString('TQualityForm', 'ToleranceWireDiameter',     '0'));
-  ToleranceWireDiameterUnit.ItemIndex := TryTextToInt  (IniFile.ReadString('TQualityForm', 'ToleranceWireDiameterUnit', '0'));
-  ToleranceCoilDiameter    .ItemIndex := TryTextToInt  (IniFile.ReadString('TQualityForm', 'ToleranceCoilDiameter',     '0'));
-  ToleranceLengthL0        .ItemIndex := TryTextToInt  (IniFile.ReadString('TQualityForm', 'ToleranceLengthL0',         '0'));
-  ToleranceLoadF1          .ItemIndex := TryTextToInt  (IniFile.ReadString('TQualityForm', 'ToleranceLoadF1',           '0'));
-  ToleranceLoadF2          .ItemIndex := TryTextToInt  (IniFile.ReadString('TQualityForm', 'ToleranceLoadF2',           '0'));
-  ToleranceEccentricitye1  .ItemIndex := TryTextToInt  (IniFile.ReadString('TQualityForm', 'ToleranceEccentricitye1',   '0'));
-  ToleranceEccentricitye2  .ItemIndex := TryTextToInt  (IniFile.ReadString('TQualityForm', 'ToleranceEccentricitye2',   '0'));
+  ToleranceWireDiameter    .Value     := IniFile.ReadFloat  ('TQualityForm', 'ToleranceWireDiameter',     0);
+  ToleranceWireDiameterUnit.ItemIndex := IniFile.ReadInteger('TQualityForm', 'ToleranceWireDiameterUnit', 0);
+  ToleranceCoilDiameter    .ItemIndex := IniFile.ReadInteger('TQualityForm', 'ToleranceCoilDiameter',     0);
+  ToleranceLengthL0        .ItemIndex := IniFile.ReadInteger('TQualityForm', 'ToleranceLengthL0',         0);
+  ToleranceLoadF1          .ItemIndex := IniFile.ReadInteger('TQualityForm', 'ToleranceLoadF1',           0);
+  ToleranceLoadF2          .ItemIndex := IniFile.ReadInteger('TQualityForm', 'ToleranceLoadF2',           0);
+  ToleranceEccentricitye1  .ItemIndex := IniFile.ReadInteger('TQualityForm', 'ToleranceEccentricitye1',   0);
+  ToleranceEccentricitye2  .ItemIndex := IniFile.ReadInteger('TQualityForm', 'ToleranceEccentricitye2',   0);
 end;
 
 procedure TQualityForm.Save(IniFile: TIniFile);

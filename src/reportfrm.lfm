@@ -6,7 +6,7 @@ object ReportForm: TReportForm
   Caption = 'Report'
   ClientHeight = 478
   ClientWidth = 555
-  LCLVersion = '3.99.0.0'
+  LCLVersion = '2.2.6.0'
   object Memo: TMemo
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner

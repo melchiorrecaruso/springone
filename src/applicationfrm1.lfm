@@ -8,10 +8,10 @@ object ApplicationForm1: TApplicationForm1
   Caption = 'Analisys'
   ClientHeight = 215
   ClientWidth = 400
+  OnCreate = FormCreate
   ParentBiDiMode = False
   Position = poMainFormCenter
-  LCLVersion = '3.99.0.0'
-  OnCreate = FormCreate
+  LCLVersion = '2.2.6.0'
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -88,6 +88,7 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Right = 10
     Caption = 'seat coefficient nu'
     Layout = tlCenter
+    ParentColor = False
   end
   object CancelBtn: TBitBtn
     AnchorSideTop.Control = OkBtn
@@ -119,6 +120,7 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Right = 10
     Caption = 'type of stress'
     Layout = tlCenter
+    ParentColor = False
   end
   object LoadType: TComboBox
     AnchorSideLeft.Control = Temperature
@@ -182,6 +184,7 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Left = 12
     Caption = 'operating temperature T'
     Layout = tlCenter
+    ParentColor = False
   end
   object Temperature: TFloatSpinEdit
     AnchorSideLeft.Control = TemperatureLabel
@@ -199,9 +202,9 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Top = 8
     BorderSpacing.Right = 10
     DecimalPlaces = 1
+    OnChange = SpinEditChange
     TabOrder = 5
     Value = 20
-    OnChange = SpinEditChange
   end
   object CycleFrequencyUnit: TComboBox
     AnchorSideLeft.Side = asrBottom
@@ -243,9 +246,9 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Top = 8
     BorderSpacing.Right = 10
     DecimalPlaces = 1
+    OnChange = SpinEditChange
     TabOrder = 7
     Value = 1
-    OnChange = SpinEditChange
   end
   object CycleFrequencyLabel: TLabel
     AnchorSideTop.Control = CycleFrequency
@@ -260,5 +263,6 @@ object ApplicationForm1: TApplicationForm1
     BorderSpacing.Right = 10
     Caption = 'stress cycle frequency'
     Layout = tlCenter
+    ParentColor = False
   end
 end

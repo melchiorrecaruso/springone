@@ -89,11 +89,11 @@ end;
 
 procedure TApplicationForm3.Load(IniFile: TIniFile);
 begin
-  LoadType       .ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm3', 'LoadType',        '0'));
-  CycleFrequency .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm3', 'CycleFrequency',  '1'));
-  Temperature    .Value     := TryTextToFloat(IniFile.ReadString('TApplicationForm3', 'Temperature',     '0'));
-  TemperatureUnit.ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm3', 'TemperatureUnit', '0'));
-  StressDirection.ItemIndex := TryTextToInt  (IniFile.ReadString('TApplicationForm3', 'StressDirection', '0'));
+  LoadType       .ItemIndex := IniFile.ReadInteger('TApplicationForm3', 'LoadType',        0);
+  CycleFrequency .Value     := IniFile.ReadFloat  ('TApplicationForm3', 'CycleFrequency',  1);
+  Temperature    .Value     := IniFile.ReadFloat  ('TApplicationForm3', 'Temperature',     0);
+  TemperatureUnit.ItemIndex := IniFile.ReadInteger('TApplicationForm3', 'TemperatureUnit', 0);
+  StressDirection.ItemIndex := IniFile.ReadInteger('TApplicationForm3', 'StressDirection', 0);
 end;
 
 procedure TApplicationForm3.Save(IniFile: TIniFile);

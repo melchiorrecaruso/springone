@@ -239,6 +239,9 @@ var
   Logo: TBGRABitmap;
   {$endif}
 begin
+  DefaultFormatSettings.DecimalSeparator  := '.';
+  DefaultFormatSettings.ThousandSeparator := ',';
+
   Caption := ApplicationVer;
   ClientFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
@@ -257,11 +260,11 @@ begin
   if PaperName <> '' then
   begin
     Printer.PaperSize.PaperName  := PaperName;
-    Printer.Orientation          := TPrinterOrientation(ClientFile.ReadInteger('Printer', 'Page.Orientation',  0 ));
-    PageSetupDialog.MarginTop    := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginTop',    '0'));
-    PageSetupDialog.MarginLeft   := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginLeft',   '0'));
-    PageSetupDialog.MarginRight  := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginRight',  '0'));
-    PageSetupDialog.MarginBottom := TryTextToInt       (ClientFile.ReadString ('Printer', 'Page.MarginBottom', '0'));
+    Printer.Orientation          := TPrinterOrientation(ClientFile.ReadInteger('Printer', 'Page.Orientation',   0));
+    PageSetupDialog.MarginTop    :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginTop',    0);
+    PageSetupDialog.MarginLeft   :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginLeft',   0);
+    PageSetupDialog.MarginRight  :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginRight',  0);
+    PageSetupDialog.MarginBottom :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginBottom', 0);
   end;
   UseImperialSystem := UseImperialSystemMenuItem.Checked;
   WindowState := wsMaximized;
@@ -1005,21 +1008,21 @@ begin
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := True;
     SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
     SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := False;
     SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
     SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := False;
     SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
     Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
@@ -1050,21 +1053,21 @@ begin
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := True;
     SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
     SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := False;
     SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L1 = %s', 'L1 = ---', SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
     SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := False;
     SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L2 = %s', 'L2 = ---', SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
     Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
@@ -1092,14 +1095,14 @@ begin
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := True;
     SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
     SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := False;
     SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
-    SpringDrawing.Caption    := TryFormatFloat('L = %s', 'L = ---', SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
     Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
@@ -1125,14 +1128,14 @@ begin
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := True;
     SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := TryFormatFloat('L0 = %s', 'L0 = ---',SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
     SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
     SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
     SpringDrawing.AutoFit    := False;
     SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
-    SpringDrawing.Caption    := TryFormatFloat('L = %s', 'L = ---', SpringDrawing.Lx);
+    SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
     SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
     Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
@@ -1178,7 +1181,7 @@ begin
   Result.Dm         := SpringSolver.Dm.Value([pMilli]);
   Result.Lc         := SpringSolver.LengthLc.Value([pMilli]);
   Result.Lx         := DrawingForm.SpringLength.Value;
-  Result.Caption       := TryFormatFloat('L = %s', 'L = ---', Result.Lx);
+  Result.Caption    := Format('L = %0.2f', [Result.Lx]);
   Result.n          := SpringSolver.ActiveColis;
   Result.nt1        := GeometryForm1.InactiveCoil1.Value;
   Result.nt2        := GeometryForm1.InactiveCoil2.Value;
@@ -1197,61 +1200,61 @@ begin
   {$IFDEF MODULE1}
   Result := Tx;
   Result := StringReplace(Result, '@0.00', Format('e1=%s ' + GetSymbol(SpringSolver.EccentricityE1),
-    [TryFloatToText(GetValue(SpringSolver.EccentricityE1))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.EccentricityE1))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.01', Format('e2=%s ' + GetSymbol(SpringSolver.EccentricityE2),
-    [TryFloatToText(GetValue(SpringSolver.EccentricityE2))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.EccentricityE2))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.02', Format('d=%s ' + GetSymbol(SpringSolver.WireDiameter),
-    [TryFloatToText(GetValue(SpringSolver.WireDiameter))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.WireDiameter))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.03', Format('Di=%s ' + GetSymbol(SpringSolver.Di),
-    [TryFloatToText(GetValue(SpringSolver.Di))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.Di))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.04', Format('Dm=%s ' + GetSymbol(SpringSolver.Dm),
-    [TryFloatToText(GetValue(SpringSolver.Dm))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.Dm))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.05', Format('De=%s ' + GetSymbol(SpringSolver.De),
-    [TryFloatToText(GetValue(SpringSolver.De))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.De))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.06', Format('L0=%s ' + GetSymbol(SpringSolver.LengthL0),
-    [TryFloatToText(GetValue(SpringSolver.LengthL0))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LengthL0))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.07', Format('L1=%s ' + GetSymbol(SpringSolver.LengthL1),
-    [TryFloatToText(GetValue(SpringSolver.LengthL1))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LengthL1))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.08', Format('L2=%s ' + GetSymbol(SpringSolver.LengthL2),
-    [TryFloatToText(GetValue(SpringSolver.LengthL2))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LengthL2))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.09', Format('Ln=%s ' + GetSymbol(SpringSolver.LengthLn),
-    [TryFloatToText(GetValue(SpringSolver.LengthLn))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LengthLn))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.10', Format('Lc=%s ' + GetSymbol(SpringSolver.LengthLc),
-    [TryFloatToText(GetValue(SpringSolver.LengthLc))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LengthLc))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.11', Format('F1=%s ' + GetSymbol(SpringSolver.LoadF1),
-    [TryFloatToText(GetValue(SpringSolver.LoadF1))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LoadF1))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.13', Format('F2=%s ' + GetSymbol(SpringSolver.LoadF2),
-    [TryFloatToText(GetValue(SpringSolver.LoadF2))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LoadF2))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.15', Format('Fn=%s ' + GetSymbol(SpringSolver.LoadFn),
-    [TryFloatToText(GetValue(SpringSolver.LoadFn))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LoadFn))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.17', Format('Fc=%s ' + GetSymbol(SpringSolver.LoadFc),
-    [TryFloatToText(GetValue(SpringSolver.LoadFc))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.LoadFc))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.12', Format('Tauk1=%s ' + GetSymbol(SpringSolver.TorsionalStressTauk1),
-    [TryFloatToText(GetValue(SpringSolver.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.14', Format('Tauk2=%s ' + GetSymbol(SpringSolver.TorsionalStressTauk1),
-    [TryFloatToText(GetValue(SpringSolver.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.16', Format('Taukn=%s ' + GetSymbol(SpringSolver.TorsionalStressTaukn),
-    [TryFloatToText(GetValue(SpringSolver.TorsionalStressTaukn))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.TorsionalStressTaukn))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@0.18', Format('Tauc=%s ' + GetSymbol(SpringSolver.TorsionalStressTauc),
-    [TryFloatToText(GetValue(SpringSolver.TorsionalStressTauc ))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.TorsionalStressTauc ))]), [rfReplaceAll, rfIgnoreCase]);
 
   if SpringSolver.ClosedEnds and (SpringSolver.GroundEnds = True) then
   begin
@@ -1268,13 +1271,13 @@ begin
   end;
 
   Result := StringReplace(Result, '@1.0', Format('n=%s',
-    [TryFloatToText(SpringSolver.ActiveColis)]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(SpringSolver.ActiveColis)]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@1.1', Format('nt=%s',
-    [TryFloatToText(SpringSolver.TotalCoils )]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(SpringSolver.TotalCoils )]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@2.0', Format('R=%s ' + GetSymbol(SpringSolver.SpringRateR),
-    [TryFloatToText(GetValue(SpringSolver.SpringRateR))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.SpringRateR))]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.DirectionCoils.ItemIndex of
     0: ;
@@ -1285,10 +1288,10 @@ begin
   Result := StringReplace(Result, '@3.1', ' ', [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@4.0', Format('Dd=%s ' + GetSymbol(SpringSolver.DiMin),
-    [TryFloatToText(GetValue(SpringSolver.DiMin))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.DiMin))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@4.1', Format('Dh=%s ' + GetSymbol(SpringSolver.DeMax),
-    [TryFloatToText(GetValue(SpringSolver.DeMax))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.DeMax))]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.BurringEnds.ItemIndex of
     0: Result := StringReplace(Result, '@5.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1300,11 +1303,11 @@ begin
   Result := StringReplace(Result, '@5.2', ' ', [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@6.0', Format('fe=%s ' + GetSymbol(SpringSolver.NaturalFrequency),
-    [TryFloatToText(GetValue(SpringSolver.NaturalFrequency))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.NaturalFrequency))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@7.0', Format('%s C° / %s C°',
-    [TryFloatToText(MAT.TempetatureMin),
-     TryFloatToText(MAT.TempetatureMax)]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(MAT.TempetatureMin),
+     GetString(MAT.TempetatureMax)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.WireSurface.ItemIndex of
     0: Result := StringReplace(Result, '@8.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1321,10 +1324,10 @@ begin
   Result := StringReplace(Result, '@10.0', MAT.Items[MAT.ItemIndex], [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@10.1', Format('tauz=%s ' + GetSymbol(SpringSolver.AdmStaticTorsionalStressTauz),
-    [TryFloatToText(GetValue(SpringSolver.AdmStaticTorsionalStressTauz))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(SpringSolver.AdmStaticTorsionalStressTauz))]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@10.2', Format('G=%s ' + GetSymbol(MAT.ShearModulusG20),
-    [TryFloatToText(GetValue(MAT.ShearModulusG20))]), [rfReplaceAll, rfIgnoreCase]);
+    [GetString(GetValue(MAT.ShearModulusG20))]), [rfReplaceAll, rfIgnoreCase]);
 
   case SpringTolerance.QualityGradeOnCoilDiameter of
     QualityGrade1: Result := StringReplace(Result, '@11.00', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1394,7 +1397,7 @@ begin
   if ProductionForm.LengthLs.Value > 0 then
   begin
     Result := StringReplace(Result, '@13.0', Format('Ls=%s ' + ProductionForm.LengthLsUnit.Text,
-      [TryFloatToText(ProductionForm.LengthLs.Value)]), [rfReplaceAll, rfIgnoreCase]);
+      [GetString(ProductionForm.LengthLs.Value)]), [rfReplaceAll, rfIgnoreCase]);
 
     Result := StringReplace(Result, '@13.1', 'X', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@13.2', ' ', [rfReplaceAll, rfIgnoreCase]);

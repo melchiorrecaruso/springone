@@ -360,10 +360,10 @@ begin
   for i := 0 to fTolFile.RowCount -1 do
   begin
     if Pos(fTolFile.Cells[0, 0], aID) = 1 then
-      if (aWireDiameter >  TryTextToFloat(fTolFile.Cells[1, i])*mm) and
-         (aWireDiameter <= TryTextToFloat(fTolFile.Cells[2, i])*mm) then
+      if (aWireDiameter >  StrToFloat(fTolFile.Cells[1, i])*mm) and
+         (aWireDiameter <= StrToFloat(fTolFile.Cells[2, i])*mm) then
       begin
-        fValue := TryTextToFloat(fTolFile.Cells[3, i])*mm;
+        fValue := StrToFloat(fTolFile.Cells[3, i])*mm;
         Break;
       end;
   end;

@@ -903,7 +903,7 @@ begin
   begin
     X := FXMin + XSpacing * I;
     DrawLine(X, FYMin, X, FYMax, FYGridLineColor, FYGridLineWidth * FScale);
-    DrawText(X, FYMin + YShift, TryFloatToText(FXMinF + FXDeltaF * I), FXAxisFontColor, taCenter, taAlignTop);
+    DrawText(X, FYMin + YShift, GetString(FXMinF + FXDeltaF * I), FXAxisFontColor, taCenter, taAlignTop);
   end;
   DrawLine(FXMax, FYMin, FXMax, FYMax, FYGridLineColor, FYGridLineWidth * FScale);
   DrawText(FXMax, FYMin + YShift, FXAxisLabel, FXAxisFontColor, taCenter, taAlignTop);
@@ -922,7 +922,7 @@ begin
   begin
     Y := FYMin + YSpacing * I;
     DrawLine(FXMin, Y, FXMax, Y, FXGridLineColor, FXGridLineWidth * FScale);
-    DrawText(FXMin + XShift, Y, TryFloatToText(FYMinF + FYDeltaF * I), FYAxisFontColor, taRightJustify, taVerticalCenter);
+    DrawText(FXMin + XShift, Y, GetString(FYMinF + FYDeltaF * I), FYAxisFontColor, taRightJustify, taVerticalCenter);
   end;
   DrawLine(FXMin, FYMax, FXMax, FYMax, FXGridLineColor, FXGridLineWidth * FScale);
   DrawText(FXMin + XShift, FYMax, FYAxisLabel, FYAxisFontColor, taRightJustify, taVerticalCenter);
@@ -1240,10 +1240,10 @@ begin
   FBit.FontStyle     := FXAxisFontStyle;
   FBit.FontHeight    := Trunc(FXAxisFontHeight * FScale);
 
-  maxXLabelWidth  := Max(FBit.TextSize(FXAxisLabel).Width,  FBit.TextSize(TryFloatToText(FXMaxF)).Width ) + Trunc(FSpacer * FScale);
-  maxXLabelHeight := Max(FBit.TextSize(FXAxisLabel).Height, FBit.TextSize(TryFloatToText(FXMaxF)).Height) + Trunc(FSpacer * FScale);
-  maxYLabelWidth  := Max(FBit.TextSize(FYAxisLabel).Width,  FBit.TextSize(TryFloatToText(FYMaxF)).Width ) + Trunc(FSpacer * FScale);
-  maxYLabelHeight := Max(FBit.TextSize(FYAxisLabel).Height, FBit.TextSize(TryFloatToText(FYMaxF)).Height) + Trunc(FSpacer * FScale);
+  maxXLabelWidth  := Max(FBit.TextSize(FXAxisLabel).Width,  FBit.TextSize(GetString(FXMaxF)).Width ) + Trunc(FSpacer * FScale);
+  maxXLabelHeight := Max(FBit.TextSize(FXAxisLabel).Height, FBit.TextSize(GetString(FXMaxF)).Height) + Trunc(FSpacer * FScale);
+  maxYLabelWidth  := Max(FBit.TextSize(FYAxisLabel).Width,  FBit.TextSize(GetString(FYMaxF)).Width ) + Trunc(FSpacer * FScale);
+  maxYLabelHeight := Max(FBit.TextSize(FYAxisLabel).Height, FBit.TextSize(GetString(FYMaxF)).Height) + Trunc(FSpacer * FScale);
 
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;

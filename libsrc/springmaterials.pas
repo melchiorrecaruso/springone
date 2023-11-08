@@ -218,8 +218,8 @@ begin
     //TREATMENT  DMIN	 DMAX
     if (CompareText(aID, GetItem(i)) = 0) and (CompareText(aSurfaceTreatment, fMatFile.Cells[2, i]) = 0)  then
     begin
-       if (aWireDiameter >  (TryTextToFloat(fMatFile.Cells[3, i]))*mm) and
-          (aWireDiameter <= (TryTextToFloat(fMatFile.Cells[4, i]))*mm) then
+       if (aWireDiameter >  (StrToFloat(fMatFile.Cells[3, i]))*mm) and
+          (aWireDiameter <= (StrToFloat(fMatFile.Cells[4, i]))*mm) then
        begin
          Result := i;
          Break;
@@ -243,14 +243,14 @@ begin
 
     fSurfaceTreatment     := fMatFile.Cells[2,  fItemIndex];
     fWireDiameter         := aWireDiameter;
-    fYoungModulusE20      := TryTextToFloat(fMatFile.Cells[5,  fItemIndex])*MPa;
-    fShearModulusG20      := TryTextToFloat(fMatFile.Cells[6,  fItemIndex])*MPa;
-    fDensityRho           := TryTextToFloat(fMatFile.Cells[7,  fItemIndex])*kg/m3;
+    fYoungModulusE20      := StrToFloat(fMatFile.Cells[5,  fItemIndex])*MPa;
+    fShearModulusG20      := StrToFloat(fMatFile.Cells[6,  fItemIndex])*MPa;
+    fDensityRho           := StrToFloat(fMatFile.Cells[7,  fItemIndex])*kg/m3;
 
-    RM0                   := TryTextToFloat(fMatFile.Cells[8,  fItemIndex])*MPa;
-    DRM                   := TryTextToFloat(fMatFile.Cells[9,  fItemIndex])*MPa;
-    DR0                   := TryTextToFloat(fMatFile.Cells[10, fItemIndex])*mm;
-    RMMAX                 := TryTextToFloat(fMatFile.Cells[11, fItemIndex])*MPa;
+    RM0                   := StrToFloat(fMatFile.Cells[8,  fItemIndex])*MPa;
+    DRM                   := StrToFloat(fMatFile.Cells[9,  fItemIndex])*MPa;
+    DR0                   := StrToFloat(fMatFile.Cells[10, fItemIndex])*mm;
+    RMMAX                 := StrToFloat(fMatFile.Cells[11, fItemIndex])*MPa;
     fTensileStrengthRm    := RM0-DRM*Log10(fWireDiameter/DR0);
 
     if fTensileStrengthRm > RMMAX then
@@ -258,19 +258,19 @@ begin
 
     fTorsionalStressTauUT := fTensileStrengthRm*0.577;
 
-    DT0                   := TryTextToFloat(fMatFile.Cells[12, fItemIndex])*mm;
-    TO0                   := TryTextToFloat(fMatFile.Cells[13, fItemIndex])*MPa;
-    DTO0                  := TryTextToFloat(fMatFile.Cells[14, fItemIndex])*MPa;
-    TO1                   := TryTextToFloat(fMatFile.Cells[15, fItemIndex])*MPa;
-    DTO1                  := TryTextToFloat(fMatFile.Cells[16, fItemIndex])*MPa;
-    TU1                   := TryTextToFloat(fMatFile.Cells[17, fItemIndex])*MPa;
-    DTU1                  := TryTextToFloat(fMatFile.Cells[18, fItemIndex])*MPa;
+    DT0                   := StrToFloat(fMatFile.Cells[12, fItemIndex])*mm;
+    TO0                   := StrToFloat(fMatFile.Cells[13, fItemIndex])*MPa;
+    DTO0                  := StrToFloat(fMatFile.Cells[14, fItemIndex])*MPa;
+    TO1                   := StrToFloat(fMatFile.Cells[15, fItemIndex])*MPa;
+    DTO1                  := StrToFloat(fMatFile.Cells[16, fItemIndex])*MPa;
+    TU1                   := StrToFloat(fMatFile.Cells[17, fItemIndex])*MPa;
+    DTU1                  := StrToFloat(fMatFile.Cells[18, fItemIndex])*MPa;
 
-    fNumOfCyclesE7        := TryTextToFloat(fMatFile.Cells[19, fItemIndex]);
+    fNumOfCyclesE7        := StrToFloat(fMatFile.Cells[19, fItemIndex]);
 
     fTemperature          := aTemperature;
-    fTemperatureMin       := TryTextToFloat(fMatFile.Cells[20, fItemIndex]);
-    fTemperatureMax       := TryTextToFloat(fMatFile.Cells[21, fItemIndex]);
+    fTemperatureMin       := StrToFloat(fMatFile.Cells[20, fItemIndex]);
+    fTemperatureMax       := StrToFloat(fMatFile.Cells[21, fItemIndex]);
 
     fPoissonRatio         := fYoungModulusE20/(2*fShearModulusG20)-1;
     fShearModulusG        := GetG(fTemperature);

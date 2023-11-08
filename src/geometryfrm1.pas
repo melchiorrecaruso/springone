@@ -112,21 +112,21 @@ end;
 
 procedure TGeometryForm1.Load(IniFile: TIniFile);
 begin
-  WireDiameter     .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'WireDiameter',      '0'));
-  WireDiameterUnit .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'WireDiameterUnit',  '0'));
-  CoilDiameterIndex.ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'CoilDiameterIndex', '0'));
-  CoilDiameter     .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'CoilDiameter',      '0'));
-  CoilDiameterUnit .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'CoilDiameterUnit',  '0'));
-  ActiveCoil       .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'ActiveCoil',        '0'));
-  InactiveCoil1    .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'InactiveCoil1',     '0'));
-  InactiveCoil2    .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'InactiveCoil2',     '0'));
-  LengthL0         .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'LengthL0',          '0'));
-  LengthL0Unit     .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'LengthL0Unit',      '0'));
-  LengthL1         .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'LengthL1',          '0'));
-  LengthL1Unit     .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'LengthL1Unit',      '0'));
-  LengthL2         .Value     := TryTextToFloat(IniFile.ReadString('TGeometryForm1', 'LengthL2',          '0'));
-  LengthL2Unit     .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'LengthL2Unit',      '0'));
-  EndCoilType      .ItemIndex := TryTextToInt  (IniFile.ReadString('TGeometryForm1', 'EndCoilType',       '0'));
+  WireDiameter     .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'WireDiameter',      0);
+  WireDiameterUnit .ItemIndex := IniFile.ReadInteger('TGeometryForm1', 'WireDiameterUnit',  0);
+  CoilDiameterIndex.ItemIndex := IniFile.ReadInteger('TGeometryForm1', 'CoilDiameterIndex', 0);
+  CoilDiameter     .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'CoilDiameter',      0);
+  CoilDiameterUnit .ItemIndex := IniFile.ReadInteger('TGeometryForm1', 'CoilDiameterUnit',  0);
+  ActiveCoil       .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'ActiveCoil',        0);
+  InactiveCoil1    .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'InactiveCoil1',     0);
+  InactiveCoil2    .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'InactiveCoil2',     0);
+  LengthL0         .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'LengthL0',          0);
+  LengthL0Unit     .ItemIndex := IniFile.ReadInteger('TGeometryForm1', 'LengthL0Unit',      0);
+  LengthL1         .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'LengthL1',          0);
+  LengthL1Unit     .ItemIndex := IniFile.ReadInteger('TGeometryForm1', 'LengthL1Unit',      0);
+  LengthL2         .Value     := IniFile.ReadFloat  ('TGeometryForm1', 'LengthL2',          0);
+  LengthL2Unit     .ItemIndex := IniFile.ReadInteger('TGeometryForm1', 'LengthL2Unit',      0);
+  EndCoilType      .ItemIndex := IniFile.ReadInteger('TGeometryForm1', 'EndCoilType',       0);
 end;
 
 procedure TGeometryForm1.Save(IniFile: TIniFile);
