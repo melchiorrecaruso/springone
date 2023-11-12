@@ -1,3 +1,24 @@
+{
+  Helical Compression Spring Designer
+
+  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+
+  This source is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free
+  Software Foundation; either version 2 of the License, or (at your option)
+  any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  A copy of the GNU General Public License is available on the World Wide Web
+  at <http://www.gnu.org/copyleft/gpl.html>. You can also obtain it by writing
+  to the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+  Boston, MA 02110-1335, USA.
+}
+
 unit Compozer;
 
 {$mode ObjFPC}{$H+}
@@ -838,10 +859,10 @@ begin
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 0] := 'angle [' + GetSymbol(0*deg) + ']';
-  Result[1, 0] := TryFormatFloat('α0: %s', 'α0: 0  ', GetValue(0*deg));
-  Result[2, 0] := TryFormatFloat('α1: %s', 'α1: ---', GetValue(SpringSolver.Alpha1));
-  Result[3, 0] := TryFormatFloat('α2: %s', 'α2: ---', GetValue(SpringSolver.Alpha2));
-  Result[4, 0] := TryFormatFloat('αn: %s', 'αn: ---', GetValue(0*deg));
+  Result[1, 0] := Format('α0: %s', [GetString(0*deg)]);
+  Result[2, 0] := Format('α1: %s', [GetString(SpringSolver.Alpha1)]);
+  Result[3, 0] := Format('α2: %s', [GetString(SpringSolver.Alpha2)]);
+  Result[4, 0] := Format('αn: %s', [GetString(0*deg)]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -855,9 +876,9 @@ begin
   {$IFDEF MODULE3}
   Result[0, 1] := 'torque [' + GetSymbol(SpringSolver.TorqueT1) + ']';
   Result[1, 1] := '';
-  Result[2, 1] := TryFormatFloat('T1: %s', 'T1: ---', GetValue(SpringSolver.TorqueT1));
-  Result[3, 1] := TryFormatFloat('T2: %s', 'T2: ---', GetValue(SpringSolver.TorqueT2));
-  Result[4, 1] := TryFormatFloat('Tn: %s', 'Tn: ---', GetValue(SpringSolver.TorqueTn));
+  Result[2, 1] := Format('T1: %s', [GetString(SpringSolver.TorqueT1)]);
+  Result[3, 1] := Format('T2: %s', [GetString(SpringSolver.TorqueT2)]);
+  Result[4, 1] := Format('Tn: %s', [GetString(SpringSolver.TorqueTn)]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -871,9 +892,9 @@ begin
   {$IFDEF MODULE3}
   Result[0, 2] := 'σ [' + GetSymbol(SpringSolver.BendingStressSigmaq1) + ']';
   Result[1, 2] := '';
-  Result[2, 2] := TryFormatFloat('σ1: %s', 'σ1: ---', GetValue(SpringSolver.BendingStressSigmaq1));
-  Result[3, 2] := TryFormatFloat('σ2: %s', 'σ2: ---', GetValue(SpringSolver.BendingStressSigmaq2));
-  Result[4, 2] := TryFormatFloat('σn: %s', 'σn: ---', GetValue(SpringSolver.BendingStressSigman ));
+  Result[2, 2] := Format('σ1: %s', [GetString(SpringSolver.BendingStressSigmaq1)]);
+  Result[3, 2] := Format('σ2: %s', [GetString(SpringSolver.BendingStressSigmaq2)]);
+  Result[4, 2] := Format('σn: %s', [GetString(SpringSolver.BendingStressSigman )]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -898,10 +919,13 @@ begin
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 3] := 'σ/σz';
-  Result[1, 3] := '';
-  Result[2, 3] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.BendingStressSigmaq1), GetValue(SpringSolver.AdmStaticBendingStressSigmaz));
-  Result[3, 3] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.BendingStressSigmaq2), GetValue(SpringSolver.AdmStaticBendingStressSigmaz));
-  Result[4, 3] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.BendingStressSigman ), GetValue(SpringSolver.AdmStaticBendingStressSigmaz));
+  if SpringSolver.AdmStaticBendingStressSigmaz.Value > 0 then
+  begin
+    Result[1, 3] := '';
+    Result[2, 3] := Format('%0.3f', [SpringSolver.BendingStressSigmaq1/SpringSolver.AdmStaticBendingStressSigmaz]);
+    Result[3, 3] := Format('%0.3f', [SpringSolver.BendingStressSigmaq2/SpringSolver.AdmStaticBendingStressSigmaz]);
+    Result[4, 3] := Format('%0.3f', [SpringSolver.BendingStressSigman /SpringSolver.AdmStaticBendingStressSigmaz]);
+  end;
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -917,10 +941,13 @@ begin
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 4] := 'σ/Rm';
-  Result[1, 4] := '';
-  Result[2, 4] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.BendingStressSigmaq1), GetValue(SpringSolver.TensileStrengthRm));
-  Result[3, 4] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.BendingStressSigmaq1), GetValue(SpringSolver.TensileStrengthRm));
-  Result[4, 4] := TryFormatFloatDiv('%s', '---', GetValue(SpringSolver.BendingStressSigman ), GetValue(SpringSolver.TensileStrengthRm));
+  if SpringSolver.TensileStrengthRm.Value > 0 then
+  begin
+    Result[1, 4] := '';
+    Result[2, 4] := Format('%0.3f', [SpringSolver.BendingStressSigmaq1/SpringSolver.TensileStrengthRm]);
+    Result[3, 4] := Format('%0.3f', [SpringSolver.BendingStressSigmaq1/SpringSolver.TensileStrengthRm]);
+    Result[4, 4] := Format('%0.3f', [SpringSolver.BendingStressSigman /SpringSolver.TensileStrengthRm]);
+  end;
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -936,10 +963,10 @@ begin
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 5] := 'Lk [' + GetSymbol(SpringSolver.Lk(0*rad)) + ']';
-  Result[1, 5] := TryFormatFloat('%s', '---', GetValue(SpringSolver.Lk(0*rad)));
-  Result[2, 5] := TryFormatFloat('%s', '---', GetValue(SpringSolver.Lk(SpringSolver.Alpha1)));
-  Result[3, 5] := TryFormatFloat('%s', '---', GetValue(SpringSolver.Lk(SpringSolver.Alpha2)));
-  Result[4, 5] := TryFormatFloat('%s', '---', GetValue(0*rad));
+  Result[1, 5] := Format('%s', [GetString(GetValue(SpringSolver.Lk(0*rad)))]);
+  Result[2, 5] := Format('%s', [GetString(GetValue(SpringSolver.Lk(SpringSolver.Alpha1)))]);
+  Result[3, 5] := Format('%s', [GetString(GetValue(SpringSolver.Lk(SpringSolver.Alpha2)))]);
+  Result[4, 5] := Format('%s', [GetString(GetValue(0*rad))]);
   {$ENDIF}
 end;
 
