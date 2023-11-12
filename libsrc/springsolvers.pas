@@ -994,9 +994,9 @@ begin
     if (fDynamicLoad) or (not fStressInCoilingDirection) then
     begin
     // formula approssimativa secondo EN 13906-3
-    //fq := (fw + 0.07)/(fw - 0.75);
+    fq := (fw + 0.07)/(fw - 0.75);
     // formula di Göhner
-      fq := 1 + 0.87 / fw + 0.642 / Sqr(fw);
+    // fq := 1 + 0.87 / fw + 0.642 / Sqr(fw);
     end;
 
     if fBentLegA then
@@ -1109,15 +1109,20 @@ begin
     writeln(falpha2    .ToDegree.ToString(4, 0, []), ' = ', (falpha2coil + fbeta2).ToDegree.ToString(4, 0, []));
 
     writeln;
-    writeln('T1  = ', fTorqueT1.ToNewtonMeter.ToString(4, 0, []));
-    writeln('T2  = ', fTorqueT2.ToNewtonMeter.ToString(4, 0, []));
-    writeln('RMR = ', fRMR.ToNewtonMeterPerDegree.ToString(4, 0, []));
+    writeln('T1  = ', fTorqueT1.ToNewtonMeter.ToString(4, 0, [pNone, pMilli]));
+    writeln('T2  = ', fTorqueT2.ToNewtonMeter.ToString(4, 0, [pNone, pMilli]));
+    writeln('RMR = ', fRMR.ToNewtonMeterPerDegree.ToString(4, 0, [pNone, pMilli]));
 
     writeln;
     writeln(fSigmaq1.ToString(4, 0, [pMega]));
     writeln(fSigmaq2.ToString(4, 0, [pMega]));
     writeln;
     writeln(fSigmaz .ToString(4, 0, [pMega]));
+
+
+
+
+
   end;
 
 end;
@@ -1135,10 +1140,9 @@ end;
 function TTorsionSpringSolver.Lk(const Alpha: TRadians): TMeters;
 begin
   Result := 0*m;
-  // calculate Lk
   if fCheck then
   begin
-    Result := fdmax*(fn + 1.0 + AlphaCoil(Alpha)/(2*pi*rad));
+    Result := fdmax*(fn + 1.5 + AlphaCoil(Alpha)/(2*pi*rad));
     if fa.Value > 0 then
     begin
       if Result < (fn*(fa + fdmax) + fdmax) then
