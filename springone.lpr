@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -29,14 +29,13 @@ uses
   {$IFDEF HASAMIGA}
   athreads,
   {$ENDIF}
-  Interfaces, Forms, ApplicationFrm1, DrawingFrm, TextFrm, AboutFrm,
+  Interfaces, Forms, DrawingFrm, TextFrm, AboutFrm,
 
-  {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
-  {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
+  {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
+  {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
-  MainFrm, MaterialFrm, ProductionFrm, QualityFrm,
-  ReportFrm, ApplicationFrm3, Compozer, SpringLib, LazControls, SysUtils,
-  UtilsBase, LibLink;
+  MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm,
+  Compozer, SpringLib, LazControls, SysUtils, UtilsBase, LibLink;
 
 {$R *.res}
 
@@ -50,16 +49,11 @@ begin
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TAboutForm, AboutForm);
-  Application.CreateForm(TApplicationForm1, ApplicationForm1);
-  Application.CreateForm(TApplicationForm3, ApplicationForm3);
+  {$IFDEF MODULE1} Application.CreateForm(TApplicationForm1, ApplicationForm1); {$ENDIF}
+  {$IFDEF MODULE3} Application.CreateForm(TApplicationForm3, ApplicationForm3); {$ENDIF}
   Application.CreateForm(TDrawingForm, DrawingForm);
-  {$IFDEF MODULE1}
-  Application.CreateForm(TGeometryForm1, GeometryForm1);
-  {$ENDIF}
-  {$IFDEF MODULE3}
-  Application.CreateForm(TGeometryForm3, GeometryForm3);
-  {$ENDIF}
-
+  {$IFDEF MODULE1} Application.CreateForm(TGeometryForm1, GeometryForm1); {$ENDIF}
+  {$IFDEF MODULE3} Application.CreateForm(TGeometryForm3, GeometryForm3); {$ENDIF}
   Application.CreateForm(TMaterialForm, MaterialForm);
   Application.CreateForm(TProductionForm, ProductionForm);
   Application.CreateForm(TQualityForm, QualityForm);
