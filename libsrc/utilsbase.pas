@@ -65,10 +65,12 @@ function GetString(const AValue: TKilogramsPerCubicMeter): string;
 
 function GetSymbol(const AValue: TRadians): string;
 function GetValue (const AValue: TRadians): double;
+function GetString(const AValue: TRadians): string;
 
 function GetSymbol(const AValue: TKelvins): string;
 function GetValue (const AValue: TKelvins): double;
 function GetString(const AValue: TKelvins): string;
+
 
 const
   DefaultDigits    = 5;
@@ -339,18 +341,17 @@ end;
 
 function GetSymbol(const AValue: TRadians): string;
 begin
-  case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsDegreeSymbol, []);
-    False: result := ADim.GetSymbol(rsDegreeSymbol, []);
-  end;
+  result := ADim.GetSymbol(rsDegreeSymbol, []);
 end;
 
 function GetValue(const AValue: TRadians): double;
 begin
-  case UseImperialSystem of
-    True:  result := AValue.ToDegree.Value;
-    False: result := AValue.ToDegree.Value;
-  end;
+  result := AValue.ToDegree.Value;
+end;
+
+function GetString(const AValue: TRadians): string;
+begin
+  result := AValue.ToString(DefaultPrecision, DefaultDigits, []);
 end;
 
 function GetSymbol(const AValue: TKelvins): string;
@@ -405,16 +406,7 @@ begin
     Result := S2;
 end;
 
-function TryFloatToText(const Value: double): string;
-begin
-  if Value >= 100000 then
-    Result := FloatToStrF(Value, ffGeneral, 6, 0)
-  else
-    if Value >= 10000 then
-      Result := FloatToStrF(Value, ffGeneral, 5, 0)
-    else
-      Result := FloatToStrF(Value, ffGeneral, 4, 0);
-end;
+
 
 initialization
 
