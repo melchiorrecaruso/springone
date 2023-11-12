@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -322,47 +322,50 @@ begin
   if Assigned(TextForm         ) then TextForm         .Clear;
   {$IFDEF MODULE1}
   if Assigned(GeometryForm1    ) then GeometryForm1    .Clear;
+  if Assigned(ApplicationForm1 ) then ApplicationForm1 .Clear;
   {$ENDIF}
   {$IFDEF MODULE3}
   if Assigned(GeometryForm3    ) then GeometryForm3    .Clear;
+  if Assigned(ApplicationForm3 ) then ApplicationForm3 .Clear;
   {$ENDIF}
   if Assigned(MaterialForm     ) then MaterialForm     .Clear;
   if Assigned(QualityForm      ) then QualityForm      .Clear;
   if Assigned(ProductionForm   ) then ProductionForm   .Clear;
-  if Assigned(ApplicationForm1 ) then ApplicationForm1  .Clear;
-  if Assigned(ApplicationForm3 ) then ApplicationForm3  .Clear;
 end;
 
 procedure TMainForm.LoadAll(SessionIniFile: TIniFile);
 begin
   TextForm         .Load(SessionIniFile);
   {$IFDEF MODULE1}
-    GeometryForm1  .Load(SessionIniFile);
+  GeometryForm1    .Load(SessionIniFile);
+  ApplicationForm1 .Load(SessionIniFile);
   {$ENDIF}
   {$IFDEF MODULE3}
-    GeometryForm3  .Load(SessionIniFile);
+  GeometryForm3    .Load(SessionIniFile);
+  ApplicationForm3 .Load(SessionIniFile);
+
   {$ENDIF}
   MaterialForm     .Load(SessionIniFile);
   QualityForm      .Load(SessionIniFile);
   ProductionForm   .Load(SessionIniFile);
-  ApplicationForm1 .Load(SessionIniFile);
-  ApplicationForm3 .Load(SessionIniFile);
 end;
 
 procedure TMainForm.SaveAll(SessionIniFile: TIniFile);
 begin
   TextForm         .Save(SessionIniFile);
   {$IFDEF MODULE1}
-    GeometryForm1  .Save(SessionIniFile);
+  GeometryForm1    .Save(SessionIniFile);
+  ApplicationForm1 .Save(SessionIniFile);
   {$ENDIF}
   {$IFDEF MODULE3}
-    GeometryForm3  .Save(SessionIniFile);
+  GeometryForm3    .Save(SessionIniFile);
+  ApplicationForm3 .Save(SessionIniFile);
   {$ENDIF}
   MaterialForm     .Save(SessionIniFile);
   QualityForm      .Save(SessionIniFile);
   ProductionForm   .Save(SessionIniFile);
-  ApplicationForm1 .Save(SessionIniFile);
-  ApplicationForm3 .Save(SessionIniFile);
+
+
 end;
 
 (*
@@ -497,7 +500,8 @@ procedure TMainForm.OpenMenuItemClick(Sender: TObject);
 var
   SessionIniFile: TIniFile;
 begin
-  OpenDialog.Filter := 'SpringOne file (*.springone)|*.springone|All files (*.*)|*.*|;';
+  {$IFDEF MODULE1} OpenDialog.Filter := 'Spring1 file (*.spring1)|*.spring1|;'; {$ENDIF}
+  {$IFDEF MODULE3} OpenDialog.Filter := 'Spring3 file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
     SessionFileName := OpenDialog.FileName;
@@ -787,7 +791,6 @@ var
 begin
   if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
   begin
-
     {$IFDEF MODULE1}
     DrawingForm.SpringLength.MinValue := SpringSolver.LengthLc.Value([pMilli]);
     DrawingForm.SpringLength.MaxValue := SpringSolver.LengthL0.Value([pMilli]);
