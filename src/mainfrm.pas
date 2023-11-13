@@ -253,7 +253,7 @@ begin
   ScreenImage       := TBGRABitmap.Create;
   ScreenImageWidth  := Screen.Width  - (Width  - VirtualScreen.Width);
   ScreenImageHeight := Screen.Height - (Height - VirtualScreen.Height + LCLIntf.GetSystemMetrics(SM_CYCAPTION));
-  ScreenColor.FromString(ClientFile.ReadString('Custom', 'Background Color', 'White'));
+  ScreenColor.FromString(ClientFile.ReadString('Custom', 'BackgroundColor', 'White'));
   VirtualScreen.Color := ScreenColor;
 
   PaperName := ClientFile.ReadString('Printer', 'Page.Name', '');
@@ -917,6 +917,7 @@ procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenColor: TBGRAPixel; 
 var
   i: longint;
   Chart: TChart;
+  Table: TReportTable;
   Compozer: TCompozer;
   Bit: array of TBGRABitmap = nil;
   SpringDrawing: TSpringDrawing;
@@ -930,6 +931,11 @@ begin
   aScreen.Fill(aScreenColor);
   Compozer := TCompozer.Create(aSetting);
 
+  // check error
+  if not SpringSolver.Check then
+  begin
+    Compozer.DrawMessageList(aScreen, aScreenScale);
+  end else
   // Quick1
   if Quick1MenuItem.Checked then
   begin
@@ -1447,7 +1453,7 @@ begin
   Result.SetSize(
     Trunc(aWidth  *aScale),
     Trunc(aHeight *aScale));
-  PageColor.FromString(aSetting.ReadString('Custom', 'Background Color', 'White'));
+  PageColor.FromString(aSetting.ReadString('Custom', 'BackgroundColor', 'White'));
   PaintTo(Result, PageColor, aScale, aSetting);
 end;
 
