@@ -47,6 +47,8 @@ type
     procedure DrawQuick1(var aScreen: TBGRABitmap; const aScreenScale: double);
     procedure DrawQuick2(var aScreen: TBGRABitmap; const aScreenScale: double);
     procedure DrawQuick3(var aScreen: TBGRABitmap; const aScreenScale: double);
+    procedure DrawMessageList(var aScreen: TBGRABitmap; const aScreenScale: double);
+
 
     function CreateForceDisplacementChart(const aScreenScale: double): TChart;
     function CreateGoodmanChart(const aScreenScale: double): TChart;
@@ -1763,6 +1765,15 @@ end;
 procedure TCompozer.DrawQuick3(var aScreen: TBGRABitmap; const aScreenScale: double);
 begin
   DrawQuickX(aScreen, aScreenScale, 3);
+end;
+
+procedure TCompozer.DrawMessageList(var aScreen: TBGRABitmap; const aScreenScale: double);
+var
+  Table: TReportTable;
+begin
+  Table := CreateMessageList(aScreenScale);
+  Table.Draw(aScreen.Canvas);
+  Table.Destroy;
 end;
 
 end.
