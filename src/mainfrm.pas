@@ -511,7 +511,7 @@ begin
     LoadAll(SessionIniFile);
     SessionIniFile.Destroy;
     begin
-      Quick1MenuItem.Checked := True;
+      ViewMenuItemClick(Quick1MenuItem);
     end;
   end;
   Solve();
