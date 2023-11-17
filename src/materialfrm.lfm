@@ -1,7 +1,7 @@
 object MaterialForm: TMaterialForm
-  Left = 534
+  Left = 403
   Height = 260
-  Top = 248
+  Top = 188
   Width = 420
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -9,6 +9,7 @@ object MaterialForm: TMaterialForm
   ClientHeight = 260
   ClientWidth = 420
   OnCreate = FormCreate
+  Position = poMainFormCenter
   LCLVersion = '2.2.6.0'
   object Material: TComboBox
     AnchorSideLeft.Control = MaterialLabel

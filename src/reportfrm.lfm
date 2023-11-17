@@ -1,11 +1,12 @@
 object ReportForm: TReportForm
-  Left = 397
+  Left = 300
   Height = 478
-  Top = 125
+  Top = 96
   Width = 555
   Caption = 'Report'
   ClientHeight = 478
   ClientWidth = 555
+  Position = poMainFormCenter
   LCLVersion = '2.2.6.0'
   object Memo: TMemo
     AnchorSideLeft.Control = Owner

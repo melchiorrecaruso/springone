@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 296
+  Left = 224
   Height = 500
-  Top = 81
+  Top = 63
   Width = 700
   Caption = 'Spring ONE'
   ClientHeight = 480
@@ -13,6 +13,7 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnWindowStateChange = FormWindowStateChange
+  Position = poMainFormCenter
   LCLVersion = '2.2.6.0'
   object VirtualScreen: TBGRAVirtualScreen
     Left = 0

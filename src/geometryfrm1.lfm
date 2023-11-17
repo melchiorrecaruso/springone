@@ -1,7 +1,7 @@
 object GeometryForm1: TGeometryForm1
-  Left = 542
+  Left = 408
   Height = 360
-  Top = 144
+  Top = 111
   Width = 420
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle

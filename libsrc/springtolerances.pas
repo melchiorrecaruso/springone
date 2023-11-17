@@ -148,11 +148,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-
     procedure Clear;
     procedure Solve;
-
-
   public
     property MaterialID: string read fMaterialID write fMaterialID;
     property ActiveCoils: double read fActiveCoils write fActiveCoils;
@@ -167,10 +164,8 @@ type
     property QualityGradeOnTorque2: TQualityGrade read fQualityGradeOnTorqueT2 write fQualityGradeOnTorqueT2;
     property QualityGradeOnRelativeEndAngle: TQualityGrade read fQualityGradeOnRelativeEndAngle write fQualityGradeOnRelativeEndAngle;
 
-
     property ToleranceOnCoilDiameter: TMeters read fToleranceOnCoilDiameter;
     property ToleranceFreeBodyLength: TMeters read fToleranceOnFreeBodyLength;
-
 
     property ToleranceOnTorque1: TJoules read fToleranceOnTorque1;
     property ToleranceOnTorque2: TJoules read fToleranceOnTorque2;
@@ -216,22 +211,22 @@ end;
 
 procedure TEN15800.Clear;
 begin
-  fAD               := 0*m;
-  fAF1              := 0*N;
-  fAF2              := 0*N;
-  fAL0              := 0*m;
-  fFactorAlphaF     := 0*N;
-  fWireDiameter     := 0*m;
-  fCoilDiameterDm   := 0*m;
-  fLoadF1           := 0*N;
-  fLoadF2           := 0*N;
-  fE1               := 0*m;
-  fE2               := 0*m;
-  fFactorKF         := 0;
-  fLengthL0         := 0*m;
-  fActiveCoils      := 0;
-  fSpringRateR      := 0*N/m;
-  fSpringIndexW     := 0;
+  fAD.SetZero;
+  fAF1.SetZero;
+  fAF2.SetZero;
+  fAL0.SetZero;
+  fFactorAlphaF.SetZero;
+  fWireDiameter.SetZero;
+  fCoilDiameterDm.SetZero;
+  fLoadF1.SetZero;
+  fLoadF2.SetZero;
+  fE1.SetZero;
+  fE2.SetZero;
+  fFactorKF := 0;
+  fLengthL0.SetZero;
+  fActiveCoils := 0;
+  fSpringRateR.SetZero;
+  fSpringIndexW := 0;
 
   fQualityGradeOnDm := QualityGrade2;
   fQualityGradeOnL0 := QualityGrade2;
@@ -384,12 +379,12 @@ end;
 
 procedure TDIN2194.Clear;
 begin
-  fQualityGradeOnDm                := QualityGrade2;
-  fQualityGradeOnTorqueT1          := QualityGrade2;
-  fQualityGradeOnTorqueT2          := QualityGrade2;
-  fQualityGradeOnRelativeEndAngle  := QualityGrade2;
-  fQualityGradeOnLk0               := QualityGrade2;
-  fQualityGradeOnLegLengths        := QualityGrade2;
+  fQualityGradeOnDm               := QualityGrade2;
+  fQualityGradeOnTorqueT1         := QualityGrade2;
+  fQualityGradeOnTorqueT2         := QualityGrade2;
+  fQualityGradeOnRelativeEndAngle := QualityGrade2;
+  fQualityGradeOnLk0              := QualityGrade2;
+  fQualityGradeOnLegLengths       := QualityGrade2;
 end;
 
 procedure TDIN2194.Solve;
@@ -411,9 +406,6 @@ begin
   if (fLegLength1 < (1000*mm)) then ErrorMessage.Add('Leg length1 is > 1000 mm.');
   if (fLegLength2 < (1000*mm)) then ErrorMessage.Add('Leg length2 is > 1000 mm.');
   if (fLegLength3 < (1000*mm)) then ErrorMessage.Add('Leg length3 is > 1000 mm.');
-
-
-
 
   if (fLegLength1 < (1000*mm)) then ErrorMessage.Add('Leg length1 is > 1000 mm.');
   if (fLegLength2 < (1000*mm)) then ErrorMessage.Add('Leg length2 is > 1000 mm.');
