@@ -639,15 +639,22 @@ begin
     ASpringTolerance.SpringIndex    := fw;
     ASpringTolerance.SpringRate     := fR;
     ASpringTolerance.Solve;
-
-    fCheck := ErrorMessage.Count = 0;
   end;
+
+  fCheck := ErrorMessage.Count = 0;
 
   // Calcolo diametro minimo e massimo della molla in esercizio:
   if fCheck then
   begin
     FDiMin := FDi - ASpringTolerance.ToleranceOnCoilDiameter - (Fdmax - Fd);
     FDeMax := FDe + ASpringTolerance.ToleranceOnCoilDiameter + (Fdmax - Fd) + FDeltaDe;
+  end;
+
+  // Calcolo errore perpendicolarità e parallelismo
+  if fCheck then
+  begin
+    fe1 := ASpringTolerance.ToleranceOnPerpendicularity;
+    fe2 := ASpringTolerance.ToleranceOnParallelism;
   end;
 
   // Calcolo lunghezza sviluppo del filo della molla
