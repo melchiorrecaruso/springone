@@ -115,7 +115,6 @@ type
     fBendRadius2: TMeters;
     fBendRadius3: TMeters;
 
-
     fQualityGradeOnDm: TQualityGrade;
     fQualityGradeOnTorqueT1: TQualityGrade;
     fQualityGradeOnTorqueT2: TQualityGrade;
@@ -124,7 +123,6 @@ type
     fQualityGradeOnLegLengths: TQualityGrade;
     fQualityGradeOnBendRadii: TQualityGrade;
     fQualityGradeOnBendAngles: TQualityGrade;
-
 
     fToleranceOnCoilDiameter: TMeters;
     fToleranceOnTorque1: TJoules;
@@ -178,24 +176,34 @@ uses
   LCLType;
 
 const
-  AD_TABLE : array[0..16, 0..10] of single = (
-     ( 0.63,  1.00, 0.05, 0.07, 0.10, 0.07, 0.10, 0.15, 0.10, 0.15, 0.20),
-     ( 1.00,  1.60, 0.05, 0.07, 0.10, 0.08, 0.10, 0.15, 0.15, 0.20, 0.30),
-     ( 1.60,  2.50, 0.07, 0.10, 0.15, 0.10, 0.15, 0.20, 0.20, 0.30, 0.40),
-     ( 2.50,  4.00, 0.10, 0.10, 0.15, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50),
-     ( 4.00,  6.30, 0.10, 0.15, 0.20, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60),
-     ( 6.30,  10.0, 0.15, 0.15, 0.20, 0.25, 0.30, 0.35, 0.50, 0.60, 0.70),
-     ( 10.0,  16.0, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.60, 0.70, 0.80),
-     ( 16.0,  25.0, 0.20, 0.25, 0.30, 0.35, 0.45, 0.50, 0.70, 0.90, 1.00),
-     ( 25.0,  31.5, 0.25, 0.30, 0.35, 0.40, 0.50, 0.60, 0.80, 1.00, 1.20),
-     ( 31.5,  40.0, 0.25, 0.30, 0.35, 0.50, 0.60, 0.70, 1.00, 1.20, 1.50),
-     ( 40.0,  50.0, 0.30, 0.40, 0.50, 0.60, 0.80, 0.90, 1.20, 1.50, 1.80),
-     ( 50.0,  63.0, 0.40, 0.50, 0.60, 0.80, 1.00, 1.10, 1.50, 2.00, 2.30),
-     ( 63.0,  80.0, 0.50, 0.70, 0.80, 1.00, 1.20, 1.40, 1.80, 2.40, 2.80),
-     ( 80.0, 100.0, 0.60, 0.80, 0.90, 1.20, 1.50, 1.70, 2.30, 3.00, 3.50),
-     (100.0, 125.0, 0.70, 1.00, 1.10, 1.40, 1.90, 2.20, 2.80, 3.70, 4.40),
-     (125.0, 160.0, 0.90, 1.20, 1.40, 1.80, 2.30, 2.70, 3.50, 4.60, 5.40),
-     (160.0, 200.0, 1.20, 1.50, 1.70, 2.10, 2.90, 3.30, 4.20, 5.70, 6.60));
+  AD_TABLE : array[0..16, 0..10] of TMeters = (
+     ((FValue: 0.63/1000),(FValue: 1.00/1000),(FValue:0.05/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.20/1000)),
+     ((FValue: 1.00/1000),(FValue: 1.60/1000),(FValue:0.05/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.08/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.30/1000)),
+     ((FValue: 1.60/1000),(FValue: 2.50/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.20/1000),(FValue:0.30/1000),(FValue:0.40/1000)),
+     ((FValue: 2.50/1000),(FValue: 4.00/1000),(FValue:0.10/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.40/1000),(FValue:0.50/1000)),
+     ((FValue: 4.00/1000),(FValue: 6.30/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000)),
+     ((FValue: 6.30/1000),(FValue: 10.0/1000),(FValue:0.15/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.70/1000)),
+     ((FValue: 10.0/1000),(FValue: 16.0/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.40/1000),(FValue:0.60/1000),(FValue:0.70/1000),(FValue:0.80/1000)),
+     ((FValue: 16.0/1000),(FValue: 25.0/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.45/1000),(FValue:0.50/1000),(FValue:0.70/1000),(FValue:0.90/1000),(FValue:1.00/1000)),
+     ((FValue: 25.0/1000),(FValue: 31.5/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:1.00/1000),(FValue:1.20/1000)),
+     ((FValue: 31.5/1000),(FValue: 40.0/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.70/1000),(FValue:1.00/1000),(FValue:1.20/1000),(FValue:1.50/1000)),
+     ((FValue: 40.0/1000),(FValue: 50.0/1000),(FValue:0.30/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:0.90/1000),(FValue:1.20/1000),(FValue:1.50/1000),(FValue:1.80/1000)),
+     ((FValue: 50.0/1000),(FValue: 63.0/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:1.00/1000),(FValue:1.10/1000),(FValue:1.50/1000),(FValue:2.00/1000),(FValue:2.30/1000)),
+     ((FValue: 63.0/1000),(FValue: 80.0/1000),(FValue:0.50/1000),(FValue:0.70/1000),(FValue:0.80/1000),(FValue:1.00/1000),(FValue:1.20/1000),(FValue:1.40/1000),(FValue:1.80/1000),(FValue:2.40/1000),(FValue:2.80/1000)),
+     ((FValue: 80.0/1000),(FValue:100.0/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:0.90/1000),(FValue:1.20/1000),(FValue:1.50/1000),(FValue:1.70/1000),(FValue:2.30/1000),(FValue:3.00/1000),(FValue:3.50/1000)),
+     ((FValue:100.0/1000),(FValue:125.0/1000),(FValue:0.70/1000),(FValue:1.00/1000),(FValue:1.10/1000),(FValue:1.40/1000),(FValue:1.90/1000),(FValue:2.20/1000),(FValue:2.80/1000),(FValue:3.70/1000),(FValue:4.40/1000)),
+     ((FValue:125.0/1000),(FValue:160.0/1000),(FValue:0.90/1000),(FValue:1.20/1000),(FValue:1.40/1000),(FValue:1.80/1000),(FValue:2.30/1000),(FValue:2.70/1000),(FValue:3.50/1000),(FValue:4.60/1000),(FValue:5.40/1000)),
+     ((FValue:160.0/1000),(FValue:200.0/1000),(FValue:1.20/1000),(FValue:1.50/1000),(FValue:1.70/1000),(FValue:2.10/1000),(FValue:2.90/1000),(FValue:3.30/1000),(FValue:4.20/1000),(FValue:5.70/1000),(FValue:6.60/1000)));
+
+const
+  MinWireDiameter : TMeters = (FValue: 0.07/1000);
+  MaxWireDiameter : TMeters = (FValue:   16/1000);
+  MinCoilDiameter : TMeters = (FValue: 0.63/1000);
+  MaxCoilDiameter : TMeters = (FValue:  200/1000);
+  MaxFreeLength   : TMeters = (FValue:  630/1000);
+  MinActiveCoils  = 2;
+  MinSpringIndex  = 4;
+  MaxSpringIndex  = 20;
 
 // TEN15800
 
@@ -245,25 +253,26 @@ var
 begin
   Check := True;
   // Scopo e campo di applicazione
-  if fWireDiameter   < (0.07*mm) then ErrorMessage.Add('Wire diameter < 0.07 mm.');
-  if fWireDiameter   >   (16*mm) then ErrorMessage.Add('Wire diameter > 16 mm.');
-  if fCoilDiameterDm < (0.63*mm) then ErrorMessage.Add('Mean coil diameter < 0.63 mm.');
-  if fCoilDiameterDm >  (200*mm) then ErrorMessage.Add('Mean coil diameter > 200 mm.');
-  if fLengthL0       >  (630*mm) then ErrorMessage.Add('Length of unloaded spring > 630 mm.');
-  if fActiveCoils    <       (2) then ErrorMessage.Add('Number of active coils < 2.');
-  if fSpringIndexW   <       (4) then ErrorMessage.Add('Spring Index < 4.');
-  if fSpringIndexW   >      (20) then ErrorMessage.Add('Spring Index > 20.');
+  if fWireDiameter   < MinWireDiameter then ErrorMessage.Add(Format('Wire diameter < %s.', [MinWireDiameter.ToString(5, 5, [pMilli])]));
+  if fWireDiameter   > MaxWireDiameter then ErrorMessage.Add(Format('Wire diameter > %s.', [MaxWireDiameter.ToString(5, 5, [pMilli])]));
+  if fCoilDiameterDm < MinCoilDiameter then ErrorMessage.Add(Format('Mean coil diameter < %s.', [MinCoilDiameter.ToString(5, 5, [pMilli])]));
+  if fCoilDiameterDm > MaxCoilDiameter then ErrorMessage.Add(Format('Mean coil diameter > %s.', [MaxCoilDiameter.ToString(5, 5, [pMilli])]));
+  if fLengthL0       > MaxFreeLength   then ErrorMessage.Add(Format('Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
+  if fActiveCoils    < MinActiveCoils  then ErrorMessage.Add('Number of active coils < %d.', [MinActiveCoils]);
+  if fSpringIndexW   < MinSpringIndex  then ErrorMessage.Add('Spring Index < %d.', [MinSpringIndex]);
+  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage.Add('Spring Index > %f.', [MaxSpringIndex]);
 
   Check := ErrorMessage.Count = 0;
-
   if Check then
   begin
-    // Tolleranza AD sul diametro medio di avvolgimento CoilDiameter di una molla libera
+    // Tolleranza AD sul diametro medio di avvolgimento Dm di una molla libera
     Index1 := 16;
-    if (fCoilDiameterDm > (0.63*mm)) and (fCoilDiameterDm <= (200*mm)) then
+    if (fCoilDiameterDm >  MinCoilDiameter) and
+       (fCoilDiameterDm <= MaxCoilDiameter) then
     begin
       for Index := 0 to 16 do
-        if (fCoilDiameterDm > (AD_TABLE[Index][0]*mm)) and (fCoilDiameterDm <= (AD_TABLE[Index][1]*mm)) then
+        if (fCoilDiameterDm >  AD_TABLE[Index][0]) and
+           (fCoilDiameterDm <= AD_TABLE[Index][1]) then
         begin
           Index1 := Index;
           Break;
@@ -274,10 +283,10 @@ begin
     if (fSpringIndexW >=  4.0) and (fSpringIndexW <=  8.0) then Index2 := 2 + 3*Ord(fQualityGradeOnDm) else
     if (fSpringIndexW >   8.0) and (fSpringIndexW <= 14.0) then Index2 := 3 + 3*Ord(fQualityGradeOnDm) else
     if (fSpringIndexW >  14.0) and (fSpringIndexW <= 20.0) then Index2 := 4 + 3*Ord(fQualityGradeOnDm);
-    fAD := AD_TABLE[Index1][Index2]*mm;
+    fAD := AD_TABLE[Index1][Index2];
     // alphaF
-    fFactorAlphaF := (65.92*(Power(1000*FWireDiameter.Value, 3.3))/(Power(1000*FCoilDiameterDm.Value, 1.6))*
-      (-0.84*Power(fSpringIndexW/10, 3) + 3.781*Power(fSpringIndexW/10,2) - 4.244*(fSpringIndexW/10) + 2.274))*N;
+    fFactorAlphaF := 65.92*Power(1000*FWireDiameter.Value, 3.3)/Power(1000*FCoilDiameterDm.Value, 1.6)*
+      (-0.84*IntPower(fSpringIndexW/10, 3) + 3.781*IntPower(fSpringIndexW/10, 2) - 4.244*(fSpringIndexW/10) + 2.274)*N;
     // kF
     fFactorKF := 1/(3*Sqr(fActiveCoils))+8/(5*fActiveCoils)+0.803;
     // Tolleranza AF1 sul carico della molla Load1 ad una lunghezza data della molla L1
@@ -299,20 +308,21 @@ begin
       QualityGrade3: fAL0 := (fFactorAlphaF*fFactorKF*1.60)/fSpringRateR;
     end;
     //  ToleranceOnPerpendicularity & ToleranceOnParallelism
-    if (fQualityGradeOnE1 = QualityGrade1) or (fQualityGradeOnE2 = QualityGrade1) then
+    if (fQualityGradeOnE1 = QualityGrade1) or
+       (fQualityGradeOnE2 = QualityGrade1) then
     begin
       if (fSpringIndexW            ) > 12 then WarningMessage.Add('If "e" Quality Grade = 1 then "w" must be <= 12');
       if (fLengthL0/fCoilDiameterDm) >  5 then WarningMessage.Add('If "e" Quality Grade = 1 then "L0/Dm" must be <= 5');
     end;
     case fQualityGradeOnE1 of
-      QualityGrade1: fE1 := 0.030*fLengthL0;
-      QualityGrade2: fE1 := 0.050*fLengthL0;
-      QualityGrade3: fE1 := 0.080*fLengthL0;
+      QualityGrade1: fe1 := 0.030*fLengthL0;
+      QualityGrade2: fe1 := 0.050*fLengthL0;
+      QualityGrade3: fe1 := 0.080*fLengthL0;
     end;
     case fQualityGradeOnE2 of
-      QualityGrade1: fE2 := 0.015*(fCoilDiameterDm + fWireDiameter);
-      QualityGrade2: fE2 := 0.030*(fCoilDiameterDm + fWireDiameter);
-      QualityGrade3: fE2 := 0.060*(fCoilDiameterDm + fWireDiameter);
+      QualityGrade1: fe2 := 0.015*(fCoilDiameterDm + fWireDiameter);
+      QualityGrade2: fe2 := 0.030*(fCoilDiameterDm + fWireDiameter);
+      QualityGrade3: fe2 := 0.060*(fCoilDiameterDm + fWireDiameter);
     end;
   end;
 end;
