@@ -9,22 +9,23 @@ object QualityForm: TQualityForm
   ClientHeight = 275
   ClientWidth = 330
   OnCreate = FormCreate
-  LCLVersion = '3.99.0.0'
+  LCLVersion = '2.2.6.0'
   object ToleranceWireDiameterLabel: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = ToleranceWireDiameter
     AnchorSideBottom.Control = ToleranceWireDiameter
     AnchorSideBottom.Side = asrBottom
     Left = 12
-    Height = 23
+    Height = 29
     Top = 12
-    Width = 113
+    Width = 123
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akBottom]
     BorderSpacing.Left = 12
     BorderSpacing.Right = 10
     Caption = '           tolerance d +/-'
     Layout = tlCenter
+    ParentColor = False
   end
   object ToleranceWireDiameter: TFloatSpinEdit
     AnchorSideLeft.Control = ToleranceWireDiameterLabel
@@ -33,10 +34,10 @@ object QualityForm: TQualityForm
     AnchorSideRight.Control = ToleranceWireDiameterUnit
     AnchorSideBottom.Control = ToleranceWireDiameterUnit
     AnchorSideBottom.Side = asrBottom
-    Left = 135
-    Height = 23
+    Left = 145
+    Height = 29
     Top = 12
-    Width = 103
+    Width = 93
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 10
@@ -53,14 +54,14 @@ object QualityForm: TQualityForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
     Left = 248
-    Height = 23
+    Height = 29
     Top = 12
     Width = 70
     Anchors = [akTop, akRight]
     BidiMode = bdRightToLeftReadingOnly
     BorderSpacing.Top = 12
     BorderSpacing.Right = 12
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'mm'
@@ -78,13 +79,13 @@ object QualityForm: TQualityForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ToleranceWireDiameterUnit
     AnchorSideRight.Side = asrBottom
-    Left = 135
-    Height = 23
-    Top = 39
-    Width = 183
+    Left = 145
+    Height = 29
+    Top = 45
+    Width = 173
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       'EN 15800 GRADE-1'
@@ -100,30 +101,32 @@ object QualityForm: TQualityForm
     AnchorSideRight.Control = ToleranceCoilDiameter
     AnchorSideBottom.Control = ToleranceCoilDiameter
     AnchorSideBottom.Side = asrBottom
-    Left = 17
-    Height = 23
-    Top = 39
-    Width = 108
+    Left = 14
+    Height = 29
+    Top = 45
+    Width = 121
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'tolerance Di, Dm, De'
     Layout = tlCenter
+    ParentColor = False
   end
   object ToleranceLengthL0Label: TLabel
     AnchorSideTop.Control = ToleranceLengthL0
     AnchorSideRight.Control = ToleranceLengthL0
     AnchorSideBottom.Control = ToleranceLengthL0
     AnchorSideBottom.Side = asrBottom
-    Left = 61
-    Height = 23
-    Top = 66
-    Width = 64
+    Left = 60
+    Height = 29
+    Top = 78
+    Width = 75
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'tolerance L0'
     Layout = tlCenter
+    ParentColor = False
   end
   object ToleranceLengthL0: TComboBox
     AnchorSideLeft.Control = ToleranceCoilDiameter
@@ -131,13 +134,13 @@ object QualityForm: TQualityForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ToleranceCoilDiameter
     AnchorSideRight.Side = asrBottom
-    Left = 135
-    Height = 23
-    Top = 66
-    Width = 183
+    Left = 145
+    Height = 29
+    Top = 78
+    Width = 173
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       'EN 15800 GRADE-1'
@@ -154,13 +157,13 @@ object QualityForm: TQualityForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ToleranceLengthL0
     AnchorSideRight.Side = asrBottom
-    Left = 135
-    Height = 23
-    Top = 93
-    Width = 183
+    Left = 145
+    Height = 29
+    Top = 111
+    Width = 173
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       'EN 15800 GRADE-1'
@@ -177,29 +180,31 @@ object QualityForm: TQualityForm
     AnchorSideBottom.Control = ToleranceLoadF1
     AnchorSideBottom.Side = asrBottom
     Left = 61
-    Height = 23
-    Top = 93
-    Width = 64
+    Height = 29
+    Top = 111
+    Width = 74
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'tolerance F1'
     Layout = tlCenter
+    ParentColor = False
   end
   object ToleranceLoadF2Label: TLabel
     AnchorSideTop.Control = ToleranceLoadF2
     AnchorSideRight.Control = ToleranceLoadF2
     AnchorSideBottom.Control = ToleranceLoadF2
     AnchorSideBottom.Side = asrBottom
-    Left = 61
-    Height = 23
-    Top = 120
-    Width = 64
+    Left = 60
+    Height = 29
+    Top = 144
+    Width = 75
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'tolerance F2'
     Layout = tlCenter
+    ParentColor = False
   end
   object ToleranceLoadF2: TComboBox
     AnchorSideLeft.Control = ToleranceLoadF1
@@ -207,13 +212,13 @@ object QualityForm: TQualityForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ToleranceLoadF1
     AnchorSideRight.Side = asrBottom
-    Left = 135
-    Height = 23
-    Top = 120
-    Width = 183
+    Left = 145
+    Height = 29
+    Top = 144
+    Width = 173
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       'EN 15800 GRADE-1'
@@ -230,13 +235,13 @@ object QualityForm: TQualityForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ToleranceLoadF2
     AnchorSideRight.Side = asrBottom
-    Left = 135
-    Height = 23
-    Top = 147
-    Width = 183
+    Left = 145
+    Height = 29
+    Top = 177
+    Width = 173
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       'EN 15800 GRADE-1'
@@ -252,15 +257,16 @@ object QualityForm: TQualityForm
     AnchorSideRight.Control = ToleranceEccentricitye1
     AnchorSideBottom.Control = ToleranceEccentricitye1
     AnchorSideBottom.Side = asrBottom
-    Left = 61
-    Height = 23
-    Top = 147
-    Width = 64
+    Left = 62
+    Height = 29
+    Top = 177
+    Width = 73
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'tolerance e1'
     Layout = tlCenter
+    ParentColor = False
   end
   object ToleranceEccentricitye2Label: TLabel
     AnchorSideTop.Control = ToleranceEccentricitye2
@@ -268,14 +274,15 @@ object QualityForm: TQualityForm
     AnchorSideBottom.Control = ToleranceEccentricitye2
     AnchorSideBottom.Side = asrBottom
     Left = 61
-    Height = 23
-    Top = 174
-    Width = 64
+    Height = 29
+    Top = 210
+    Width = 74
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'tolerance e2'
     Layout = tlCenter
+    ParentColor = False
   end
   object ToleranceEccentricitye2: TComboBox
     AnchorSideLeft.Control = ToleranceEccentricitye1
@@ -283,13 +290,13 @@ object QualityForm: TQualityForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = ToleranceEccentricitye1
     AnchorSideRight.Side = asrBottom
-    Left = 135
-    Height = 23
-    Top = 174
-    Width = 183
+    Left = 145
+    Height = 29
+    Top = 210
+    Width = 173
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       'EN 15800 GRADE-1'

@@ -269,7 +269,6 @@ begin
   UseImperialSystem := UseImperialSystemMenuItem.Checked;
   WindowState := wsMaximized;
 
-
   MoveX := 0;
   MoveY := 0;
   FormPaint(nil);
@@ -364,8 +363,6 @@ begin
   MaterialForm     .Save(SessionIniFile);
   QualityForm      .Save(SessionIniFile);
   ProductionForm   .Save(SessionIniFile);
-
-
 end;
 
 (*
@@ -926,7 +923,7 @@ begin
   ErrorMessage.Clear;
   WarningMessage.Clear;
 
-  SpringSolver.Solve(SpringTolerance, WireTolerance);
+  SpringSolver.Solve(SpringTolerance);
 
   aScreen.Fill(aScreenColor);
   Compozer := TCompozer.Create(aSetting);
@@ -1330,7 +1327,7 @@ begin
   Result := StringReplace(Result, '@8.3', ' ', [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@9.0', ' ', [rfReplaceAll, rfIgnoreCase]);
-  Result := StringReplace(Result, '@10.0', MAT.Items[MAT.ItemIndex], [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@10.0', MAT.Name, [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@10.1', Format('tauz=%s ' + GetSymbol(SpringSolver.AdmStaticTorsionalStressTauz),
     [GetString(GetValue(SpringSolver.AdmStaticTorsionalStressTauz))]), [rfReplaceAll, rfIgnoreCase]);

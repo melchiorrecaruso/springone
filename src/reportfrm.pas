@@ -85,7 +85,7 @@ begin
   S.Add(Format('',[]));
   S.Add(Format('   MAIN DIMENSIONS',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Wire diameter                      d         %s', [GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterMax - SpringSolver.WireDiameter)]));
+  S.Add(Format('   Wire diameter                      d         %s', [GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Inside diameter                    Di        %s', [GetString(SpringSolver.Di)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));

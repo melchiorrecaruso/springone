@@ -18,31 +18,17 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit springtolerances;
+unit SpringTolerances;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  BGRABitmapTypes, Classes, CsvDocument, Math, SysUtils, UtilsBase, ADim;
+  BGRABitmapTypes, Classes, Math, SysUtils, UtilsBase, ADim;
 
 type
-  TQualityGrade = (QualityGrade1 = 0, QualityGrade2, QualityGrade3);
-
-type
-  TWireTolerance = class
-  private
-    fTolFile: TCsvDocument;
-    fValue: TMeters;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function Search(const aID: string; const aWireDiameter: TMeters): boolean;
-    procedure Clear;
-  public
-    property Value: TMeters read fValue;
-  end;
+  TQualityGrade   = (QualityGrade1, QualityGrade2, QualityGrade3);
 
   TEN15800 = class
   private
@@ -170,30 +156,33 @@ type
   end;
 
 
+  function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TMeters): TMeters;
+
+
 implementation
 
 uses
   LCLType;
 
 const
-  AD_TABLE : array[0..16, 0..10] of TMeters = (
-     ((FValue: 0.63/1000),(FValue: 1.00/1000),(FValue:0.05/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.20/1000)),
-     ((FValue: 1.00/1000),(FValue: 1.60/1000),(FValue:0.05/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.08/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.30/1000)),
-     ((FValue: 1.60/1000),(FValue: 2.50/1000),(FValue:0.07/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.20/1000),(FValue:0.30/1000),(FValue:0.40/1000)),
-     ((FValue: 2.50/1000),(FValue: 4.00/1000),(FValue:0.10/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.40/1000),(FValue:0.50/1000)),
-     ((FValue: 4.00/1000),(FValue: 6.30/1000),(FValue:0.10/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000)),
-     ((FValue: 6.30/1000),(FValue: 10.0/1000),(FValue:0.15/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.70/1000)),
-     ((FValue: 10.0/1000),(FValue: 16.0/1000),(FValue:0.15/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.40/1000),(FValue:0.60/1000),(FValue:0.70/1000),(FValue:0.80/1000)),
-     ((FValue: 16.0/1000),(FValue: 25.0/1000),(FValue:0.20/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.45/1000),(FValue:0.50/1000),(FValue:0.70/1000),(FValue:0.90/1000),(FValue:1.00/1000)),
-     ((FValue: 25.0/1000),(FValue: 31.5/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:1.00/1000),(FValue:1.20/1000)),
-     ((FValue: 31.5/1000),(FValue: 40.0/1000),(FValue:0.25/1000),(FValue:0.30/1000),(FValue:0.35/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.70/1000),(FValue:1.00/1000),(FValue:1.20/1000),(FValue:1.50/1000)),
-     ((FValue: 40.0/1000),(FValue: 50.0/1000),(FValue:0.30/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:0.90/1000),(FValue:1.20/1000),(FValue:1.50/1000),(FValue:1.80/1000)),
-     ((FValue: 50.0/1000),(FValue: 63.0/1000),(FValue:0.40/1000),(FValue:0.50/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:1.00/1000),(FValue:1.10/1000),(FValue:1.50/1000),(FValue:2.00/1000),(FValue:2.30/1000)),
-     ((FValue: 63.0/1000),(FValue: 80.0/1000),(FValue:0.50/1000),(FValue:0.70/1000),(FValue:0.80/1000),(FValue:1.00/1000),(FValue:1.20/1000),(FValue:1.40/1000),(FValue:1.80/1000),(FValue:2.40/1000),(FValue:2.80/1000)),
-     ((FValue: 80.0/1000),(FValue:100.0/1000),(FValue:0.60/1000),(FValue:0.80/1000),(FValue:0.90/1000),(FValue:1.20/1000),(FValue:1.50/1000),(FValue:1.70/1000),(FValue:2.30/1000),(FValue:3.00/1000),(FValue:3.50/1000)),
-     ((FValue:100.0/1000),(FValue:125.0/1000),(FValue:0.70/1000),(FValue:1.00/1000),(FValue:1.10/1000),(FValue:1.40/1000),(FValue:1.90/1000),(FValue:2.20/1000),(FValue:2.80/1000),(FValue:3.70/1000),(FValue:4.40/1000)),
-     ((FValue:125.0/1000),(FValue:160.0/1000),(FValue:0.90/1000),(FValue:1.20/1000),(FValue:1.40/1000),(FValue:1.80/1000),(FValue:2.30/1000),(FValue:2.70/1000),(FValue:3.50/1000),(FValue:4.60/1000),(FValue:5.40/1000)),
-     ((FValue:160.0/1000),(FValue:200.0/1000),(FValue:1.20/1000),(FValue:1.50/1000),(FValue:1.70/1000),(FValue:2.10/1000),(FValue:2.90/1000),(FValue:3.30/1000),(FValue:4.20/1000),(FValue:5.70/1000),(FValue:6.60/1000)));
+  AD_TABLE : array[0..16] of record DmMin, DmMax, Q1W48, Q1W814, Q1W1420, Q2W48, Q2W814, Q2W1420, Q3W48, Q3W814, Q3W1420: double; end = (
+    (DmMin: 0.63; DmMax: 1.00; Q1W48:0.05; Q1W814:0.07; Q1W1420:0.10; Q2W48:0.07; Q2W814:0.10; Q2W1420:0.15; Q3W48:0.10; Q3W814:0.15; Q3W1420:0.20),
+    (DmMin: 1.00; DmMax: 1.60; Q1W48:0.05; Q1W814:0.07; Q1W1420:0.10; Q2W48:0.08; Q2W814:0.10; Q2W1420:0.15; Q3W48:0.15; Q3W814:0.20; Q3W1420:0.30),
+    (DmMin: 1.60; DmMax: 2.50; Q1W48:0.07; Q1W814:0.10; Q1W1420:0.15; Q2W48:0.10; Q2W814:0.15; Q2W1420:0.20; Q3W48:0.20; Q3W814:0.30; Q3W1420:0.40),
+    (DmMin: 2.50; DmMax: 4.00; Q1W48:0.10; Q1W814:0.10; Q1W1420:0.15; Q2W48:0.15; Q2W814:0.20; Q2W1420:0.25; Q3W48:0.30; Q3W814:0.40; Q3W1420:0.50),
+    (DmMin: 4.00; DmMax: 6.30; Q1W48:0.10; Q1W814:0.15; Q1W1420:0.20; Q2W48:0.20; Q2W814:0.25; Q2W1420:0.30; Q3W48:0.40; Q3W814:0.50; Q3W1420:0.60),
+    (DmMin: 6.30; DmMax: 10.0; Q1W48:0.15; Q1W814:0.15; Q1W1420:0.20; Q2W48:0.25; Q2W814:0.30; Q2W1420:0.35; Q3W48:0.50; Q3W814:0.60; Q3W1420:0.70),
+    (DmMin: 10.0; DmMax: 16.0; Q1W48:0.15; Q1W814:0.20; Q1W1420:0.25; Q2W48:0.30; Q2W814:0.35; Q2W1420:0.40; Q3W48:0.60; Q3W814:0.70; Q3W1420:0.80),
+    (DmMin: 16.0; DmMax: 25.0; Q1W48:0.20; Q1W814:0.25; Q1W1420:0.30; Q2W48:0.35; Q2W814:0.45; Q2W1420:0.50; Q3W48:0.70; Q3W814:0.90; Q3W1420:1.00),
+    (DmMin: 25.0; DmMax: 31.5; Q1W48:0.25; Q1W814:0.30; Q1W1420:0.35; Q2W48:0.40; Q2W814:0.50; Q2W1420:0.60; Q3W48:0.80; Q3W814:1.00; Q3W1420:1.20),
+    (DmMin: 31.5; DmMax: 40.0; Q1W48:0.25; Q1W814:0.30; Q1W1420:0.35; Q2W48:0.50; Q2W814:0.60; Q2W1420:0.70; Q3W48:1.00; Q3W814:1.20; Q3W1420:1.50),
+    (DmMin: 40.0; DmMax: 50.0; Q1W48:0.30; Q1W814:0.40; Q1W1420:0.50; Q2W48:0.60; Q2W814:0.80; Q2W1420:0.90; Q3W48:1.20; Q3W814:1.50; Q3W1420:1.80),
+    (DmMin: 50.0; DmMax: 63.0; Q1W48:0.40; Q1W814:0.50; Q1W1420:0.60; Q2W48:0.80; Q2W814:1.00; Q2W1420:1.10; Q3W48:1.50; Q3W814:2.00; Q3W1420:2.30),
+    (DmMin: 63.0; DmMax: 80.0; Q1W48:0.50; Q1W814:0.70; Q1W1420:0.80; Q2W48:1.00; Q2W814:1.20; Q2W1420:1.40; Q3W48:1.80; Q3W814:2.40; Q3W1420:2.80),
+    (DmMin: 80.0; DmMax:100.0; Q1W48:0.60; Q1W814:0.80; Q1W1420:0.90; Q2W48:1.20; Q2W814:1.50; Q2W1420:1.70; Q3W48:2.30; Q3W814:3.00; Q3W1420:3.50),
+    (DmMin:100.0; DmMax:125.0; Q1W48:0.70; Q1W814:1.00; Q1W1420:1.10; Q2W48:1.40; Q2W814:1.90; Q2W1420:2.20; Q3W48:2.80; Q3W814:3.70; Q3W1420:4.40),
+    (DmMin:125.0; DmMax:160.0; Q1W48:0.90; Q1W814:1.20; Q1W1420:1.40; Q2W48:1.80; Q2W814:2.30; Q2W1420:2.70; Q3W48:3.50; Q3W814:4.60; Q3W1420:5.40),
+    (DmMin:160.0; DmMax:200.0; Q1W48:1.20; Q1W814:1.50; Q1W1420:1.70; Q2W48:2.10; Q2W814:2.90; Q2W1420:3.30; Q3W48:4.20; Q3W814:5.70; Q3W1420:6.60));
 
 const
   MinWireDiameter : TMeters = (FValue: 0.07/1000);
@@ -201,9 +190,42 @@ const
   MinCoilDiameter : TMeters = (FValue: 0.63/1000);
   MaxCoilDiameter : TMeters = (FValue:  200/1000);
   MaxFreeLength   : TMeters = (FValue:  630/1000);
-  MinActiveCoils  = 2;
-  MinSpringIndex  = 4;
+  MinActiveCoils  =  2;
+  MinSpringIndex  =  4;
   MaxSpringIndex  = 20;
+
+const
+  WIRETOL_TABLE : array[0..29] of record WireReg: TRegulation; DMin, DMax, Tolerance: double; end = (
+    (WireReg:EN10270P1; DMin: 0.0499; DMax: 0.0900; Tolerance:0.0030),
+    (WireReg:EN10270P1; DMin: 0.0900; DMax: 0.1600; Tolerance:0.0040),
+    (WireReg:EN10270P1; DMin: 0.1600; DMax: 0.2500; Tolerance:0.0050),
+    (WireReg:EN10270P1; DMin: 0.2500; DMax: 0.6300; Tolerance:0.0080),
+    (WireReg:EN10270P1; DMin: 0.6300; DMax: 0.7500; Tolerance:0.0100),
+    (WireReg:EN10270P1; DMin: 0.7500; DMax: 1.0000; Tolerance:0.0150),
+    (WireReg:EN10270P1; DMin: 1.0000; DMax: 1.2000; Tolerance:0.0200),
+    (WireReg:EN10270P1; DMin: 1.2000; DMax: 1.7000; Tolerance:0.0200),
+    (WireReg:EN10270P1; DMin: 1.7000; DMax: 2.6000; Tolerance:0.0250),
+    (WireReg:EN10270P1; DMin: 2.6000; DMax: 4.0000; Tolerance:0.0300),
+    (WireReg:EN10270P1; DMin: 4.0000; DMax: 5.3000; Tolerance:0.0350),
+    (WireReg:EN10270P1; DMin: 5.3000; DMax: 7.0000; Tolerance:0.0400),
+    (WireReg:EN10270P1; DMin: 7.0000; DMax: 9.0000; Tolerance:0.0450),
+    (WireReg:EN10270P1; DMin: 9.0000; DMax:10.0000; Tolerance:0.0500),
+    (WireReg:EN10270P1; DMin:10.0000; DMax:11.0000; Tolerance:0.0700),
+    (WireReg:EN10270P1; DMin:11.0000; DMax:14.0000; Tolerance:0.0800),
+    (WireReg:EN10270P1; DMin:14.0000; DMax:18.0000; Tolerance:0.0900),
+    (WireReg:EN10270P1; DMin:18.0000; DMax:20.0000; Tolerance:0.1000),
+    (WireReg:EN10270P2; DMin: 0.4990; DMax: 0.8500; Tolerance:0.0100),
+    (WireReg:EN10270P2; DMin: 0.8500; DMax: 1.0500; Tolerance:0.0150),
+    (WireReg:EN10270P2; DMin: 1.0500; DMax: 1.7000; Tolerance:0.0200),
+    (WireReg:EN10270P2; DMin: 1.7000; DMax: 3.0000; Tolerance:0.0250),
+    (WireReg:EN10270P2; DMin: 3.0000; DMax: 4.2000; Tolerance:0.0300),
+    (WireReg:EN10270P2; DMin: 4.2000; DMax: 6.0000; Tolerance:0.0350),
+    (WireReg:EN10270P2; DMin: 6.0000; DMax: 7.5000; Tolerance:0.0400),
+    (WireReg:EN10270P2; DMin: 7.5000; DMax: 9.0000; Tolerance:0.0450),
+    (WireReg:EN10270P2; DMin: 9.0000; DMax:11.0000; Tolerance:0.0500),
+    (WireReg:EN10270P2; DMin:11.0000; DMax:13.0000; Tolerance:0.0700),
+    (WireReg:EN10270P2; DMin:13.0000; DMax:16.0000; Tolerance:0.0800),
+    (WireReg:EN10270P2; DMin:16.0000; DMax:17.0000; Tolerance:0.0900));
 
 // TEN15800
 
@@ -219,23 +241,22 @@ end;
 
 procedure TEN15800.Clear;
 begin
-  fAD.SetZero;
-  fAF1.SetZero;
-  fAF2.SetZero;
-  fAL0.SetZero;
-  fFactorAlphaF.SetZero;
-  fWireDiameter.SetZero;
-  fCoilDiameterDm.SetZero;
-  fLoadF1.SetZero;
-  fLoadF2.SetZero;
-  fE1.SetZero;
-  fE2.SetZero;
-  fFactorKF := 0;
-  fLengthL0.SetZero;
-  fActiveCoils := 0;
-  fSpringRateR.SetZero;
-  fSpringIndexW := 0;
-
+  fAD               := 0*m;
+  fAF1              := 0*N;
+  fAF2              := 0*N;
+  fAL0              := 0*m;
+  fFactorAlphaF     := 0*N;
+  fWireDiameter     := 0*m;
+  fCoilDiameterDm   := 0*m;
+  fLoadF1           := 0*N;
+  fLoadF2           := 0*N;
+  fE1               := 0*m;
+  fE2               := 0*m;
+  fFactorKF         := 0;
+  fLengthL0         := 0*m;
+  fActiveCoils      := 0;
+  fSpringIndexW     := 0;
+  fSpringRateR      := 0*N/m;
   fQualityGradeOnDm := QualityGrade2;
   fQualityGradeOnL0 := QualityGrade2;
   fQualityGradeOnF1 := QualityGrade2;
@@ -247,9 +268,7 @@ end;
 procedure TEN15800.Solve;
 var
   Check:  boolean;
-  Index:  longint;
-  Index1: longint;
-  Index2: longint;
+  I, Index:  longint;
 begin
   Check := True;
   // Scopo e campo di applicazione
@@ -258,32 +277,51 @@ begin
   if fCoilDiameterDm < MinCoilDiameter then ErrorMessage.Add(Format('Mean coil diameter < %s.', [MinCoilDiameter.ToString(5, 5, [pMilli])]));
   if fCoilDiameterDm > MaxCoilDiameter then ErrorMessage.Add(Format('Mean coil diameter > %s.', [MaxCoilDiameter.ToString(5, 5, [pMilli])]));
   if fLengthL0       > MaxFreeLength   then ErrorMessage.Add(Format('Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
-  if fActiveCoils    < MinActiveCoils  then ErrorMessage.Add('Number of active coils < %d.', [MinActiveCoils]);
-  if fSpringIndexW   < MinSpringIndex  then ErrorMessage.Add('Spring Index < %d.', [MinSpringIndex]);
-  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage.Add('Spring Index > %f.', [MaxSpringIndex]);
+  if fActiveCoils    < MinActiveCoils  then ErrorMessage.Add(Format('Number of active coils < %d.', [MinActiveCoils]));
+  if fSpringIndexW   < MinSpringIndex  then ErrorMessage.Add(Format('Spring Index < %d.', [MinSpringIndex]));
+  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage.Add(Format('Spring Index > %f.', [MaxSpringIndex]));
 
   Check := ErrorMessage.Count = 0;
   if Check then
   begin
     // Tolleranza AD sul diametro medio di avvolgimento Dm di una molla libera
-    Index1 := 16;
+    Index := -1;
     if (fCoilDiameterDm >  MinCoilDiameter) and
        (fCoilDiameterDm <= MaxCoilDiameter) then
     begin
-      for Index := 0 to 16 do
-        if (fCoilDiameterDm >  AD_TABLE[Index][0]) and
-           (fCoilDiameterDm <= AD_TABLE[Index][1]) then
+      for I := 0 to 16 do
+        if (fCoilDiameterDm >  (AD_TABLE[Index].DmMin*mm)) and
+           (fCoilDiameterDm <= (AD_TABLE[Index].DmMax*mm)) then
         begin
-          Index1 := Index;
+          Index := I;
           Break;
         end;
     end;
 
-    Index2 := 10;
-    if (fSpringIndexW >=  4.0) and (fSpringIndexW <=  8.0) then Index2 := 2 + 3*Ord(fQualityGradeOnDm) else
-    if (fSpringIndexW >   8.0) and (fSpringIndexW <= 14.0) then Index2 := 3 + 3*Ord(fQualityGradeOnDm) else
-    if (fSpringIndexW >  14.0) and (fSpringIndexW <= 20.0) then Index2 := 4 + 3*Ord(fQualityGradeOnDm);
-    fAD := AD_TABLE[Index1][Index2];
+    if (fSpringIndexW >=  4.0) and (fSpringIndexW <=  8.0) then
+    begin
+      case fQualityGradeOnDm of
+        QualityGrade1: fAD := AD_TABLE[Index].Q1W48*mm;
+        QualityGrade2: fAD := AD_TABLE[Index].Q2W48*mm;
+        QualityGrade3: fAD := AD_TABLE[Index].Q3W48*mm;
+      end;
+    end else
+    if (fSpringIndexW >   8.0) and (fSpringIndexW <= 14.0) then
+    begin
+      case fQualityGradeOnDm of
+        QualityGrade1: fAD := AD_TABLE[Index].Q1W814*mm;
+        QualityGrade2: fAD := AD_TABLE[Index].Q2W814*mm;
+        QualityGrade3: fAD := AD_TABLE[Index].Q3W814*mm;
+      end;
+    end else
+    if (fSpringIndexW > 14.0) and (fSpringIndexW <= 20.0) then
+    begin
+      case fQualityGradeOnDm of
+        QualityGrade1: fAD := AD_TABLE[Index].Q1W1420*mm;
+        QualityGrade2: fAD := AD_TABLE[Index].Q2W1420*mm;
+        QualityGrade3: fAD := AD_TABLE[Index].Q3W1420*mm;
+      end;
+    end;
     // alphaF
     fFactorAlphaF := 65.92*Power(1000*FWireDiameter.Value, 3.3)/Power(1000*FCoilDiameterDm.Value, 1.6)*
       (-0.84*IntPower(fSpringIndexW/10, 3) + 3.781*IntPower(fSpringIndexW/10, 2) - 4.244*(fSpringIndexW/10) + 2.274)*N;
@@ -329,50 +367,21 @@ end;
 
 // TWireTolerance
 
-constructor TWireTolerance.Create;
+function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TMeters): TMeters;
 var
-  Resource: TResourceStream;
+  I: longint;
 begin
-  inherited Create;
-  fTolFile := TCsvDocument.Create;
-  fTolFile.Delimiter := ';';
-  try
-    Resource := TResourceStream.Create(HInstance, 'WIRETOL', RT_RCDATA);
-    Resource.Position := 0;
-    fTolFile.LoadFromStream(Resource);
-  finally
-    Resource.Free;
-  end;
-  Clear;
-end;
-
-destructor TWireTolerance.Destroy;
-begin
-  fTolFile.Destroy;
-  inherited Destroy;
-end;
-
-procedure TWireTolerance.Clear;
-begin
-  fValue := 0*mm;
-end;
-
-function TWireTolerance.Search(const aID: string; const aWireDiameter: TMeters): boolean;
-var
-  i: longint;
-begin
-  Clear;
-  for i := 0 to fTolFile.RowCount -1 do
+  Result := 0*m;
+  for I := Low(WIRETOL_TABLE) to High(WIRETOL_TABLE) do
   begin
-    if Pos(fTolFile.Cells[0, 0], aID) = 1 then
-      if (aWireDiameter >  StrToFloat(fTolFile.Cells[1, i])*mm) and
-         (aWireDiameter <= StrToFloat(fTolFile.Cells[2, i])*mm) then
-      begin
-        fValue := StrToFloat(fTolFile.Cells[3, i])*mm;
-        Break;
-      end;
+    if (aWireRegulation  = (WIRETOL_TABLE[i].WireReg)) and
+       (aWireDiameter   >  (WIRETOL_TABLE[I].DMin*mm)) and
+       (aWireDiameter   <= (WIRETOL_TABLE[I].DMax*mm)) then
+    begin
+      Result := WIRETOL_TABLE[I].Tolerance*mm;
+      Break;
+    end;
   end;
-  Result := (fValue > (0*mm));
 end;
 
 // TDIN2194

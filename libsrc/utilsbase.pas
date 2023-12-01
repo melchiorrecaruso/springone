@@ -27,6 +27,11 @@ interface
 uses
   ADim, Classes, SysUtils;
 
+
+type
+  TGrade      = (SM, DM, SL, SH, DH, FDC, FDCrV, FDSiCr, FDSiCrV, TDC, TDCrV, TDSiCr, TDSiCrV, VDC, VDCrV, VDSiCr, VDSiCrV);
+  TRegulation = (EN10270P1, EN10270P2, EN10089, EN10270P3, EN12166, EN15800);
+
 function GetString(const AValue: double): string;
 
 function GetSymbol(const AValue: TMeters): string;
@@ -407,9 +412,7 @@ begin
 end;
 
 
-
 initialization
-
 begin
   ErrorMessage   := TStringList.Create;
   WarningMessage := TStringList.Create;

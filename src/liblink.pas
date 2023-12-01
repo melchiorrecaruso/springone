@@ -28,7 +28,6 @@ uses
   Classes, SysUtils, SpringSolvers, SpringTolerances, SpringMaterials;
 
 var
-  WireTolerance: TWireTolerance;
   {$IFDEF MODULE1}
   SpringTolerance: TEN15800;
   SpringSolver: TCompressionSpringSolver;
@@ -42,7 +41,7 @@ implementation
 
 initialization
 begin
-  WireTolerance   := TWireTolerance.Create;
+  MAT := TMaterial.Create;
   {$IFDEF MODULE1}
   SpringTolerance := TEN15800.Create;
   SpringSolver    := TCompressionSpringSolver.Create;
@@ -55,7 +54,6 @@ end;
 
 finalization
 begin
-  WireTolerance.Destroy;
   {$IFDEF MODULE1}
   SpringTolerance.Destroy;
   SpringSolver.Destroy;
@@ -64,6 +62,7 @@ begin
   SpringTolerance.Destroy;
   SpringSolver.Destroy;
   {$ENDIF}
+  MAT.Destroy;
 end;
 
 end.

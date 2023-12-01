@@ -1,10 +1,10 @@
 object MainForm: TMainForm
-  Left = 224
+  Left = 182
   Height = 500
-  Top = 63
+  Top = 358
   Width = 700
   Caption = 'Spring ONE'
-  ClientHeight = 480
+  ClientHeight = 475
   ClientWidth = 700
   Color = clForm
   Constraints.MinHeight = 500
@@ -17,14 +17,14 @@ object MainForm: TMainForm
   LCLVersion = '2.2.6.0'
   object VirtualScreen: TBGRAVirtualScreen
     Left = 0
-    Height = 480
+    Height = 475
     Top = 0
     Width = 700
     OnRedraw = VirtualScreenRedraw
     Align = alClient
     Alignment = taCenter
     Anchors = []
-    ClientHeight = 480
+    ClientHeight = 475
     ClientWidth = 700
     Color = clNone
     ParentColor = False

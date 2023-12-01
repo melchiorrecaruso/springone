@@ -16,21 +16,21 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit springmaterials;
+unit SpringMaterials;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, CsvDocument, LCLType, SysUtils, UtilsBase, ADim;
+  ADim, Classes, SysUtils, UtilsBase;
 
 type
-  TMaterialDB = class
+  TMaterial = class
   private
-    fItemIndex: longint;
-    fMatFile: TCsvDocument;
-    fSurfaceTreatment: string;
+    FName: string;
+    fGrade: TGrade;
+    fRegulation: TRegulation;
     fTensileStrengthRm: TPascals;
     fYoungModulusE20: TPascals;
     fYoungModulusE: TPascals;
@@ -39,10 +39,10 @@ type
     fPoissonRatio: double;
     fWireDiameter: TMeters;
     fDensityRho: TKilogramsPerCubicMeter;
-    fTemperature: double;
-    fTemperatureMin: double;
-    fTemperatureMax: double;
-
+    fTemperature: TKelvins;
+    fTemperatureMin: TKelvins;
+    fTemperatureMax: TKelvins;
+    fTreatment: string;
     fFatigueFactorA: TPascals;
     fFatigueFactorB: double;
     fTorsionalStressTauStar: TPascals;
@@ -59,22 +59,23 @@ type
     fNumOfCyclesE6: double;
     fNumOfCyclesE5: double;
     fNumOfCyclesE3: double;
-    function GetItem(Index: longint): string;
     function GetCount: longint;
+    function GetName(Index: longint): string;
   public
     constructor Create;
     destructor Destroy; override;
-    function GetG(const aTemperature: double): TPascals;
-    function GetE(const aTemperature: double): TPascals;
+    function GetG(const aTemperature: TKelvins): TPascals;
+    function GetE(const aTemperature: TKelvins): TPascals;
+    procedure Load(const aName: string; const aWireDiameter: TMeters; const aTemperature: TKelvins; const aTreatment: string);
     procedure Clear;
-
-    function Search (const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
-    function SetItem(const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
   public
-    property SurfaceTreatment: string read fSurfaceTreatment;
-    property Tempetature: double read fTemperature;
-    property TempetatureMin: double read fTemperatureMin;
-    property TempetatureMax: double read fTemperatureMax;
+    property Name: string read FName;
+    property Grade: TGrade read fGrade;
+    property Regulation: TRegulation read fRegulation;
+    property Tempetature: TKelvins read fTemperature;
+    property TempetatureMin: TKelvins read fTemperatureMin;
+    property TempetatureMax: TKelvins read fTemperatureMax;
+    property Treatment: string read FTreatment;
     property TensileStrengthRm: TPascals read fTensileStrengthRm;
     property YoungModulusE20: TPascals read fYoungModulusE20;
     property YoungModulusE: TPascals read fYoungModulusE;
@@ -83,10 +84,6 @@ type
     property WireDiameter: TMeters read fWireDiameter;
     property PoissonRatio: double read fPoissonRatio;
     property DensityRho: TKilogramsPerCubicMeter read fDensityRho;
-    property ItemIndex: longint read fItemIndex;
-    property Items[Index: longint]: string read GetItem; default;
-    property Count: longint read GetCount;
-
     property FatigueFactorA: TPascals read fFatigueFactorA;
     property FatigueFactorB: double read fFatigueFactorB;
     property TorsionalStressTauStar: TPascals read fTorsionalStressTauStar;
@@ -103,11 +100,13 @@ type
     property NumOfCyclesE6: double read fNumOfCyclesE6;
     property NumOfCyclesE5: double read fNumOfCyclesE5;
     property NumOfCyclesE3: double read fNumOfCyclesE3;
+    property Names[Index: longint]: string read GetName;
+    property Count: longint read GetCount;
   end;
 
 
 var
-  MAT: TMaterialDB;
+  MAT: TMaterial;
 
 
 implementation
@@ -115,166 +114,142 @@ implementation
 uses
   Math;
 
-// TMaterialDB class
+const
+  WIRESPECS_TABLE : array[0..21] of record Name: string; Reg: TRegulation; Grade: TGrade; Treatment: string; DMin,DMax, E20, G20, RHO, RM0, DRM, DR0, RMMAX, DT0, TO0, DTO0, TO1, DTO1, TU1, DTU1, CYCLES, TMIN, TMAX : double; end = (
+    (Name:'EN10270-1 class SM';      Reg:EN10270P1; Grade:SM;      Treatment:'';            DMin:0.28; DMax:20.0; E20:206000; G20:81500; RHO:7850; RM0:1971; DRM:740; DR0:1.0; RMMAX:2370; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:-40; TMAX:120),
+    (Name:'EN10270-1 class DM';      Reg:EN10270P1; Grade:DM;      Treatment:'';            DMin:0.28; DMax:20.0; E20:206000; G20:81500; RHO:7850; RM0:1971; DRM:740; DR0:1.0; RMMAX:2370; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:-40; TMAX:120),
+    (Name:'EN10270-1 class SL';      Reg:EN10270P1; Grade:SL;      Treatment:'';            DMin:0.95; DMax:10.0; E20:206000; G20:81500; RHO:7850; RM0:1712; DRM:660; DR0:1.0; RMMAX:1720; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:-40; TMAX:120),
+    (Name:'EN10270-1 class SH';      Reg:EN10270P1; Grade:SH;      Treatment:'';            DMin:0.28; DMax:20.0; E20:206000; G20:81500; RHO:7850; RM0:2220; DRM:820; DR0:1.0; RMMAX:2660; DT0:1.0; TO0:506; DTO0:175; TO1:1118; DTO1:410; TU1:832; DTU1:322; CYCLES:1.00E+07; TMIN:-40; TMAX:120),
+    (Name:'EN10270-1 class DH';      Reg:EN10270P1; Grade:DH;      Treatment:'';            DMin:0.05; DMax:20.0; E20:206000; G20:81500; RHO:7850; RM0:2218; DRM:817; DR0:1.0; RMMAX:2800; DT0:1.0; TO0:506; DTO0:175; TO1:1118; DTO1:410; TU1:832; DTU1:322; CYCLES:1.00E+07; TMIN:-40; TMAX:120),
+    (Name:'EN10270-2 class FDC';     Reg:EN10270P2; Grade:FDC;     Treatment:'';            DMin:0.50; DMax:17.0; E20:206000; G20:79500; RHO:7850; RM0:1834; DRM:488; DR0:1.0; RMMAX:1900; DT0:1.0; TO0:375; DTO0:117; TO1: 889; DTO1:263; TU1:669; DTU1:183; CYCLES:1.00E+07; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class FDCrV';   Reg:EN10270P2; Grade:FDCrV;   Treatment:'';            DMin:0.50; DMax:17.0; E20:206000; G20:79500; RHO:7850; RM0:1906; DRM:464; DR0:1.0; RMMAX:2000; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class FDSiCr';  Reg:EN10270P2; Grade:FDSiCr;  Treatment:'';            DMin:0.50; DMax:17.0; E20:206000; G20:79500; RHO:7850; RM0:2103; DRM:435; DR0:1.0; RMMAX:2100; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN: 60; TMAX:250),
+    (Name:'EN10270-2 class FDSiCrV'; Reg:EN10270P2; Grade:FDSiCrV; Treatment:'';            DMin:0.50; DMax:17.0; E20:206000; G20:79500; RHO:7850; RM0:2328; DRM:468; DR0:1.0; RMMAX:2280; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class TDC';     Reg:EN10270P2; Grade:TDC;     Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:1781; DRM:391; DR0:1.0; RMMAX:1850; DT0:1.0; TO0:375; DTO0:117; TO1: 889; DTO1:263; TU1:669; DTU1:183; CYCLES:1.00E+07; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class TDCrV';   Reg:EN10270P2; Grade:TDCrV;   Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:1900; DRM:518; DR0:1.0; RMMAX:1910; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class TDSiCr';  Reg:EN10270P2; Grade:TDSiCr;  Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:2125; DRM:466; DR0:1.0; RMMAX:2080; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class TDSiCrV'; Reg:EN10270P2; Grade:TDSiCrV; Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:2270; DRM:475; DR0:1.0; RMMAX:2230; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class VDC';     Reg:EN10270P2; Grade:VDC;     Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:1781; DRM:391; DR0:1.0; RMMAX:1850; DT0:1.0; TO0:553; DTO0:174; TO1: 833; DTO1:226; TU1:418; DTU1: 99; CYCLES:1.00E+07; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class VDCrV';   Reg:EN10270P2; Grade:VDCrV;   Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:1900; DRM:518; DR0:1.0; RMMAX:1910; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:-60; TMAX:200),
+    (Name:'EN10270-2 class VDSiCr';  Reg:EN10270P2; Grade:VDSiCr;  Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:2125; DRM:466; DR0:1.0; RMMAX:2080; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:-60; TMAX:250),
+    (Name:'EN10270-2 class VDSiCrV'; Reg:EN10270P2; Grade:VDSiCrV; Treatment:'';            DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:2270; DRM:475; DR0:1.0; RMMAX:2230; DT0:1.0; TO0:  0; DTO0:  0; TO1:   0; DTO1:  0; TU1:  0; DTU1:  0; CYCLES:       0; TMIN:-60; TMAX:250),
+    (Name:'EN10270-1 class SH';      Reg:EN10270P1; Grade:SH;      Treatment:'Shot peened'; DMin:0.28; DMax:20.0; E20:206000; G20:81500; RHO:7850; RM0:2220; DRM:820; DR0:1.0; RMMAX:2660; DT0:1.0; TO0:601; DTO0:193; TO1:1119; DTO1:409; TU1:698; DTU1:273; CYCLES:1.00E+07; TMIN:-40; TMAX: 20),
+    (Name:'EN10270-1 class DH';      Reg:EN10270P1; Grade:DH;      Treatment:'Shot peened'; DMin:0.05; DMax:20.0; E20:206000; G20:81500; RHO:7850; RM0:2218; DRM:817; DR0:1.0; RMMAX:2800; DT0:1.0; TO0:601; DTO0:193; TO1:1119; DTO1:409; TU1:698; DTU1:273; CYCLES:1.00E+07; TMIN: 40; TMAX:120),
+    (Name:'EN10270-2 class FDC';     Reg:EN10270P2; Grade:FDC;     Treatment:'Shot peened'; DMin:0.50; DMax:17.0; E20:206000; G20:79500; RHO:7850; RM0:1834; DRM:488; DR0:1.0; RMMAX:1900; DT0:1.0; TO0:490; DTO0:138; TO1: 881; DTO1:248; TU1:552; DTU1:195; CYCLES:1.00E+07; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class TDC';     Reg:EN10270P2; Grade:TDC;     Treatment:'Shot peened'; DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:1781; DRM:391; DR0:1.0; RMMAX:1850; DT0:1.0; TO0:490; DTO0:138; TO1: 881; DTO1:248; TU1:552; DTU1:195; CYCLES:1.00E+07; TMIN:  0; TMAX:  0),
+    (Name:'EN10270-2 class VDC';     Reg:EN10270P2; Grade:VDC;     Treatment:'Shot peened'; DMin:0.50; DMax:10.0; E20:206000; G20:79500; RHO:7850; RM0:1781; DRM:391; DR0:1.0; RMMAX:1850; DT0:1.0; TO0:375; DTO0:117; TO1: 889; DTO1:263; TU1:669; DTU1:183; CYCLES:1.00E+07; TMIN:  0; TMAX:  0));
 
-constructor TMaterialDB.Create;
-var
-  Resource: TResourceStream;
+// TMaterial class
+
+constructor TMaterial.Create;
 begin
   inherited Create;
-  fMatFile := TCsvDocument.Create;
-  fMatFile.Delimiter := ';';
-  try
-    Resource := TResourceStream.Create(HInstance, 'MATERIAL', RT_RCDATA);
-    Resource.Position := 0;
-    fMatFile.LoadFromStream(Resource);
-  finally
-    Resource.Free;
-  end;
   Clear;
 end;
 
-destructor TMaterialDB.Destroy;
+destructor TMaterial.Destroy;
 begin
-  fMatFile.Destroy;
   inherited destroy;
 end;
 
-function TMaterialDB.GetCount: longint;
+procedure TMaterial.Clear;
 begin
-  Result := fMatFile.RowCount;
+  fName := '';
 end;
 
-function TMaterialDB.GetG(const aTemperature: double): TPascals;
+function TMaterial.GetCount: longint;
+begin
+  Result := Length(WIRESPECS_TABLE);
+end;
+
+function TMaterial.GetName(Index: longint): string;
+begin
+  Result := WIRESPECS_TABLE[Index].Name;
+end;
+
+function TMaterial.GetG(const aTemperature: TKelvins): TPascals;
 var
   Ratio: double;
 begin
   Result := fShearModulusG20;
   Ratio  := 0;
-
-  if Pos('EN10270-1', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000;
-  if Pos('EN10270-2', GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000;
-  if Pos('EN10089',   GetItem(fItemIndex)) = 1 then Ratio := 0.25/1000;
-  if Pos('EN10270-3', GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000;
-  if Pos('EN12166',   GetItem(fItemIndex)) = 1 then Ratio := 0.40/1000;
-
-  Result := Result * (1 - Ratio*(aTemperature - 20));
+  case fRegulation of
+    EN10270P1: Ratio := 0.25/1000;
+    EN10270P2: Ratio := 0.25/1000;
+    EN10089  : Ratio := 0.25/1000;
+    EN10270P3: Ratio := 0.40/1000;
+    EN12166  : Ratio := 0.40/1000;
+  else ErrorMessage.Add('Unknow regulation');
+  end;
+  Result := Result * (1 - Ratio*(aTemperature.ToDegreeCelsius.Value - 20));
 end;
 
-function TMaterialDB.GetE(const aTemperature: double): TPascals;
+function TMaterial.GetE(const aTemperature: TKelvins): TPascals;
 begin
   Result := GetG(aTemperature) * (2*(1 + fPoissonRatio));
 end;
 
-procedure TMaterialDB.Clear;
-begin
-  fItemIndex                     := -1;
-  fFatigueFactorA                := 0*Pa;
-  fFatigueFactorB                := 0;
-  fSurfaceTreatment              := '';
-  fTensileStrengthRm             := 0*Pa;
-  fYoungModulusE20               := 0*Pa;
-  fYoungModulusE                 := 0*Pa;
-  fShearModulusG20               := 0*Pa;
-  fShearModulusG                 := 0*Pa;
-  fPoissonRatio                  := 0;
-  fWireDiameter                  := 0*m;
-  fDensityRho                    := 0*kg/m3;
-  fTemperature                   := 0;
-  fTemperatureMin                := 0;
-  fTemperatureMax                := 0;
-  fTorsionalStressTauStar        := 0*Pa;
-  fTorsionalStressTauYield       := 0*Pa;
-  fTorsionalStressTauOE7         := 0*Pa;
-  fTorsionalStressTauOE6         := 0*Pa;
-  fTorsionalStressTauOE5         := 0*Pa;
-  fTorsionalStressTauOE3         := 0*Pa;
-  fTorsionalStressTauUE7         := 0*Pa;
-  fTorsionalStressTauUE6         := 0*Pa;
-  fTorsionalStressTauUE5         := 0*Pa;
-  fNumOfCyclesE7                 := 0;
-  fNumOfCyclesE6                 := 0;
-  fNumOfCyclesE5                 := 0;
-  fNumOfCyclesE3                 := 0;
-end;
-
-function TMaterialDB.GetItem(Index: longint): string;
-begin
-  //0	1
-  //ID	GRADE
-  if Index <> -1 then
-    Result := Format('%s Grade %s', [fMatFile.Cells[0, Index], fMatFile.Cells[1, Index]])
-  else
-    Result := '';
-end;
-
-function TMaterialDB.Search(const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
-var
-  i: longint;
-begin
-  Result := -1;
-  for i := 0 to fMatFile.RowCount -1 do
-    //2          3   	 4
-    //TREATMENT  DMIN	 DMAX
-    if (CompareText(aID, GetItem(i)) = 0) and (CompareText(aSurfaceTreatment, fMatFile.Cells[2, i]) = 0)  then
-    begin
-       if (aWireDiameter >  (StrToFloat(fMatFile.Cells[3, i]))*mm) and
-          (aWireDiameter <= (StrToFloat(fMatFile.Cells[4, i]))*mm) then
-       begin
-         Result := i;
-         Break;
-       end;
-    end;
-end;
-
-function TMaterialDB.SetItem(const aID: string; const aWireDiameter: TMeters; const aTemperature: double; const aSurfaceTreatment: string): longint;
+procedure TMaterial.Load(const aName: string; const aWireDiameter: TMeters; const aTemperature: TKelvins; const aTreatment: string);
 var
   TO0, DTO0, TO1, DTO1, TU1, DTU1: TPascals;
   RM0, DRM, RMMAX: TPascals;
   DR0, DT0: TMeters;
+  I: longint;
 begin
   Clear;
 
-  fItemIndex := Search(aID, aWireDiameter, aTemperature, aSurfaceTreatment);
-  if fItemIndex <> -1 then
+  I := Low(WIRESPECS_TABLE);
+  while I in [Low(WIRESPECS_TABLE)..High(WIRESPECS_TABLE)] do
   begin
-    //5	  6	7	8	9	10	11	12,0	13,0	14,0	15	16	17	18	19	20
-    //E   G	RHO	RM0	DRM	DR0	RMMAX	DT0	TO0	DTO0	TO1	DTO1	TU1	DTU1	TMIN	TMAX
+    if (CompareText(aName,      WIRESPECS_TABLE[I].Name     ) = 0) and
+       (CompareText(aTreatment, WIRESPECS_TABLE[I].Treatment) = 0) then
+    begin
+      if (aWireDiameter >  (WIRESPECS_TABLE[I].DMin*mm)) and
+         (aWireDiameter <= (WIRESPECS_TABLE[I].DMax*mm)) then Break;
+    end;
+    Inc(I);
+  end;
 
-    fSurfaceTreatment     := fMatFile.Cells[2,  fItemIndex];
+  if I in [Low(WIRESPECS_TABLE)..High(WIRESPECS_TABLE)] then
+  begin
+    FName                 := WIRESPECS_TABLE[I].Name;
+    FGrade                := WIRESPECS_TABLE[I].Grade;
+    FRegulation           := WIRESPECS_TABLE[I].Reg;
+
     fWireDiameter         := aWireDiameter;
-    fYoungModulusE20      := StrToFloat(fMatFile.Cells[5,  fItemIndex])*MPa;
-    fShearModulusG20      := StrToFloat(fMatFile.Cells[6,  fItemIndex])*MPa;
-    fDensityRho           := StrToFloat(fMatFile.Cells[7,  fItemIndex])*kg/m3;
+    fYoungModulusE20      := WIRESPECS_TABLE[I].E20*MPa;
+    fShearModulusG20      := WIRESPECS_TABLE[I].G20*MPa;
+    fDensityRho           := WIRESPECS_TABLE[I].RHO*kg/m3;
 
-    RM0                   := StrToFloat(fMatFile.Cells[8,  fItemIndex])*MPa;
-    DRM                   := StrToFloat(fMatFile.Cells[9,  fItemIndex])*MPa;
-    DR0                   := StrToFloat(fMatFile.Cells[10, fItemIndex])*mm;
-    RMMAX                 := StrToFloat(fMatFile.Cells[11, fItemIndex])*MPa;
+    RM0                   := WIRESPECS_TABLE[I].RM0*MPa;
+    DRM                   := WIRESPECS_TABLE[I].DRM*MPa;
+    DR0                   := WIRESPECS_TABLE[I].DR0*mm;
+    RMMAX                 := WIRESPECS_TABLE[I].RMMAX*MPa;
     fTensileStrengthRm    := RM0-DRM*Log10(fWireDiameter/DR0);
 
     if fTensileStrengthRm > RMMAX then
+    begin
       fTensileStrengthRm := RMMAX;
-
+    end;
     fTorsionalStressTauUT := fTensileStrengthRm*0.577;
 
-    DT0                   := StrToFloat(fMatFile.Cells[12, fItemIndex])*mm;
-    TO0                   := StrToFloat(fMatFile.Cells[13, fItemIndex])*MPa;
-    DTO0                  := StrToFloat(fMatFile.Cells[14, fItemIndex])*MPa;
-    TO1                   := StrToFloat(fMatFile.Cells[15, fItemIndex])*MPa;
-    DTO1                  := StrToFloat(fMatFile.Cells[16, fItemIndex])*MPa;
-    TU1                   := StrToFloat(fMatFile.Cells[17, fItemIndex])*MPa;
-    DTU1                  := StrToFloat(fMatFile.Cells[18, fItemIndex])*MPa;
-
-    fNumOfCyclesE7        := StrToFloat(fMatFile.Cells[19, fItemIndex]);
+    DT0                   := WIRESPECS_TABLE[I].DT0*mm;
+    TO0                   := WIRESPECS_TABLE[I].TO0*MPa;
+    DTO0                  := WIRESPECS_TABLE[I].DTO0*MPa;
+    TO1                   := WIRESPECS_TABLE[I].TO1*MPa;
+    DTO1                  := WIRESPECS_TABLE[I].DTO1*MPa;
+    TU1                   := WIRESPECS_TABLE[I].TU1*MPa;
+    DTU1                  := WIRESPECS_TABLE[I].DTU1*MPa;
 
     fTemperature          := aTemperature;
-    fTemperatureMin       := StrToFloat(fMatFile.Cells[20, fItemIndex]);
-    fTemperatureMax       := StrToFloat(fMatFile.Cells[21, fItemIndex]);
+    fTemperatureMin       := (WIRESPECS_TABLE[I].TMIN*degC).toKelvin;
+    fTemperatureMax       := (WIRESPECS_TABLE[I].TMAX*degC).toKelvin;
 
     fPoissonRatio         := fYoungModulusE20/(2*fShearModulusG20)-1;
     fShearModulusG        := GetG(fTemperature);
     fYoungModulusE        := GetE(fTemperature);
+
+    fNumOfCyclesE7        := WIRESPECS_TABLE[I].CYCLES;
 
     if (DT0 > 0*mm) and (fNumOfCyclesE7 > 0) then
     begin
@@ -305,18 +280,6 @@ begin
       end;
     end;
   end;
-  Result := fItemIndex;
-end;
-
-
-initialization
-begin
-  MAT := TMaterialDB.Create;
-end;
-
-finalization
-begin
-  MAT.Destroy;
 end;
 
 end.

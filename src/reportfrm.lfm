@@ -1,7 +1,7 @@
 object ReportForm: TReportForm
-  Left = 300
+  Left = 360
   Height = 478
-  Top = 96
+  Top = 240
   Width = 555
   Caption = 'Report'
   ClientHeight = 478

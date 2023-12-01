@@ -18,7 +18,7 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit springsolvers;
+unit SpringSolvers;
 
 {$mode ObjFPC}{$H+}
 
@@ -30,41 +30,41 @@ uses
 type
   TCompressionSpringSolver = class
   private
-    fCheck: boolean;
-    fClosedEnds: boolean;
+    FCheck: boolean;
+    FClosedEnds: boolean;
     FColdCoiled: boolean;
     FCycleFrequency: THertz;
     Fd: TMeters;
-    Fdmax: TMeters;
+    FdTolerance: TMeters;
     FDe: TMeters;
     FDeMax: TMeters;
     FDi: TMeters;
     FDiMin: TMeters;
     FDm: TMeters;
     FDeltaDe: TMeters;
-    fDynamicLoad: boolean;
-    fDynamicSafetyFactor: double;
+    FDynamicLoad: boolean;
+    FDynamicSafetyFactor: double;
     FLoadF1: TNewtons;
     FLoadF2: TNewtons;
     FLoadFn: TNewtons;
     FLoadFc: TNewtons;
-    fE: TPascals;
-    fe1: TMeters;
-    fe2: TMeters;
-    fG: TPascals;
-    fGroundEnds: boolean;
-    fk: double;
+    FE: TPascals;
+    Fe1: TMeters;
+    Fe2: TMeters;
+    FG: TPascals;
+    FGroundEnds: boolean;
+    Fk: double;
     FLengthL0: TMeters;
     FLengthL1: TMeters;
     FLengthL2: TMeters;
     FLengthLc: TMeters;
     FLengthLn: TMeters;
-    fMass: TKilograms;
-    fn: double;
-    fNaturalFrequency: THertz;
-    fNumOfCycles: double;
-    fnt: double;
-    fnu: double;
+    FMass: TKilograms;
+    Fn: double;
+    FNaturalFrequency: THertz;
+    FNumOfCycles: double;
+    Fnt: double;
+    Fnu: double;
     fPitch: TMeters;
     fPitchRatio: double;
     fR: TNewtonsPerMeter;
@@ -75,37 +75,37 @@ type
     FStrokeSh: TMeters;
     FStrokeSc: TMeters;
     FStrokeSn: TMeters;
-    fSa: TMeters;
-    fStaticSafetyFactor: double;
-    fSk: TMeters;
-    fTau1: TPascals;
-    fTau2: TPascals;
-    fTauh: TPascals;
-    fTauc: TPascals;
-    fTaun: TPascals;
-    fTauk1: TPascals;
-    fTauk2: TPascals;
-    fTaukh: TPascals;
-    fTaukc: TPascals;
-    fTaukn: TPascals;
-    fTauhz: TPascals;
-    fTauoz: TPascals;
-    fTauz: TPascals;
-    fTemperature: TKelvins;
-    fw: double;
-    fW0n: TJoules;
-    fW12: TJoules;
-    fWireLength: TMeters;
+    FSa: TMeters;
+    FStaticSafetyFactor: double;
+    FSk: TMeters;
+    FTau1: TPascals;
+    FTau2: TPascals;
+    FTauh: TPascals;
+    FTauc: TPascals;
+    FTaun: TPascals;
+    FTauk1: TPascals;
+    FTauk2: TPascals;
+    FTaukh: TPascals;
+    FTaukc: TPascals;
+    FTaukn: TPascals;
+    FTauhz: TPascals;
+    FTauoz: TPascals;
+    FTauz: TPascals;
+    FTemperature: TKelvins;
+    Fw: double;
+    FW0n: TJoules;
+    FW12: TJoules;
+    FWireLength: TMeters;
     procedure PreCheck;
     procedure PostCheck(ASpringTolerance: TEN15800);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Solve(ASpringTolerance: TEN15800; AWireTolerance: TWireTolerance);
+    procedure Solve(ASpringTolerance: TEN15800);
     procedure Clear;
-    function GetR(const aTemperature: double): TNewtonsPerMeter;
-    function GetF1(const aTemperature: double): TNewtons;
-    function GetF2(const aTemperature: double): TNewtons;
+    function GetR(const aTemperature: TKelvins): TNewtonsPerMeter;
+    function GetF1(const aTemperature: TKelvins): TNewtons;
+    function GetF2(const aTemperature: TKelvins): TNewtons;
     function GetTau(const aLoadF: TNewtons): TPascals;
     function GetTauk(const aLoadF: TNewtons): TPascals;
     procedure GetBucklingCurve(var aPoints: ArrayOfTPointF);
@@ -175,7 +175,7 @@ type
     property Temperature: TKelvins read fTemperature write fTemperature;
     property YoungModulus: TPascals read fE write fE;
     property WireDiameter: TMeters read Fd write Fd;
-    property WireDiameterMax: TMeters read Fdmax write Fdmax;
+    property WireDiameterTolerance: TMeters read FdTolerance write FdTolerance;
     property WireLength: TMeters read fWireLength;
   end;
 
@@ -254,7 +254,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    procedure Solve(ASpringTolerance: TDIN2194; AWireTolerance: TWireTolerance);
+    procedure Solve(ASpringTolerance: TDIN2194);
 
     function AlphaCoil(const Alpha: TRadians): TRadians;
     function Lk(const alpha: TRadians): TMeters;
@@ -342,68 +342,68 @@ begin
   FColdCoiled          := True;
   Fd                   := 0*m;
   FDe                  := 0*m;
-  FDeMax               := 0*mm;
-  FDeltaDe             := 0*mm;
-  FDi                  := 0*mm;
-  FDiMin               := 0*mm;
-  FDm                  := 0*mm;
-  Fdmax                := 0*mm;
+  FDeMax               := 0*m;
+  FDeltaDe             := 0*m;
+  FDi                  := 0*m;
+  FDiMin               := 0*m;
+  FDm                  := 0*m;
+  FdTolerance          := 0*m;
   fDynamicLoad         := False;
   fDynamicSafetyFactor := 0;
-  fE                   := 0*MPa;
-  fe1                  := 0*mm;
-  fe2                  := 0*mm;
+  fE                   := 0*Pa;
+  fe1                  := 0*m;
+  fe2                  := 0*m;
   FLoadF1              := 0*N;
   FLoadF2              := 0*N;
   FLoadFn              := 0*N;
   FLoadFc              := 0*N;
-  fG                   := 0*MPa;
+  fG                   := 0*Pa;
   fGroundEnds          := True;
   fk                   := 0;
-  FLengthL0            := 0*mm;
-  FLengthL1            := 0*mm;
-  FLengthL2            := 0*mm;
-  FLengthLc            := 0*mm;
-  FLengthLn            := 0*mm;
+  FLengthL0            := 0*m;
+  FLengthL1            := 0*m;
+  FLengthL2            := 0*m;
+  FLengthLc            := 0*m;
+  FLengthLn            := 0*m;
   fMass                := 0*kg;
   fn                   := 0;
   fNaturalFrequency    := 0*Hz;
   fnu                  := 0;
   fNumOfCycles         := 0;
   fnt                  := 0;
-  fPitch               := 0*mm;
+  fPitch               := 0*m;
   fPitchRatio          := 0;
   fR                   := 0*N/m;
   fRho                 := 0*kg/m3;
-  fRm                  := 0*MPa;
-  FStrokeS1            := 0*mm;
-  FStrokeS2            := 0*mm;
-  FStrokeSh            := 0*mm;
-  FStrokeSn            := 0*mm;
-  FStrokeSc            := 0*mm;
+  fRm                  := 0*Pa;
+  FStrokeS1            := 0*m;
+  FStrokeS2            := 0*m;
+  FStrokeSh            := 0*m;
+  FStrokeSn            := 0*m;
+  FStrokeSc            := 0*m;
 
-  fSa                  := 0*mm;
+  fSa                  := 0*m;
 
-  fSk                  := 0*mm;
+  fSk                  := 0*m;
 
   fStaticSafetyFactor  := 0;
-  fTau1                := 0*MPa;
-  fTau2                := 0*MPa;
-  fTauc                := 0*MPa;
-  fTauh                := 0*MPa;
-  fTauk1               := 0*MPa;
-  fTauk2               := 0*MPa;
-  fTaukc               := 0*MPa;
-  fTaukh               := 0*MPa;
-  fTaukn               := 0*MPa;
-  fTauhz               := 0*MPa;
-  fTaun                := 0*MPa;
-  fTauoz               := 0*MPa;
-  fTauz                := 0*MPa;
+  fTau1                := 0*Pa;
+  fTau2                := 0*Pa;
+  fTauc                := 0*Pa;
+  fTauh                := 0*Pa;
+  fTauk1               := 0*Pa;
+  fTauk2               := 0*Pa;
+  fTaukc               := 0*Pa;
+  fTaukh               := 0*Pa;
+  fTaukn               := 0*Pa;
+  fTauhz               := 0*Pa;
+  fTaun                := 0*Pa;
+  fTauoz               := 0*Pa;
+  fTauz                := 0*Pa;
   fw                   := 0;
   fW0n                 := 0*J;
   fW12                 := 0*J;
-  fWireLength          := 0*mm;
+  fWireLength          := 0*m;
 end;
 
 procedure TCompressionSpringSolver.PreCheck;
@@ -475,7 +475,7 @@ begin
   end;
 end;
 
-procedure TCompressionSpringSolver.Solve(ASpringTolerance: TEN15800; AWireTolerance: TWireTolerance);
+procedure TCompressionSpringSolver.Solve(ASpringTolerance: TEN15800);
 var
   mDe: TMeters;
   mSk: double;
@@ -510,19 +510,19 @@ begin
     if (fClosedEnds = True) then
     begin
       if (FColdCoiled = True) and (fGroundEnds = True) then
-        FLengthLc := fnt * Fdmax
+        FLengthLc := fnt * (Fd + FdTolerance)
       else
         if (FColdCoiled = True) and (fGroundEnds = False) then
-          FLengthLc := (fnt + 1.5) * Fdmax
+          FLengthLc := (fnt + 1.5) * (Fd + FdTolerance)
         else
           if (FColdCoiled = False) and (fGroundEnds = True) then
-            FLengthLc := (fnt - 0.3) * Fdmax
+            FLengthLc := (fnt - 0.3) * (Fd + FdTolerance)
           else
             FLengthLc := (0*mm);
     end else
     begin
       if (FColdCoiled = False) and (fGroundEnds = False) then
-        FLengthLc := (fnt + 1.1) * Fdmax
+        FLengthLc := (fnt + 1.1) * (Fd + FdTolerance)
       else
         FLengthLc := (0*mm);
     end;
@@ -646,8 +646,8 @@ begin
   // Calcolo diametro minimo e massimo della molla in esercizio:
   if fCheck then
   begin
-    FDiMin := FDi - ASpringTolerance.ToleranceOnCoilDiameter - (Fdmax - Fd);
-    FDeMax := FDe + ASpringTolerance.ToleranceOnCoilDiameter + (Fdmax - Fd) + FDeltaDe;
+    FDiMin := FDi - ASpringTolerance.ToleranceOnCoilDiameter - (FdTolerance);
+    FDeMax := FDe + ASpringTolerance.ToleranceOnCoilDiameter + (FdTolerance) + FDeltaDe;
   end;
 
   // Calcolo errore perpendicolarità e parallelismo
@@ -764,16 +764,16 @@ begin
   // Calcolo numero di cicli e coefficente di sicurezza a fatica
   if fCheck then
   begin
-    if MAT.ItemIndex = -1 then
+    if MAT.Name = '' then
       WarningMessage.Add('Warning: spring material data unavailable (dyn).');
 
-    if (MAT.TorsionalStressTauStar  > 0*MPa) and
-       (MAT.TorsionalStressTauYield > 0*MPa) and
-       (MAT.TorsionalStressTauOE7   > 0*MPa) and
-       (MAT.TorsionalStressTauUE7   > 0*MPa) then
+    if (MAT.TorsionalStressTauStar  > 0*Pa) and
+       (MAT.TorsionalStressTauYield > 0*Pa) and
+       (MAT.TorsionalStressTauOE7   > 0*Pa) and
+       (MAT.TorsionalStressTauUE7   > 0*Pa) then
     begin
       fTauoz := MAT.TorsionalStressTauYield;
-      fTauhz := 0*MPa;
+      fTauhz := 0*Pa;
 
       if fTauk1 >= MAT.TorsionalStressTauUE7 then
         Tauh7 := fTauoz - fTauk1
@@ -816,7 +816,7 @@ begin
   PostCheck(ASpringTolerance);
 end;
 
-function TCompressionSpringSolver.GetR(const aTemperature: double): TNewtonsPerMeter;
+function TCompressionSpringSolver.GetR(const aTemperature: TKelvins): TNewtonsPerMeter;
 begin
   if fCheck then
     Result := MAT.GetG(aTemperature) * (QuarticPower(Fd)/ (8*fn*CubicPower(FDm)))
@@ -824,7 +824,7 @@ begin
     Result := 0*N/m;
 end;
 
-function TCompressionSpringSolver.GetF1(const aTemperature: double): TNewtons;
+function TCompressionSpringSolver.GetF1(const aTemperature: TKelvins): TNewtons;
 begin
   if fCheck then
     Result := GetR(aTemperature) * FStrokeS1
@@ -832,7 +832,7 @@ begin
     Result := 0*N;
 end;
 
-function TCompressionSpringSolver.GetF2(const aTemperature: double): TNewtons;
+function TCompressionSpringSolver.GetF2(const aTemperature: TKelvins): TNewtons;
 begin
   if fCheck then
     Result := GetR(aTemperature) * FStrokeS2
@@ -985,7 +985,7 @@ begin
   Result := (4*Power(ArmLength/fDm, 2) -1)/(12*pi*fn*(ArmLength/fDm));
 end;
 
-procedure TTorsionSpringSolver.Solve(ASpringTolerance: TDIN2194; AWireTolerance: TWireTolerance);
+procedure TTorsionSpringSolver.Solve(ASpringTolerance: TDIN2194);
 begin
   writeln;
   writeln('TTorsionSpringSolver');

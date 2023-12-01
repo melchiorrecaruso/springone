@@ -101,7 +101,7 @@ begin
   Material.Items.Add('');
   for i := 0 to MAT.Count -1 do
   begin
-    m := MAT.Items[i];
+    m := MAT.Names[i];
     if Material.Items.IndexOf(m) = -1 then
     begin
       Material.Items.Add(m);
@@ -143,44 +143,42 @@ begin
 
     {$IFDEF MODULE1}
     GeometryForm1.SaveToSolver;
-    if SpringSolver.WireDiameter.Value > 0 then
+    if not SpringSolver.WireDiameter.IsZero then
     {$ENDIF}
     {$IFDEF MODULE3}
     GeometryForm3.SaveToSolver;
-    if SpringSolver.WireDiameter.Value > 0 then
+    if not SpringSolver.WireDiameter.IsZero then
     {$ENDIF}
     begin
-      MAT.SetItem(Material.Text,
+      MAT.Load(Material.Text,
         {$IFDEF MODULE1} SpringSolver.WireDiameter, {$ENDIF}
         {$IFDEF MODULE3} SpringSolver.WireDiameter, {$ENDIF}
-        {$IFDEF MODULE1} ApplicationForm1.Temperature.Value, {$ENDIF}
-        {$IFDEF MODULE3} ApplicationForm3.Temperature.Value, {$ENDIF}
+        {$IFDEF MODULE1} (ApplicationForm1.Temperature.Value*degC).ToKelvin, {$ENDIF}
+        {$IFDEF MODULE3} (ApplicationForm3.Temperature.Value*degC).ToKelvin, {$ENDIF}
         ProductionForm.WireSurface.Text);
 
-      if MAT.ItemIndex = -1 then
-        MAT.SetItem(Material.Text,
+      if MAT.Name = '' then
+        MAT.Load(Material.Text,
           {$IFDEF MODULE1} SpringSolver.WireDiameter, {$ENDIF}
           {$IFDEF MODULE3} SpringSolver.WireDiameter, {$ENDIF}
-          {$IFDEF MODULE1} ApplicationForm1.Temperature.Value,  {$ENDIF}
-          {$IFDEF MODULE3} ApplicationForm3.Temperature.Value,  {$ENDIF}
+          {$IFDEF MODULE1} (ApplicationForm1.Temperature.Value*degC).toKelvin, {$ENDIF}
+          {$IFDEF MODULE3} (ApplicationForm3.Temperature.Value*degC).toKelvin, {$ENDIF}
           '');
 
-      if MAT.ItemIndex <> -1 then
+      if MAT.Name <> '' then
       begin
         YoungModulus   .Value := MAT.YoungModulusE20  .Value([pMega]);
         ShearModulus   .Value := MAT.ShearModulusG20  .Value([pMega]);
         TensileStrength.Value := MAT.TensileStrengthRm.Value([pMega]);
         MaterialDensity.Value := MAT.DensityRho.Value;
 
-        WireTolerance.Search(Material.Text,
-          {$IFDEF MODULE1} GeometryForm1.WireDiameter.Value*mm); {$ENDIF}
-          {$IFDEF MODULE3} GeometryForm3.WireDiameter.Value*mm); {$ENDIF}
+        SpringSolver.WireDiameterTolerance := WireTolerance(MAT.Regulation, MAT.WireDiameter);
 
         if Assigned(QualityForm) then
         begin
           case QualityForm.ToleranceWireDiameterUnit.ItemIndex of
-            0: QualityForm.ToleranceWireDiameter.Value := WireTolerance.Value.Value([pMilli]);
-            1: QualityForm.ToleranceWireDiameter.Value := WireTolerance.Value.Value([pMilli])/25.4;
+            0: QualityForm.ToleranceWireDiameter.Value := SpringSolver.WireDiameterTolerance.Value([pMilli]);
+            1: QualityForm.ToleranceWireDiameter.Value := SpringSolver.WireDiameterTolerance.ToInch.Value;
           end;
         end;
       end;

@@ -395,10 +395,11 @@ var
 begin
   Result := TChart.Create;
   Result.LegendEnabled := False;
-  case MAT.ItemIndex of
-    -1: Result.Title := Format('Goodman Chart: %s', ['Custom material']);
-  else  Result.Title := Format('Goodman Chart: %s', [MAT.Items[MAT.ItemIndex]])
-  end;
+  if MAT.Name = '' then
+    Result.Title := Format('Goodman Chart: %s', ['Custom material'])
+  else
+    Result.Title := Format('Goodman Chart: %s', [MAT.Name]);
+
   Result.XAxisLabel := 'tauU [' + GetSymbol(SpringSolver.TensileStrengthRm) + ']';
   Result.YAxisLabel := 'tauO [' + GetSymbol(SpringSolver.TensileStrengthRm) + ']';
   Result.Scale := AScreenScale;
@@ -512,7 +513,7 @@ begin
   {$ENDIF}
 
   // Drawing Goodmand curve
-  if MAT.ItemIndex <> -1 then
+  if MAT.Name <> '' then
   begin
     if (MAT.TorsionalStressTauOE5  .Value > 0) and
        (MAT.TorsionalStressTauUE5  .Value > 0) and
@@ -636,7 +637,7 @@ end;
 
 function TCompozer.CreateLoadF1Chart(const AScreenScale: double): TChart;
 const
-  DeltaTemp = 50;
+  DeltaTemp : TKelvins = (FValue: 323.15);
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -655,21 +656,21 @@ begin
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := MAT.Tempetature - DeltaTemp;
-    Points[0].y := GetValue(SpringSolver.GetF1(Points[0].x));
-    Points[1].x := MAT.Tempetature + DeltaTemp;
-    Points[1].y := GetValue(SpringSolver.GetF1(Points[1].x));
+    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
+    Points[0].y := GetValue(SpringSolver.GetF1(MAT.Tempetature - DeltaTemp));
+    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
+    Points[1].y := GetValue(SpringSolver.GetF1(MAT.Tempetature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'F1(T°)');
     Points := nil;
-    Result.AddDotLabel(MAT.Tempetature, GetValue(SpringSolver.GetF1(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(SpringSolver.GetF1(MAT.Tempetature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.ToString);
   end;
   {$ENDIF}
 end;
 
 function TCompozer.CreateLoadF2Chart(const AScreenScale: double): TChart;
 const
-  DeltaTemp = 50;
+  DeltaTemp : TKelvins = (FValue: 323.15);
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -683,19 +684,19 @@ begin
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  if (SpringSolver.GetF2(MAT.Tempetature - DeltaTemp).Value > 0) and
-     (SpringSolver.GetF2(MAT.Tempetature + DeltaTemp).Value > 0) then
+  if (not SpringSolver.GetF2(MAT.Tempetature - DeltaTemp).IsZero) and
+     (not SpringSolver.GetF2(MAT.Tempetature + DeltaTemp).IsZero) then
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := MAT.Tempetature - DeltaTemp;
-    Points[0].y := GetValue(SpringSolver.GetF2(Points[0].x));
-    Points[1].x := MAT.Tempetature + DeltaTemp;
-    Points[1].y := GetValue(SpringSolver.GetF2(Points[1].x));
+    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
+    Points[0].y := GetValue(SpringSolver.GetF2(MAT.Tempetature - DeltaTemp));
+    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
+    Points[1].y := GetValue(SpringSolver.GetF2(MAT.Tempetature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'F2(T°)');
     Points := nil;
-    Result.AddDotLabel(MAT.Tempetature, GetValue(SpringSolver.GetF2(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(SpringSolver.GetF2(MAT.Tempetature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.ToString);
   end;
   {$ENDIF}
 
@@ -703,7 +704,7 @@ end;
 
 function TCompozer.CreateShearModulusChart(const AScreenScale: double): TChart;
 const
-  DeltaTemp = 50;
+  DeltaTemp : TKelvins = (FValue: 323.15);
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -715,25 +716,25 @@ begin
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  if (MAT.GetG(MAT.Tempetature - DeltaTemp).Value > 0) and
-     (MAT.GetG(MAT.Tempetature + DeltaTemp).Value > 0) then
+  if (not MAT.GetG(MAT.Tempetature - DeltaTemp).IsZero) and
+     (not MAT.GetG(MAT.Tempetature + DeltaTemp).IsZero) then
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := MAT.Tempetature - DeltaTemp;
-    Points[0].y := GetValue(MAT.GetG(Points[0].x));
-    Points[1].x := MAT.Tempetature + DeltaTemp;
-    Points[1].y := GetValue(MAT.GetG(Points[1].x));
+    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
+    Points[0].y := GetValue(MAT.GetG(MAT.Tempetature - DeltaTemp));
+    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
+    Points[1].y := GetValue(MAT.GetG(MAT.Tempetature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'G(T°)');
     Points := nil;
-    Result.AddDotLabel(MAT.Tempetature, GetValue(MAT.GetG(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(MAT.GetG(MAT.Tempetature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.toString);
   end;
 end;
 
 function TCompozer.CreateYoungModulusChart(const AScreenScale: double): TChart;
 const
-  DeltaTemp = 50;
+  DeltaTemp : TKelvins = (FValue: 323.15);
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -745,20 +746,20 @@ begin
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  if (MAT.GetE(MAT.Tempetature - DeltaTemp).Value > 0) and
-     (MAT.GetE(MAT.Tempetature + DeltaTemp).Value > 0) then
+  if (not MAT.GetE(MAT.Tempetature - DeltaTemp).IsZero) and
+     (not MAT.GetE(MAT.Tempetature + DeltaTemp).IsZero) then
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := MAT.Tempetature - DeltaTemp;
-    Points[0].y := GetValue(MAT.GetE(Points[0].x));
-    Points[1].x := MAT.Tempetature + DeltaTemp;
-    Points[1].y := GetValue(MAT.GetE(Points[1].x));
+    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
+    Points[0].y := GetValue(MAT.GetE(MAT.Tempetature - DeltaTemp));
+    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
+    Points[1].y := GetValue(MAT.GetE(MAT.Tempetature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'E(T°)');
     Points := nil;
 
-    Result.AddDotLabel(MAT.Tempetature, GetValue(MAT.GetE(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, FloatToStr(MAT.Tempetature) + ' C°');
+    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(MAT.GetE(MAT.Tempetature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.toString);
   end;
 end;
 
@@ -986,7 +987,7 @@ begin
 
   Result.Items[0, 0] := 'd';
   Result.Items[0, 1] := '=';
-  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterMax - SpringSolver.WireDiameter);
+  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
 
   Result.Items[1, 0] := 'Di';
   Result.Items[1, 1] := '=';
@@ -1208,7 +1209,7 @@ begin
 
   Result.Items[0, 0] := 'd';
   Result.Items[0, 1] := '=';
-  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterMax - SpringSolver.WireDiameter);
+  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
 
   Result.Items[1, 0] := 'Di';
   Result.Items[1, 1] := '=';
@@ -1495,7 +1496,7 @@ begin
   Row := 0;
   QuickXList.Items[Row, 0] := 'd';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterMax - SpringSolver.WireDiameter);
+  QuickXList.Items[Row, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Di';
@@ -1620,7 +1621,7 @@ begin
   Row := 2;
   QuickXList.Items[Row, 4] := 'Material';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := Format('%s', [MAT.Items[MAT.ItemIndex]]);
+  QuickXList.Items[Row, 6] := Format('%s', [MAT.Name]);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'Rm';
