@@ -27,8 +27,8 @@ interface
 uses
   BGRABitmap, BGRAShape, BGRASVG, BGRATextFX, BGRABitmapTypes, BGRAUnits,
   BGRAVirtualScreen, Classes, Controls, Dialogs, ExtCtrls, ExtDlgs, Forms,
-  GraphBase, SpringMaterials, SpringSolvers, SpringTolerances, Graphics, IniFiles, LResources, Math,
-  Menus, PrintersDlgs, Spin, StdCtrls, ActnList, SysUtils;
+  GraphBase, SpringMaterials, SpringSolvers, SpringTolerances, Graphics, IniFiles,
+  LResources, Math, Menus, PrintersDlgs, Spin, StdCtrls, ActnList, SysUtils;
 
 type
 
@@ -130,7 +130,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormPaint(Sender: TObject);
-    procedure FormWindowStateChange(Sender: TObject);
+
     procedure GeometryMenuItemClick(Sender: TObject);
 
     procedure MaterialMenuItemClick(Sender: TObject);
@@ -196,10 +196,10 @@ implementation
 {$R *.lfm}
 
 uses
-  AboutFrm, ADim, ApplicationFrm1, ApplicationFrm3, Compozer, DrawingFrm, TextFrm,
+  AboutFrm, ADim, Compozer, DrawingFrm, TextFrm,
 
-  {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
-  {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
+  {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
+  {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
   LCLIntf, LCLType, LibLink, MaterialFrm, Printers, ProductionFrm, QualityFrm, ReportFrm, UtilsBase;
 
@@ -207,6 +207,11 @@ uses
 
 procedure TMainForm.Solve;
 begin
+  if WindowState <> wsMaximized then
+  begin
+    //WindowState := wsMaximized;
+  end;
+
   SpringTolerance.Clear;
   SpringSolver.Clear;
   {$IFDEF MODULE1}
@@ -267,7 +272,7 @@ begin
     PageSetupDialog.MarginBottom :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginBottom', 0);
   end;
   UseImperialSystem := UseImperialSystemMenuItem.Checked;
-  WindowState := wsMaximized;
+
 
   MoveX := 0;
   MoveY := 0;
@@ -275,9 +280,9 @@ begin
 
   {$ifopt D+}
   Logo := TBGRABitmap.Create;
-  Logo.SetSize(2560, 2048);
-  // DrawLogo(Logo.Canvas, Logo.Width, Logo.Height);
-  // Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'BACKGROUND.png');
+  Logo.SetSize(ScreenImageWidth, ScreenImageHeight);
+  DrawLogo(Logo.Canvas, Logo.Width, Logo.Height);
+  Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'BACKGROUND.png');
   Logo.Destroy;
   {$endif}
   SessionFileName := '';
@@ -288,15 +293,6 @@ begin
   ClientFile.Destroy;
   PrinterFile.Destroy;
   ScreenImage.Destroy;
-end;
-
-procedure TMainForm.FormWindowStateChange(Sender: TObject);
-begin
-  if WindowState = wsMaximized then
-  begin
-    ScreenImageWidth  := VirtualScreen.Width;
-    ScreenImageHeight := VirtualScreen.Height;
-  end;
 end;
 
 procedure TMainForm.Clear;
@@ -887,8 +883,6 @@ var
   i: longint;
   Check: boolean;
 begin
-  FormWindowStateChange(Sender);
-
   Check := False;
   for i := 0 to ViewMenuItem.Count -1 do if ViewMenuItem.Items[i].Checked then Check := True;
   for i := 0 to TempMenuItem.Count -1 do if TempMenuItem.Items[i].Checked then Check := True;
