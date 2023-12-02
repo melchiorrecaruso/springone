@@ -279,7 +279,7 @@ begin
   if fLengthL0       > MaxFreeLength   then ErrorMessage.Add(Format('Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
   if fActiveCoils    < MinActiveCoils  then ErrorMessage.Add(Format('Number of active coils < %d.', [MinActiveCoils]));
   if fSpringIndexW   < MinSpringIndex  then ErrorMessage.Add(Format('Spring Index < %d.', [MinSpringIndex]));
-  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage.Add(Format('Spring Index > %f.', [MaxSpringIndex]));
+  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage.Add(Format('Spring Index > %d.', [MaxSpringIndex]));
 
   Check := ErrorMessage.Count = 0;
   if Check then
@@ -290,8 +290,8 @@ begin
        (fCoilDiameterDm <= MaxCoilDiameter) then
     begin
       for I := 0 to 16 do
-        if (fCoilDiameterDm >  (AD_TABLE[Index].DmMin*mm)) and
-           (fCoilDiameterDm <= (AD_TABLE[Index].DmMax*mm)) then
+        if (fCoilDiameterDm >  (AD_TABLE[I].DmMin*mm)) and
+           (fCoilDiameterDm <= (AD_TABLE[I].DmMax*mm)) then
         begin
           Index := I;
           Break;
