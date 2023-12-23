@@ -19,12 +19,14 @@
       </CodeGeneration>
       <Linking>
         <Debugging>
-          <GenerateDebugInfo Value="False"/>
-          <UseLineInfoUnit Value="False"/>
+          <UseHeaptrc Value="True"/>
         </Debugging>
       </Linking>
       <Other>
         <WriteFPCLogo Value="False"/>
+        <ConfigFile>
+          <WriteConfigFilePath Value="$(PkgOutDir)\fpclaz.cfg"/>
+        </ConfigFile>
       </Other>
     </CompilerOptions>
     <Description Value="SpringONE Application Library"/>
@@ -32,15 +34,15 @@
     <Files>
       <Item>
         <Filename Value="libsrc\springmaterials.pas"/>
-        <UnitName Value="springmaterials"/>
+        <UnitName Value="SpringMaterials"/>
       </Item>
       <Item>
         <Filename Value="libsrc\springsolvers.pas"/>
-        <UnitName Value="springsolvers"/>
+        <UnitName Value="SpringSolvers"/>
       </Item>
       <Item>
         <Filename Value="libsrc\springtolerances.pas"/>
-        <UnitName Value="springtolerances"/>
+        <UnitName Value="SpringTolerances"/>
       </Item>
       <Item>
         <Filename Value="libsrc\graphbase.pas"/>

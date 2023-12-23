@@ -176,7 +176,7 @@ type
     function CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
     function CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
 
-    procedure PaintTo(var aScreen: TBGRABitmap; aScreenColor: TBGRAPixel; aScreenScale: double; aSetting: TIniFile);
+    procedure PaintTo(var aScreen: TBGRABitmap; aScreenScale: double; aSetting: TIniFile);
 
   public
     procedure LoadAll(SessionIniFile: TIniFile);
@@ -196,7 +196,7 @@ implementation
 {$R *.lfm}
 
 uses
-  AboutFrm, ADim, Compozer, DrawingFrm, TextFrm,
+  AboutFrm, ADim, Compozer, DateUtils, DrawingFrm, TextFrm,
 
   {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
@@ -265,14 +265,13 @@ begin
   if PaperName <> '' then
   begin
     Printer.PaperSize.PaperName  := PaperName;
-    Printer.Orientation          := TPrinterOrientation(ClientFile.ReadInteger('Printer', 'Page.Orientation',   0));
-    PageSetupDialog.MarginTop    :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginTop',    0);
-    PageSetupDialog.MarginLeft   :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginLeft',   0);
-    PageSetupDialog.MarginRight  :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginRight',  0);
-    PageSetupDialog.MarginBottom :=                     ClientFile.ReadInteger ('Printer', 'Page.MarginBottom', 0);
+    Printer.Orientation          := TPrinterOrientation(ClientFile.ReadInteger('Printer', 'Page.Orientation',  0));
+    PageSetupDialog.MarginTop    :=                     ClientFile.ReadInteger('Printer', 'Page.MarginTop',    0);
+    PageSetupDialog.MarginLeft   :=                     ClientFile.ReadInteger('Printer', 'Page.MarginLeft',   0);
+    PageSetupDialog.MarginRight  :=                     ClientFile.ReadInteger('Printer', 'Page.MarginRight',  0);
+    PageSetupDialog.MarginBottom :=                     ClientFile.ReadInteger('Printer', 'Page.MarginBottom', 0);
   end;
   UseImperialSystem := UseImperialSystemMenuItem.Checked;
-
 
   MoveX := 0;
   MoveY := 0;
@@ -308,7 +307,7 @@ begin
   MoveX := 0;
   MoveY := 0;
   MouseIsDown := False;
-  ScreenScale := 1.00;
+  ScreenScale := 1.0;
   SessionFileName := '';
 end;
 
@@ -417,7 +416,7 @@ end;
 
 procedure TMainForm.VirtualScreenMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 const
-  MaxScale = 10;
+  MaxScale = 5;
 var
   NewScale: double;
 begin
@@ -894,7 +893,7 @@ begin
     ScreenImage.SetSize(
       Trunc(ScreenImageWidth *ScreenScale),
       Trunc(ScreenImageHeight*ScreenScale));
-    PaintTo(ScreenImage, ScreenColor ,ScreenScale, ClientFile);
+    PaintTo(ScreenImage, ScreenScale, ClientFile);
   end else
   begin
     MoveX := (VirtualScreen.Width  - ScreenImageWidth ) div 2;
@@ -904,7 +903,7 @@ begin
   end;
 end;
 
-procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenColor: TBGRAPixel; aScreenScale: double; aSetting: TIniFile);
+procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenScale: double; aSetting: TIniFile);
 var
   i: longint;
   Chart: TChart;
@@ -913,15 +912,16 @@ var
   Bit: array of TBGRABitmap = nil;
   SpringDrawing: TSpringDrawing;
   SVG: TBGRASvg;
+
+  Start: TDateTime;
 begin
   ErrorMessage.Clear;
   WarningMessage.Clear;
 
   SpringSolver.Solve(SpringTolerance);
-
-  aScreen.Fill(aScreenColor);
   Compozer := TCompozer.Create(aSetting);
 
+  Start := Now;
   // check error
   if not SpringSolver.Check then
   begin
@@ -1167,8 +1167,10 @@ begin
     Bit := nil;
   end;
   Compozer.Destroy;
+
   VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
+  DEBUG('Draw -> ', MilliSecondsBetween(Now, Start).ToString);
 end;
 
 // Create Diagrams
@@ -1196,7 +1198,6 @@ end;
 function TMainForm.CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
 begin
 //Solve();
-
   {$IFDEF MODULE1}
   Result := Tx;
   Result := StringReplace(Result, '@0.00', Format('e1=%s ' + GetSymbol(SpringSolver.EccentricityE1),
@@ -1444,8 +1445,9 @@ begin
   Result.SetSize(
     Trunc(aWidth  *aScale),
     Trunc(aHeight *aScale));
+  Result.Fill(PageColor);
   PageColor.FromString(aSetting.ReadString('Custom', 'BackgroundColor', 'White'));
-  PaintTo(Result, PageColor, aScale, aSetting);
+  PaintTo(Result, aScale, aSetting);
 end;
 
 end.

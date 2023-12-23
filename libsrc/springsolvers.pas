@@ -484,7 +484,6 @@ var
 begin
   PreCheck;
   // Calcolo molla a compressione ad elica cilindrica fabbricate con filo sezione circolare.
-
   if fCheck then
   begin
     FDe := FDm + Fd;

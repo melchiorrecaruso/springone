@@ -604,8 +604,8 @@ procedure TChart.Clear;
 var
   I: longint;
 begin
-  FBackgroundColor.FromColor(clBtnFace);
   FColor.FromColor(clWindow);
+  FBackgroundColor.FromColor(clBtnFace);
 
   FTitle := 'Chart';
   FTitleFontName := 'default';
@@ -648,7 +648,6 @@ begin
   FCurrentPenStyle := psSolid;
   FCurrentFontQuality := fqSystem;
 
-
   FCurrentPenWidth := 1.0;
   FCurrentTextureColor.FromColor(clRed);
   FCurrentTextureBackgroundColor := BGRA(255, 255, 255, 0);
@@ -683,8 +682,8 @@ begin
   FIsNeededCalcXCount  := True;
   FIsNeededCalcYCount  := True;
 
-  FSpacer  := DefaultSpacer;
-  FScale    := 1.0;
+  FSpacer := DefaultSpacer;
+  FScale  := 1.0;
 
   for I := 0 to FItems.Count -1 do
     TChartItem(FItems[I]).Destroy;
@@ -886,24 +885,16 @@ begin
   YShift   := -(FSpacer * FScale) * 0.5;
   XSpacing := +(FXMax - FXMin) / FXCount;
   YSpacing := +(FYMax - FYMin) / FYCount;
-  // Draw background color
-  FBit.FillRectAntialias(
-    XToCanvas(FXMin),
-    YToCanvas(FYMax),
-    XToCanvas(FXMax),
-    YToCanvas(FYMin),
-    FBackgroundColor);
   // Draw Y secondary axis and X labels
   FBit.FontAntialias := True;
   FBit.FontQuality   := FCurrentFontQuality;
   FBit.FontName      := FXAxisFontName;
   FBit.FontStyle     := FXAxisFontStyle;
   FBit.FontHeight    := Trunc(FXAxisFontHeight * FScale);
-  FBitCharSize       := FBit.TextSize('F');
-
-  FBit.JoinStyle := pjsRound;
-  FBit.LineCap   := pecRound;
-  FBit.PenStyle  := FYGridLineStyle;
+  FBitCharSize       := FBit.TextSize('M');
+  FBit.JoinStyle     := pjsRound;
+  FBit.LineCap       := pecRound;
+  FBit.PenStyle      := FYGridLineStyle;
 
   for I := 0 to FXCount - 1 do
   begin
@@ -919,11 +910,10 @@ begin
   FBit.FontName      := FYAxisFontName;
   FBit.FontStyle     := FYAxisFontStyle;
   FBit.FontHeight    := Trunc(FYAxisFontHeight * FScale);
-  FBitCharSize       := FBit.TextSize('F');
-
-  FBit.JoinStyle := pjsRound;
-  FBit.LineCap   := pecRound;
-  FBit.PenStyle  := FXGridLineStyle;
+  FBitCharSize       := FBit.TextSize('M');
+  FBit.JoinStyle     := pjsRound;
+  FBit.LineCap       := pecRound;
+  FBit.PenStyle      := FXGridLineStyle;
 
   for I := 0 to FYCount - 1 do
   begin
@@ -939,7 +929,7 @@ begin
   FBit.FontName      := FTitleFontName;
   FBit.FontStyle     := FTitleFontStyle;
   FBit.FontHeight    := Trunc(FTitleFontHeight * FScale);
-  FBitCharSize       := FBit.TextSize('F');
+  FBitCharSize       := FBit.TextSize('M');
 
   YShift := (FSpacer * FScale) * 0.5;
   DrawText((FXMin + FXMax) * 0.5, FYMax + YShift, FTitle, FTitleFontColor, taCenter, taAlignBottom);
@@ -947,7 +937,7 @@ end;
 
 procedure TChart.DrawLine(x0, y0, x1, y1: single; aPenColor: TBGRAPixel; aPenWidth: single);
 begin
-  fBit.DrawLineAntialias(
+  FBit.DrawLineAntialias(
     XToCanvas(x0),
     YToCanvas(y0),
     XToCanvas(x1),
@@ -971,7 +961,6 @@ begin
     taAlignBottom:    ShiftY := + FBitCharSize.Height;
     taVerticalCenter: ShiftY := + FBitCharSize.Height / 2;
   end;
-
   FBit.TextOut(XToCanvas(X + ShiftX), YToCanvas(Y + ShiftY), AText, ATextColor, taLeftJustify);
 end;
 
@@ -998,7 +987,7 @@ begin
         FBit.FontName      := Item.FFontName;
         FBit.FontStyle     := Item.FFontStyle;
         FBit.FontHeight    := Trunc(Item.FFontHeight*FScale);
-        FBitCharSize       := FBit.TextSize('F');
+        FBitCharSize       := FBit.TextSize('M');
 
         Result.Width  := Max(Result.Width,  Length(Item.FCaption)*FBitCharSize.Width);
         Result.Height := Max(Result.Height,                       FBitCharSize.Height);
@@ -1007,14 +996,10 @@ begin
   end;
 
   if Result.Width > 0 then
-  begin
     Result.Width := Result.Width + Trunc(FSpacer*FScale*2.5 + FLegendLineLength*FScale);
-  end;
 
   if Result.Height > 0 then
-  begin
     Result.Height := Result.Height + Trunc(FSpacer*FScale);
-  end;
 end;
 
 procedure TChart.DrawLegend;
@@ -1053,7 +1038,7 @@ begin
         FBit.FontName      := Item.FFontName;
         FBit.FontHeight    := Trunc(Item.FFontHeight * FScale);
         FBit.FontStyle     := Item.FFontStyle;
-        FBitCharSize       := FBit.TextSize('F');
+        FBitCharSize       := FBit.TextSize('M');
 
         DrawText(X + (FSpacer * FScale * 1.5) + FLegendLineLength * FScale, Y,
           Item.FCaption, Item.FFontColor, taLeftJustify, taVerticalCenter);
@@ -1178,6 +1163,7 @@ begin
           T[j].y := YToCanvas(FYMin + (T[j].y - FYMinF) * FYScaleF);
         end;
         FBit.DrawPolyLineAntialias(T, FPenColor, FPenWidth * FScale, BGRA(255, 255, 255, 0));
+
         T := nil;
       end;
     end else
@@ -1203,7 +1189,7 @@ begin
         FBit.FontName      := FFontName;
         FBit.FontHeight    := Trunc(FFontHeight * FScale);
         FBit.FontStyle     := FFontStyle;
-        FBitCharSize       := FBit.TextSize('F');
+        FBitCharSize       := FBit.TextSize('M');
 
         DrawText(
           FXMin + (FX - FXMinF) * FXScaleF + FShiftX*FScale,
@@ -1220,7 +1206,7 @@ begin
         FBit.FontName      := FFontName;
         FBit.FontHeight    := Trunc(FFontHeight * FScale);
         FBit.FontStyle     := FFontStyle;
-        FBitCharSize       := FBit.TextSize('F');
+        FBitCharSize       := FBit.TextSize('M');
 
         DrawText(
           FXMin + (FX - FXMinF) * FXScaleF + FShiftX*FScale,
@@ -1246,7 +1232,7 @@ begin
   Start := Now;
 
   FBit.SetSize(FWidth, FHeight);
-  FBit.Fill(FColor);
+  FBit.Fill(FBackgroundColor);
 
   CalculareChartArea;
 
@@ -1255,7 +1241,7 @@ begin
   FBit.FontName      := FXAxisFontName;
   FBit.FontStyle     := FXAxisFontStyle;
   FBit.FontHeight    := Trunc(FXAxisFontHeight * FScale);
-  FBitCharSize       := FBit.TextSize('F');
+  FBitCharSize       := FBit.TextSize('M');
 
   maxXLabelWidth  := Max(Length(FXAxisLabel)*FBitCharSize.Width,  Length(GetString(FXMaxF))*FBitCharSize.Width  + Trunc(FSpacer * FScale));
   maxXLabelHeight := Max(                    FBitCharSize.Height,                           FBitCharSize.Height + Trunc(FSpacer * FScale));
@@ -1267,7 +1253,7 @@ begin
   FBit.FontName      := FTitleFontName;
   FBit.FontStyle     := FTitleFontStyle;
   FBit.FontHeight    := Trunc(FTitleFontHeight * FScale);
-  FBitCharSize       := FBit.TextSize('F');
+  FBitCharSize       := FBit.TextSize('M');
 
   maxTitleWidth  := Length(FTitle)*FBitCharSize.Width  + Trunc(FSpacer * FScale);
   maxTitleHeight :=                FBitCharSize.Height + Trunc(FSpacer * FScale);
@@ -1522,7 +1508,7 @@ begin
   FBit.FontName           := FFontName;
   FBit.FontStyle          := FFontStyle;
   FBit.FontHeight         := Trunc(FFontHeight * FScale);
-  FBitCharSize            := FBit.TextSize('F');
+  FBitCharSize            := FBit.TextSize('M');
   FIsNeededUpdateCharSize := False;
 end;
 
@@ -1569,11 +1555,7 @@ var
   y: array of longint = nil;
   xsum, xoffset: single;
   ysum, yoffset: single;
-
-  Start: TDateTime;
 begin
-  Start := Now;
-
   FBit.SetSize(GetWidth, GetHeight);
   FBit.Fill(FBackgroundColor);
 
@@ -1603,6 +1585,7 @@ begin
   for i := Low(y) to High(y) do
   begin
     ysum := ysum + y[i];
+
     FBit.DrawLineAntialias(
       Trunc(FBorderWidth * FScale),
       ysum,
@@ -1618,6 +1601,7 @@ begin
   for i := Low(x) to High(x) do
   begin
     xsum := xsum + x[i];
+
     FBit.DrawLineAntialias(
       xsum,
       Trunc(FBorderWidth * FScale),
@@ -1658,10 +1642,8 @@ begin
   y := nil;
 
   // Draw
-  Start := Now;
   fBit.InvalidateBitmap;
   fBit.Draw(aCanvas, 0, 0, True);
-  DEBUG('Draw Report -> ', MilliSecondsBetween(Now, Start).ToString);
 end;
 
 function TReportTable.XToCanvas(X: single): single;
@@ -1801,7 +1783,7 @@ begin
   FBit.FontName      := FFontName;
   FBit.FontStyle     := FFontStyle;
   FBit.FontHeight    := Trunc(FFontHeight * FScale);
-  FBitCharSize       := FBit.TextSize('F');
+  FBitCharSize       := FBit.TextSize('M');
 
   FXMin := FSpacer;
   FXMax := FWidth - Trunc(FSpacer*FScale * 0.5);
@@ -1939,6 +1921,7 @@ begin
       FCaption, FFontColor, taCenter);
     // Draw
   end;
+
   FBit.InvalidateBitmap;
   FBit.Draw(aCanvas, 0, 0, True);
   FBit.Destroy;
@@ -1966,14 +1949,13 @@ begin
   CenterPosition := FWidth div 2;
   FBit := TBGRABitmap.Create;
   FBit.SetSize(FWidth, FHeight);
-  FBit.Fill(FBackgroundColor);
 
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;
   FBit.FontName      := FFontName;
   FBit.FontStyle     := FFontStyle;
   FBit.FontHeight    := Trunc(FFontHeight * FScale);
-  FBitCharSize       := FBit.TextSize('F');
+  FBitCharSize       := FBit.TextSize('M');
 
   FXMin := FSpacer;
   FXMax := FWidth - Trunc(FSpacer*FScale * 0.5);
@@ -2166,6 +2148,8 @@ begin
       YToCanvas(y0),
       FCaption, FFontColor, taCenter);
   end;
+
+
   FBit.InvalidateBitmap;
   FBit.Draw(aCanvas, 0, 0, True);
   FBit.Destroy;

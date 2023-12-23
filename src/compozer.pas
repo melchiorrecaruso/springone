@@ -26,8 +26,13 @@ unit Compozer;
 interface
 
 uses
-  ADim, BGRABitmap, BGRABitmapTypes, Classes,  Dialogs, GraphBase,
+  ADim, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, GraphBase,
   Graphics, IniFiles, LibLink, Math, SysUtils;
+
+type
+  TCompozerMode = (cmQuick1, cmQuick2, cmQuick3, cmMessages, cmForceChart, cmGoodmanChart,
+                   cmBucklingChart, cmLoadF1Chart, cmLoadF2Chart, cmShearModulusChart,
+                   cmYoungModulusChart);
 
 type
   TCompozer = class
@@ -42,13 +47,11 @@ type
 
     procedure DrawQuickX(var aScreen: TBGRABitmap; const aScreenScale: double; X: longint);
   public
-    constructor Create(ASetting: TIniFile);
-    destructor Destroy; override;
+
     procedure DrawQuick1(var aScreen: TBGRABitmap; const aScreenScale: double);
     procedure DrawQuick2(var aScreen: TBGRABitmap; const aScreenScale: double);
     procedure DrawQuick3(var aScreen: TBGRABitmap; const aScreenScale: double);
     procedure DrawMessageList(var aScreen: TBGRABitmap; const aScreenScale: double);
-
 
     function CreateForceDisplacementChart(const aScreenScale: double): TChart;
     function CreateGoodmanChart(const aScreenScale: double): TChart;
@@ -65,6 +68,9 @@ type
     function CreateQuick1List2(const AScreenScale: double): TReportTable;
     function CreateMessageList(const AScreenScale: double): TReportTable;
     function CreateQuick1AList(const AScreenScale: double): TReportTable;
+
+    constructor Create(ASetting: TIniFile);
+    destructor Destroy; override;
   end;
 
 
@@ -1424,7 +1430,7 @@ begin
   Bit[6].Draw(aScreen.Canvas, aScreen.Width - Bit[6].Width, Bit[4].Height, True);
   MessageList.Destroy;
 
-  // 6-Spring Drawings
+  // 7-Spring Drawings
   SpringDrawing := CreateSpringDrawing(AScreenScale);
   Bit[6].SetSize(Bit[2].Width div 3, Bit[0].Height);
   Bit[7].SetSize(Bit[2].Width div 3, Bit[0].Height);
