@@ -1,24 +1,23 @@
 object DrawingForm: TDrawingForm
-  Left = 391
-  Height = 160
-  Top = 138
-  Width = 340
+  Left = 684
+  Height = 299
+  Top = 342
+  Width = 413
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
   Caption = 'Drawing spring'
-  ClientHeight = 160
-  ClientWidth = 340
-  OnCreate = FormCreate
+  ClientHeight = 299
+  ClientWidth = 413
   Position = poMainFormCenter
-  LCLVersion = '2.2.6.0'
+  LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 228
-    Height = 28
-    Top = 120
+    Left = 301
+    Height = 36
+    Top = 251
     Width = 100
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 12
@@ -30,14 +29,15 @@ object DrawingForm: TDrawingForm
     TabOrder = 0
   end
   object CancelBtn: TBitBtn
+    AnchorSideTop.Control = OkBtn
     AnchorSideRight.Control = OkBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 116
-    Height = 28
-    Top = 120
+    Left = 189
+    Height = 36
+    Top = 251
     Width = 100
-    Anchors = [akRight, akBottom]
+    Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 12
     BorderSpacing.Bottom = 12
     Cancel = True
@@ -52,13 +52,13 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Side = asrBottom
     Left = 12
     Height = 28
-    Top = 55
+    Top = 66
     Width = 70
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'L0'
-    OnClick = BtnClick
     TabOrder = 2
+    OnClick = BtnClick
   end
   object L1Btn: TBitBtn
     AnchorSideLeft.Control = L0Btn
@@ -67,13 +67,13 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Side = asrBottom
     Left = 94
     Height = 28
-    Top = 55
+    Top = 66
     Width = 70
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'L1'
-    OnClick = BtnClick
     TabOrder = 3
+    OnClick = BtnClick
   end
   object L2Btn: TBitBtn
     AnchorSideLeft.Control = L1Btn
@@ -82,13 +82,13 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Side = asrBottom
     Left = 176
     Height = 28
-    Top = 55
+    Top = 66
     Width = 70
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'L2'
-    OnClick = BtnClick
     TabOrder = 4
+    OnClick = BtnClick
   end
   object LcBtn: TBitBtn
     AnchorSideLeft.Control = L2Btn
@@ -97,13 +97,13 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Side = asrBottom
     Left = 258
     Height = 28
-    Top = 55
+    Top = 66
     Width = 70
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
     Caption = 'Lc'
-    OnClick = BtnClick
     TabOrder = 5
+    OnClick = BtnClick
   end
   object SpringLength: TFloatSpinEdit
     AnchorSideLeft.Control = SpringLengthLabel
@@ -111,17 +111,17 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 98
-    Height = 23
+    Left = 109
+    Height = 34
     Top = 20
-    Width = 230
+    Width = 292
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 12
     BorderSpacing.Top = 20
     BorderSpacing.Right = 12
-    OnChange = SpinEditChange
     TabOrder = 6
+    OnChange = SpinEditChange
   end
   object SpringLengthLabel: TLabel
     AnchorSideLeft.Control = Owner
@@ -129,9 +129,9 @@ object DrawingForm: TDrawingForm
     AnchorSideBottom.Control = SpringLength
     AnchorSideBottom.Side = asrBottom
     Left = 12
-    Height = 23
+    Height = 34
     Top = 20
-    Width = 74
+    Width = 85
     Anchors = [akTop, akLeft, akBottom]
     BorderSpacing.Left = 12
     Caption = 'Spring length:'
@@ -146,8 +146,8 @@ object DrawingForm: TDrawingForm
     AnchorSideBottom.Control = OkBtn
     Left = 6
     Height = 2
-    Top = 106
-    Width = 328
+    Top = 237
+    Width = 401
     Anchors = [akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6

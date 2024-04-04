@@ -1,13 +1,12 @@
 object AboutForm: TAboutForm
-  Left = 490
-  Height = 320
-  Top = 245
-  Width = 400
+  Left = 839
+  Height = 344
+  Top = 462
+  Width = 473
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
   Caption = 'About ...'
-  ClientHeight = 320
-  ClientWidth = 400
+  ClientHeight = 344
+  ClientWidth = 473
   Color = clWhite
   LCLVersion = '3.99.0.0'
   object Image: TImage
@@ -17,7 +16,7 @@ object AboutForm: TAboutForm
     Left = 0
     Height = 128
     Top = 15
-    Width = 400
+    Width = 473
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     Center = True
@@ -189,9 +188,9 @@ object AboutForm: TAboutForm
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 40
-    Height = 30
-    Top = 268
-    Width = 320
+    Height = 34
+    Top = 278
+    Width = 393
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 40
@@ -210,9 +209,9 @@ object AboutForm: TAboutForm
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 0
-    Height = 15
+    Height = 17
     Top = 155
-    Width = 400
+    Width = 473
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 12
@@ -228,9 +227,9 @@ object AboutForm: TAboutForm
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 0
-    Height = 15
-    Top = 197
-    Width = 400
+    Height = 17
+    Top = 201
+    Width = 473
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 6
@@ -246,9 +245,9 @@ object AboutForm: TAboutForm
     AnchorSideRight.Side = asrBottom
     Cursor = crHandPoint
     Left = 0
-    Height = 15
-    Top = 222
-    Width = 400
+    Height = 17
+    Top = 228
+    Width = 473
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 10
@@ -267,9 +266,9 @@ object AboutForm: TAboutForm
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 0
-    Height = 15
-    Top = 247
-    Width = 400
+    Height = 17
+    Top = 255
+    Width = 473
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 10
@@ -284,9 +283,9 @@ object AboutForm: TAboutForm
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 0
-    Height = 15
-    Top = 176
-    Width = 400
+    Height = 17
+    Top = 178
+    Width = 473
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 6
