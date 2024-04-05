@@ -35,7 +35,7 @@ uses
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
   MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm,
-  Compozer, SpringLib, LazControls, SysUtils, UtilsBase, LibLink;
+  Compozer, SpringLib, LazControls, SysUtils, UtilsBase, LibLink, Setting;
 
 {$R *.res}
 
@@ -43,6 +43,7 @@ begin
   ApplicationName := 'SpringONE';
   ApplicationVer  := 'SpringONE v0.43';
 
+  OpeSettingFile;
   RequireDerivedFormResource:=True;
   Application.Title:='SpringOne';
   Application.Scaled:=True;
@@ -59,7 +60,7 @@ begin
   Application.CreateForm(TQualityForm, QualityForm);
   Application.CreateForm(TReportForm, ReportForm);
   Application.CreateForm(TTextForm, TextForm);
-
   Application.Run;
+  CloseSettingFile;
 end.
 
