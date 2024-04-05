@@ -1,14 +1,17 @@
 object AboutForm: TAboutForm
-  Left = 839
+  Left = 967
   Height = 344
-  Top = 462
+  Top = 461
   Width = 473
   BorderIcons = [biSystemMenu]
   Caption = 'About ...'
   ClientHeight = 344
   ClientWidth = 473
   Color = clWhite
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
+  OnCreate = FormCreate
   object Image: TImage
     AnchorSideLeft.Control = Owner
     AnchorSideRight.Control = Owner

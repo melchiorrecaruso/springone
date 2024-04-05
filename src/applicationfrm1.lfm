@@ -8,8 +8,9 @@ object ApplicationForm1: TApplicationForm1
   ClientHeight = 334
   ClientWidth = 611
   ParentBiDiMode = False
-  Position = poMainFormCenter
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner

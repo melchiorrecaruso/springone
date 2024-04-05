@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -46,6 +46,7 @@ type
     TemperatureUnit: TComboBox;
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
   public
@@ -65,13 +66,29 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, LibLink, SpringSolvers, MaterialFrm, Math, UtilsBase;
+  ADim, LibLink, SpringSolvers, MaterialFrm, Math, UtilsBase, Setting;
 
 // TApplicationForm1
 
 procedure TApplicationForm1.FormCreate(Sender: TObject);
 begin
+  ApplicationForm1.Top    := ClientFile.ReadInteger('ApplicationForm1', 'Top',    ApplicationForm1.Top);
+  ApplicationForm1.Left   := ClientFile.ReadInteger('ApplicationForm1', 'Left',   ApplicationForm1.Left);
+  ApplicationForm1.Height := ClientFile.ReadInteger('ApplicationForm1', 'Height', ApplicationForm1.Height);
+  ApplicationForm1.Width  := ClientFile.ReadInteger('ApplicationForm1', 'Width',  ApplicationForm1.Width);
+
   Clear;
+end;
+
+procedure TApplicationForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('ApplicationForm1', 'Top',    ApplicationForm1.Top);
+    ClientFile.WriteInteger('ApplicationForm1', 'Left',   ApplicationForm1.Left);
+    ClientFile.WriteInteger('ApplicationForm1', 'Height', ApplicationForm1.Height);
+    ClientFile.WriteInteger('ApplicationForm1', 'Width',  ApplicationForm1.Width);
+  end;
 end;
 
 procedure TApplicationForm1.SpinEditChange(Sender: TObject);

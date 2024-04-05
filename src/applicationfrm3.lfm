@@ -1,24 +1,25 @@
 object ApplicationForm3: TApplicationForm3
-  Left = 683
-  Height = 326
-  Top = 404
-  Width = 400
+  Left = 1001
+  Height = 318
+  Top = 438
+  Width = 443
   BorderIcons = [biSystemMenu]
   Caption = 'Analisys'
-  ClientHeight = 326
-  ClientWidth = 400
+  ClientHeight = 318
+  ClientWidth = 443
   ParentBiDiMode = False
-  Position = poMainFormCenter
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 288
+    Left = 331
     Height = 36
-    Top = 278
+    Top = 270
     Width = 100
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 12
@@ -38,8 +39,8 @@ object ApplicationForm3: TApplicationForm3
     AnchorSideBottom.Control = OkBtn
     Left = 6
     Height = 2
-    Top = 264
-    Width = 388
+    Top = 256
+    Width = 431
     Anchors = [akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Top = 12
@@ -57,7 +58,7 @@ object ApplicationForm3: TApplicationForm3
     Left = 170
     Height = 29
     Top = 133
-    Width = 218
+    Width = 261
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     ItemHeight = 0
@@ -90,9 +91,9 @@ object ApplicationForm3: TApplicationForm3
     AnchorSideRight.Control = OkBtn
     AnchorSideBottom.Control = OkBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 178
+    Left = 221
     Height = 36
-    Top = 278
+    Top = 270
     Width = 100
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
@@ -124,7 +125,7 @@ object ApplicationForm3: TApplicationForm3
     Left = 170
     Height = 29
     Top = 12
-    Width = 218
+    Width = 261
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 12
     BorderSpacing.Right = 12
@@ -145,7 +146,7 @@ object ApplicationForm3: TApplicationForm3
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Temperature
     AnchorSideBottom.Side = asrBottom
-    Left = 318
+    Left = 361
     Height = 34
     Top = 91
     Width = 70
@@ -188,7 +189,7 @@ object ApplicationForm3: TApplicationForm3
     Left = 170
     Height = 34
     Top = 91
-    Width = 138
+    Width = 181
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
@@ -206,7 +207,7 @@ object ApplicationForm3: TApplicationForm3
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = CycleFrequency
     AnchorSideBottom.Side = asrBottom
-    Left = 318
+    Left = 361
     Height = 34
     Top = 49
     Width = 70
@@ -232,7 +233,7 @@ object ApplicationForm3: TApplicationForm3
     Left = 170
     Height = 34
     Top = 49
-    Width = 138
+    Width = 181
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
