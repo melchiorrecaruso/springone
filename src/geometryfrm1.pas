@@ -60,6 +60,7 @@ type
     ApplyBtn: TBitBtn;
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
     procedure ApplyBtnClick(Sender: TObject);
@@ -82,13 +83,29 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, LibLink, MainFrm, UtilsBase;
+  ADim, LibLink, MainFrm, UtilsBase, Setting;
 
 // TGeometryForm1
 
 procedure TGeometryForm1.FormCreate(Sender: TObject);
 begin
+  GeometryForm1.Top    := ClientFile.ReadInteger('GeometryForm1', 'Top',    GeometryForm1.Top);
+  GeometryForm1.Left   := ClientFile.ReadInteger('GeometryForm1', 'Left',   GeometryForm1.Left);
+  GeometryForm1.Height := ClientFile.ReadInteger('GeometryForm1', 'Height', GeometryForm1.Height);
+  GeometryForm1.Width  := ClientFile.ReadInteger('GeometryForm1', 'Width',  GeometryForm1.Width);
+
   Clear;
+end;
+
+procedure TGeometryForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('GeometryForm1', 'Top',    GeometryForm1.Top);
+    ClientFile.WriteInteger('GeometryForm1', 'Left',   GeometryForm1.Left);
+    ClientFile.WriteInteger('GeometryForm1', 'Height', GeometryForm1.Height);
+    ClientFile.WriteInteger('GeometryForm1', 'Width',  GeometryForm1.Width);
+  end;
 end;
 
 procedure TGeometryForm1.Clear;

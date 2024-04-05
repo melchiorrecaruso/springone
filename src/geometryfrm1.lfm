@@ -1,14 +1,15 @@
 object GeometryForm1: TGeometryForm1
-  Left = 183
+  Left = 1489
   Height = 532
-  Top = 186
+  Top = 417
   Width = 437
   BorderIcons = [biSystemMenu]
   Caption = 'Geometry & working length'
   ClientHeight = 532
   ClientWidth = 437
-  Position = poMainFormCenter
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   object WireDiameterLabel: TLabel
     AnchorSideTop.Control = WireDiameter
