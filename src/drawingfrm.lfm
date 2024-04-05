@@ -1,14 +1,15 @@
 object DrawingForm: TDrawingForm
-  Left = 684
+  Left = 763
   Height = 299
-  Top = 342
+  Top = 355
   Width = 413
   BorderIcons = [biSystemMenu]
   Caption = 'Drawing spring'
   ClientHeight = 299
   ClientWidth = 413
-  Position = poMainFormCenter
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
