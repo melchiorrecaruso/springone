@@ -36,7 +36,6 @@ type
 
   TMainForm = class(TForm)
 
-
     CloseMenuItem: TMenuItem;
     CustomProfileMenuItem: TMenuItem;
     CustomSectionMenuItem: TMenuItem;
@@ -75,9 +74,6 @@ type
     Separator9: TMenuItem;
     Separator10: TMenuItem;
     Separator11: TMenuItem;
-
-
-
 
 
     ShearModulusMenuItem: TMenuItem;
@@ -128,6 +124,7 @@ type
     procedure ExportMenuItemClick(Sender: TObject);
     procedure ExportProductionMenuItemClick(Sender: TObject);
     procedure ExportReportMenuItemClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -165,9 +162,6 @@ type
     procedure VirtualScreenResize(Sender: TObject);
     procedure WizardMenuItemClick(Sender: TObject);
   private
-
-    ClientFile: TIniFile;
-    PrinterFile: TIniFile;
     MoveX, MoveY: longint;
     MouseIsDown: boolean;
     Px, Py: longint;
@@ -207,7 +201,8 @@ uses
   {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
-  LCLIntf, LCLType, LibLink, MaterialFrm, Printers, ProductionFrm, QualityFrm, ReportFrm, UtilsBase;
+  LCLIntf, LCLType, LibLink, MaterialFrm, Printers, ProductionFrm,
+  QualityFrm, ReportFrm, Setting, UtilsBase;
 
 
 { Solve routine }
@@ -251,14 +246,14 @@ var
   Logo: TBGRABitmap;
   {$endif}
 begin
+  Caption := ApplicationVer;
   DefaultFormatSettings.DecimalSeparator  := '.';
   DefaultFormatSettings.ThousandSeparator := ',';
 
-  Caption := ApplicationVer;
-  ClientFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
-    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
-  PrinterFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'printer.ini',
-    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+  MainForm.Top    := ClientFile.ReadInteger('MainForm', 'Top',    MainForm.Top);
+  MainForm.Left   := ClientFile.ReadInteger('MainForm', 'Left',   MainForm.Left);
+  MainForm.Height := ClientFile.ReadInteger('MainForm', 'Height', MainForm.Height);
+  MainForm.Width  := ClientFile.ReadInteger('MainForm', 'Width',  MainForm.Width);
 
   Clear;
   Selection.Visible := False;
@@ -296,11 +291,18 @@ end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
-  ClientFile.WriteInteger('MainForm', 'Width',  Max(ScreenImageWidth, VirtualScreen.Width));
-  ClientFile.WriteInteger('MainForm', 'Height', Max(ScreenImageHeight, VirtualScreen.Height));
-  ClientFile.Destroy;
-  PrinterFile.Destroy;
   ScreenImage.Destroy;
+end;
+
+procedure TMainForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('MainForm', 'Top',    MainForm.Top);
+    ClientFile.WriteInteger('MainForm', 'Left',   MainForm.Left);
+    ClientFile.WriteInteger('MainForm', 'Height', MainForm.Height);
+    ClientFile.WriteInteger('MainForm', 'Width',  MainForm.Width);
+  end;
 end;
 
 procedure TMainForm.Clear;
@@ -1436,24 +1438,12 @@ begin
   Result := StringReplace(Result, '@15.2', TextForm.CompanyName  .Text, [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@15.3', ApplicationVer,              [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '#ff0', aSetting.ReadString('Printer', 'Page.Color4', '#ff0'),
-    [rfReplaceAll, rfIgnoreCase]); // Yellow line
-
-  Result := StringReplace(Result, '#f00',    aSetting.ReadString('Printer', 'Page.Color5', '#f00'),
-    [rfReplaceAll, rfIgnoreCase]); // Red    line
-
-  Result := StringReplace(Result, '#0f0',    aSetting.ReadString('Printer', 'Page.Color6', '#0f0'),
-    [rfReplaceAll, rfIgnoreCase]); // Green  line
-
-  Result := StringReplace(Result, '#ffff00', aSetting.ReadString('Printer', 'Page.Color1', '#ffff00'),
-    [rfReplaceAll, rfIgnoreCase]); // Yellow
-
-  Result := StringReplace(Result, '#ff0000', aSetting.ReadString('Printer', 'Page.Color2', '#ff0000'),
-    [rfReplaceAll, rfIgnoreCase]); // Red
-
-  Result := StringReplace(Result, '#00ff00', aSetting.ReadString('Printer', 'Page.Color3', '#00ff00'),
-    [rfReplaceAll, rfIgnoreCase]); // Green
-
+  Result := StringReplace(Result, '#ff0',    aSetting.ReadString('Printer', 'Page.Color4', '#ff0'   ), [rfReplaceAll, rfIgnoreCase]); // Yellow line
+  Result := StringReplace(Result, '#f00',    aSetting.ReadString('Printer', 'Page.Color5', '#f00'   ), [rfReplaceAll, rfIgnoreCase]); // Red    line
+  Result := StringReplace(Result, '#0f0',    aSetting.ReadString('Printer', 'Page.Color6', '#0f0'   ), [rfReplaceAll, rfIgnoreCase]); // Green  line
+  Result := StringReplace(Result, '#ffff00', aSetting.ReadString('Printer', 'Page.Color1', '#ffff00'), [rfReplaceAll, rfIgnoreCase]); // Yellow
+  Result := StringReplace(Result, '#ff0000', aSetting.ReadString('Printer', 'Page.Color2', '#ff0000'), [rfReplaceAll, rfIgnoreCase]); // Red
+  Result := StringReplace(Result, '#00ff00', aSetting.ReadString('Printer', 'Page.Color3', '#00ff00'), [rfReplaceAll, rfIgnoreCase]); // Green
   {$ENDIF}
 end;
 

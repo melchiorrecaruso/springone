@@ -1,18 +1,16 @@
 object MainForm: TMainForm
-  Left = 750
+  Left = 1221
   Height = 500
-  Top = 296
+  Top = 323
   Width = 700
-  AutoSize = True
   Caption = 'Spring ONE'
   ClientHeight = 500
   ClientWidth = 700
   Color = clForm
-  Constraints.MinHeight = 500
-  Constraints.MinWidth = 700
   Menu = MainMenu
   Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   object VirtualScreen: TBGRAVirtualScreen
