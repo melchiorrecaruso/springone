@@ -7,8 +7,9 @@ object GeometryForm3: TGeometryForm3
   Caption = 'Geometry & working angle'
   ClientHeight = 732
   ClientWidth = 611
-  Position = poMainFormCenter
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   object WireDiameterLabel: TLabel
     AnchorSideTop.Control = WireDiameter
