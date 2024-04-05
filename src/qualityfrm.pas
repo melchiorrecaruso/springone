@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -51,6 +51,7 @@ type
     ToleranceLengthL0: TComboBox;
     ToleranceLengthL0Label: TLabel;
     ToleranceWireDiameterUnit: TComboBox;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
   private
@@ -73,16 +74,32 @@ implementation
 
 uses
   ADim,
-  springtolerances,
+  SpringTolerances,
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
-  UtilsBase;
+  UtilsBase, Setting;
 
 // TQualityForm
 
 procedure TQualityForm.FormCreate(Sender: TObject);
 begin
+  QualityForm.Top    := ClientFile.ReadInteger('QualityForm', 'Top',    QualityForm.Top);
+  QualityForm.Left   := ClientFile.ReadInteger('QualityForm', 'Left',   QualityForm.Left);
+  QualityForm.Height := ClientFile.ReadInteger('QualityForm', 'Height', QualityForm.Height);
+  QualityForm.Width  := ClientFile.ReadInteger('QualityForm', 'Width',  QualityForm.Width);
+
   Clear;
+end;
+
+procedure TQualityForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('QualityForm', 'Top',    QualityForm.Top);
+    ClientFile.WriteInteger('QualityForm', 'Left',   QualityForm.Left);
+    ClientFile.WriteInteger('QualityForm', 'Height', QualityForm.Height);
+    ClientFile.WriteInteger('QualityForm', 'Width',  QualityForm.Width);
+  end;
 end;
 
 procedure TQualityForm.SpinEditChange(Sender: TObject);
@@ -186,7 +203,6 @@ begin
     2: SpringTolerance.QualityGradeOnParallelism := QualityGrade3;
   end;
   {$ENDIF}
-
 end;
 
 end.

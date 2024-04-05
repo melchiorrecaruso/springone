@@ -7,7 +7,9 @@ object QualityForm: TQualityForm
   Caption = 'Quality grade'
   ClientHeight = 387
   ClientWidth = 522
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   object ToleranceWireDiameterLabel: TLabel
     AnchorSideLeft.Control = Owner
