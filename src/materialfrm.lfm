@@ -1,16 +1,15 @@
 object MaterialForm: TMaterialForm
-  Left = 1027
-  Height = 282
-  Top = 200
-  Width = 420
+  Left = 588
+  Height = 375
+  Top = 344
+  Width = 517
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
   Caption = 'Material & Manufactoring'
-  ClientHeight = 282
-  ClientWidth = 420
-  OnCreate = FormCreate
+  ClientHeight = 375
+  ClientWidth = 517
   Position = poMainFormCenter
-  LCLVersion = '2.2.6.0'
+  LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
   object Material: TComboBox
     AnchorSideLeft.Control = MaterialLabel
     AnchorSideLeft.Side = asrBottom
@@ -20,17 +19,17 @@ object MaterialForm: TMaterialForm
     Left = 135
     Height = 33
     Top = 12
-    Width = 273
+    Width = 370
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
     BorderSpacing.Top = 12
     BorderSpacing.Right = 12
     ItemHeight = 0
-    OnChange = Change
-    OnClick = Change
     Sorted = True
     Style = csDropDownList
     TabOrder = 0
+    OnChange = Change
+    OnClick = Change
   end
   object MaterialLabel: TLabel
     AnchorSideLeft.Control = Owner
@@ -74,13 +73,13 @@ object MaterialForm: TMaterialForm
     Left = 135
     Height = 29
     Top = 49
-    Width = 193
+    Width = 290
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
     DecimalPlaces = 0
-    OnChange = SpinEditChange
     TabOrder = 1
+    OnChange = SpinEditChange
   end
   object YoungModulusUnit: TComboBox
     AnchorSideLeft.Control = YoungModulus
@@ -90,7 +89,7 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Control = Material
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 435
     Height = 29
     Top = 49
     Width = 70
@@ -115,7 +114,7 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Control = YoungModulusUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 435
     Height = 29
     Top = 82
     Width = 70
@@ -142,13 +141,13 @@ object MaterialForm: TMaterialForm
     Left = 135
     Height = 29
     Top = 82
-    Width = 193
+    Width = 290
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
     DecimalPlaces = 0
-    OnChange = SpinEditChange
     TabOrder = 4
+    OnChange = SpinEditChange
   end
   object ShearModulusLabel: TLabel
     AnchorSideTop.Control = ShearModulus
@@ -166,10 +165,13 @@ object MaterialForm: TMaterialForm
     ParentColor = False
   end
   object TensileStrengthLabel: TLabel
+    AnchorSideTop.Control = TensileStrength
+    AnchorSideRight.Control = TensileStrength
+    AnchorSideBottom.Control = TensileStrength
     AnchorSideBottom.Side = asrBottom
-    Left = -4
-    Height = 45
-    Top = 112
+    Left = 4
+    Height = 29
+    Top = 115
     Width = 121
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
@@ -185,7 +187,7 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Control = ShearModulusUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 435
     Height = 29
     Top = 115
     Width = 70
@@ -210,7 +212,7 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Control = TensileStrengthUnit
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 338
+    Left = 435
     Height = 29
     Top = 148
     Width = 70
@@ -229,28 +231,29 @@ object MaterialForm: TMaterialForm
     Text = 'kg/m3'
   end
   object MaterialDensity: TFloatSpinEdit
+    AnchorSideLeft.Control = TensileStrength
     AnchorSideTop.Control = MaterialDensityUnit
     AnchorSideRight.Control = MaterialDensityUnit
     AnchorSideBottom.Control = MaterialDensityUnit
     AnchorSideBottom.Side = asrBottom
-    Left = 127
+    Left = 135
     Height = 29
     Top = 148
-    Width = 201
+    Width = 290
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
     DecimalPlaces = 1
     Increment = 0.00001
-    OnChange = SpinEditChange
     TabOrder = 7
+    OnChange = SpinEditChange
   end
   object MaterialDensityLabel: TLabel
     AnchorSideTop.Control = MaterialDensity
     AnchorSideRight.Control = MaterialDensity
     AnchorSideBottom.Control = MaterialDensity
     AnchorSideBottom.Side = asrBottom
-    Left = 96
+    Left = 104
     Height = 29
     Top = 148
     Width = 21
@@ -268,10 +271,11 @@ object MaterialForm: TMaterialForm
     AnchorSideBottom.Control = OkBtn
     Left = 6
     Height = 2
-    Top = 228
-    Width = 408
+    Top = 313
+    Width = 505
     Anchors = [akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
+    BorderSpacing.Top = 8
     BorderSpacing.Right = 6
     BorderSpacing.Bottom = 12
     Constraints.MaxHeight = 2
@@ -282,9 +286,9 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 308
-    Height = 28
-    Top = 242
+    Left = 405
+    Height = 36
+    Top = 327
     Width = 100
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 12
@@ -300,9 +304,9 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Control = OkBtn
     AnchorSideBottom.Control = OkBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 198
-    Height = 28
-    Top = 242
+    Left = 295
+    Height = 36
+    Top = 327
     Width = 100
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
@@ -317,7 +321,7 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Control = CoilingType
     AnchorSideBottom.Control = CoilingType
     AnchorSideBottom.Side = asrBottom
-    Left = 45
+    Left = 53
     Height = 29
     Top = 185
     Width = 72
@@ -334,10 +338,10 @@ object MaterialForm: TMaterialForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = MaterialDensityUnit
     AnchorSideRight.Side = asrBottom
-    Left = 127
+    Left = 135
     Height = 29
     Top = 185
-    Width = 281
+    Width = 370
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 8
     ItemHeight = 0
@@ -355,15 +359,15 @@ object MaterialForm: TMaterialForm
     AnchorSideRight.Control = CancelBtn
     AnchorSideBottom.Control = CancelBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 88
-    Height = 28
-    Top = 242
+    Left = 185
+    Height = 36
+    Top = 327
     Width = 100
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'Apply'
-    OnClick = ApplyBtnClick
     TabOrder = 11
+    OnClick = ApplyBtnClick
   end
   object TensileStrength: TFloatSpinEdit
     AnchorSideLeft.Control = ShearModulus
@@ -374,12 +378,12 @@ object MaterialForm: TMaterialForm
     Left = 135
     Height = 29
     Top = 115
-    Width = 193
+    Width = 290
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Right = 10
     DecimalPlaces = 0
-    OnChange = SpinEditChange
     TabOrder = 12
+    OnChange = SpinEditChange
   end
 end

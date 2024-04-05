@@ -272,14 +272,14 @@ var
 begin
   Check := True;
   // Scopo e campo di applicazione
-  if fWireDiameter   < MinWireDiameter then ErrorMessage.Add(Format('Wire diameter < %s.', [MinWireDiameter.ToString(5, 5, [pMilli])]));
-  if fWireDiameter   > MaxWireDiameter then ErrorMessage.Add(Format('Wire diameter > %s.', [MaxWireDiameter.ToString(5, 5, [pMilli])]));
-  if fCoilDiameterDm < MinCoilDiameter then ErrorMessage.Add(Format('Mean coil diameter < %s.', [MinCoilDiameter.ToString(5, 5, [pMilli])]));
-  if fCoilDiameterDm > MaxCoilDiameter then ErrorMessage.Add(Format('Mean coil diameter > %s.', [MaxCoilDiameter.ToString(5, 5, [pMilli])]));
-  if fLengthL0       > MaxFreeLength   then ErrorMessage.Add(Format('Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
-  if fActiveCoils    < MinActiveCoils  then ErrorMessage.Add(Format('Number of active coils < %d.', [MinActiveCoils]));
-  if fSpringIndexW   < MinSpringIndex  then ErrorMessage.Add(Format('Spring Index < %d.', [MinSpringIndex]));
-  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage.Add(Format('Spring Index > %d.', [MaxSpringIndex]));
+  if fWireDiameter   < MinWireDiameter then ErrorMessage  .Add(Format('Wire diameter < %s.', [MinWireDiameter.ToString(5, 5, [pMilli])]));
+  if fWireDiameter   > MaxWireDiameter then ErrorMessage  .Add(Format('Wire diameter > %s.', [MaxWireDiameter.ToString(5, 5, [pMilli])]));
+  if fCoilDiameterDm < MinCoilDiameter then ErrorMessage  .Add(Format('Mean coil diameter < %s.', [MinCoilDiameter.ToString(5, 5, [pMilli])]));
+  if fCoilDiameterDm > MaxCoilDiameter then ErrorMessage  .Add(Format('Mean coil diameter > %s.', [MaxCoilDiameter.ToString(5, 5, [pMilli])]));
+  if fLengthL0       > MaxFreeLength   then WarningMessage.Add(Format('Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
+  if fActiveCoils    < MinActiveCoils  then ErrorMessage  .Add(Format('Number of active coils < %d.', [MinActiveCoils]));
+  if fSpringIndexW   < MinSpringIndex  then ErrorMessage  .Add(Format('Spring Index < %d.', [MinSpringIndex]));
+  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage  .Add(Format('Spring Index > %d.', [MaxSpringIndex]));
 
   Check := ErrorMessage.Count = 0;
   if Check then

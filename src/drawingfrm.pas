@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -44,6 +44,7 @@ type
     OkBtn: TBitBtn;
     SpringLengthLabel: TLabel;
     procedure BtnClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
   private
@@ -64,13 +65,29 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim;
+  ADim, Setting;
 
 // TDrawingForm
 
 procedure TDrawingForm.FormCreate(Sender: TObject);
 begin
+  DrawingForm.Top    := ClientFile.ReadInteger('DrawingForm', 'Top',    DrawingForm.Top);
+  DrawingForm.Left   := ClientFile.ReadInteger('DrawingForm', 'Left',   DrawingForm.Left);
+  DrawingForm.Height := ClientFile.ReadInteger('DrawingForm', 'Height', DrawingForm.Height);
+  DrawingForm.Width  := ClientFile.ReadInteger('DrawingForm', 'Width',  DrawingForm.Width);
+
   Clear;
+end;
+
+procedure TDrawingForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('DrawingForm', 'Top',    DrawingForm.Top);
+    ClientFile.WriteInteger('DrawingForm', 'Left',   DrawingForm.Left);
+    ClientFile.WriteInteger('DrawingForm', 'Height', DrawingForm.Height);
+    ClientFile.WriteInteger('DrawingForm', 'Width',  DrawingForm.Width);
+  end;
 end;
 
 procedure TDrawingForm.SpinEditChange(Sender: TObject);

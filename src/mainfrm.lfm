@@ -1,18 +1,16 @@
 object MainForm: TMainForm
-  Left = 752
+  Left = 1221
   Height = 500
-  Top = 234
+  Top = 323
   Width = 700
-  AutoSize = True
   Caption = 'Spring ONE'
   ClientHeight = 500
   ClientWidth = 700
   Color = clForm
-  Constraints.MinHeight = 500
-  Constraints.MinWidth = 700
   Menu = MainMenu
   Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   object VirtualScreen: TBGRAVirtualScreen
@@ -123,6 +121,13 @@ object MainForm: TMainForm
     end
     object EditMenuItem: TMenuItem
       Caption = '&Edit'
+      object WizardMenuItem: TMenuItem
+        Caption = 'Wizard ...'
+        OnClick = WizardMenuItemClick
+      end
+      object Separator8: TMenuItem
+        Caption = '-'
+      end
       object DrawingTextMenuItem: TMenuItem
         Caption = 'Drawing Text'
         OnClick = TextMenuItemClick

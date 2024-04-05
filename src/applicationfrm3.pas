@@ -46,6 +46,7 @@ type
     TemperatureUnit: TComboBox;
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
   public
@@ -65,13 +66,29 @@ implementation
 {$R *.lfm}
 
 uses
-  SpringSolvers, MaterialFrm, Math, UtilsBase;
+  SpringSolvers, MaterialFrm, Math, UtilsBase, Setting;
 
 // TApplicationForm3
 
 procedure TApplicationForm3.FormCreate(Sender: TObject);
 begin
+  ApplicationForm.Top    := ClientFile.ReadInteger('ApplicationForm', 'Top',    ApplicationForm.Top);
+  ApplicationForm.Left   := ClientFile.ReadInteger('ApplicationForm', 'Left',   ApplicationForm.Left);
+  ApplicationForm.Height := ClientFile.ReadInteger('ApplicationForm', 'Height', ApplicationForm.Height);
+  ApplicationForm.Width  := ClientFile.ReadInteger('ApplicationForm', 'Width',  ApplicationForm.Width);
+
   Clear;
+end;
+
+procedure TApplicationForm3.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('ApplicationForm', 'Top',    ApplicationForm.Top);
+    ClientFile.WriteInteger('ApplicationForm', 'Left',   ApplicationForm.Left);
+    ClientFile.WriteInteger('ApplicationForm', 'Height', ApplicationForm.Height);
+    ClientFile.WriteInteger('ApplicationForm', 'Width',  ApplicationForm.Width);
+  end;
 end;
 
 procedure TApplicationForm3.SpinEditChange(Sender: TObject);

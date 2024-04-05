@@ -1,13 +1,13 @@
 object ReportForm: TReportForm
-  Left = 360
-  Height = 478
-  Top = 240
-  Width = 555
+  Left = 666
+  Height = 532
+  Top = 247
+  Width = 650
   Caption = 'Report'
-  ClientHeight = 478
-  ClientWidth = 555
+  ClientHeight = 532
+  ClientWidth = 650
   Position = poMainFormCenter
-  LCLVersion = '2.2.6.0'
+  LCLVersion = '3.99.0.0'
   object Memo: TMemo
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -15,9 +15,9 @@ object ReportForm: TReportForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = CloseBtn
     Left = 0
-    Height = 426
+    Height = 472
     Top = 0
-    Width = 555
+    Width = 650
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Bottom = 12
     Font.Name = 'Courier New'
@@ -32,9 +32,9 @@ object ReportForm: TReportForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 443
-    Height = 28
-    Top = 438
+    Left = 538
+    Height = 36
+    Top = 484
     Width = 100
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 12
@@ -49,9 +49,9 @@ object ReportForm: TReportForm
     AnchorSideRight.Control = CloseBtn
     AnchorSideBottom.Control = CloseBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 333
-    Height = 28
-    Top = 438
+    Left = 428
+    Height = 36
+    Top = 484
     Width = 100
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10

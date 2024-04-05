@@ -1,16 +1,15 @@
 object ProductionForm: TProductionForm
-  Left = 581
-  Height = 362
-  Top = 210
-  Width = 430
+  Left = 594
+  Height = 471
+  Top = 315
+  Width = 673
   Anchors = []
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
   Caption = 'Production'
-  ClientHeight = 362
-  ClientWidth = 430
+  ClientHeight = 471
+  ClientWidth = 673
+  LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
-  LCLVersion = '2.3.0.0'
   object Bevel1: TBevel
     AnchorSideLeft.Control = Owner
     AnchorSideRight.Control = Owner
@@ -18,8 +17,8 @@ object ProductionForm: TProductionForm
     AnchorSideBottom.Control = OkBtn
     Left = 6
     Height = 2
-    Top = 308
-    Width = 418
+    Top = 409
+    Width = 661
     Anchors = [akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
     BorderSpacing.Right = 6
@@ -32,9 +31,9 @@ object ProductionForm: TProductionForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 318
-    Height = 28
-    Top = 322
+    Left = 561
+    Height = 36
+    Top = 423
     Width = 100
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 12
@@ -50,9 +49,9 @@ object ProductionForm: TProductionForm
     AnchorSideRight.Control = OkBtn
     AnchorSideBottom.Control = OkBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 208
-    Height = 28
-    Top = 322
+    Left = 451
+    Height = 36
+    Top = 423
     Width = 100
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
@@ -67,13 +66,13 @@ object ProductionForm: TProductionForm
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = BurringEnds
     AnchorSideRight.Side = asrBottom
-    Left = 149
-    Height = 23
+    Left = 154
+    Height = 29
     Top = 12
-    Width = 200
+    Width = 417
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 12
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'Free'
@@ -86,46 +85,52 @@ object ProductionForm: TProductionForm
     Text = 'Free'
   end
   object DirectionCoilsLB: TLabel
+    AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = DirectionCoils
     AnchorSideRight.Control = DirectionCoils
     AnchorSideBottom.Control = DirectionCoils
     AnchorSideBottom.Side = asrBottom
-    Left = 46
-    Height = 23
+    Left = 39
+    Height = 29
     Top = 12
-    Width = 91
+    Width = 103
     Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 12
     BorderSpacing.Right = 12
     Caption = 'Direction of Colis'
     Layout = tlCenter
   end
   object BurringEndsLB: TLabel
+    AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = BurringEnds
     AnchorSideRight.Control = WireSurface
     AnchorSideBottom.Control = BurringEnds
     AnchorSideBottom.Side = asrBottom
-    Left = 23
-    Height = 23
-    Top = 39
-    Width = 114
-    Anchors = [akTop, akRight, akBottom]
+    Left = 12
+    Height = 29
+    Top = 45
+    Width = 130
+    Anchors = [akTop, akLeft, akBottom]
+    BorderSpacing.Left = 12
     BorderSpacing.Right = 12
     Caption = 'Burring if Spring Ends'
     Layout = tlCenter
   end
   object BurringEnds: TComboBox
-    AnchorSideLeft.Control = WireSurface
+    AnchorSideLeft.Control = BurringEndsLB
+    AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = DirectionCoils
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = WireSurface
     AnchorSideRight.Side = asrBottom
-    Left = 149
-    Height = 23
-    Top = 39
-    Width = 200
+    Left = 154
+    Height = 29
+    Top = 45
+    Width = 417
     Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 12
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       'No'
@@ -137,33 +142,35 @@ object ProductionForm: TProductionForm
     Text = 'Inside'
   end
   object WireSurfaceLB: TLabel
+    AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = WireSurface
     AnchorSideRight.Control = WireSurface
     AnchorSideBottom.Control = WireSurface
     AnchorSideBottom.Side = asrBottom
-    Left = 33
-    Height = 23
-    Top = 66
-    Width = 104
+    Left = 24
+    Height = 29
+    Top = 78
+    Width = 118
     Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 12
     BorderSpacing.Right = 12
     Caption = 'Wire or Rod Surface'
     Layout = tlCenter
   end
   object WireSurface: TComboBox
-    AnchorSideLeft.Control = LengthLs
+    AnchorSideLeft.Control = BurringEnds
     AnchorSideTop.Control = BurringEnds
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = LengthLs
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = LengthLs
-    Left = 149
-    Height = 23
-    Top = 66
-    Width = 200
+    Left = 154
+    Height = 29
+    Top = 78
+    Width = 417
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'Drawn'
@@ -176,15 +183,17 @@ object ProductionForm: TProductionForm
     Text = 'Drawn'
   end
   object LengthLsLB: TLabel
+    AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = LengthLs
     AnchorSideRight.Control = LengthLs
     AnchorSideBottom.Control = LengthLsUnit
     AnchorSideBottom.Side = asrBottom
-    Left = 46
-    Height = 23
-    Top = 93
-    Width = 91
+    Left = 37
+    Height = 34
+    Top = 111
+    Width = 105
     Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Left = 12
     BorderSpacing.Right = 12
     Caption = 'Setting Length Ls'
     Layout = tlCenter
@@ -195,13 +204,13 @@ object ProductionForm: TProductionForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = LengthLs
     AnchorSideBottom.Side = asrBottom
-    Left = 359
-    Height = 23
-    Top = 93
-    Width = 59
+    Left = 581
+    Height = 34
+    Top = 111
+    Width = 80
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 12
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'mm'
@@ -212,19 +221,20 @@ object ProductionForm: TProductionForm
     Text = 'mm'
   end
   object LengthLs: TFloatSpinEdit
+    AnchorSideLeft.Control = WireSurface
     AnchorSideTop.Control = WireSurface
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = LengthLsUnit
-    Left = 149
-    Height = 23
-    Top = 93
-    Width = 200
+    Left = 154
+    Height = 34
+    Top = 111
+    Width = 417
     Alignment = taRightJustify
-    Anchors = [akTop, akRight]
+    Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 4
     BorderSpacing.Right = 10
-    OnChange = SpinEditChange
     TabOrder = 7
+    OnChange = SpinEditChange
   end
   object DividerBevel: TDividerBevel
     AnchorSideLeft.Control = Owner
@@ -233,9 +243,9 @@ object ProductionForm: TProductionForm
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 6
-    Height = 15
-    Top = 128
-    Width = 418
+    Height = 17
+    Top = 157
+    Width = 661
     Caption = 'Production Compensation:'
     Anchors = [akTop, akLeft, akRight]
     BevelWidth = 2
@@ -251,9 +261,9 @@ object ProductionForm: TProductionForm
     AnchorSideTop.Control = DividerBevel
     AnchorSideTop.Side = asrBottom
     Left = 18
-    Height = 30
-    Top = 153
-    Width = 151
+    Height = 34
+    Top = 184
+    Width = 171
     BorderSpacing.Left = 12
     BorderSpacing.Top = 10
     Caption = 'a) if the spring force and the'#13#10'    spring length are specified'
@@ -263,9 +273,9 @@ object ProductionForm: TProductionForm
     AnchorSideTop.Control = Bevel2
     AnchorSideTop.Side = asrBottom
     Left = 18
-    Height = 30
-    Top = 207
-    Width = 166
+    Height = 34
+    Top = 242
+    Width = 188
     BorderSpacing.Left = 12
     BorderSpacing.Top = 10
     Caption = 'b) if the spring force, the spring'#13#10'     length and L0 are specified'
@@ -275,9 +285,9 @@ object ProductionForm: TProductionForm
     AnchorSideTop.Control = Bevel3
     AnchorSideTop.Side = asrBottom
     Left = 18
-    Height = 30
-    Top = 261
-    Width = 157
+    Height = 34
+    Top = 300
+    Width = 177
     BorderSpacing.Left = 12
     BorderSpacing.Top = 10
     Caption = 'c) if two spring forces and the'#13#10'    spring lengths are specified'
@@ -287,10 +297,10 @@ object ProductionForm: TProductionForm
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = CCaseLB
     AnchorSideRight.Side = asrBottom
-    Left = 300
-    Height = 19
-    Top = 261
-    Width = 100
+    Left = 338
+    Height = 23
+    Top = 300
+    Width = 118
     BorderSpacing.Left = 20
     Caption = 'L0, n and De, Di'
     TabOrder = 8
@@ -301,10 +311,10 @@ object ProductionForm: TProductionForm
     AnchorSideTop.Control = BCaseLb
     AnchorSideRight.Control = DividerBevel
     AnchorSideRight.Side = asrBottom
-    Left = 300
-    Height = 19
-    Top = 207
-    Width = 82
+    Left = 338
+    Height = 23
+    Top = 242
+    Width = 97
     BorderSpacing.Left = 20
     Caption = 'n and De, Di'
     TabOrder = 9
@@ -313,10 +323,10 @@ object ProductionForm: TProductionForm
     AnchorSideLeft.Control = BCaseLb
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = BCaseLb
-    Left = 204
-    Height = 19
-    Top = 207
-    Width = 58
+    Left = 226
+    Height = 23
+    Top = 242
+    Width = 71
     BorderSpacing.Left = 20
     Caption = 'n and d'
     TabOrder = 10
@@ -325,10 +335,10 @@ object ProductionForm: TProductionForm
     AnchorSideLeft.Control = BCaseLb
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = ACaseLB
-    Left = 204
-    Height = 19
-    Top = 153
-    Width = 30
+    Left = 226
+    Height = 23
+    Top = 184
+    Width = 41
     BorderSpacing.Left = 20
     Caption = 'L0'
     Checked = True
@@ -343,8 +353,8 @@ object ProductionForm: TProductionForm
     AnchorSideRight.Side = asrBottom
     Left = 18
     Height = 2
-    Top = 195
-    Width = 394
+    Top = 230
+    Width = 637
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
@@ -360,8 +370,8 @@ object ProductionForm: TProductionForm
     AnchorSideRight.Side = asrBottom
     Left = 18
     Height = 2
-    Top = 249
-    Width = 394
+    Top = 288
+    Width = 637
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 12
     BorderSpacing.Top = 12
@@ -373,10 +383,10 @@ object ProductionForm: TProductionForm
     AnchorSideLeft.Control = BCaseLb
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = CCaseLB
-    Left = 204
-    Height = 19
-    Top = 261
-    Width = 76
+    Left = 226
+    Height = 23
+    Top = 300
+    Width = 92
     BorderSpacing.Left = 20
     Caption = 'L0, n and d'
     TabOrder = 11

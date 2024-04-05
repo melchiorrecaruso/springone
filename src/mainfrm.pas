@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -36,7 +36,6 @@ type
 
   TMainForm = class(TForm)
 
-
     CloseMenuItem: TMenuItem;
     CustomProfileMenuItem: TMenuItem;
     CustomSectionMenuItem: TMenuItem;
@@ -50,6 +49,8 @@ type
     GeometryMenuItem: TMenuItem;
 
     MaterialMenuItem: TMenuItem;
+    Separator8: TMenuItem;
+    WizardMenuItem: TMenuItem;
     Separator7: TMenuItem;
     UseImperialSystemMenuItem: TMenuItem;
 
@@ -73,9 +74,6 @@ type
     Separator9: TMenuItem;
     Separator10: TMenuItem;
     Separator11: TMenuItem;
-
-
-
 
 
     ShearModulusMenuItem: TMenuItem;
@@ -122,10 +120,11 @@ type
 
     VirtualScreen: TBGRAVirtualScreen;
 
-    procedure CloseMenuItemClick(Sender: TObject);
+
     procedure ExportMenuItemClick(Sender: TObject);
     procedure ExportProductionMenuItemClick(Sender: TObject);
     procedure ExportReportMenuItemClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -141,12 +140,16 @@ type
     procedure ProductionMenuItemClick(Sender: TObject);
     procedure QualityMenuItemClick(Sender: TObject);
 
+    procedure NewMenuItemClick(Sender: TObject);
+    procedure OpenMenuItemClick(Sender: TObject);
     procedure SaveMenuItemClick(Sender: TObject);
     procedure SaveAsMenuItemClick(Sender: TObject);
-    procedure OpenMenuItemClick(Sender: TObject);
+    procedure CloseMenuItemClick(Sender: TObject);
+
     procedure ExitMenuItemClick(Sender: TObject);
     procedure ApplicationMenuItemClick(Sender: TObject);
     procedure CustomSectionMenuItemClick(Sender: TObject);
+    procedure SolveExecute(Sender: TObject);
     procedure UseImperialSystemMenuItemClick(Sender: TObject);
     procedure VirtualScreenDblClick(Sender: TObject);
     procedure VirtualScreenMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -155,13 +158,10 @@ type
     procedure VirtualScreenRedraw(Sender: TObject; Bitmap: TBGRABitmap);
     procedure TextMenuItemClick(Sender: TObject);
     procedure ViewMenuItemClick(Sender: TObject);
-    procedure NewMenuItemClick(Sender: TObject);
     procedure ReportMenuItemClick(Sender: TObject);
     procedure VirtualScreenResize(Sender: TObject);
+    procedure WizardMenuItemClick(Sender: TObject);
   private
-
-    ClientFile: TIniFile;
-    PrinterFile: TIniFile;
     MoveX, MoveY: longint;
     MouseIsDown: boolean;
     Px, Py: longint;
@@ -201,7 +201,9 @@ uses
   {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
-  LCLIntf, LCLType, LibLink, MaterialFrm, Printers, ProductionFrm, QualityFrm, ReportFrm, UtilsBase;
+  LCLIntf, LCLType, LibLink, MaterialFrm, Printers, ProductionFrm,
+  QualityFrm, ReportFrm, Setting, UtilsBase;
+
 
 { Solve routine }
 
@@ -244,20 +246,20 @@ var
   Logo: TBGRABitmap;
   {$endif}
 begin
+  Caption := ApplicationVer;
   DefaultFormatSettings.DecimalSeparator  := '.';
   DefaultFormatSettings.ThousandSeparator := ',';
 
-  Caption := ApplicationVer;
-  ClientFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
-    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
-  PrinterFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'printer.ini',
-    [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
+  MainForm.Top    := ClientFile.ReadInteger('MainForm', 'Top',    MainForm.Top);
+  MainForm.Left   := ClientFile.ReadInteger('MainForm', 'Left',   MainForm.Left);
+  MainForm.Height := ClientFile.ReadInteger('MainForm', 'Height', MainForm.Height);
+  MainForm.Width  := ClientFile.ReadInteger('MainForm', 'Width',  MainForm.Width);
 
   Clear;
   Selection.Visible := False;
   ScreenImage       := TBGRABitmap.Create;
-  ScreenImageWidth  := Screen.Width  - (Width  - VirtualScreen.Width);
-  ScreenImageHeight := Screen.Height - (Height - VirtualScreen.Height + LCLIntf.GetSystemMetrics(SM_CYCAPTION));
+  ScreenImageWidth  := Max(800, ClientFile.ReadInteger('MainForm', 'Width',  800));
+  ScreenImageHeight := Max(600, ClientFile.ReadInteger('MainForm', 'Height', 600));
   ScreenColor.FromString(ClientFile.ReadString('Custom', 'BackgroundColor', 'White'));
   VirtualScreen.Color := ScreenColor;
 
@@ -289,9 +291,18 @@ end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
-  ClientFile.Destroy;
-  PrinterFile.Destroy;
   ScreenImage.Destroy;
+end;
+
+procedure TMainForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('MainForm', 'Top',    MainForm.Top);
+    ClientFile.WriteInteger('MainForm', 'Left',   MainForm.Left);
+    ClientFile.WriteInteger('MainForm', 'Height', MainForm.Height);
+    ClientFile.WriteInteger('MainForm', 'Width',  MainForm.Width);
+  end;
 end;
 
 procedure TMainForm.Clear;
@@ -466,34 +477,15 @@ end;
 procedure TMainForm.NewMenuItemClick(Sender: TObject);
 begin
   ClearAll;
-  if (TextForm         .ShowModal = mrOk) and
-     {$IFDEF MODULE1}
-     (GeometryForm1    .ShowModal = mrOk) and
-     {$ENDIF}
-     {$IFDEF MODULE3}
-     (GeometryForm3    .ShowModal = mrOk) and
-     {$ENDIF}
-     (MaterialForm     .ShowModal = mrOk) and
-     (QualityForm      .ShowModal = mrOk) and
-     (ProductionForm   .ShowModal = mrOk) and
-     {$IFDEF MODULE1}
-     (ApplicationForm1 .ShowModal = mrOk) then
-     {$ENDIF}
-     {$IFDEF MODULE3}
-     (ApplicationForm3 .ShowModal = mrOk) then
-     {$ENDIF}
-  begin
-    Quick1MenuItem.Checked := True;
-  end;
-  Solve();
+  WizardMenuItemClick(Sender);
 end;
 
 procedure TMainForm.OpenMenuItemClick(Sender: TObject);
 var
   SessionIniFile: TIniFile;
 begin
-  {$IFDEF MODULE1} OpenDialog.Filter := 'Spring1 file (*.spring1)|*.spring1|;'; {$ENDIF}
-  {$IFDEF MODULE3} OpenDialog.Filter := 'Spring3 file (*.spring3)|*.spring3|;'; {$ENDIF}
+  {$IFDEF MODULE1} OpenDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|;'; {$ENDIF}
+  {$IFDEF MODULE3} OpenDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
     SessionFileName := OpenDialog.FileName;
@@ -528,7 +520,8 @@ end;
 
 procedure TMainForm.SaveAsMenuItemClick(Sender: TObject);
 begin
-  SaveDialog.Filter := 'SpringOne file (*.springone)|*.springone|All files (*.*)|*.*|;';
+  {$IFDEF MODULE1} SaveDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|All files (*.*)|*.*|;'; {$ENDIF}
+  {$IFDEF MODULE3} SaveDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|All files (*.*)|*.*|;'; {$ENDIF}
   if SaveDialog.Execute then
   begin
     SessionFileName := SaveDialog.FileName;
@@ -613,6 +606,30 @@ begin
 end;
 
 // Menu Edit
+
+procedure TMainForm.WizardMenuItemClick(Sender: TObject);
+begin
+  if (TextForm         .ShowModal = mrOk) and
+     {$IFDEF MODULE1}
+     (GeometryForm1    .ShowModal = mrOk) and
+     {$ENDIF}
+     {$IFDEF MODULE3}
+     (GeometryForm3    .ShowModal = mrOk) and
+     {$ENDIF}
+     (MaterialForm     .ShowModal = mrOk) and
+     (QualityForm      .ShowModal = mrOk) and
+     (ProductionForm   .ShowModal = mrOk) and
+     {$IFDEF MODULE1}
+     (ApplicationForm1 .ShowModal = mrOk) then
+     {$ENDIF}
+     {$IFDEF MODULE3}
+     (ApplicationForm3 .ShowModal = mrOk) then
+     {$ENDIF}
+  begin
+    Quick1MenuItem.Checked := True;
+  end;
+  Solve();
+end;
 
 procedure TMainForm.TextMenuItemClick(Sender: TObject);
 var
@@ -802,6 +819,11 @@ begin
     FormPaint(Sender);
     {$ENDIF}
   end;
+end;
+
+procedure TMainForm.SolveExecute(Sender: TObject);
+begin
+  Solve();
 end;
 
 procedure TMainForm.UseImperialSystemMenuItemClick(Sender: TObject);
@@ -1416,24 +1438,12 @@ begin
   Result := StringReplace(Result, '@15.2', TextForm.CompanyName  .Text, [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@15.3', ApplicationVer,              [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '#ff0', aSetting.ReadString('Printer', 'Page.Color4', '#ff0'),
-    [rfReplaceAll, rfIgnoreCase]); // Yellow line
-
-  Result := StringReplace(Result, '#f00',    aSetting.ReadString('Printer', 'Page.Color5', '#f00'),
-    [rfReplaceAll, rfIgnoreCase]); // Red    line
-
-  Result := StringReplace(Result, '#0f0',    aSetting.ReadString('Printer', 'Page.Color6', '#0f0'),
-    [rfReplaceAll, rfIgnoreCase]); // Green  line
-
-  Result := StringReplace(Result, '#ffff00', aSetting.ReadString('Printer', 'Page.Color1', '#ffff00'),
-    [rfReplaceAll, rfIgnoreCase]); // Yellow
-
-  Result := StringReplace(Result, '#ff0000', aSetting.ReadString('Printer', 'Page.Color2', '#ff0000'),
-    [rfReplaceAll, rfIgnoreCase]); // Red
-
-  Result := StringReplace(Result, '#00ff00', aSetting.ReadString('Printer', 'Page.Color3', '#00ff00'),
-    [rfReplaceAll, rfIgnoreCase]); // Green
-
+  Result := StringReplace(Result, '#ff0',    aSetting.ReadString('Printer', 'Page.Color4', '#ff0'   ), [rfReplaceAll, rfIgnoreCase]); // Yellow line
+  Result := StringReplace(Result, '#f00',    aSetting.ReadString('Printer', 'Page.Color5', '#f00'   ), [rfReplaceAll, rfIgnoreCase]); // Red    line
+  Result := StringReplace(Result, '#0f0',    aSetting.ReadString('Printer', 'Page.Color6', '#0f0'   ), [rfReplaceAll, rfIgnoreCase]); // Green  line
+  Result := StringReplace(Result, '#ffff00', aSetting.ReadString('Printer', 'Page.Color1', '#ffff00'), [rfReplaceAll, rfIgnoreCase]); // Yellow
+  Result := StringReplace(Result, '#ff0000', aSetting.ReadString('Printer', 'Page.Color2', '#ff0000'), [rfReplaceAll, rfIgnoreCase]); // Red
+  Result := StringReplace(Result, '#00ff00', aSetting.ReadString('Printer', 'Page.Color3', '#00ff00'), [rfReplaceAll, rfIgnoreCase]); // Green
   {$ENDIF}
 end;
 

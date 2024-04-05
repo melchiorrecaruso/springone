@@ -78,6 +78,7 @@ type
     WireDiameter: TFloatSpinEdit;
     WireDiameterLabel: TLabel;
     WireDiameterUnit: TComboBox;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure OkBtnClick(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
@@ -100,13 +101,29 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, ConvUtils, LibLink, MainFrm, UtilsBase;
+  ADim, ConvUtils, LibLink, MainFrm, UtilsBase, Setting;
 
 { TGeometryForm3 }
 
 procedure TGeometryForm3.FormCreate(Sender: TObject);
 begin
+  GeometryForm3.Top    := ClientFile.ReadInteger('GeometryForm3', 'Top',    GeometryForm3.Top);
+  GeometryForm3.Left   := ClientFile.ReadInteger('GeometryForm3', 'Left',   GeometryForm3.Left);
+  GeometryForm3.Height := ClientFile.ReadInteger('GeometryForm3', 'Height', GeometryForm3.Height);
+  GeometryForm3.Width  := ClientFile.ReadInteger('GeometryForm3', 'Width',  GeometryForm3.Width);
+
   Clear;
+end;
+
+procedure TGeometryForm3.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('GeometryForm3', 'Top',    GeometryForm3.Top);
+    ClientFile.WriteInteger('GeometryForm3', 'Left',   GeometryForm3.Left);
+    ClientFile.WriteInteger('GeometryForm3', 'Height', GeometryForm3.Height);
+    ClientFile.WriteInteger('GeometryForm3', 'Width',  GeometryForm3.Width);
+  end;
 end;
 
 procedure TGeometryForm3.Clear;

@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -35,14 +35,15 @@ uses
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
   MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm,
-  Compozer, SpringLib, LazControls, SysUtils, UtilsBase, LibLink;
+  Compozer, SpringLib, LazControls, SysUtils, UtilsBase, LibLink, Setting;
 
 {$R *.res}
 
 begin
   ApplicationName := 'SpringONE';
-  ApplicationVer  := 'SpringONE v0.42';
+  ApplicationVer  := 'SpringONE v0.43';
 
+  OpeSettingFile;
   RequireDerivedFormResource:=True;
   Application.Title:='SpringOne';
   Application.Scaled:=True;
@@ -59,7 +60,7 @@ begin
   Application.CreateForm(TQualityForm, QualityForm);
   Application.CreateForm(TReportForm, ReportForm);
   Application.CreateForm(TTextForm, TextForm);
-
   Application.Run;
+  CloseSettingFile;
 end.
 
