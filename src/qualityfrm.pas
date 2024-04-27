@@ -151,7 +151,7 @@ begin
     SpringSolver.WireDiameterTolerance := 0*m;
     case ToleranceWireDiameterUnit.ItemIndex of
       0: SpringSolver.WireDiametertolerance := ToleranceWireDiameter.Value*mm;
-      1: SpringSolver.WireDiametertolerance := ToleranceWireDiameter.Value*25.4*mm;
+      1: SpringSolver.WireDiametertolerance := ToleranceWireDiameter.Value*inch;
     end;
   end;
   {$ENDIF}
@@ -159,14 +159,10 @@ begin
   {$IFDEF MODULE3}
   if Assigned(GeometryForm3) then
   begin
-    SpringSolver.WireDiameterMax := (0*mm);
-    case GeometryForm3.WireDiameterUnit.ItemIndex of
-      0: SpringSolver.WireDiameterMax := GeometryForm3.WireDiameter.Value*mm;
-      1: SpringSolver.WireDiameterMax := GeometryForm3.WireDiameter.Value*25.4*mm;
-    end;
+    SpringSolver.WireDiameterTolerance := 0*m;
     case ToleranceWireDiameterUnit.ItemIndex of
-      0: SpringSolver.WireDiameterMax := SpringSolver.WireDiameterMax + ToleranceWireDiameter.Value*mm;
-      1: SpringSolver.WireDiameterMax := SpringSolver.WireDiameterMax + ToleranceWireDiameter.Value*25.4*mm;
+      0: SpringSolver.WireDiametertolerance := ToleranceWireDiameter.Value*mm;
+      1: SpringSolver.WireDiametertolerance := ToleranceWireDiameter.Value*inch;
     end;
   end;
   {$ENDIF}

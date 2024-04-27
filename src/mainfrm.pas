@@ -258,8 +258,8 @@ begin
   Clear;
   Selection.Visible := False;
   ScreenImage       := TBGRABitmap.Create;
-  ScreenImageWidth  := Max(800, ClientFile.ReadInteger('MainForm', 'Width',  800));
-  ScreenImageHeight := Max(600, ClientFile.ReadInteger('MainForm', 'Height', 600));
+  ScreenImageWidth  := ClientFile.ReadInteger('MainForm', 'Screen.Width',  800);
+  ScreenImageHeight := ClientFile.ReadInteger('MainForm', 'Screen.Height', 600);
   ScreenColor.FromString(ClientFile.ReadString('Custom', 'BackgroundColor', 'White'));
   VirtualScreen.Color := ScreenColor;
 
@@ -303,6 +303,8 @@ begin
     ClientFile.WriteInteger('MainForm', 'Height', MainForm.Height);
     ClientFile.WriteInteger('MainForm', 'Width',  MainForm.Width);
   end;
+  ClientFile.WriteInteger('MainForm', 'Screen.Width',  ScreenImageWidth );
+  ClientFile.WriteInteger('MainForm', 'Screen.Height', ScreenImageHeight);
 end;
 
 procedure TMainForm.Clear;
@@ -909,6 +911,9 @@ begin
   for i := 0 to TempMenuItem.Count -1 do if TempMenuItem.Items[i].Checked then Check := True;
   for i := 0 to DrawMenuItem.Count -1 do if DrawMenuItem.Items[i].Checked then Check := True;
   for i := 0 to DocsMenuItem.Count -1 do if DocsMenuItem.Items[i].Checked then Check := True;
+
+  ScreenImageWidth  := Max(ScreenImageWidth,  VirtualScreen.Width );
+  ScreenImageHeight := Max(ScreenImageHeight, VirtualScreen.Height);
 
   if Check then
   begin

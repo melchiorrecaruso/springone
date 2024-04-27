@@ -202,12 +202,12 @@ type
     fClosedCoils: boolean;
     fColdCoiled: boolean;
     fd: TMeters;
+    fdTolerance: TMeters;
 
     fDe: TMeters;
     fDi: TMeters;
-
     fDm: TMeters;
-    fdmax: TMeters;
+
     fDynamicLoad: boolean;
 
     fE: TPascals;
@@ -318,7 +318,7 @@ type
 
     property YoungModulus: TPascals read fE write fE;
     property WireDiameter: TMeters read fd write fd;
-    property WireDiameterMax: TMeters read fdmax write fdmax;
+    property WireDiameterTolerance: TMeters read FdTolerance write FdTolerance;
   end;
 
 implementation
@@ -1096,7 +1096,7 @@ begin
     writeln('De   = ', fDe.ToString( 4, 0, [pMilli]));
     writeln('n    = ', fn:0:2);
     writeln;
-    writeln('dmax = ', fdmax.ToString(4, 0, [pMilli]));
+    writeln('dmax = ', (fd + fdTolerance).ToString(4, 0, [pMilli]));
     writeln('w    = ', fw:0:4);
     writeln;
     writeln('q    = ', fq :0:4);
@@ -1144,15 +1144,18 @@ begin
 end;
 
 function TTorsionSpringSolver.Lk(const Alpha: TRadians): TMeters;
+var
+  fdMax: TMeters;
 begin
   Result := 0*m;
   if fCheck then
   begin
-    Result := fdmax*(fn + 1.5 + AlphaCoil(Alpha)/(2*pi*rad));
+    fdMax  := fd + fdTolerance;
+    Result := fdMax*(fn + 1.5 + AlphaCoil(Alpha)/(2*pi*rad));
     if fa.Value > 0 then
     begin
-      if Result < (fn*(fa + fdmax) + fdmax) then
-        Result := (fn*(fa + fdmax) + fdmax);
+      if Result < (fn*(fa + fdMax) + fdMax) then
+        Result := (fn*(fa + fdMax) + fdMax);
     end;
   end;
 end;
