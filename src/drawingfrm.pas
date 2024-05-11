@@ -21,6 +21,7 @@
 unit DrawingFrm;
 
 {$mode ObjFPC}{$H+}
+{$i defines.inc}
 
 interface
 

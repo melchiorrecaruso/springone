@@ -21,6 +21,7 @@
 unit QualityFrm;
 
 {$mode ObjFPC}{$H+}
+{$i defines.inc}
 
 interface
 

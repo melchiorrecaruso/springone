@@ -1,5 +1,4 @@
-{
-  Helical Compression Spring Designer
+{ Helical Compression Spring Designer
 
   Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
@@ -22,6 +21,7 @@
 unit Compozer;
 
 {$mode ObjFPC}{$H+}
+{$i defines.inc}
 
 interface
 

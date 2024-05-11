@@ -21,6 +21,7 @@
 unit MainFrm;
 
 {$mode ObjFPC}{$H+}
+{$i defines.inc}
 
 interface
 
@@ -934,7 +935,6 @@ procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenScale: double; aSet
 var
   i: longint;
   Chart: TChart;
-  Table: TReportTable;
   Compozer: TCompozer;
   Bit: array of TBGRABitmap = nil;
   SpringDrawing: TSpringDrawing;

@@ -24,7 +24,6 @@ object MainForm: TMainForm
     Anchors = []
     ClientHeight = 500
     ClientWidth = 700
-    Color = clNone
     ParentColor = False
     TabOrder = 0
     OnDblClick = VirtualScreenDblClick

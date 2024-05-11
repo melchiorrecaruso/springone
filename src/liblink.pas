@@ -21,6 +21,7 @@
 unit LibLink;
 
 {$mode ObjFPC}{$H+}
+{$i defines.inc}
 
 interface
 
