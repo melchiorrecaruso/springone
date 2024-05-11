@@ -1949,6 +1949,7 @@ begin
   CenterPosition := FWidth div 2;
   FBit := TBGRABitmap.Create;
   FBit.SetSize(FWidth, FHeight);
+  FBit.Fill(FBackgroundColor);
 
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;
