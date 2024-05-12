@@ -262,7 +262,7 @@ begin
   ScreenImageWidth  := ClientFile.ReadInteger('MainForm', 'Screen.Width',  800);
   ScreenImageHeight := ClientFile.ReadInteger('MainForm', 'Screen.Height', 600);
   ScreenColor.FromString(ClientFile.ReadString('Custom', 'BackgroundColor', 'White'));
-//VirtualScreen.Color := ScreenColor;
+  VirtualScreen.Color := ScreenColor;
 
   PaperName := ClientFile.ReadString('Printer', 'Page.Name', '');
   if PaperName <> '' then
@@ -1179,6 +1179,7 @@ begin
     Bit[0] := TBGRABitmap.Create;
     Bit[0].SetSize(aScreen.Width, aScreen.Height);
     Bit[0].AlphaFill(255);
+    Bit[0].Fill(ScreenColor);
     begin
       SVG := TBGRASVG.Create;
       SVG.LoadFromResource('TEMPLATE');

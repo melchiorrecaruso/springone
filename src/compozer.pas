@@ -27,7 +27,7 @@ interface
 
 uses
   ADim, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, GraphBase,
-  Graphics, IniFiles, LibLink, Math, SysUtils, Dialogs;
+  Graphics, IniFiles, LibLink, SysUtils, Dialogs;
 
 type
   TCompozerMode = (cmQuick1, cmQuick2, cmQuick3, cmMessages, cmForceChart, cmGoodmanChart,
