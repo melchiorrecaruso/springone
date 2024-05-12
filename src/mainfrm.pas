@@ -1335,7 +1335,7 @@ begin
   Result := StringReplace(Result, '@6.0', Format('fe=%s ' + GetSymbol(SpringSolver.NaturalFrequency),
     [GetString(GetValue(SpringSolver.NaturalFrequency))]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@7.0', Format('%s C° / %s C°',
+  Result := StringReplace(Result, '@7.0', Format('%s / %s',
     [GetString(MAT.TempetatureMin),
      GetString(MAT.TempetatureMax)]), [rfReplaceAll, rfIgnoreCase]);
 
