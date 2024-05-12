@@ -212,7 +212,7 @@ procedure TMainForm.Solve;
 begin
   if WindowState <> wsMaximized then
   begin
-    //WindowState := wsMaximized;
+  //WindowState := wsMaximized;
   end;
 
   SpringTolerance.Clear;
@@ -262,7 +262,7 @@ begin
   ScreenImageWidth  := ClientFile.ReadInteger('MainForm', 'Screen.Width',  800);
   ScreenImageHeight := ClientFile.ReadInteger('MainForm', 'Screen.Height', 600);
   ScreenColor.FromString(ClientFile.ReadString('Custom', 'BackgroundColor', 'White'));
-  VirtualScreen.Color := ScreenColor;
+//VirtualScreen.Color := ScreenColor;
 
   PaperName := ClientFile.ReadString('Printer', 'Page.Name', '');
   if PaperName <> '' then
@@ -351,7 +351,6 @@ begin
   {$IFDEF MODULE3}
   GeometryForm3    .Load(SessionIniFile);
   ApplicationForm3 .Load(SessionIniFile);
-
   {$ENDIF}
   MaterialForm     .Load(SessionIniFile);
   QualityForm      .Load(SessionIniFile);
@@ -487,7 +486,7 @@ procedure TMainForm.OpenMenuItemClick(Sender: TObject);
 var
   SessionIniFile: TIniFile;
 begin
-  {$IFDEF MODULE1} OpenDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|;'; {$ENDIF}
+  {$IFDEF MODULE1} OpenDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|;';   {$ENDIF}
   {$IFDEF MODULE3} OpenDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
@@ -1143,7 +1142,6 @@ begin
   // Custom profle spring drawing
   if CustomProfileMenuItem.Checked then
   begin
-
     SetLength(Bit, 2);
     Bit[0] := TBGRABitmap.Create;
     Bit[1] := TBGRABitmap.Create;
@@ -1197,7 +1195,9 @@ begin
 
   VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
+  {$ifopt D+}
   DEBUG('Draw -> ', MilliSecondsBetween(Now, Start).ToString);
+  {$endif}
 end;
 
 // Create Diagrams
