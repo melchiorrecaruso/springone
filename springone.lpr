@@ -36,7 +36,7 @@ uses
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
   MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm,
-  Compozer, SpringLib, LazControls, SysUtils, UtilsBase, LibLink, Setting;
+  Compozer, SpringLib, LazControls, SysUtils, baseutils, LibLink, Setting;
 
 {$R *.res}
 

@@ -78,7 +78,7 @@ uses
   SpringTolerances,
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
-  UtilsBase, Setting;
+  baseutils, Setting;
 
 // TQualityForm
 

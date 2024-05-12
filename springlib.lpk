@@ -24,9 +24,6 @@
       </Linking>
       <Other>
         <WriteFPCLogo Value="False"/>
-        <ConfigFile>
-          <WriteConfigFilePath Value="$(PkgOutDir)\fpclaz.cfg"/>
-        </ConfigFile>
       </Other>
     </CompilerOptions>
     <Description Value="SpringONE Application Library"/>
@@ -45,12 +42,12 @@
         <UnitName Value="SpringTolerances"/>
       </Item>
       <Item>
-        <Filename Value="libsrc\graphbase.pas"/>
-        <UnitName Value="GraphBase"/>
+        <Filename Value="libsrc\basegraphics.pas"/>
+        <UnitName Value="basegraphics"/>
       </Item>
       <Item>
-        <Filename Value="libsrc\utilsbase.pas"/>
-        <UnitName Value="UtilsBase"/>
+        <Filename Value="libsrc\baseutils.pas"/>
+        <UnitName Value="baseutils"/>
       </Item>
     </Files>
     <RequiredPkgs>
