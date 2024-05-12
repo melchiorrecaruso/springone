@@ -21,6 +21,7 @@
 unit MainFrm;
 
 {$mode ObjFPC}{$H+}
+{$i defines.inc}
 
 interface
 
@@ -211,7 +212,7 @@ procedure TMainForm.Solve;
 begin
   if WindowState <> wsMaximized then
   begin
-    //WindowState := wsMaximized;
+  //WindowState := wsMaximized;
   end;
 
   SpringTolerance.Clear;
@@ -258,8 +259,8 @@ begin
   Clear;
   Selection.Visible := False;
   ScreenImage       := TBGRABitmap.Create;
-  ScreenImageWidth  := Max(800, ClientFile.ReadInteger('MainForm', 'Width',  800));
-  ScreenImageHeight := Max(600, ClientFile.ReadInteger('MainForm', 'Height', 600));
+  ScreenImageWidth  := ClientFile.ReadInteger('MainForm', 'Screen.Width',  800);
+  ScreenImageHeight := ClientFile.ReadInteger('MainForm', 'Screen.Height', 600);
   ScreenColor.FromString(ClientFile.ReadString('Custom', 'BackgroundColor', 'White'));
   VirtualScreen.Color := ScreenColor;
 
@@ -303,6 +304,8 @@ begin
     ClientFile.WriteInteger('MainForm', 'Height', MainForm.Height);
     ClientFile.WriteInteger('MainForm', 'Width',  MainForm.Width);
   end;
+  ClientFile.WriteInteger('MainForm', 'Screen.Width',  ScreenImageWidth );
+  ClientFile.WriteInteger('MainForm', 'Screen.Height', ScreenImageHeight);
 end;
 
 procedure TMainForm.Clear;
@@ -348,7 +351,6 @@ begin
   {$IFDEF MODULE3}
   GeometryForm3    .Load(SessionIniFile);
   ApplicationForm3 .Load(SessionIniFile);
-
   {$ENDIF}
   MaterialForm     .Load(SessionIniFile);
   QualityForm      .Load(SessionIniFile);
@@ -484,7 +486,7 @@ procedure TMainForm.OpenMenuItemClick(Sender: TObject);
 var
   SessionIniFile: TIniFile;
 begin
-  {$IFDEF MODULE1} OpenDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|;'; {$ENDIF}
+  {$IFDEF MODULE1} OpenDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|;';   {$ENDIF}
   {$IFDEF MODULE3} OpenDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
@@ -910,6 +912,9 @@ begin
   for i := 0 to DrawMenuItem.Count -1 do if DrawMenuItem.Items[i].Checked then Check := True;
   for i := 0 to DocsMenuItem.Count -1 do if DocsMenuItem.Items[i].Checked then Check := True;
 
+  ScreenImageWidth  := Max(ScreenImageWidth,  VirtualScreen.Width );
+  ScreenImageHeight := Max(ScreenImageHeight, VirtualScreen.Height);
+
   if Check then
   begin
     ScreenImage.SetSize(
@@ -929,7 +934,6 @@ procedure TMainForm.PaintTo(var aScreen: TBGRABitmap; aScreenScale: double; aSet
 var
   i: longint;
   Chart: TChart;
-  Table: TReportTable;
   Compozer: TCompozer;
   Bit: array of TBGRABitmap = nil;
   SpringDrawing: TSpringDrawing;
@@ -1138,7 +1142,6 @@ begin
   // Custom profle spring drawing
   if CustomProfileMenuItem.Checked then
   begin
-
     SetLength(Bit, 2);
     Bit[0] := TBGRABitmap.Create;
     Bit[1] := TBGRABitmap.Create;
@@ -1176,6 +1179,7 @@ begin
     Bit[0] := TBGRABitmap.Create;
     Bit[0].SetSize(aScreen.Width, aScreen.Height);
     Bit[0].AlphaFill(255);
+    Bit[0].Fill(ScreenColor);
     begin
       SVG := TBGRASVG.Create;
       SVG.LoadFromResource('TEMPLATE');
@@ -1192,7 +1196,9 @@ begin
 
   VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
+  {$ifopt D+}
   DEBUG('Draw -> ', MilliSecondsBetween(Now, Start).ToString);
+  {$endif}
 end;
 
 // Create Diagrams

@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -21,6 +21,7 @@
 unit ApplicationFrm3;
 
 {$mode objfpc}{$H+}
+{$i defines.inc}
 
 interface
 
@@ -72,10 +73,10 @@ uses
 
 procedure TApplicationForm3.FormCreate(Sender: TObject);
 begin
-  ApplicationForm.Top    := ClientFile.ReadInteger('ApplicationForm', 'Top',    ApplicationForm.Top);
-  ApplicationForm.Left   := ClientFile.ReadInteger('ApplicationForm', 'Left',   ApplicationForm.Left);
-  ApplicationForm.Height := ClientFile.ReadInteger('ApplicationForm', 'Height', ApplicationForm.Height);
-  ApplicationForm.Width  := ClientFile.ReadInteger('ApplicationForm', 'Width',  ApplicationForm.Width);
+  Top    := ClientFile.ReadInteger('ApplicationForm3', 'Top',    Top);
+  Left   := ClientFile.ReadInteger('ApplicationForm3', 'Left',   Left);
+  Height := ClientFile.ReadInteger('ApplicationForm3', 'Height', Height);
+  Width  := ClientFile.ReadInteger('ApplicationForm3', 'Width',  Width);
 
   Clear;
 end;
@@ -84,10 +85,10 @@ procedure TApplicationForm3.FormClose(Sender: TObject; var CloseAction: TCloseAc
 begin
   if Windowstate <> wsMaximized then
   begin
-    ClientFile.WriteInteger('ApplicationForm', 'Top',    ApplicationForm.Top);
-    ClientFile.WriteInteger('ApplicationForm', 'Left',   ApplicationForm.Left);
-    ClientFile.WriteInteger('ApplicationForm', 'Height', ApplicationForm.Height);
-    ClientFile.WriteInteger('ApplicationForm', 'Width',  ApplicationForm.Width);
+    ClientFile.WriteInteger('ApplicationForm3', 'Top',    Top);
+    ClientFile.WriteInteger('ApplicationForm3', 'Left',   Left);
+    ClientFile.WriteInteger('ApplicationForm3', 'Height', Height);
+    ClientFile.WriteInteger('ApplicationForm3', 'Width',  Width);
   end;
 end;
 

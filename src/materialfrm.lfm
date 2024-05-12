@@ -1,7 +1,7 @@
 object MaterialForm: TMaterialForm
-  Left = 588
+  Left = 1063
   Height = 375
-  Top = 344
+  Top = 400
   Width = 517
   BorderIcons = [biSystemMenu]
   Caption = 'Material & Manufactoring'

@@ -27,7 +27,7 @@ interface
 
 uses
   BGRABitmap, BGRABitmapTypes, BGRATextFX, BGRACanvas2D,
-  Classes, DateUtils, Graphics, IniFiles, SysUtils, UtilsBase;
+  Classes, DateUtils, Graphics, SysUtils, UtilsBase;
 
 type
   TChart = class
@@ -230,20 +230,19 @@ type
     FLeft: longint;
     FTop: longint;
     FScale: single;
+    FAutosize: boolean;
     FRowSpacer: longint;
     FRowCount: longint;
     FRowAlignments: array of TVerticalAlignment;
     FColumnSpacer: longint;
     FColumnCount: longint;
     FColumnAlignments: array of TAlignment;
+
     FTable: array of array of string;
     FIsNeededUpdateCharSize: boolean;
 
     function GetWidth: longint;
     function GetHeight: longint;
-
-    function XToCanvas(X: single): single;
-    function YToCanvas(Y: single): single;
 
     function GetItem(aRow, aColumn: longint): string;
     procedure SetItem(aRow, aColumn: longint; const S: string);
@@ -264,9 +263,9 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure Draw(aCanvas: TCanvas);
+    procedure Draw(ABitmap: TBGRABitmap);
   public
-
+    property Autosize: boolean read FAutosize write FAutosize;
     property RowCount: longint read FRowCount write SetRowCount;
     property ColumnCount: longint read FColumnCount write SetColumnCount;
     property Items[Row, Column: longint]: string read GetItem write SetItem; default;
@@ -1303,7 +1302,9 @@ begin
 
   FBit.InvalidateBitmap;
   FBit.Draw(aCanvas, 0, 0, TRUE);
+  {$ifopt D+}
   DEBUG('Draw Chart -> ', MilliSecondsBetween(Now, Start).ToString);
+  {$endif}
 end;
 
 procedure TChart.Draw(aCanvas: TCanvas; aWidth, aHeight: longint);
@@ -1381,6 +1382,7 @@ begin
   FPenStyle   := psSolid;
   FPenWidth   := 1.0;
 
+  FAutosize        := True;
   FBorderWidth     := DefaultSpacer;
   FBackgroundColor := BGRA(255, 255, 255, 255);
 
@@ -1547,7 +1549,7 @@ begin
   end;
 end;
 
-procedure TReportTable.Draw(aCanvas: TCanvas);
+procedure TReportTable.Draw(ABitmap: TBGRABitmap);
 var
   i: longint;
   j: longint;
@@ -1556,7 +1558,10 @@ var
   xsum, xoffset: single;
   ysum, yoffset: single;
 begin
-  FBit.SetSize(GetWidth, GetHeight);
+  if FAutosize then
+    FBit.SetSize(GetWidth, GetHeight)
+  else
+    FBit.SetSize(ABitmap.Width, ABitmap.Height);
   FBit.Fill(FBackgroundColor);
 
   SetLength(y, fRowCount    + 1);
@@ -1643,17 +1648,7 @@ begin
 
   // Draw
   fBit.InvalidateBitmap;
-  fBit.Draw(aCanvas, 0, 0, True);
-end;
-
-function TReportTable.XToCanvas(X: single): single;
-begin
-  Result := X;
-end;
-
-function TReportTable.YToCanvas(Y: single): single;
-begin
-  Result := FBit.Height - Y;
+  fBit.Draw(ABitmap.Canvas, 0, 0, True);
 end;
 
 // TSpringDrawing
@@ -1949,6 +1944,7 @@ begin
   CenterPosition := FWidth div 2;
   FBit := TBGRABitmap.Create;
   FBit.SetSize(FWidth, FHeight);
+  FBit.Fill(FBackgroundColor);
 
   FBit.FontAntialias := True;
   FBit.FontQuality   := fqSystemClearType;

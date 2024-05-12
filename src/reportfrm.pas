@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2023 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -21,22 +21,31 @@
 unit ReportFrm;
 
 {$mode ObjFPC}{$H+}
+{$i defines.inc}
 
 interface
 
 uses
-  Buttons, Classes, Controls, Dialogs, SpringTolerances, SpringSolvers,
-  SpringMaterials, Forms, Graphics, LibLink, StdCtrls, SysUtils;
+  Buttons, Classes, Controls, Dialogs, SpringTolerances, SpringSolvers, IniFiles,
+  SpringMaterials, Forms, Graphics, LibLink, StdCtrls, Printers, PrintersDlgs,
+  SysUtils;
 
 type
 
   { TReportForm }
 
   TReportForm = class(TForm)
+    Memo: TMemo;
     CloseBtn: TBitBtn;
     PrintBtn: TBitBtn;
-    Memo: TMemo;
+    PrintDialog: TPrintDialog;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure PrintBtnClick(Sender: TObject);
   private
+    PageRowCount: longint;
+    AddRowAtBegin: boolean;
+    AddRowAtEnd: boolean;
   public
     procedure CreateReport;
   end;
@@ -56,17 +65,13 @@ uses
    {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
    {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
 
-   ADim, UtilsBase;
+   ADim, UtilsBase, Setting;
 
 // TReportForm
 
 procedure TReportForm.CreateReport;
-const
-  RowCount = 65;
 var
   i: longint;
-  PageIndex: longint;
-  PageCount: longint;
   S: TStringList;
 begin
   S := TStringList.Create;
@@ -202,7 +207,6 @@ begin
   S.Add(Format('   Adm.deviation d        :                   ± %s', [GetString(QualityForm.ToleranceWireDiameter.Value*mm)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
-  S.Add(Format('',[]));
   // PAG.3
   S.Add(Format('   DETAILS',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
@@ -272,22 +276,80 @@ begin
 
   for i := 0 to ErrorMessage.Count   -1 do S.Add(Format('   %s', [ErrorMessage  [i]]));
   for i := 0 to WarningMessage.Count -1 do S.Add(Format('   %s', [WarningMessage[i]]));
-  while (S.Count mod RowCount) <> 0 do S.Add('');
-
-  PageIndex := 1;
-  PageCount := S.Count div RowCount;
 
   Memo.Clear;
   for i := 0 to S.Count -1 do
   begin
     Memo.Lines.Add(S[i]);
-    if (i > 0) and (((i + 1) mod RowCount) = 0) then
-    begin
-      Memo.Lines.Add(Format('%73s', [Format('pag. %d/%d',[PageIndex, PageCount])]));
-      Inc(PageIndex);
-    end;
   end;
   S.Destroy;
+end;
+
+procedure TReportForm.PrintBtnClick(Sender: TObject);
+var
+  I, J: longint;
+  S: TStringList;
+begin
+  if PrintDialog.Execute then
+  begin
+    Printer.Title := '';
+    Printer.RawMode:= True;
+    Printer.BeginDoc;
+
+    I := 0;
+    J := 0;
+    S := TStringList.Create;
+    while (I < Memo.Lines.Count) do
+    begin
+      if AddRowAtBegin then S.Add('');
+      if AddRowAtEnd   then S.Add('');
+      while (S.Count < PageRowCount) and
+            (I  <  Memo.Lines.Count) do
+      begin
+        S.Add(Memo.Lines[I]);
+        Inc(I);
+      end;
+      Inc(J);
+      S.Add('');
+      S.Add(Format('%75s', [Format('pag. %d',[J])]));
+
+      if AddRowAtEnd then S.Delete(0);
+      if AddRowAtEnd then S.Add('');
+      Printer.Write(S.Text);
+      S.Clear;
+    end;
+    S.Destroy;
+    Printer.EndDoc;
+  end;
+end;
+
+procedure TReportForm.FormCreate(Sender: TObject);
+begin
+  ReportForm.Top    := ClientFile.ReadInteger('ReportForm', 'Top',    ReportForm.Top);
+  ReportForm.Left   := ClientFile.ReadInteger('ReportForm', 'Left',   ReportForm.Left);
+  ReportForm.Height := ClientFile.ReadInteger('ReportForm', 'Height', ReportForm.Height);
+  ReportForm.Width  := ClientFile.ReadInteger('ReportForm', 'Width',  ReportForm.Width);
+
+  PageRowCount      := ClientFile.ReadInteger('ReportForm', 'PageRowCount',     65);
+  AddRowAtBegin     := ClientFile.ReadBool   ('ReportForm', 'AddRowAtBegin', False);
+  AddRowAtEnd       := ClientFile.ReadBool   ('ReportForm', 'AddRowAtEnd',   False);
+
+  if AddRowAtBegin then Dec(PageRowCount);
+  if AddRowAtEnd   then Dec(PageRowCount);
+end;
+
+procedure TReportForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate <> wsMaximized then
+  begin
+    ClientFile.WriteInteger('ReportForm', 'Top',    ReportForm.Top);
+    ClientFile.WriteInteger('ReportForm', 'Left',   ReportForm.Left);
+    ClientFile.WriteInteger('ReportForm', 'Height', ReportForm.Height);
+    ClientFile.WriteInteger('ReportForm', 'Width',  ReportForm.Width);
+  end;
+  ClientFile.WriteInteger('ReportForm', 'PageRowCount',  PageRowCount);
+  ClientFile.WriteBool   ('ReportForm', 'AddRowAtBegin', AddRowAtBegin);
+  ClientFile.WriteBool   ('ReportForm', 'AddRowAtEnd',   AddRowAtEnd);
 end;
 
 end.

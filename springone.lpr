@@ -21,6 +21,7 @@
 program SpringONE;
 
 {$mode objfpc}{$H+}
+{$i defines.inc}
 
 uses
   {$IFDEF UNIX}
@@ -41,7 +42,7 @@ uses
 
 begin
   ApplicationName := 'SpringONE';
-  ApplicationVer  := 'SpringONE v0.43';
+  ApplicationVer  := 'SpringONE v0.44';
 
   OpeSettingFile;
   RequireDerivedFormResource:=True;

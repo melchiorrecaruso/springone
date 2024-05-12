@@ -21,6 +21,7 @@
 unit ApplicationFrm1;
 
 {$mode objfpc}{$H+}
+{$i defines.inc}
 
 interface
 

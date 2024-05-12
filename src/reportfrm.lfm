@@ -1,13 +1,15 @@
 object ReportForm: TReportForm
-  Left = 666
+  Left = 1061
   Height = 532
-  Top = 247
+  Top = 422
   Width = 650
   Caption = 'Report'
   ClientHeight = 532
   ClientWidth = 650
-  Position = poMainFormCenter
+  Position = poDefault
   LCLVersion = '3.99.0.0'
+  OnClose = FormClose
+  OnCreate = FormCreate
   object Memo: TMemo
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -57,5 +59,10 @@ object ReportForm: TReportForm
     BorderSpacing.Right = 10
     Caption = 'Print'
     TabOrder = 2
+    OnClick = PrintBtnClick
+  end
+  object PrintDialog: TPrintDialog
+    Left = 40
+    Top = 472
   end
 end
