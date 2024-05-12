@@ -19,7 +19,7 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit GraphBase;
+unit BaseGraphics;
 
 {$mode ObjFPC}{$H+}
 
@@ -27,7 +27,7 @@ interface
 
 uses
   BGRABitmap, BGRABitmapTypes, BGRATextFX, BGRACanvas2D,
-  Classes, DateUtils, Graphics, SysUtils, UtilsBase;
+  Classes, DateUtils, Graphics, SysUtils, baseutils;
 
 type
   TChart = class
@@ -214,7 +214,6 @@ type
   TReportTable = class
   private
     FBit: TBGRABitmap;
-    FBitCharSize: TSize;
     FFontName: string;
     FFontHeight: single;
     FFontColor: TBGRAPixel;
@@ -239,7 +238,9 @@ type
     FColumnAlignments: array of TAlignment;
 
     FTable: array of array of string;
-    FIsNeededUpdateCharSize: boolean;
+    FIsNeededUpdateSize: boolean;
+    FWidth: longint;
+    FHeight: longint;
 
     function GetWidth: longint;
     function GetHeight: longint;
@@ -257,13 +258,13 @@ type
     procedure SetFontName(const Value: string);
     procedure SetFontHeight(const Value: single);
     procedure SetFontStyle(const Value: TFontStyles);
-    procedure UpdateCharSize;
+    procedure UpdateSize;
 
   public
     constructor Create;
     destructor Destroy; override;
 
-    procedure Draw(ABitmap: TBGRABitmap);
+    procedure Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
   public
     property Autosize: boolean read FAutosize write FAutosize;
     property RowCount: longint read FRowCount write SetRowCount;
@@ -1376,7 +1377,9 @@ begin
   FFontStyle   := [fsBold];
   FFontQuality := fqSystem; //fqSystemClearType,
 
-  FIsNeededUpdateCharSize := True;
+  FIsNeededUpdateSize := True;
+  FWidth  := 0;
+  FHeight := 0;
 
   FPenColor   := BGRA(0, 0, 0, 255);
   FPenStyle   := psSolid;
@@ -1478,8 +1481,8 @@ end;
 
 procedure TReportTable.SetFontName(const Value: string);
 begin
-  FIsNeededUpdateCharSize := FFontName <> Value;
-  if FIsNeededUpdateCharSize then
+  FIsNeededUpdateSize := FFontName <> Value;
+  if FIsNeededUpdateSize then
   begin
     FFontName := Value;
   end;
@@ -1487,8 +1490,8 @@ end;
 
 procedure TReportTable.SetFontHeight(const Value: single);
 begin
-  FIsNeededUpdateCharSize := FFontHeight <> Value;
-  if FIsNeededUpdateCharSize then
+  FIsNeededUpdateSize := FFontHeight <> Value;
+  if FIsNeededUpdateSize then
   begin
     FFontHeight := Value;
   end;
@@ -1496,60 +1499,76 @@ end;
 
 procedure TReportTable.SetFontStyle(const Value: TFontStyles);
 begin
-  FIsNeededUpdateCharSize := FFontStyle <> Value;
-  if FIsNeededUpdateCharSize then
+  FIsNeededUpdateSize := FFontStyle <> Value;
+  if FIsNeededUpdateSize then
   begin
     FFontStyle := Value;
   end;
 end;
 
-procedure TReportTable.UpdateCharSize;
+procedure TReportTable.UpdateSize;
+var
+  i: longint;
+  j: longint;
+  CellWidthList: array of longint = nil;
+  CellHeightList: array of longint = nil;
+  CellSize: TSize;
 begin
-  FBit.FontAntialias      := True;
-  FBit.FontQuality        := FFontQuality;
-  FBit.FontName           := FFontName;
-  FBit.FontStyle          := FFontStyle;
-  FBit.FontHeight         := Trunc(FFontHeight * FScale);
-  FBitCharSize            := FBit.TextSize('M');
-  FIsNeededUpdateCharSize := False;
-end;
+  FBit.FontAntialias  := True;
+  FBit.FontQuality    := FFontQuality;
+  FBit.FontName       := FFontName;
+  FBit.FontStyle      := FFontStyle;
+  FBit.FontHeight     := Trunc(FFontHeight * FScale);
+  FIsNeededUpdateSize := False;
 
-function TReportTable.GetHeight: longint;
-begin
-  Result := Trunc(2*FBorderWidth*FScale);
+  FWidth  := Ceil(2*FBorderWidth*FScale);
+  FHeight := Ceil(2*FBorderWidth*FScale);
   if (FRowCount > 0) and (FColumnCount > 0) then
   begin
-    if FIsNeededUpdateCharSize then UpdateCharSize;
-    Inc(Result, FRowCount * (FBitCharSize.Height + Trunc(FRowSpacer*FScale)));
+    SetLength(CellHeightList, FRowCount);
+    for i := Low(CellHeightList) to High(CellHeightList) do CellHeightList[i] := 0;
+
+    SetLength(CellWidthList, FColumnCount);
+    for i := Low(CellWidthList) to High(CellWidthList) do CellWidthList[i] := 0;
+
+    for i := Low(FTable) to High(FTable) do
+      for j := Low(FTable[i]) to High(FTable[i]) do
+      begin
+        CellSize          := FBit.TextSize(GetItem(i, j));
+        CellHeightList[i] := Max(CellHeightList[i], CellSize.Height);
+        CellWidthList [j] := Max(CellWidthList [j], CellSize.Width );
+      end;
+
+    for i := Low(CellHeightList) to High(CellHeightList) do
+      Inc(FHeight, CellHeightList[i] + Ceil(FRowSpacer*FScale));
+
+    for i := Low(CellWidthList ) to High(CellWidthList ) do
+      Inc(FWidth, CellWidthList[i] + Ceil(FColumnSpacer*FScale));
+
+    CellHeightList := nil;
+    CellWidthList := nil;
   end;
 end;
 
 function TReportTable.GetWidth: longint;
-var
-  i: longint;
-  j: longint;
-  CharCount: array of longint = nil;
 begin
-  Result := Trunc(2*FBorderWidth*FScale);
-  if (FRowCount > 0) and (FColumnCount > 0) then
+  if FIsNeededUpdateSize then
   begin
-    if FIsNeededUpdateCharSize then UpdateCharSize;
-    SetLength(CharCount, FColumnCount);
-    for i := Low(FTable) to High(FTable) do
-      for j := Low(FTable[i]) to High(FTable[i]) do
-      begin
-        CharCount[j] := Max(CharCount[j], Length(GetItem(i, j)));
-      end;
-
-    for i := Low(CharCount) to High(CharCount) do
-    begin
-      Inc(Result, CharCount[i]*FBitCharSize.Width + Trunc(FColumnSpacer*FScale));
-    end;
-    CharCount := nil;
+    UpdateSize;
   end;
+  result := FWidth;
 end;
 
-procedure TReportTable.Draw(ABitmap: TBGRABitmap);
+function TReportTable.GetHeight: longint;
+begin
+  if FIsNeededUpdateSize then
+  begin
+    UpdateSize;
+  end;
+  result := FHeight;
+end;
+
+procedure TReportTable.Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean);
 var
   i: longint;
   j: longint;
@@ -1558,10 +1577,11 @@ var
   xsum, xoffset: single;
   ysum, yoffset: single;
 begin
+  if FIsNeededUpdateSize then UpdateSize;
   if FAutosize then
     FBit.SetSize(GetWidth, GetHeight)
   else
-    FBit.SetSize(ABitmap.Width, ABitmap.Height);
+    FBit.SetSize(AWidth, AHeight);
   FBit.Fill(FBackgroundColor);
 
   SetLength(y, fRowCount    + 1);
@@ -1569,13 +1589,12 @@ begin
   for i := Low(y) to High(y) do y[i] := Trunc(FBorderWidth*FScale);
   for i := Low(x) to High(x) do x[i] := Trunc(FBorderWidth*FScale);
 
-  if FIsNeededUpdateCharSize then UpdateCharSize;
   for i := Low(fTable) to High(fTable) do
   begin
     for j := Low(fTable[i]) to High(fTable[i]) do
     begin
-      x[j + 1] := Max(x[j + 1], Length(GetItem(i, j))*FBitCharSize.Width  + Trunc(FColumnSpacer*FScale));
-      y[i + 1] := Max(y[i + 1],                       FBitCharSize.Height + Trunc(FRowSpacer   *FScale));
+      x[j + 1] := Max(x[j + 1], FBit.TextSize(GetItem(i, j)).Width  + Trunc(FColumnSpacer*FScale));
+      y[i + 1] := Max(y[i + 1], FBit.TextSize(GetItem(i, j)).Height + Trunc(FRowSpacer   *FScale));
     end;
   end;
 
@@ -1648,7 +1667,7 @@ begin
 
   // Draw
   fBit.InvalidateBitmap;
-  fBit.Draw(ABitmap.Canvas, 0, 0, True);
+  fBit.Draw(ACanvas, 0, 0, AOpaque);
 end;
 
 // TSpringDrawing

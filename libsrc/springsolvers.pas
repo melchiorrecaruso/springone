@@ -25,7 +25,8 @@ unit SpringSolvers;
 interface
 
 uses
-  BGRABitmapTypes, Classes, SpringMaterials, SpringTolerances, Math, UtilsBase, SysUtils, ADim;
+  BGRABitmapTypes, Classes, SpringMaterials, SpringTolerances,
+  Math, BaseUtils, SysUtils, ADim;
 
 type
   TCompressionSpringSolver = class

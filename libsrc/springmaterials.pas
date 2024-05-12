@@ -23,7 +23,7 @@ unit SpringMaterials;
 interface
 
 uses
-  ADim, Classes, SysUtils, UtilsBase;
+  ADim, Classes, SysUtils, BaseUtils;
 
 type
   TMaterial = class
