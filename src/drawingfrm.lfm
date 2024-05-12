@@ -1,28 +1,31 @@
 object DrawingForm: TDrawingForm
-  Left = 763
-  Height = 299
-  Top = 355
-  Width = 413
+  Left = 782
+  Height = 200
+  Top = 384
+  Width = 450
   BorderIcons = [biSystemMenu]
   Caption = 'Drawing spring'
-  ClientHeight = 299
-  ClientWidth = 413
+  ClientHeight = 200
+  ClientWidth = 450
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 450
   Position = poDefault
   LCLVersion = '3.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
+  OnResize = FormResize
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 301
+    Left = 340
     Height = 36
-    Top = 251
+    Top = 154
     Width = 100
     Anchors = [akRight, akBottom]
-    BorderSpacing.Right = 12
-    BorderSpacing.Bottom = 12
+    BorderSpacing.Right = 10
+    BorderSpacing.Bottom = 10
     Default = True
     DefaultCaption = True
     Kind = bkOK
@@ -34,13 +37,13 @@ object DrawingForm: TDrawingForm
     AnchorSideRight.Control = OkBtn
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 189
+    Left = 230
     Height = 36
-    Top = 251
+    Top = 154
     Width = 100
     Anchors = [akTop, akRight, akBottom]
-    BorderSpacing.Right = 12
-    BorderSpacing.Bottom = 12
+    BorderSpacing.Right = 10
+    BorderSpacing.Bottom = 10
     Cancel = True
     DefaultCaption = True
     Kind = bkCancel
@@ -48,16 +51,17 @@ object DrawingForm: TDrawingForm
     TabOrder = 1
   end
   object L0Btn: TBitBtn
-    AnchorSideLeft.Control = Owner
+    AnchorSideLeft.Control = SpringLength
     AnchorSideTop.Control = SpringLength
     AnchorSideTop.Side = asrBottom
-    Left = 12
-    Height = 28
+    Left = 110
+    Height = 35
     Top = 66
     Width = 70
-    BorderSpacing.Left = 12
-    BorderSpacing.Top = 12
+    AutoSize = True
+    BorderSpacing.Top = 10
     Caption = 'L0'
+    Constraints.MinWidth = 70
     TabOrder = 2
     OnClick = BtnClick
   end
@@ -66,13 +70,16 @@ object DrawingForm: TDrawingForm
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = SpringLength
     AnchorSideTop.Side = asrBottom
-    Left = 94
-    Height = 28
+    AnchorSideRight.Control = L2Btn
+    Left = 190
+    Height = 35
     Top = 66
     Width = 70
-    BorderSpacing.Left = 12
-    BorderSpacing.Top = 12
+    AutoSize = True
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
     Caption = 'L1'
+    Constraints.MinWidth = 70
     TabOrder = 3
     OnClick = BtnClick
   end
@@ -81,13 +88,16 @@ object DrawingForm: TDrawingForm
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = SpringLength
     AnchorSideTop.Side = asrBottom
-    Left = 176
-    Height = 28
+    AnchorSideRight.Control = LcBtn
+    Left = 270
+    Height = 35
     Top = 66
     Width = 70
-    BorderSpacing.Left = 12
-    BorderSpacing.Top = 12
+    AutoSize = True
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
     Caption = 'L2'
+    Constraints.MinWidth = 70
     TabOrder = 4
     OnClick = BtnClick
   end
@@ -96,13 +106,17 @@ object DrawingForm: TDrawingForm
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = SpringLength
     AnchorSideTop.Side = asrBottom
-    Left = 258
-    Height = 28
+    AnchorSideRight.Control = SpringLength
+    AnchorSideRight.Side = asrBottom
+    Left = 350
+    Height = 35
     Top = 66
     Width = 70
-    BorderSpacing.Left = 12
-    BorderSpacing.Top = 12
+    AutoSize = True
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
     Caption = 'Lc'
+    Constraints.MinWidth = 70
     TabOrder = 5
     OnClick = BtnClick
   end
@@ -112,15 +126,15 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 109
-    Height = 34
+    Left = 110
+    Height = 36
     Top = 20
-    Width = 292
+    Width = 330
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Left = 12
+    BorderSpacing.Left = 10
     BorderSpacing.Top = 20
-    BorderSpacing.Right = 12
+    BorderSpacing.Right = 10
     TabOrder = 6
     OnChange = SpinEditChange
   end
@@ -129,12 +143,12 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Control = SpringLength
     AnchorSideBottom.Control = SpringLength
     AnchorSideBottom.Side = asrBottom
-    Left = 12
-    Height = 34
+    Left = 10
+    Height = 36
     Top = 20
-    Width = 85
+    Width = 90
     Anchors = [akTop, akLeft, akBottom]
-    BorderSpacing.Left = 12
+    BorderSpacing.Left = 10
     Caption = 'Spring length:'
     Layout = tlCenter
     ParentColor = False
@@ -145,13 +159,13 @@ object DrawingForm: TDrawingForm
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = OkBtn
-    Left = 6
+    Left = 5
     Height = 2
-    Top = 237
-    Width = 401
+    Top = 142
+    Width = 440
     Anchors = [akLeft, akRight, akBottom]
-    BorderSpacing.Left = 6
-    BorderSpacing.Right = 6
-    BorderSpacing.Bottom = 12
+    BorderSpacing.Left = 5
+    BorderSpacing.Right = 5
+    BorderSpacing.Bottom = 10
   end
 end

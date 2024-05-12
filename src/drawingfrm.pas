@@ -47,6 +47,7 @@ type
     procedure BtnClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormResize(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
   private
 
@@ -78,6 +79,19 @@ begin
   DrawingForm.Width  := ClientFile.ReadInteger('DrawingForm', 'Width',  DrawingForm.Width);
 
   Clear;
+end;
+
+procedure TDrawingForm.FormResize(Sender: TObject);
+begin
+  L0Btn.Constraints.MinWidth := (SpringLength.Width - 30) div 4;
+  L1Btn.Constraints.MinWidth := L0Btn.Constraints.MinWidth;
+  L2Btn.Constraints.MinWidth := L0Btn.Constraints.MinWidth;
+  LcBtn.Constraints.MinWidth := L0Btn.Constraints.MinWidth;
+
+  L0Btn.Constraints.MaxWidth := L0Btn.Constraints.MinWidth;
+  L1Btn.Constraints.MaxWidth := L0Btn.Constraints.MinWidth;
+  L2Btn.Constraints.MaxWidth := L0Btn.Constraints.MinWidth;
+  LcBtn.Constraints.MaxWidth := L0Btn.Constraints.MinWidth;
 end;
 
 procedure TDrawingForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);

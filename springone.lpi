@@ -708,10 +708,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainFrm"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="12"/>
         <TopLine Value="1151"/>
-        <CursorPos X="5" Y="1181"/>
+        <CursorPos X="29" Y="1169"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -768,11 +767,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DrawingFrm"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="4"/>
-        <CursorPos X="17" Y="24"/>
+        <TopLine Value="66"/>
+        <CursorPos Y="86"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\textfrm.pas"/>
@@ -1275,7 +1276,6 @@
         <EditorIndex Value="13"/>
         <TopLine Value="15"/>
         <CursorPos X="32" Y="1774"/>
-        <FoldState Value=" T3)L0NT"/>
         <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1524,7 +1524,7 @@
         <UnitName Value="Setting"/>
         <EditorIndex Value="9"/>
         <CursorPos X="25" Y="14"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="41"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1561,18 +1561,6 @@
       <Define1 Value="MODULE1"/>
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="libsrc\graphbase.pas"/>
-        <Caret Line="266" Column="19" TopLine="239"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\graphbase.pas"/>
-        <Caret Line="1567" Column="34" TopLine="1552"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\graphbase.pas"/>
-        <Caret Line="266" Column="19" TopLine="233"/>
-      </Position>
       <Position>
         <Filename Value="src\compozer.pas"/>
         <Caret Line="51" Column="25" TopLine="16"/>
@@ -1680,6 +1668,18 @@
       <Position>
         <Filename Value="src\mainfrm.pas"/>
         <Caret Line="172" Column="16" TopLine="144"/>
+      </Position>
+      <Position>
+        <Filename Value="src\drawingfrm.pas"/>
+        <Caret Line="24" Column="17" TopLine="4"/>
+      </Position>
+      <Position>
+        <Filename Value="src\drawingfrm.pas"/>
+        <Caret Line="88" Column="38" TopLine="74"/>
+      </Position>
+      <Position>
+        <Filename Value="src\drawingfrm.pas"/>
+        <Caret Line="81" Column="90" TopLine="66"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>
