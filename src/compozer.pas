@@ -26,7 +26,7 @@ unit Compozer;
 interface
 
 uses
-  ADim, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, GraphBase,
+  ADim, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, basegraphics,
   Graphics, IniFiles, LibLink, SysUtils, Dialogs;
 
 type
@@ -77,7 +77,7 @@ type
 implementation
 
 uses
-  springmaterials, springtolerances, UtilsBase;
+  springmaterials, springtolerances, baseutils;
 
 // TCompozer //
 
@@ -1385,14 +1385,14 @@ begin
   // 0-Quick-1 List
   Quick1List := CreateQuick1List1(aScreenScale);
   Bit[0].SetSize(Quick1List.Width, Quick1List.Height);
-  Quick1List.Draw(Bit[0]);
+  Quick1List.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
   Quick1List.Destroy;
 
   // 1-Quick-2 List
   Quick1List := CreateQuick1List2(aScreenScale);
   Quick1List.Autosize := False;
   Bit[1].SetSize(Quick1List.Width, aScreen.Height - Bit[0].Height);
-  Quick1List.Draw(Bit[1]);
+  Quick1List.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
   Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[1].Width, Bit[0].Height, False);
   Quick1List.Destroy;
 
@@ -1414,7 +1414,7 @@ begin
   Quick1Table := CreateQuick1Table(aScreenScale);
   Quick1Table.Autosize := False;
   Bit[4].SetSize(Bit[1].Width + Bit[3].Width - Bit[0].Width, Quick1Table.Height);
-  Quick1Table.Draw(Bit[4]);
+  Quick1Table.Draw(Bit[4].Canvas, Bit[4].Width, Bit[4].Height);
   Bit[4].Draw(aScreen.Canvas, aScreen.Width - Bit[4].Width, 0, True);
   Quick1Table.Destroy;
 
@@ -1422,7 +1422,7 @@ begin
   QualityTable := CreateQualityTable(aScreenScale);
   QualityTable.Autosize := False;
   Bit[5].SetSize(QualityTable.Width, Bit[0].Height - Bit[4].Height);
-  QualityTable.Draw(Bit[5]);
+  QualityTable.Draw(Bit[5].Canvas, Bit[5].Width, Bit[5].Height);
   Bit[5].Draw(aScreen.Canvas, aScreen.Width - Bit[4].Width, Bit[4].Height, True);
   QualityTable.Destroy;
 
@@ -1430,7 +1430,7 @@ begin
   MessageList := CreateMessageList(aScreenScale);
   MessageList.Autosize := False;
   Bit[6].SetSize(Bit[4].Width - Bit[5].Width, Bit[5].Height);
-  MessageList.Draw(Bit[6]);
+  MessageList.Draw(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
   Bit[6].Draw(aScreen.Canvas, aScreen.Width - Bit[6].Width, Bit[4].Height, True);
   MessageList.Destroy;
 
@@ -1740,7 +1740,7 @@ begin
 
   // 0-List
   Bit[0].SetSize(QuickXList.Width, QuickXList.Height);
-  QuickXList.Draw(Bit[0]);
+  QuickXList.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
   Bit[0].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, 0, True);
   QuickXList.Destroy;
 
@@ -1748,7 +1748,7 @@ begin
   MessageList := CreateMessageList(aScreenScale);
   MessageList.Autosize := False;
   Bit[1].SetSize(Bit[0].Width, aScreen.Height - Bit[0].Height);
-  MessageList.Draw(Bit[1]);
+  MessageList.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
   Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, Bit[0].Height, True);
   MessageList.Destroy;
 
@@ -1784,7 +1784,7 @@ var
   Table: TReportTable;
 begin
   Table := CreateMessageList(aScreenScale);
-  Table.Draw(aScreen);
+  Table.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
   Table.Destroy;
 end;
 

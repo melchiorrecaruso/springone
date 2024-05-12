@@ -1,7 +1,7 @@
 object ApplicationForm1: TApplicationForm1
   Left = 524
   Height = 334
-  Top = 483
+  Top = 397
   Width = 611
   BorderIcons = [biSystemMenu]
   Caption = 'Analisys'

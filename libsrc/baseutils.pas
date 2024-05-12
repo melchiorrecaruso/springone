@@ -18,7 +18,7 @@
   Boston, MA 02110-1335, USA.
 }
 
-unit UtilsBase;
+unit BaseUtils;
 
 {$mode ObjFPC}{$H+}
 

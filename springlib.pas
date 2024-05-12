@@ -8,7 +8,7 @@ unit SpringLib;
 interface
 
 uses
-  springmaterials, springsolvers, springtolerances, GraphBase, UtilsBase;
+  SpringMaterials, SpringSolvers, SpringTolerances, basegraphics, baseutils;
 
 implementation
 

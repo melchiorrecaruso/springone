@@ -28,7 +28,7 @@ interface
 uses
   BGRABitmap, BGRAShape, BGRASVG, BGRATextFX, BGRABitmapTypes, BGRAUnits,
   BGRAVirtualScreen, Classes, Controls, Dialogs, ExtCtrls, ExtDlgs, Forms,
-  GraphBase, SpringMaterials, SpringSolvers, SpringTolerances, Graphics, IniFiles,
+  basegraphics, SpringMaterials, SpringSolvers, SpringTolerances, Graphics, IniFiles,
   LResources, Math, Menus, PrintersDlgs, Spin, StdCtrls, ActnList, SysUtils;
 
 type
@@ -203,7 +203,7 @@ uses
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
   LCLIntf, LCLType, LibLink, MaterialFrm, Printers, ProductionFrm,
-  QualityFrm, ReportFrm, Setting, UtilsBase;
+  QualityFrm, ReportFrm, Setting, baseutils;
 
 
 { Solve routine }

@@ -25,7 +25,7 @@ unit SpringTolerances;
 interface
 
 uses
-  BGRABitmapTypes, Classes, Math, SysUtils, UtilsBase, ADim;
+  BGRABitmapTypes, Classes, Math, SysUtils, BaseUtils, ADim;
 
 type
   TQualityGrade   = (QualityGrade1, QualityGrade2, QualityGrade3);
