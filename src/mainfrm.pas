@@ -920,6 +920,7 @@ begin
     ScreenImage.SetSize(
       Trunc(ScreenImageWidth *ScreenScale),
       Trunc(ScreenImageHeight*ScreenScale));
+    ScreenImage.FillTransparent;
     PaintTo(ScreenImage, ScreenScale, ClientFile);
   end else
   begin
