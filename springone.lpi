@@ -31,7 +31,7 @@
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Melchiorre Caruso" FileDescription="Helical Compression Spring Designer" ProductName="SpringONE"/>
     </VersionInfo>
-    <BuildModes Active="Debug">
+    <BuildModes Active="Release">
       <Item Name="Debug" Default="True"/>
       <Item Name="Release">
         <CompilerOptions>
@@ -47,16 +47,19 @@
             <UnitOutputDirectory Value="build\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
             <Optimizations>
-              <OptimizationLevel Value="0"/>
+              <OptimizationLevel Value="2"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
             <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseLineInfoUnit Value="False"/>
-              <UseHeaptrc Value="True"/>
             </Debugging>
+            <LinkSmart Value="True"/>
             <Options>
               <Win32>
                 <GraphicApplication Value="True"/>
@@ -708,9 +711,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainFrm"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="13"/>
-        <TopLine Value="1151"/>
-        <CursorPos X="29" Y="1169"/>
+        <TopLine Value="878"/>
+        <CursorPos X="33" Y="923"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -965,9 +969,8 @@
         <Filename Value="src\compozer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Compozer"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="11"/>
-        <TopLine Value="1369"/>
+        <TopLine Value="1380"/>
         <CursorPos X="23" Y="1415"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -1278,8 +1281,7 @@
         <UnitName Value="BaseGraphics"/>
         <EditorIndex Value="12"/>
         <TopLine Value="1491"/>
-        <CursorPos X="60" Y="1524"/>
-        <FoldState Value=" T3%803313 PUiT0?"/>
+        <CursorPos X="42" Y="1524"/>
         <UsageCount Value="70"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1613,10 +1615,6 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <OtherDefines Count="2">
-      <Define0 Value="MODULE3"/>
-      <Define1 Value="MODULE1"/>
-    </OtherDefines>
     <JumpHistory HistoryIndex="23">
       <Position>
         <Filename Value="libsrc\basegraphics.pas"/>
