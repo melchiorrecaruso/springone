@@ -172,6 +172,8 @@ type
     ScreenColor: TBGRAPixel;
     ScreenScale: double;
     SessionFileName: string;
+
+    procedure SetSessionFileName(const AFileName: string);
   public
     function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSpringDrawing;
     function CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
@@ -322,7 +324,7 @@ begin
   MoveY := 0;
   MouseIsDown := False;
   ScreenScale := 1.0;
-  SessionFileName := '';
+  SetSessionFileName('');
 end;
 
 procedure TMainForm.ClearAll;
@@ -476,6 +478,15 @@ end;
 
 // Menu File
 
+procedure TMainForm.SetSessionFileName(const AFileName: string);
+begin
+  SessionFileName := AFileName;
+  if Length(SessionFileName) > 0 then
+    Caption := ExtractFileName(SessionFileName) + ' - ' + ApplicationVer
+  else
+    Caption := ApplicationVer;
+end;
+
 procedure TMainForm.NewMenuItemClick(Sender: TObject);
 begin
   ClearAll;
@@ -490,7 +501,7 @@ begin
   {$IFDEF MODULE3} OpenDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
-    SessionFileName := OpenDialog.FileName;
+    SetSessionFileName(OpenDialog.FileName);
     SessionIniFile  := TIniFile.Create(SessionFileName,
       [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
 
@@ -526,8 +537,7 @@ begin
   {$IFDEF MODULE3} SaveDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|All files (*.*)|*.*|;'; {$ENDIF}
   if SaveDialog.Execute then
   begin
-    SessionFileName := SaveDialog.FileName;
-
+    SetSessionFileName(SaveDialog.FileName);
     SaveMenuItemClick(Sender);
   end;
 end;
@@ -865,7 +875,9 @@ end;
 procedure TMainForm.ExportReportMenuItemClick(Sender: TObject);
 begin
   Solve();
-  SaveDialog.Filter := 'Text file (*.txt)|*.txt|All files (*.*)|*.*|;';
+  SaveDialog.Filter     := 'Text file (*.txt)|*.txt|All files (*.*)|*.*|;';
+  SaveDialog.InitialDir := ExtractFileDir(SessionFileName);
+  SaveDialog.FileName   := ExtractFileName(ChangeFileExt(SessionFileName, '.txt'));
   if SaveDialog.Execute then
   begin
     ReportForm.CreateReport;
@@ -879,7 +891,9 @@ var
   SVG: TBGRASvg;
 begin
   Solve();
-  SaveDialog.Filter := 'Svg file (*.svg)|*.svg|All files (*.*)|*.*|;';
+  SaveDialog.Filter     := 'Svg file (*.svg)|*.svg|All files (*.*)|*.*|;';
+  SaveDialog.InitialDir := ExtractFileDir(SessionFileName);
+  SaveDialog.FileName   := ExtractFileName(ChangeFileExt(SessionFileName, '.svg'));
   if SaveDialog.Execute then
   begin
     SVG := TBGRASVG.Create;

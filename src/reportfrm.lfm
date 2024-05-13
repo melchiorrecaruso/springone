@@ -1,11 +1,12 @@
 object ReportForm: TReportForm
-  Left = 716
-  Height = 532
-  Top = 199
-  Width = 650
+  Left = 404
+  Height = 438
+  Top = 195
+  Width = 535
   Caption = 'Report'
-  ClientHeight = 532
-  ClientWidth = 650
+  ClientHeight = 438
+  ClientWidth = 535
+  DesignTimePPI = 79
   Position = poDefault
   LCLVersion = '3.99.0.0'
   OnClose = FormClose
@@ -17,11 +18,11 @@ object ReportForm: TReportForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = CloseBtn
     Left = 0
-    Height = 472
+    Height = 388
     Top = 0
-    Width = 650
+    Width = 535
     Anchors = [akTop, akLeft, akRight, akBottom]
-    BorderSpacing.Bottom = 12
+    BorderSpacing.Bottom = 10
     Font.Name = 'Courier New'
     ParentFont = False
     ReadOnly = True
@@ -34,13 +35,13 @@ object ReportForm: TReportForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 538
-    Height = 36
-    Top = 484
-    Width = 100
+    Left = 443
+    Height = 30
+    Top = 398
+    Width = 82
     Anchors = [akRight, akBottom]
-    BorderSpacing.Right = 12
-    BorderSpacing.Bottom = 12
+    BorderSpacing.Right = 10
+    BorderSpacing.Bottom = 10
     DefaultCaption = True
     Kind = bkClose
     ModalResult = 11
@@ -51,18 +52,18 @@ object ReportForm: TReportForm
     AnchorSideRight.Control = CloseBtn
     AnchorSideBottom.Control = CloseBtn
     AnchorSideBottom.Side = asrBottom
-    Left = 428
-    Height = 36
-    Top = 484
-    Width = 100
+    Left = 353
+    Height = 30
+    Top = 398
+    Width = 82
     Anchors = [akTop, akRight, akBottom]
-    BorderSpacing.Right = 10
+    BorderSpacing.Right = 8
     Caption = 'Print'
     TabOrder = 2
     OnClick = PrintBtnClick
   end
   object PrintDialog: TPrintDialog
-    Left = 40
-    Top = 472
+    Left = 33
+    Top = 388
   end
 end

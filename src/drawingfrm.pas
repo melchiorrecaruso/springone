@@ -112,7 +112,7 @@ end;
 
 procedure TDrawingForm.Clear;
 begin
-
+  // nothing to do
 end;
 
 procedure TDrawingForm.BtnClick(Sender: TObject);
@@ -127,12 +127,12 @@ end;
 
 procedure TDrawingForm.Load(IniFile: TIniFile);
 begin
-
+  // nothing to do
 end;
 
 procedure TDrawingForm.Save(IniFile: TIniFile);
 begin
-
+  // nothing to do
 end;
 
 end.

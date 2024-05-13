@@ -41,12 +41,9 @@ uses
 {$R *.res}
 
 begin
-  ApplicationName := 'SpringONE';
-  ApplicationVer  := 'SpringONE v0.44';
-
   OpeSettingFile;
   RequireDerivedFormResource:=True;
-  Application.Title:='SpringOne';
+  Application.Title:=ApplicationName;
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
