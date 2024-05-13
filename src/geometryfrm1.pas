@@ -100,7 +100,7 @@ end;
 
 procedure TGeometryForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if Windowstate <> wsMaximized then
+  if Windowstate = wsNormal then
   begin
     ClientFile.WriteInteger('GeometryForm1', 'Top',    GeometryForm1.Top);
     ClientFile.WriteInteger('GeometryForm1', 'Left',   GeometryForm1.Left);

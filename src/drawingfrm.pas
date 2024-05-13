@@ -81,6 +81,17 @@ begin
   Clear;
 end;
 
+procedure TDrawingForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate = wsNormal then
+  begin
+    ClientFile.WriteInteger('DrawingForm', 'Top',    DrawingForm.Top);
+    ClientFile.WriteInteger('DrawingForm', 'Left',   DrawingForm.Left);
+    ClientFile.WriteInteger('DrawingForm', 'Height', DrawingForm.Height);
+    ClientFile.WriteInteger('DrawingForm', 'Width',  DrawingForm.Width);
+  end;
+end;
+
 procedure TDrawingForm.FormResize(Sender: TObject);
 begin
   L0Btn.Constraints.MinWidth := (SpringLength.Width - 30) div 4;
@@ -92,17 +103,6 @@ begin
   L1Btn.Constraints.MaxWidth := L0Btn.Constraints.MinWidth;
   L2Btn.Constraints.MaxWidth := L0Btn.Constraints.MinWidth;
   LcBtn.Constraints.MaxWidth := L0Btn.Constraints.MinWidth;
-end;
-
-procedure TDrawingForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  if Windowstate <> wsMaximized then
-  begin
-    ClientFile.WriteInteger('DrawingForm', 'Top',    DrawingForm.Top);
-    ClientFile.WriteInteger('DrawingForm', 'Left',   DrawingForm.Left);
-    ClientFile.WriteInteger('DrawingForm', 'Height', DrawingForm.Height);
-    ClientFile.WriteInteger('DrawingForm', 'Width',  DrawingForm.Width);
-  end;
 end;
 
 procedure TDrawingForm.SpinEditChange(Sender: TObject);

@@ -119,9 +119,7 @@ type
     DocsMenuItem: TMenuItem;
     MenuItem9: TMenuItem;
 
-
     VirtualScreen: TBGRAVirtualScreen;
-
 
     procedure ExportMenuItemClick(Sender: TObject);
     procedure ExportProductionMenuItemClick(Sender: TObject);
@@ -300,7 +298,7 @@ end;
 
 procedure TMainForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if Windowstate <> wsMaximized then
+  if Windowstate = wsNormal then
   begin
     ClientFile.WriteInteger('MainForm', 'Top',    MainForm.Top);
     ClientFile.WriteInteger('MainForm', 'Left',   MainForm.Left);

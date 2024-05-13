@@ -55,6 +55,7 @@ type
     YoungModulusLabel: TLabel;
     YoungModulusUnit: TComboBox;
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);    
     procedure Change(Sender: TObject);
     procedure ApplyBtnClick(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
@@ -86,7 +87,8 @@ uses
   ProductionFrm,
   QualityFrm,
   MainFrm,
-  baseutils;
+  Setting,
+  BaseUtils;
 
 // TMaterialForm
 
@@ -95,6 +97,11 @@ var
   i: longint;
   m: string;
 begin
+  MaterialForm.Top    := ClientFile.ReadInteger('MaterialForm', 'Top',    MaterialForm.Top);
+  MaterialForm.Left   := ClientFile.ReadInteger('MaterialForm', 'Left',   MaterialForm.Left);
+  MaterialForm.Height := ClientFile.ReadInteger('MaterialForm', 'Height', MaterialForm.Height);
+  MaterialForm.Width  := ClientFile.ReadInteger('MaterialForm', 'Width',  MaterialForm.Width);
+
   Clear;
   // Load materials from database
   Material.Items.Clear;
@@ -110,6 +117,17 @@ begin
   end;
   Material.ItemIndex := 1;
   Change(Sender);
+end;
+
+procedure TMaterialForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if WindowState = wsNormal then
+  begin
+    ClientFile.WriteInteger('MaterialForm', 'Top',    MaterialForm.Top);
+    ClientFile.WriteInteger('MaterialForm', 'Left',   MaterialForm.Left);
+    ClientFile.WriteInteger('MaterialForm', 'Height', MaterialForm.Height);
+    ClientFile.WriteInteger('MaterialForm', 'Width',  MaterialForm.Width);
+  end;
 end;
 
 procedure TMaterialForm.Change(Sender: TObject);

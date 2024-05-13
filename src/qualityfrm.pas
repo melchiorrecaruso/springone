@@ -78,7 +78,7 @@ uses
   SpringTolerances,
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
-  baseutils, Setting;
+  BaseUtils, Setting;
 
 // TQualityForm
 
@@ -94,7 +94,7 @@ end;
 
 procedure TQualityForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if Windowstate <> wsMaximized then
+  if Windowstate = wsNormal then
   begin
     ClientFile.WriteInteger('QualityForm', 'Top',    QualityForm.Top);
     ClientFile.WriteInteger('QualityForm', 'Left',   QualityForm.Left);
