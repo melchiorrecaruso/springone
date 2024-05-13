@@ -257,6 +257,10 @@ object MainForm: TMainForm
           OnClick = CustomSectionMenuItemClick
         end
       end
+      object MessagesMenuItem: TMenuItem
+        Caption = 'Messages'
+        OnClick = ViewMenuItemClick
+      end
     end
     object DocsMenuItem: TMenuItem
       Caption = '&Documents'
