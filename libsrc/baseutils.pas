@@ -80,11 +80,10 @@ const
   DefaultDigits    = 5;
   DefaultPrecision = 5;
 
+  ApplicationName  = 'SpringONE' ;
+  ApplicationVer   = 'SpringONE 0.44';
 
 var
-  ApplicationName: string;
-  ApplicationVer:  string;
-
   ErrorMessage:    TStringList;
   WarningMessage:  TStringList;
 
