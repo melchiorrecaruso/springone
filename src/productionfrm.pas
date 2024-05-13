@@ -58,6 +58,7 @@ type
     LengthLsLB: TLabel;
     OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure SpinEditChange(Sender: TObject);
   private
 
@@ -78,13 +79,29 @@ implementation
 {$R *.lfm}
 
 uses
-  baseutils;
+  BaseUtils, Setting;
 
 // TProductionForm
 
 procedure TProductionForm.FormCreate(Sender: TObject);
 begin
+  ProductionForm.Top    := ClientFile.ReadInteger('ProductionForm', 'Top',    ProductionForm.Top);
+  ProductionForm.Left   := ClientFile.ReadInteger('ProductionForm', 'Left',   ProductionForm.Left);
+  ProductionForm.Height := ClientFile.ReadInteger('ProductionForm', 'Height', ProductionForm.Height);
+  ProductionForm.Width  := ClientFile.ReadInteger('ProductionForm', 'Width',  ProductionForm.Width);
+
   Clear;
+end;
+
+procedure TProductionForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if WindowState = wsNormal then
+  begin
+    ClientFile.WriteInteger('ProductionForm', 'Top',    ProductionForm.Top);
+    ClientFile.WriteInteger('ProductionForm', 'Left',   ProductionForm.Left);
+    ClientFile.WriteInteger('ProductionForm', 'Height', ProductionForm.Height);
+    ClientFile.WriteInteger('ProductionForm', 'Width',  ProductionForm.Width);
+  end;
 end;
 
 procedure TProductionForm.SpinEditChange(Sender: TObject);

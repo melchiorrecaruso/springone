@@ -340,7 +340,7 @@ end;
 
 procedure TReportForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if Windowstate <> wsMaximized then
+  if Windowstate = wsNormal then
   begin
     ClientFile.WriteInteger('ReportForm', 'Top',    ReportForm.Top);
     ClientFile.WriteInteger('ReportForm', 'Left',   ReportForm.Left);

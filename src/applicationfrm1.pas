@@ -83,7 +83,7 @@ end;
 
 procedure TApplicationForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if Windowstate <> wsMaximized then
+  if Windowstate = wsNormal then
   begin
     ClientFile.WriteInteger('ApplicationForm1', 'Top',    ApplicationForm1.Top);
     ClientFile.WriteInteger('ApplicationForm1', 'Left',   ApplicationForm1.Left);

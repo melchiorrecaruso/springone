@@ -1250,9 +1250,6 @@ begin
 
   FBit.InvalidateBitmap;
   FBit.Draw(aCanvas, 0, 0, AOpaque);
-  {$ifopt D+}
-  DEBUG('Draw Chart -> ', MilliSecondsBetween(Now, Start).ToString);
-  {$endif}
 end;
 
 procedure TChart.SetXMaxF(Value: single);

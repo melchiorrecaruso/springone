@@ -26,7 +26,7 @@ unit Compozer;
 interface
 
 uses
-  ADim, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, basegraphics,
+  ADim, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, BaseGraphics,
   Graphics, IniFiles, LibLink, SysUtils, Dialogs;
 
 type

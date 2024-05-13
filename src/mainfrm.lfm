@@ -1,13 +1,13 @@
 object MainForm: TMainForm
-  Left = 666
-  Height = 448
-  Top = 204
-  Width = 627
+  Left = 447
+  Height = 412
+  Top = 195
+  Width = 576
   Caption = 'Spring ONE'
-  ClientHeight = 448
-  ClientWidth = 627
+  ClientHeight = 412
+  ClientWidth = 576
   Color = clForm
-  DesignTimePPI = 86
+  DesignTimePPI = 79
   Menu = MainMenu
   Position = poDefault
   LCLVersion = '3.99.0.0'
@@ -16,15 +16,15 @@ object MainForm: TMainForm
   OnDestroy = FormDestroy
   object VirtualScreen: TBGRAVirtualScreen
     Left = 0
-    Height = 448
+    Height = 412
     Top = 0
-    Width = 627
+    Width = 576
     OnRedraw = VirtualScreenRedraw
     Align = alClient
     Alignment = taCenter
     Anchors = []
-    ClientHeight = 448
-    ClientWidth = 627
+    ClientHeight = 412
+    ClientWidth = 576
     Color = clNone
     ParentColor = False
     TabOrder = 0
@@ -34,10 +34,10 @@ object MainForm: TMainForm
     OnMouseUp = VirtualScreenMouseUp
     OnResize = VirtualScreenResize
     object Selection: TBGRAShape
-      Left = 29
-      Height = 36
-      Top = 86
-      Width = 36
+      Left = 27
+      Height = 33
+      Top = 79
+      Width = 33
       Angle = 45
       BorderColor = clRed
       BorderGradient.StartColor = clWhite
@@ -62,8 +62,8 @@ object MainForm: TMainForm
     end
   end
   object MainMenu: TMainMenu
-    Left = 36
-    Top = 29
+    Left = 33
+    Top = 27
     object FileMenuItem: TMenuItem
       Caption = '&File'
       object NewMenuItem: TMenuItem
@@ -257,6 +257,10 @@ object MainForm: TMainForm
           OnClick = CustomSectionMenuItemClick
         end
       end
+      object MessagesMenuItem: TMenuItem
+        Caption = 'Messages'
+        OnClick = ViewMenuItemClick
+      end
     end
     object DocsMenuItem: TMenuItem
       Caption = '&Documents'
@@ -300,24 +304,24 @@ object MainForm: TMainForm
   end
   object SaveDialog: TSaveDialog
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
-    Left = 201
-    Top = 29
+    Left = 185
+    Top = 27
   end
   object OpenDialog: TOpenDialog
     Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
-    Left = 122
-    Top = 29
+    Left = 112
+    Top = 27
   end
   object PrintDialog: TPrintDialog
-    Left = 122
-    Top = 86
+    Left = 112
+    Top = 79
   end
   object SavePictureDialog: TSavePictureDialog
-    Left = 287
-    Top = 29
+    Left = 264
+    Top = 27
   end
   object PageSetupDialog: TPageSetupDialog
-    Left = 215
-    Top = 86
+    Left = 198
+    Top = 79
   end
 end

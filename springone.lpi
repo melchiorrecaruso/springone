@@ -105,8 +105,8 @@
         <Filename Value="springone.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SpringONE"/>
-        <TopLine Value="7"/>
-        <CursorPos X="13" Y="39"/>
+        <TopLine Value="28"/>
+        <CursorPos X="37" Y="46"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -697,12 +697,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="AboutFrm"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="30"/>
-        <CursorPos X="11" Y="59"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="64"/>
+        <CursorPos X="37" Y="78"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\mainfrm.pas"/>
@@ -711,10 +709,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainFrm"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="13"/>
-        <TopLine Value="878"/>
-        <CursorPos X="33" Y="923"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="292"/>
+        <CursorPos X="38" Y="301"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -733,12 +730,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ReportFrm"/>
-        <EditorIndex Value="15"/>
-        <TopLine Value="38"/>
-        <CursorPos X="15" Y="68"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="319"/>
+        <CursorPos X="3" Y="343"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\Log.pas"/>
@@ -761,11 +756,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ApplicationFrm1"/>
-        <EditorIndex Value="2"/>
-        <CursorPos X="17" Y="24"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="67"/>
+        <CursorPos X="28" Y="86"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\drawingfrm.pas"/>
@@ -774,12 +768,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DrawingFrm"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="66"/>
-        <CursorPos Y="86"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="70"/>
+        <CursorPos X="6" Y="106"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\textfrm.pas"/>
@@ -788,10 +780,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="TextFrm"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="75" Y="17"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="70"/>
+        <CursorPos X="20" Y="82"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\EN10270.pas"/>
@@ -822,11 +814,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GeometryFrm1"/>
-        <EditorIndex Value="5"/>
-        <CursorPos X="3"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="81"/>
+        <CursorPos X="28" Y="103"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\materialfrm.pas"/>
@@ -835,10 +826,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MaterialFrm"/>
-        <EditorIndex Value="6"/>
-        <CursorPos X="3"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="105"/>
+        <CursorPos X="9" Y="105"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\productionfrm.pas"/>
@@ -847,10 +838,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ProductionFrm"/>
-        <EditorIndex Value="7"/>
-        <CursorPos X="3"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="79"/>
+        <CursorPos X="33" Y="92"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\qualityfrm.pas"/>
@@ -859,8 +850,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="QualityFrm"/>
-        <EditorIndex Value="10"/>
-        <CursorPos X="17" Y="24"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="43"/>
+        <CursorPos X="43" Y="56"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -917,7 +910,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GeometryFrm3"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="26" Y="3"/>
+        <TopLine Value="102"/>
+        <CursorPos X="53" Y="103"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -969,11 +963,10 @@
         <Filename Value="src\compozer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Compozer"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="1380"/>
-        <CursorPos X="23" Y="1415"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1750"/>
+        <CursorPos X="3" Y="1786"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\SpringLIB\src\GraphBase.pas"/>
@@ -1124,7 +1117,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ApplicationFrm3"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="26" Y="3"/>
+        <TopLine Value="67"/>
+        <CursorPos X="28" Y="86"/>
         <UsageCount Value="200"/>
       </Unit>
       <Unit>
@@ -1160,10 +1154,9 @@
         <Filename Value="src\liblink.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LibLink"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="17" Y="24"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="src\AboutFrm.lfm"/>
@@ -1234,11 +1227,10 @@
       <Unit>
         <Filename Value="libsrc\baseutils.pas"/>
         <UnitName Value="BaseUtils"/>
-        <EditorIndex Value="14"/>
-        <TopLine Value="61"/>
-        <CursorPos X="3" Y="111"/>
-        <UsageCount Value="56"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="65"/>
+        <CursorPos X="5" Y="72"/>
+        <UsageCount Value="59"/>
       </Unit>
       <Unit>
         <Filename Value="..\ADimPas\adim.pas"/>
@@ -1279,11 +1271,10 @@
       <Unit>
         <Filename Value="libsrc\basegraphics.pas"/>
         <UnitName Value="BaseGraphics"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="1491"/>
-        <CursorPos X="42" Y="1524"/>
-        <UsageCount Value="70"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="30"/>
+        <CursorPos X="52" Y="30"/>
+        <UsageCount Value="73"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
@@ -1528,10 +1519,9 @@
         <Filename Value="src\setting.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Setting"/>
-        <EditorIndex Value="9"/>
-        <CursorPos X="25" Y="14"/>
-        <UsageCount Value="46"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="6" Y="28"/>
+        <UsageCount Value="54"/>
       </Unit>
       <Unit>
         <Filename Value="src\geometryfrm1.lfm"/>
@@ -1610,107 +1600,83 @@
         <Filename Value="..\..\..\fpcdeluxe\fpcsrc\packages\rtl-objpas\src\inc\system.uitypes.pp"/>
         <UnitName Value="System.UITypes"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="547"/>
-        <CursorPos X="3" Y="575"/>
+        <TopLine Value="478"/>
+        <CursorPos X="3" Y="496"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\fpcdeluxe\fpcsrc\packages\fcl-base\src\inifiles.pp"/>
+        <UnitName Value="IniFiles"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1022"/>
+        <CursorPos X="3" Y="1024"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\fpcdeluxe\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="3" Y="64"/>
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="23">
+    <JumpHistory HistoryIndex="13">
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1462" TopLine="1440"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="133" Column="24" TopLine="114"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1529" Column="19" TopLine="1501"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="935" Column="61" TopLine="919"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1530" Column="14" TopLine="1500"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="183" Column="22" TopLine="164"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1514" Column="19" TopLine="1503"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1033" Column="16" TopLine="1010"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1513" Column="15" TopLine="1502"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1036" Column="11" TopLine="1018"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1524" Column="62" TopLine="1507"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="220" Column="3" TopLine="197"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1531" Column="19" TopLine="1514"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="218" Column="20" TopLine="197"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1534" Column="77" TopLine="1508"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="303" Column="21" TopLine="285"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1526" Column="3" TopLine="1505"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="218" Column="21" TopLine="200"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1514" Column="54" TopLine="1479"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="220" Column="20" TopLine="200"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1532" Column="82" TopLine="1490"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="305" Column="28" TopLine="287"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1537" Column="33" TopLine="1482"/>
+        <Filename Value="springone.lpr"/>
+        <Caret Line="46" Column="37" TopLine="28"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1538" Column="68" TopLine="1509"/>
+        <Filename Value="src\qualityfrm.pas"/>
+        <Caret Line="94" TopLine="73"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1541" Column="26" TopLine="1513"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1521" Column="34" TopLine="1471"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1523" Column="19" TopLine="1491"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1514" Column="45" TopLine="1491"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1523" Column="30" TopLine="1491"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1523" Column="25" TopLine="1491"/>
-      </Position>
-      <Position>
-        <Filename Value="src\textfrm.pas"/>
-        <Caret Line="17" Column="75"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1523" Column="24" TopLine="1491"/>
-      </Position>
-      <Position>
-        <Filename Value="src\textfrm.pas"/>
-        <Caret Line="17" Column="75"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1523" TopLine="1490"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="267" Column="19" TopLine="240"/>
+        <Filename Value="src\qualityfrm.pas"/>
+        <Caret Line="57" Column="5" TopLine="35"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>

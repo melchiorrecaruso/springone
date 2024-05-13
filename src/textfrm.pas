@@ -50,6 +50,7 @@ type
     CancelBtn: TBitBtn;
     OkBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
   private
 
   public
@@ -67,11 +68,30 @@ implementation
 
 {$R *.lfm}
 
+uses
+  Setting;
+
 // TTextForm
 
 procedure TTextForm.FormCreate(Sender: TObject);
 begin
+  TextForm.Top    := ClientFile.ReadInteger('TextForm', 'Top',    TextForm.Top);
+  TextForm.Left   := ClientFile.ReadInteger('TextForm', 'Left',   TextForm.Left);
+  TextForm.Height := ClientFile.ReadInteger('TextForm', 'Height', TextForm.Height);
+  TextForm.Width  := ClientFile.ReadInteger('TextForm', 'Width',  TextForm.Width);
+
   Clear;
+end;
+
+procedure TTextForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if Windowstate = wsNormal then
+  begin
+    ClientFile.WriteInteger('TextForm', 'Top',    TextForm.Top);
+    ClientFile.WriteInteger('TextForm', 'Left',   TextForm.Left);
+    ClientFile.WriteInteger('TextForm', 'Height', TextForm.Height);
+    ClientFile.WriteInteger('TextForm', 'Width',  TextForm.Width);
+  end;
 end;
 
 procedure TTextForm.Clear;

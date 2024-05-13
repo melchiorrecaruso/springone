@@ -50,6 +50,7 @@ type
     GeometryMenuItem: TMenuItem;
 
     MaterialMenuItem: TMenuItem;
+    MessagesMenuItem: TMenuItem;
     Separator8: TMenuItem;
     WizardMenuItem: TMenuItem;
     Separator7: TMenuItem;
@@ -118,9 +119,7 @@ type
     DocsMenuItem: TMenuItem;
     MenuItem9: TMenuItem;
 
-
     VirtualScreen: TBGRAVirtualScreen;
-
 
     procedure ExportMenuItemClick(Sender: TObject);
     procedure ExportProductionMenuItemClick(Sender: TObject);
@@ -172,6 +171,8 @@ type
     ScreenColor: TBGRAPixel;
     ScreenScale: double;
     SessionFileName: string;
+
+    procedure SetSessionFileName(const AFileName: string);
   public
     function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSpringDrawing;
     function CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
@@ -297,7 +298,7 @@ end;
 
 procedure TMainForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if Windowstate <> wsMaximized then
+  if Windowstate = wsNormal then
   begin
     ClientFile.WriteInteger('MainForm', 'Top',    MainForm.Top);
     ClientFile.WriteInteger('MainForm', 'Left',   MainForm.Left);
@@ -322,7 +323,7 @@ begin
   MoveY := 0;
   MouseIsDown := False;
   ScreenScale := 1.0;
-  SessionFileName := '';
+  SetSessionFileName('');
 end;
 
 procedure TMainForm.ClearAll;
@@ -476,6 +477,15 @@ end;
 
 // Menu File
 
+procedure TMainForm.SetSessionFileName(const AFileName: string);
+begin
+  SessionFileName := AFileName;
+  if Length(SessionFileName) > 0 then
+    Caption := ExtractFileName(SessionFileName) + ' - ' + ApplicationVer
+  else
+    Caption := ApplicationVer;
+end;
+
 procedure TMainForm.NewMenuItemClick(Sender: TObject);
 begin
   ClearAll;
@@ -490,7 +500,7 @@ begin
   {$IFDEF MODULE3} OpenDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
-    SessionFileName := OpenDialog.FileName;
+    SetSessionFileName(OpenDialog.FileName);
     SessionIniFile  := TIniFile.Create(SessionFileName,
       [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
 
@@ -526,8 +536,7 @@ begin
   {$IFDEF MODULE3} SaveDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|All files (*.*)|*.*|;'; {$ENDIF}
   if SaveDialog.Execute then
   begin
-    SessionFileName := SaveDialog.FileName;
-
+    SetSessionFileName(SaveDialog.FileName);
     SaveMenuItemClick(Sender);
   end;
 end;
@@ -865,7 +874,9 @@ end;
 procedure TMainForm.ExportReportMenuItemClick(Sender: TObject);
 begin
   Solve();
-  SaveDialog.Filter := 'Text file (*.txt)|*.txt|All files (*.*)|*.*|;';
+  SaveDialog.Filter     := 'Text file (*.txt)|*.txt|All files (*.*)|*.*|;';
+  SaveDialog.InitialDir := ExtractFileDir(SessionFileName);
+  SaveDialog.FileName   := ExtractFileName(ChangeFileExt(SessionFileName, '.txt'));
   if SaveDialog.Execute then
   begin
     ReportForm.CreateReport;
@@ -879,7 +890,9 @@ var
   SVG: TBGRASvg;
 begin
   Solve();
-  SaveDialog.Filter := 'Svg file (*.svg)|*.svg|All files (*.*)|*.*|;';
+  SaveDialog.Filter     := 'Svg file (*.svg)|*.svg|All files (*.*)|*.*|;';
+  SaveDialog.InitialDir := ExtractFileDir(SessionFileName);
+  SaveDialog.FileName   := ExtractFileName(ChangeFileExt(SessionFileName, '.svg'));
   if SaveDialog.Execute then
   begin
     SVG := TBGRASVG.Create;
@@ -939,16 +952,12 @@ var
   Bit: array of TBGRABitmap = nil;
   SpringDrawing: TSpringDrawing;
   SVG: TBGRASvg;
-
-  Start: TDateTime;
 begin
   ErrorMessage.Clear;
   WarningMessage.Clear;
 
   SpringSolver.Solve(SpringTolerance);
   Compozer := TCompozer.Create(aSetting);
-
-  Start := Now;
   // check error
   if not SpringSolver.Check then
   begin
@@ -1018,6 +1027,12 @@ begin
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
+  // Massages list
+  if MessagesMenuItem.Checked then
+  begin
+    Compozer.DrawMessageList(aScreen, aScreenScale);
+  end else
+
   // Spring section drawing
   if SectionMenuItem.Checked then
   begin
@@ -1197,9 +1212,6 @@ begin
 
   VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
-  {$ifopt D+}
-  DEBUG('Draw -> ', MilliSecondsBetween(Now, Start).ToString);
-  {$endif}
 end;
 
 // Create Diagrams
