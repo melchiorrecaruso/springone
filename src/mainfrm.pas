@@ -50,6 +50,7 @@ type
     GeometryMenuItem: TMenuItem;
 
     MaterialMenuItem: TMenuItem;
+    MessagesMenuItem: TMenuItem;
     Separator8: TMenuItem;
     WizardMenuItem: TMenuItem;
     Separator7: TMenuItem;
@@ -953,16 +954,12 @@ var
   Bit: array of TBGRABitmap = nil;
   SpringDrawing: TSpringDrawing;
   SVG: TBGRASvg;
-
-  Start: TDateTime;
 begin
   ErrorMessage.Clear;
   WarningMessage.Clear;
 
   SpringSolver.Solve(SpringTolerance);
   Compozer := TCompozer.Create(aSetting);
-
-  Start := Now;
   // check error
   if not SpringSolver.Check then
   begin
@@ -1032,6 +1029,12 @@ begin
     Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
     Chart.Destroy;
   end else
+  // Massages list
+  if MessagesMenuItem.Checked then
+  begin
+    Compozer.DrawMessageList(aScreen, aScreenScale);
+  end else
+
   // Spring section drawing
   if SectionMenuItem.Checked then
   begin
