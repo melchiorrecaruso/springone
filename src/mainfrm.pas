@@ -1197,9 +1197,6 @@ begin
 
   VirtualScreenResize(nil);
   VirtualScreen.RedrawBitmap;
-  {$ifopt D+}
-  DEBUG('Draw -> ', MilliSecondsBetween(Now, Start).ToString);
-  {$endif}
 end;
 
 // Create Diagrams

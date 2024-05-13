@@ -76,9 +76,6 @@ function GetSymbol(const AValue: TKelvins): string;
 function GetValue (const AValue: TKelvins): double;
 function GetString(const AValue: TKelvins): string;
 
-procedure DEBUG(const s1: string);
-procedure DEBUG(const s1, s2: string);
-
 const
   DefaultDigits    = 5;
   DefaultPrecision = 5;
@@ -95,16 +92,6 @@ var
 
 
 implementation
-
-procedure DEBUG(const s1: string);
-begin
-  writeln(s1);
-end;
-
-procedure DEBUG(const s1, s2: string);
-begin
-  writeln(s1, s2);
-end;
 
 function GetString(const AValue: double): string;
 begin
