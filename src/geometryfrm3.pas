@@ -102,7 +102,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, ConvUtils, LibLink, MainFrm, UtilsBase, Setting;
+  ADim, ConvUtils, LibLink, MainFrm, BaseUtils, Setting;
 
 { TGeometryForm3 }
 
