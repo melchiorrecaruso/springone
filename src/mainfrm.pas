@@ -176,10 +176,9 @@ type
   public
     function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSpringDrawing;
     function CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
-    function CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
+    function CreatePage(ASetting: TIniFile): TBGRABitmap;
 
     procedure PaintTo(var aScreen: TBGRABitmap; aScreenScale: double; aSetting: TIniFile);
-
   public
     procedure LoadAll(SessionIniFile: TIniFile);
     procedure SaveAll(SessionIniFile: TIniFile);
@@ -497,6 +496,7 @@ var
   SessionIniFile: TIniFile;
 begin
   {$IFDEF MODULE1} OpenDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|;';   {$ENDIF}
+  {$IFDEF MODULE2} OpenDialog.Filter := 'SpringTwo file (*.spring2)|*.spring2|;';   {$ENDIF}
   {$IFDEF MODULE3} OpenDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
@@ -534,6 +534,8 @@ procedure TMainForm.SaveAsMenuItemClick(Sender: TObject);
 begin
   {$IFDEF MODULE1} SaveDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|All files (*.*)|*.*|;'; {$ENDIF}
   {$IFDEF MODULE3} SaveDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|All files (*.*)|*.*|;'; {$ENDIF}
+  SaveDialog.InitialDir := ExtractFileDir(SessionFileName);
+  SaveDialog.FileName := ExtractFileName(SessionFileName);
   if SaveDialog.Execute then
   begin
     SetSessionFileName(SaveDialog.FileName);
@@ -555,13 +557,15 @@ begin
     'Graphics (*.png;*.xpm;*.bmp;*.jpeg;*.jpg;)|*.png;*.xpm;*.bmp;*.jpeg;*.jpg|' +
     'PNG Files (*.png)|*.png|' + 'Pixmap Files (*.xpm)|*.xpm|' + 'Bitmap Files (*.bmp)|*.bmp)|' +
     'JPEG Files (*.jpeg;*.jpg;)|*.jpeg;*.jpg|' + 'Tutti i file (*.*)|*.*|;';
+  SavePictureDialog.InitialDir := ExtractFileDir(SessionFileName);
+  SavePictureDialog.FileName := ExtractFileName(ChangefileExt(SessionFileName, '.png'));
   if SavePictureDialog.Execute then
   begin
     Solve();
     if ProductionDrawingMenuItem.Checked then
-      Page := CreatePage(Trunc(ScreenImageHeight*0.707), ScreenImageHeight, 4.5, PrinterFile)
+      Page := CreatePage(ClientFile)
     else
-      Page := CreatePage(ScreenImageWidth, ScreenImageHeight, 4.0, PrinterFile);
+      Page := CreatePage(PrinterFile);
     Page.SaveToFile(SavePictureDialog.FileName);
     Page.Destroy;
   end;
@@ -595,7 +599,7 @@ begin
     else
       Scale := ScreenImageHeight  / ScreenImageWidth;
 
-    Page := CreatePage(ScreenImageWidth, Trunc(ScreenImageWidth*Scale), 4.0, PrinterFile);
+    Page := CreatePage(PrinterFile);
     Printer.BeginDoc;
     Scale := Math.Min(Printer.PageWidth /Page.Width,
                       Printer.PageHeight/Page.Height);
@@ -931,7 +935,7 @@ begin
   if Check then
   begin
     ScreenImage.SetSize(
-      Trunc(ScreenImageWidth *ScreenScale),
+      Trunc(ScreenImageWidth*ScreenScale),
       Trunc(ScreenImageHeight*ScreenScale));
     ScreenImage.FillTransparent;
     PaintTo(ScreenImage, ScreenScale, ClientFile);
@@ -956,257 +960,251 @@ begin
   ErrorMessage.Clear;
   WarningMessage.Clear;
 
-  SpringSolver.Solve(SpringTolerance);
   Compozer := TCompozer.Create(aSetting);
-  // check error
-  if not SpringSolver.Check then
+
+  SpringSolver.Solve(SpringTolerance);
+  if SpringSolver.Check then
   begin
-    Compozer.DrawMessageList(aScreen, aScreenScale);
-  end else
-  // Quick1
-  if Quick1MenuItem.Checked then
-  begin
-    Compozer.DrawQuick1(aScreen, aScreenScale);
-  end else
-  // Quick2
-  if Quick2MenuItem.Checked then
-  begin
-    Compozer.DrawQuick2(aScreen, aScreenScale);
-  end else
-  // Quick3
-  if Quick3MenuItem.Checked then
-  begin
-    Compozer.DrawQuick3(aScreen, aScreenScale);
-  end else
-  // Force & displacement chart
-  if ForceMenuItem.Checked then
-  begin
-    Chart := Compozer.CreateForceDisplacementChart(aScreenScale);
-    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-    Chart.Destroy;
-  end else
-  // Goodman chart
-  if GoodmanMenuItem .Checked then
-  begin
-    Chart := Compozer.CreateGoodmanChart(aScreenScale);
-    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-    Chart.Destroy;
-  end else
-  // Buckling chart
-  if BucklingMenuItem.Checked then
-  begin
-    Chart := Compozer.CreateBucklingChart(aScreenScale);
-    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-    Chart.Destroy;
-  end else
-  // Shear modulus chart
-  if ShearModulusMenuItem.Checked then
-  begin
-    Chart := Compozer.CreateShearModulusChart(aScreenScale);
-    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-    Chart.Destroy;
-  end else
-  // Young modulus chart
-  if YoungModulusMenuItem.Checked then
-  begin
-    Chart := Compozer.CreateYoungModulusChart(aScreenScale);
-    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-    Chart.Destroy;
-  end else
-  // F1-Load chart
-  if F1MenuItem.Checked then
-  begin
-    Chart := Compozer.CreateLoadF1Chart(aScreenScale);
-    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-    Chart.Destroy;
-  end else
-  // F2-Load chart
-  if F2MenuItem.Checked then
-  begin
-    Chart := Compozer.CreateLoadF2Chart(aScreenScale);
-    Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-    Chart.Destroy;
-  end else
-  // Massages list
-  if MessagesMenuItem.Checked then
-  begin
-    Compozer.DrawMessageList(aScreen, aScreenScale);
-  end else
-
-  // Spring section drawing
-  if SectionMenuItem.Checked then
-  begin
-    SetLength(Bit, 3);
-    for i := Low(Bit) to High(Bit) do
-      Bit[i] := TBGRABitmap.Create;
-
-    Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
-    Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
-    Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
-
-    {$IFDEF MODULE1}
-    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := True;
-    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := False;
-    SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := False;
-    SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-
-    Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
-    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
-    Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
-    SpringDrawing.Destroy;
-    {$ENDIF}
-
-    for i := Low(Bit) to High(Bit) do
-      Bit[i].Destroy;
-    Bit := nil;
-  end else
-
-  // Spring profile drawing
-  if ProfileMenuItem.Checked then
-  begin
-    SetLength(Bit, 3);
-    for i := Low(Bit) to High(Bit) do
-      Bit[i] := TBGRABitmap.Create;
-
-    Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
-    Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
-    Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
-
-    {$IFDEF MODULE1}
-    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := True;
-    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := False;
-    SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := False;
-    SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-
-    Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
-    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
-    Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
-    SpringDrawing.Destroy;
-    {$ENDIF}
-
-    for i := Low(Bit) to High(Bit) do
-      Bit[i].Destroy;
-    Bit := nil;
-  end else
-
-  // Custom section spring drawing
-  if CustomSectionMenuItem.Checked then
-  begin
-    SetLength(Bit, 2);
-    Bit[0] := TBGRABitmap.Create;
-    Bit[1] := TBGRABitmap.Create;
-    Bit[0].SetSize(aScreen.Width, aScreen.Height);
-    Bit[1].SetSize(aScreen.Width, aScreen.Height);
-    {$IFDEF MODULE1}
-    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := True;
-    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := False;
-    SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
-    SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
-    SpringDrawing.Destroy;
-    {$ENDIF}
-    Bit[0].Destroy;
-    Bit[1].Destroy;
-    Bit := nil;
-  end else
-
-  // Custom profle spring drawing
-  if CustomProfileMenuItem.Checked then
-  begin
-    SetLength(Bit, 2);
-    Bit[0] := TBGRABitmap.Create;
-    Bit[1] := TBGRABitmap.Create;
-    Bit[0].SetSize(aScreen.Width, aScreen.Height);
-    Bit[1].SetSize(aScreen.Width, aScreen.Height);
-    {$IFDEF MODULE1}
-    SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := True;
-    SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
-    SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-    SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-    SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-    SpringDrawing.AutoFit    := False;
-    SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
-    SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
-    SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-    Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
-    SpringDrawing.Destroy;
-    {$ENDIF}
-    Bit[0].Destroy;
-    Bit[1].Destroy;
-    Bit := nil;
-
-  end else
-
-  // Production spring drawing
-  if ProductionDrawingMenuItem.Checked then
-  begin
-    SetLength(Bit, 1);
-    Bit[0] := TBGRABitmap.Create;
-    Bit[0].SetSize(aScreen.Width, aScreen.Height);
-    Bit[0].AlphaFill(255);
-    Bit[0].Fill(ScreenColor);
+    // Quick1
+    if Quick1MenuItem.Checked then
     begin
-      SVG := TBGRASVG.Create;
-      SVG.LoadFromResource('TEMPLATE');
-      SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, aSetting);
-      SVG.StretchDraw(Bit[0].Canvas2D, taLeftJustify, tlCenter, 0, 0, Bit[0].Width, Bit[0].Height, False);
-      SVG.Destroy;
+      Compozer.DrawQuick1(aScreen, aScreenScale);
+    end else
+    // Quick2
+    if Quick2MenuItem.Checked then
+    begin
+      Compozer.DrawQuick2(aScreen, aScreenScale);
+    end else
+    // Quick3
+    if Quick3MenuItem.Checked then
+    begin
+      Compozer.DrawQuick3(aScreen, aScreenScale);
+    end else
+    // Force & displacement chart
+    if ForceMenuItem.Checked then
+    begin
+      Chart := Compozer.CreateForceDisplacementChart(aScreenScale);
+      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+      Chart.Destroy;
+    end else
+    // Goodman chart
+    if GoodmanMenuItem .Checked then
+    begin
+      Chart := Compozer.CreateGoodmanChart(aScreenScale);
+      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+      Chart.Destroy;
+    end else
+    // Buckling chart
+    if BucklingMenuItem.Checked then
+    begin
+      Chart := Compozer.CreateBucklingChart(aScreenScale);
+      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+      Chart.Destroy;
+    end else
+    // Shear modulus chart
+    if ShearModulusMenuItem.Checked then
+    begin
+      Chart := Compozer.CreateShearModulusChart(aScreenScale);
+      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+      Chart.Destroy;
+    end else
+    // Young modulus chart
+    if YoungModulusMenuItem.Checked then
+    begin
+      Chart := Compozer.CreateYoungModulusChart(aScreenScale);
+      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+      Chart.Destroy;
+    end else
+    // F1-Load chart
+    if F1MenuItem.Checked then
+    begin
+      Chart := Compozer.CreateLoadF1Chart(aScreenScale);
+      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+      Chart.Destroy;
+    end else
+    // F2-Load chart
+    if F2MenuItem.Checked then
+    begin
+      Chart := Compozer.CreateLoadF2Chart(aScreenScale);
+      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+      Chart.Destroy;
+    end else
+    // Massages list
+    if MessagesMenuItem.Checked then
+    begin
+      Compozer.DrawMessageList(aScreen, aScreenScale);
+    end else
+    // Spring section drawing
+    if SectionMenuItem.Checked then
+    begin
+      SetLength(Bit, 3);
+      for i := Low(Bit) to High(Bit) do
+        Bit[i] := TBGRABitmap.Create;
+
+      Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
+      Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
+      Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
+      {$IFDEF MODULE1}
+      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := True;
+      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := False;
+      SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := False;
+      SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+
+      Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
+      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
+      Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
+      SpringDrawing.Destroy;
+      {$ENDIF}
+
+      for i := Low(Bit) to High(Bit) do
+        Bit[i].Destroy;
+      Bit := nil;
+    end else
+    // Spring profile drawing
+    if ProfileMenuItem.Checked then
+    begin
+      SetLength(Bit, 3);
+      for i := Low(Bit) to High(Bit) do
+        Bit[i] := TBGRABitmap.Create;
+
+      Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
+      Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
+      Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
+      {$IFDEF MODULE1}
+      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := True;
+      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := False;
+      SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := False;
+      SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+
+      Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
+      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
+      Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
+      SpringDrawing.Destroy;
+      {$ENDIF}
+
+      for i := Low(Bit) to High(Bit) do
+        Bit[i].Destroy;
+      Bit := nil;
+    end else
+    // Custom section spring drawing
+    if CustomSectionMenuItem.Checked then
+    begin
+      SetLength(Bit, 2);
+      Bit[0] := TBGRABitmap.Create;
+      Bit[1] := TBGRABitmap.Create;
+      Bit[0].SetSize(aScreen.Width, aScreen.Height);
+      Bit[1].SetSize(aScreen.Width, aScreen.Height);
+      {$IFDEF MODULE1}
+      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := True;
+      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := False;
+      SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
+      SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
+      SpringDrawing.Destroy;
+      {$ENDIF}
+      Bit[0].Destroy;
+      Bit[1].Destroy;
+      Bit := nil;
+    end else
+    // Custom profle spring drawing
+    if CustomProfileMenuItem.Checked then
+    begin
+      SetLength(Bit, 2);
+      Bit[0] := TBGRABitmap.Create;
+      Bit[1] := TBGRABitmap.Create;
+      Bit[0].SetSize(aScreen.Width, aScreen.Height);
+      Bit[1].SetSize(aScreen.Width, aScreen.Height);
+      {$IFDEF MODULE1}
+      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := True;
+      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+      SpringDrawing.AutoFit    := False;
+      SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
+      SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
+      SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
+      SpringDrawing.Destroy;
+      {$ENDIF}
+      Bit[0].Destroy;
+      Bit[1].Destroy;
+      Bit := nil;
+    end else
+    // Production spring drawing
+    if ProductionDrawingMenuItem.Checked then
+    begin
+      SetLength(Bit, 1);
+      Bit[0] := TBGRABitmap.Create;
+      Bit[0].SetSize(aScreen.Width, aScreen.Height);
+      Bit[0].AlphaFill(255);
+      Bit[0].Fill(ScreenColor);
+      begin
+        SVG := TBGRASVG.Create;
+        SVG.LoadFromResource('TEMPLATE');
+        SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, aSetting);
+        SVG.StretchDraw(Bit[0].Canvas2D, taLeftJustify, tlCenter, 0, 0, Bit[0].Width, Bit[0].Height, False);
+        SVG.Destroy;
+      end;
+      Bit[0].InvalidateBitmap;
+      Bit[0].Draw(aScreen.Canvas, 0, 0);
+      Bit[0].Destroy;
+      Bit := nil;
     end;
-    Bit[0].InvalidateBitmap;
-    Bit[0].Draw(aScreen.Canvas, 0, 0);
-    Bit[0].Destroy;
-    Bit := nil;
+  end else
+  begin
+    Compozer.DrawMessageList(aScreen, aScreenScale);
   end;
   Compozer.Destroy;
 
@@ -1466,17 +1464,18 @@ begin
   {$ENDIF}
 end;
 
-function TMainForm.CreatePage(aWidth, aHeight: longint; aScale: double; aSetting: TIniFile): TBGRABitmap;
+function TMainForm.CreatePage(ASetting: TIniFile): TBGRABitmap;
 var
   PageColor: TBGRAPixel;
 begin
+  PageColor.FromString(ASetting.ReadString('Custom', 'BackgroundColor', 'White'));
+
   Result := TBGRABitmap.Create;
   Result.SetSize(
-    Trunc(aWidth  *aScale),
-    Trunc(aHeight *aScale));
+    Trunc(ScreenImageWidth*ScreenScale),
+    Trunc(ScreenImageHeight*ScreenScale));
   Result.Fill(PageColor);
-  PageColor.FromString(aSetting.ReadString('Custom', 'BackgroundColor', 'White'));
-  PaintTo(Result, aScale, aSetting);
+  PaintTo(Result, ScreenScale, ASetting);
 end;
 
 end.
