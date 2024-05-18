@@ -67,7 +67,7 @@ implementation
 {$R *.lfm}
 
 uses
-  SpringSolvers, MaterialFrm, Math, UtilsBase, Setting;
+  SpringSolvers, MaterialFrm, Math, BaseUtils, Setting;
 
 // TApplicationForm3
 
