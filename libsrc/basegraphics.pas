@@ -1942,8 +1942,8 @@ begin
       alpha := arctan2((y1 - y0), -(x1 - x0));
 
       ctx := FBit.Canvas2D;
-      ctx.fillStyle(BGRA(0, 0, 0, 255));
-      ctx.strokeStyle(BGRA(255, 0, 0, 255));
+      ctx.fillStyle(FTextureBackgroundColor);
+      ctx.strokeStyle(FPenColor);
       ctx.lineWidth := FPenWidth * Min(2.0, FScale);
       ctx.beginPath();
 
@@ -2070,20 +2070,13 @@ begin
       ctx.fill();
       ctx.stroke();
     end;
-
-
     if FGroundEnds then
     begin
 
 
 
 
-
-
     end;
-
-
-
     // Draw center line
     FBit.PenStyle := psDashDot;
     FBit.DrawLineAntialias(
@@ -2100,7 +2093,6 @@ begin
       YToCanvas(y0),
       FCaption, FFontColor, taCenter);
   end;
-
 
   FBit.InvalidateBitmap;
   FBit.Draw(aCanvas, 0, 0, True);
