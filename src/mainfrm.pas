@@ -248,8 +248,6 @@ var
   {$endif}
 begin
   Caption := ApplicationVer;
-  DefaultFormatSettings.ThousandSeparator := ' ';
-  DefaultFormatSettings.DecimalSeparator  := '.';
 
   MainForm.Top    := ClientFile.ReadInteger('MainForm', 'Top',    MainForm.Top);
   MainForm.Left   := ClientFile.ReadInteger('MainForm', 'Left',   MainForm.Left);

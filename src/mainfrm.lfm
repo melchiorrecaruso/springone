@@ -1,14 +1,13 @@
 object MainForm: TMainForm
-  Left = 447
+  Left = 413
   Height = 501
-  Top = 195
+  Top = 169
   Width = 700
   Caption = 'Spring ONE'
   ClientHeight = 501
   ClientWidth = 700
   Color = clForm
   Menu = MainMenu
-  Position = poDefault
   LCLVersion = '3.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
