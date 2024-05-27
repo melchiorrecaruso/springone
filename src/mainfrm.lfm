@@ -1,13 +1,12 @@
 object MainForm: TMainForm
   Left = 447
-  Height = 412
+  Height = 501
   Top = 195
-  Width = 576
+  Width = 700
   Caption = 'Spring ONE'
-  ClientHeight = 412
-  ClientWidth = 576
+  ClientHeight = 501
+  ClientWidth = 700
   Color = clForm
-  DesignTimePPI = 79
   Menu = MainMenu
   Position = poDefault
   LCLVersion = '3.99.0.0'
@@ -16,15 +15,15 @@ object MainForm: TMainForm
   OnDestroy = FormDestroy
   object VirtualScreen: TBGRAVirtualScreen
     Left = 0
-    Height = 412
+    Height = 501
     Top = 0
-    Width = 576
+    Width = 700
     OnRedraw = VirtualScreenRedraw
     Align = alClient
     Alignment = taCenter
     Anchors = []
-    ClientHeight = 412
-    ClientWidth = 576
+    ClientHeight = 501
+    ClientWidth = 700
     Color = clNone
     ParentColor = False
     TabOrder = 0
@@ -34,10 +33,10 @@ object MainForm: TMainForm
     OnMouseUp = VirtualScreenMouseUp
     OnResize = VirtualScreenResize
     object Selection: TBGRAShape
-      Left = 27
-      Height = 33
-      Top = 79
-      Width = 33
+      Left = 33
+      Height = 40
+      Top = 96
+      Width = 40
       Angle = 45
       BorderColor = clRed
       BorderGradient.StartColor = clWhite
@@ -62,8 +61,8 @@ object MainForm: TMainForm
     end
   end
   object MainMenu: TMainMenu
-    Left = 33
-    Top = 27
+    Left = 40
+    Top = 33
     object FileMenuItem: TMenuItem
       Caption = '&File'
       object NewMenuItem: TMenuItem
@@ -304,24 +303,24 @@ object MainForm: TMainForm
   end
   object SaveDialog: TSaveDialog
     Options = [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail]
-    Left = 185
-    Top = 27
+    Left = 225
+    Top = 33
   end
   object OpenDialog: TOpenDialog
     Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
-    Left = 112
-    Top = 27
+    Left = 136
+    Top = 33
   end
   object PrintDialog: TPrintDialog
-    Left = 112
-    Top = 79
+    Left = 136
+    Top = 96
   end
   object SavePictureDialog: TSavePictureDialog
-    Left = 264
-    Top = 27
+    Left = 321
+    Top = 33
   end
   object PageSetupDialog: TPageSetupDialog
-    Left = 198
-    Top = 79
+    Left = 241
+    Top = 96
   end
 end
