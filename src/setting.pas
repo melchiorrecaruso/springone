@@ -18,6 +18,8 @@ implementation
 
 procedure OpeSettingFile;
 begin
+  DefaultFormatSettings.ThousandSeparator := ',';
+  DefaultFormatSettings.DecimalSeparator  := '.';
   ClientFile  := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'client.ini',
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
   PrinterFile := TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'printer.ini',
