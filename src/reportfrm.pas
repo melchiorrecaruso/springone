@@ -287,38 +287,35 @@ end;
 
 procedure TReportForm.PrintBtnClick(Sender: TObject);
 var
-  I, J: longint;
-  S: TStringList;
+  I, PageIndex: longint;
+  XPos, YPos, YInc: longint;
 begin
   if PrintDialog.Execute then
   begin
-    Printer.Title := '';
-    Printer.RawMode:= True;
-    Printer.BeginDoc;
-
     I := 0;
-    J := 0;
-    S := TStringList.Create;
-    while (I < Memo.Lines.Count) do
-    begin
-      if AddRowAtBegin then S.Add('');
-      if AddRowAtEnd   then S.Add('');
-      while (S.Count < PageRowCount) and
-            (I  <  Memo.Lines.Count) do
-      begin
-        S.Add(Memo.Lines[I]);
-        Inc(I);
-      end;
-      Inc(J);
-      S.Add('');
-      S.Add(Format('%75s', [Format('pag. %d',[J])]));
+    PageIndex := 1;
+    Printer.BeginDoc;
+    Printer.Canvas.Font.Name   := Memo.Font.Name;
+    Printer.Canvas.Font.Height := Memo.Font.Height * 72 div Printer.YDPI;
 
-      if AddRowAtEnd then S.Delete(0);
-      if AddRowAtEnd then S.Add('');
-      Printer.Write(S.Text);
-      S.Clear;
+    XPos := Printer.XDPI;
+    YPos := Printer.YDPI;
+    YInc := Printer.Canvas.TextHeight('Ag');
+
+    for I := 0 to Memo.Lines.Count - 1 do
+    begin
+      if (YPos + YInc) >= (Printer.PageHeight - Printer.YDPI) then
+       begin
+         Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%74s', [Format('pag. %d',[PageIndex])]));
+         Printer.NewPage;
+
+         YPos := Printer.YDPI;
+         Inc(PageIndex);
+      end;
+      Printer.Canvas.TextOut(XPos, YPos, Memo.Lines[I]);
+      YPos := YPos + YInc;
     end;
-    S.Destroy;
+    Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%74s', [Format('pag. %d',[PageIndex])]));
     Printer.EndDoc;
   end;
 end;
