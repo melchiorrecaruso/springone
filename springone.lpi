@@ -735,8 +735,8 @@
         <UnitName Value="ReportFrm"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="282"/>
-        <CursorPos X="92" Y="309"/>
+        <TopLine Value="284"/>
+        <CursorPos X="74" Y="318"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -1546,7 +1546,7 @@
         <UnitName Value="Setting"/>
         <EditorIndex Value="1"/>
         <CursorPos X="60" Y="17"/>
-        <UsageCount Value="62"/>
+        <UsageCount Value="63"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1664,18 +1664,6 @@
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="springone.lpr"/>
-        <Caret Line="44" Column="17" TopLine="6"/>
-      </Position>
-      <Position>
-        <Filename Value="src\mainfrm.pas"/>
-        <Caret Line="251" Column="20" TopLine="234"/>
-      </Position>
-      <Position>
-        <Filename Value="springone.lpr"/>
-        <Caret Line="44" Column="18" TopLine="7"/>
-      </Position>
-      <Position>
         <Filename Value="src\reportfrm.pas"/>
         <Caret Line="343" Column="3" TopLine="286"/>
       </Position>
@@ -1782,6 +1770,18 @@
       <Position>
         <Filename Value="src\reportfrm.pas"/>
         <Caret Line="305" Column="61" TopLine="282"/>
+      </Position>
+      <Position>
+        <Filename Value="src\reportfrm.pas"/>
+        <Caret Line="328" Column="89" TopLine="286"/>
+      </Position>
+      <Position>
+        <Filename Value="src\reportfrm.pas"/>
+        <Caret Line="329" Column="89" TopLine="287"/>
+      </Position>
+      <Position>
+        <Filename Value="src\reportfrm.pas"/>
+        <Caret Line="328" Column="89" TopLine="286"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>

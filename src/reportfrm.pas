@@ -296,7 +296,7 @@ begin
     PageIndex := 1;
     Printer.BeginDoc;
     Printer.Canvas.Font.Name   := Memo.Font.Name;
-    Printer.Canvas.Font.Height := Memo.Font.Height * 72 div Printer.YDPI;
+    Printer.Canvas.Font.Height := Printer.PageHeight div 80;
 
     XPos := Printer.XDPI;
     YPos := Printer.YDPI;
@@ -326,13 +326,6 @@ begin
   ReportForm.Left   := ClientFile.ReadInteger('ReportForm', 'Left',   ReportForm.Left);
   ReportForm.Height := ClientFile.ReadInteger('ReportForm', 'Height', ReportForm.Height);
   ReportForm.Width  := ClientFile.ReadInteger('ReportForm', 'Width',  ReportForm.Width);
-
-  PageRowCount      := ClientFile.ReadInteger('ReportForm', 'PageRowCount',     65);
-  AddRowAtBegin     := ClientFile.ReadBool   ('ReportForm', 'AddRowAtBegin', False);
-  AddRowAtEnd       := ClientFile.ReadBool   ('ReportForm', 'AddRowAtEnd',   False);
-
-  if AddRowAtBegin then Dec(PageRowCount);
-  if AddRowAtEnd   then Dec(PageRowCount);
 end;
 
 procedure TReportForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -344,9 +337,6 @@ begin
     ClientFile.WriteInteger('ReportForm', 'Height', ReportForm.Height);
     ClientFile.WriteInteger('ReportForm', 'Width',  ReportForm.Width);
   end;
-  ClientFile.WriteInteger('ReportForm', 'PageRowCount',  PageRowCount);
-  ClientFile.WriteBool   ('ReportForm', 'AddRowAtBegin', AddRowAtBegin);
-  ClientFile.WriteBool   ('ReportForm', 'AddRowAtEnd',   AddRowAtEnd);
 end;
 
 end.

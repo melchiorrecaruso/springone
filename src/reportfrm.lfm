@@ -22,7 +22,6 @@ object ReportForm: TReportForm
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Bottom = 12
     Font.Color = clBlack
-    Font.Height = 13
     Font.Name = 'Courier New'
     ParentFont = False
     ReadOnly = True
