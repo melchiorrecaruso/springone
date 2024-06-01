@@ -589,17 +589,15 @@ begin
   if PrintDialog.Execute then
   begin
     Solve();
-
+    Printer.BeginDoc;
     if ProductionDrawingMenuItem.Checked then
       Scale := Min((Printer.PageHeight - Printer.YDPI) / ScreenImageHeight,
-                   (Printer.PageWidth  - Printer.XDPI) / ScreenImageHeight*0.7071)
+                   (Printer.PageWidth  - Printer.XDPI) / ScreenImageHeight / 0.7071)
     else
       Scale := Min((Printer.PageHeight - Printer.YDPI) / ScreenImageHeight,
                    (Printer.PageWidth  - Printer.XDPI) / ScreenImageWidth);
 
     Page := CreatePage(PrinterFile, Scale);
-    Printer.BeginDoc;
-
     OffSetX := (Printer.PageWidth  - Page.Width ) div 2;
     OffSetY := (Printer.PageHeight - Page.Height) div 2;
     Printer.Canvas.Draw(OffSetX, OffSetY, Page.Bitmap);
@@ -1467,13 +1465,13 @@ begin
   if ProductionDrawingMenuItem.Checked then
   begin
     Result.SetSize(
-      Trunc(ScreenImageHeight*AScale* 0.7071),
-      Trunc(ScreenImageHeight*AScale));
+      Trunc(ScreenImageHeight * AScale * 0.7071),
+      Trunc(ScreenImageHeight * AScale));
   end else
   begin
     Result.SetSize(
-      Trunc(ScreenImageWidth *AScale),
-      Trunc(ScreenImageHeight*AScale));
+      Trunc(ScreenImageWidth  * AScale),
+      Trunc(ScreenImageHeight * AScale));
   end;
   Result.Fill(PageColor);
   PaintTo(Result, AScale, ASetting);
