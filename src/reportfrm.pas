@@ -292,7 +292,6 @@ var
 begin
   if PrintDialog.Execute then
   begin
-    I := 0;
     PageIndex := 1;
     Printer.BeginDoc;
     Printer.Canvas.Font.Name   := Memo.Font.Name;
@@ -300,22 +299,23 @@ begin
 
     XPos := Printer.XDPI;
     YPos := Printer.YDPI;
-    YInc := Printer.Canvas.TextHeight('Ag');
+    YInc := Printer.Canvas.TextHeight('T');
 
     for I := 0 to Memo.Lines.Count - 1 do
     begin
       if (YPos + YInc) >= (Printer.PageHeight - Printer.YDPI) then
-       begin
-         Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%74s', [Format('pag. %d',[PageIndex])]));
+      begin
+         Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%73s', [Format('pag. %d',[PageIndex])]));
          Printer.NewPage;
 
          YPos := Printer.YDPI;
          Inc(PageIndex);
       end;
+
       Printer.Canvas.TextOut(XPos, YPos, Memo.Lines[I]);
       YPos := YPos + YInc;
     end;
-    Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%74s', [Format('pag. %d',[PageIndex])]));
+    Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%73s', [Format('pag. %d',[PageIndex])]));
     Printer.EndDoc;
   end;
 end;
