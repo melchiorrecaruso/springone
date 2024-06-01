@@ -287,38 +287,35 @@ end;
 
 procedure TReportForm.PrintBtnClick(Sender: TObject);
 var
-  I, J: longint;
-  S: TStringList;
+  I, PageIndex: longint;
+  XPos, YPos, YInc: longint;
 begin
   if PrintDialog.Execute then
   begin
-    Printer.Title := '';
-    Printer.RawMode:= True;
+    PageIndex := 1;
     Printer.BeginDoc;
+    Printer.Canvas.Font.Name   := Memo.Font.Name;
+    Printer.Canvas.Font.Height := Printer.PageHeight div 80;
 
-    I := 0;
-    J := 0;
-    S := TStringList.Create;
-    while (I < Memo.Lines.Count) do
+    XPos := Printer.XDPI;
+    YPos := Printer.YDPI;
+    YInc := Printer.Canvas.TextHeight('T');
+
+    for I := 0 to Memo.Lines.Count - 1 do
     begin
-      if AddRowAtBegin then S.Add('');
-      if AddRowAtEnd   then S.Add('');
-      while (S.Count < PageRowCount) and
-            (I  <  Memo.Lines.Count) do
+      if (YPos + YInc) >= (Printer.PageHeight - Printer.YDPI) then
       begin
-        S.Add(Memo.Lines[I]);
-        Inc(I);
-      end;
-      Inc(J);
-      S.Add('');
-      S.Add(Format('%75s', [Format('pag. %d',[J])]));
+         Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%73s', [Format('pag. %d',[PageIndex])]));
+         Printer.NewPage;
 
-      if AddRowAtEnd then S.Delete(0);
-      if AddRowAtEnd then S.Add('');
-      Printer.Write(S.Text);
-      S.Clear;
+         YPos := Printer.YDPI;
+         Inc(PageIndex);
+      end;
+
+      Printer.Canvas.TextOut(XPos, YPos, Memo.Lines[I]);
+      YPos := YPos + YInc;
     end;
-    S.Destroy;
+    Printer.Canvas.TextOut(XPos, Printer.PageHeight - Printer.YDPI + YInc, Format('%73s', [Format('pag. %d',[PageIndex])]));
     Printer.EndDoc;
   end;
 end;
@@ -329,13 +326,6 @@ begin
   ReportForm.Left   := ClientFile.ReadInteger('ReportForm', 'Left',   ReportForm.Left);
   ReportForm.Height := ClientFile.ReadInteger('ReportForm', 'Height', ReportForm.Height);
   ReportForm.Width  := ClientFile.ReadInteger('ReportForm', 'Width',  ReportForm.Width);
-
-  PageRowCount      := ClientFile.ReadInteger('ReportForm', 'PageRowCount',     65);
-  AddRowAtBegin     := ClientFile.ReadBool   ('ReportForm', 'AddRowAtBegin', False);
-  AddRowAtEnd       := ClientFile.ReadBool   ('ReportForm', 'AddRowAtEnd',   False);
-
-  if AddRowAtBegin then Dec(PageRowCount);
-  if AddRowAtEnd   then Dec(PageRowCount);
 end;
 
 procedure TReportForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -347,9 +337,6 @@ begin
     ClientFile.WriteInteger('ReportForm', 'Height', ReportForm.Height);
     ClientFile.WriteInteger('ReportForm', 'Width',  ReportForm.Width);
   end;
-  ClientFile.WriteInteger('ReportForm', 'PageRowCount',  PageRowCount);
-  ClientFile.WriteBool   ('ReportForm', 'AddRowAtBegin', AddRowAtBegin);
-  ClientFile.WriteBool   ('ReportForm', 'AddRowAtEnd',   AddRowAtEnd);
 end;
 
 end.

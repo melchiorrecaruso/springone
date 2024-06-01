@@ -1,7 +1,7 @@
 object ReportForm: TReportForm
-  Left = 491
+  Left = 216
   Height = 532
-  Top = 271
+  Top = 131
   Width = 650
   Caption = 'Report'
   ClientHeight = 532
@@ -21,6 +21,7 @@ object ReportForm: TReportForm
     Width = 650
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Bottom = 12
+    Font.Color = clBlack
     Font.Name = 'Courier New'
     ParentFont = False
     ReadOnly = True

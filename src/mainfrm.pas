@@ -176,7 +176,7 @@ type
   public
     function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSpringDrawing;
     function CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
-    function CreatePage(ASetting: TIniFile): TBGRABitmap;
+    function CreatePage(ASetting: TIniFile; const AScale: double): TBGRABitmap;
 
     procedure PaintTo(var aScreen: TBGRABitmap; aScreenScale: double; aSetting: TIniFile);
   public
@@ -560,10 +560,7 @@ begin
   if SavePictureDialog.Execute then
   begin
     Solve();
-    if ProductionDrawingMenuItem.Checked then
-      Page := CreatePage(ClientFile)
-    else
-      Page := CreatePage(PrinterFile);
+    Page := CreatePage(PrinterFile, ScreenScale);
     Page.SaveToFile(SavePictureDialog.FileName);
     Page.Destroy;
   end;
@@ -587,27 +584,23 @@ var
   OffSetX: LongInt;
   OffSetY: LongInt;
   Page: TBGRABitmap;
-  Scale: Double;
+  Scale: double;
 begin
   if PrintDialog.Execute then
   begin
     Solve();
-    if ProductionDrawingMenuItem.Checked then
-      Scale := Printer.PageHeight / Printer.PageWidth
-    else
-      Scale := ScreenImageHeight  / ScreenImageWidth;
-
-    Page := CreatePage(PrinterFile);
     Printer.BeginDoc;
-    Scale := Math.Min(Printer.PageWidth /Page.Width,
-                      Printer.PageHeight/Page.Height);
+    if ProductionDrawingMenuItem.Checked then
+      Scale := Min((Printer.PageHeight - Printer.YDPI) / ScreenImageHeight,
+                   (Printer.PageWidth  - Printer.XDPI) / ScreenImageHeight / 0.7071)
+    else
+      Scale := Min((Printer.PageHeight - Printer.YDPI) / ScreenImageHeight,
+                   (Printer.PageWidth  - Printer.XDPI) / ScreenImageWidth);
 
-    OffSetX := (Printer.PageWidth  - Trunc(Page.Width *Scale)) div 2;
-    OffSetY := (Printer.PageHeight - Trunc(Page.Height*Scale)) div 2;
-    Printer.Canvas.StretchDraw(Rect(OffSetX, OffSetY,
-      OffSetX + Trunc(Page.Width *Scale),
-      OffSetY + Trunc(Page.Height*Scale)),
-      Page.Bitmap);
+    Page := CreatePage(PrinterFile, Scale);
+    OffSetX := (Printer.PageWidth  - Page.Width ) div 2;
+    OffSetY := (Printer.PageHeight - Page.Height) div 2;
+    Printer.Canvas.Draw(OffSetX, OffSetY, Page.Bitmap);
     Printer.EndDoc;
     Page.Destroy;
   end;
@@ -899,7 +892,7 @@ begin
   begin
     SVG := TBGRASVG.Create;
     SVG.LoadFromResource('TEMPLATE');
-    SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, PrinterFile);
+    SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, ClientFile);
     SVG.SaveToFile(SaveDialog.FileName);
     SVG.Destroy;
   end;
@@ -1462,18 +1455,26 @@ begin
   {$ENDIF}
 end;
 
-function TMainForm.CreatePage(ASetting: TIniFile): TBGRABitmap;
+function TMainForm.CreatePage(ASetting: TIniFile; const AScale: double): TBGRABitmap;
 var
   PageColor: TBGRAPixel;
 begin
   PageColor.FromString(ASetting.ReadString('Custom', 'BackgroundColor', 'White'));
 
   Result := TBGRABitmap.Create;
-  Result.SetSize(
-    Trunc(ScreenImageWidth*ScreenScale),
-    Trunc(ScreenImageHeight*ScreenScale));
+  if ProductionDrawingMenuItem.Checked then
+  begin
+    Result.SetSize(
+      Trunc(ScreenImageHeight * AScale * 0.7071),
+      Trunc(ScreenImageHeight * AScale));
+  end else
+  begin
+    Result.SetSize(
+      Trunc(ScreenImageWidth  * AScale),
+      Trunc(ScreenImageHeight * AScale));
+  end;
   Result.Fill(PageColor);
-  PaintTo(Result, ScreenScale, ASetting);
+  PaintTo(Result, AScale, ASetting);
 end;
 
 end.

@@ -1,7 +1,7 @@
 object DrawingForm: TDrawingForm
-  Left = 489
+  Left = 213
   Height = 201
-  Top = 272
+  Top = 136
   Width = 450
   BorderIcons = [biSystemMenu]
   Caption = 'Drawing spring'
@@ -53,9 +53,9 @@ object DrawingForm: TDrawingForm
     AnchorSideLeft.Control = SpringLength
     AnchorSideTop.Control = SpringLength
     AnchorSideTop.Side = asrBottom
-    Left = 110
-    Height = 35
-    Top = 65
+    Left = 94
+    Height = 25
+    Top = 52
     Width = 70
     AutoSize = True
     BorderSpacing.Top = 10
@@ -70,9 +70,9 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Control = SpringLength
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = L2Btn
-    Left = 190
-    Height = 35
-    Top = 65
+    Left = 174
+    Height = 25
+    Top = 52
     Width = 70
     AutoSize = True
     BorderSpacing.Left = 10
@@ -88,9 +88,9 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Control = SpringLength
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = LcBtn
-    Left = 270
-    Height = 35
-    Top = 65
+    Left = 254
+    Height = 25
+    Top = 52
     Width = 70
     AutoSize = True
     BorderSpacing.Left = 10
@@ -107,9 +107,9 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = SpringLength
     AnchorSideRight.Side = asrBottom
-    Left = 350
-    Height = 35
-    Top = 65
+    Left = 334
+    Height = 25
+    Top = 52
     Width = 70
     AutoSize = True
     BorderSpacing.Left = 10
@@ -125,10 +125,10 @@ object DrawingForm: TDrawingForm
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 110
-    Height = 36
+    Left = 94
+    Height = 23
     Top = 19
-    Width = 330
+    Width = 346
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
@@ -143,9 +143,9 @@ object DrawingForm: TDrawingForm
     AnchorSideBottom.Control = SpringLength
     AnchorSideBottom.Side = asrBottom
     Left = 10
-    Height = 36
+    Height = 23
     Top = 19
-    Width = 90
+    Width = 74
     Anchors = [akTop, akLeft, akBottom]
     BorderSpacing.Left = 10
     Caption = 'Spring length:'
