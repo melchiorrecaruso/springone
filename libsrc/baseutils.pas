@@ -81,7 +81,7 @@ const
   DefaultPrecision = 5;
 
   ApplicationName  = 'SpringONE' ;
-  ApplicationVer   = 'SpringONE 0.44';
+  ApplicationVer   = 'SpringONE 0.46';
 
 var
   ErrorMessage:    TStringList;
