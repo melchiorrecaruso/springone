@@ -26,9 +26,9 @@ EndCoilType=1
 [TApplicationForm1]
 LoadType=0
 CycleFrequency=1
-Temperature=20
+Temperature=400
 TemperatureUnit=0
-SeatingCoefficent=1
+SeatingCoefficent=0
 
 [TMaterialForm]
 Material=14
@@ -45,12 +45,12 @@ CoilingType=0
 [TQualityForm]
 ToleranceWireDiameter=0.025
 ToleranceWireDiameterUnit=0
-ToleranceCoilDiameter=1
-ToleranceLengthL0=1
-ToleranceLoadF1=1
-ToleranceLoadF2=1
-ToleranceEccentricitye1=1
-ToleranceEccentricitye2=1
+ToleranceCoilDiameter=2
+ToleranceLengthL0=2
+ToleranceLoadF1=2
+ToleranceLoadF2=2
+ToleranceEccentricitye1=2
+ToleranceEccentricitye2=2
 
 [TProductionForm]
 DirectionCoilsIndex=0
