@@ -585,17 +585,18 @@ var
   OffSetY: LongInt;
   Page: TBGRABitmap;
   Scale: double;
+  SVG: TBGRASvg;
 begin
   if PrintDialog.Execute then
   begin
     Solve();
     Printer.BeginDoc;
     if ProductionDrawingMenuItem.Checked then
-      Scale := Min((Printer.PageHeight - Printer.YDPI) / ScreenImageHeight,
-                   (Printer.PageWidth  - Printer.XDPI) / ScreenImageHeight / 0.7071)
+      Scale := Min((Printer.PageHeight) / ScreenImageHeight,
+                   (Printer.PageWidth ) / ScreenImageHeight / 0.7071)
     else
-      Scale := Min((Printer.PageHeight - Printer.YDPI) / ScreenImageHeight,
-                   (Printer.PageWidth  - Printer.XDPI) / ScreenImageWidth);
+      Scale := Min((Printer.PageHeight) / ScreenImageHeight,
+                   (Printer.PageWidth ) / ScreenImageWidth);
 
     Page := CreatePage(PrinterFile, Scale);
     OffSetX := (Printer.PageWidth  - Page.Width ) div 2;
@@ -891,7 +892,7 @@ begin
   if SaveDialog.Execute then
   begin
     SVG := TBGRASVG.Create;
-    SVG.LoadFromResource('TEMPLATE');
+    SVG.LoadFromResource('TEMPLATEBLACK');
     SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, ClientFile);
     SVG.SaveToFile(SaveDialog.FileName);
     SVG.Destroy;
@@ -1180,14 +1181,21 @@ begin
       Bit[0] := TBGRABitmap.Create;
       Bit[0].SetSize(aScreen.Width, aScreen.Height);
       Bit[0].AlphaFill(255);
-      Bit[0].Fill(ScreenColor);
+
+      SVG := TBGRASVG.Create;
+      if ASetting = ClientFile then
       begin
-        SVG := TBGRASVG.Create;
+        Bit[0].Fill(ScreenColor);
         SVG.LoadFromResource('TEMPLATE');
-        SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, aSetting);
-        SVG.StretchDraw(Bit[0].Canvas2D, taLeftJustify, tlCenter, 0, 0, Bit[0].Width, Bit[0].Height, False);
-        SVG.Destroy;
+      end else
+      begin
+        Bit[0].Fill(clWhite);
+        SVG.LoadFromResource('TEMPLATEBLACK');
       end;
+      SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, aSetting);
+      SVG.StretchDraw(Bit[0].Canvas2D, taLeftJustify, tlCenter, 0, 0, Bit[0].Width, Bit[0].Height, False);
+      SVG.Destroy;
+
       Bit[0].InvalidateBitmap;
       Bit[0].Draw(aScreen.Canvas, 0, 0);
       Bit[0].Destroy;

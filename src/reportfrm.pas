@@ -96,7 +96,7 @@ begin
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Mean coil diameter                 Dm        %s', [GetString(SpringSolver.Dm)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Outside diameter                   De        %s', [GetString(SpringSolver.De)]));
+  S.Add(Format('   Outside diameter                   De        %s', [GetString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Number of active coils             n         %0.2f', [SpringSolver.ActiveColis]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));

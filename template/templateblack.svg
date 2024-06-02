@@ -1,0 +1,4394 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   fill="none"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="templateblack.svg"
+   version="1.1"
+   viewBox="0 0 210 297"
+   id="svg3135">
+  <metadata
+     id="metadata3139">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3137">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3145">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3141" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop3143" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3145"
+       id="linearGradient3147"
+       x1="26.534826"
+       y1="180.24989"
+       x2="203.6784"
+       y2="180.24989"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:current-layer="svg3135"
+     inkscape:cx="361.13795"
+     inkscape:cy="568.82992"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:pagecheckerboard="0"
+     inkscape:pageopacity="0.0"
+     inkscape:showpageshadow="2"
+     inkscape:window-height="705"
+     inkscape:window-maximized="1"
+     inkscape:window-width="1366"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:zoom="0.71181884"
+     pagecolor="#ffffff"
+     showgrid="false"
+     id="namedview1987"
+     inkscape:document-rotation="0" />
+  <g
+     stroke="#f00"
+     stroke-width=".24987"
+     id="g2037"
+     style="stroke:#000000;stroke-opacity:1">
+    <line
+       x1="61.027"
+       x2="31.046"
+       y1="23.061"
+       y2="24.06"
+       id="line1989"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="31.046"
+       x2="61.027"
+       y1="96.028"
+       y2="95.029"
+       id="line1991"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="62.758"
+       x2="29.047"
+       y1="22.061"
+       y2="22.061"
+       id="line1993"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="29.315"
+       x2="63.026"
+       y1="97.028"
+       y2="97.028"
+       id="line1995"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m61.027 23.061a1.9988 1.9991 0 0 0 1.731-0.99956"
+       id="path1997"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m31.046 96.028a1.9988 1.9991 0 0 0-1.731 0.99956"
+       id="path1999"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m29.047 22.061a1.9988 1.9991 0 0 0 1.9988 1.9991"
+       id="path2001"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m63.026 97.028a1.9988 1.9991 0 0 0-1.9988-1.9991"
+       id="path2003"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="30.787"
+       x2="42.084"
+       y1="24.04"
+       y2="25.519"
+       id="line2005"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="61.286"
+       x2="49.989"
+       y1="95.049"
+       y2="93.57"
+       id="line2007"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="61.286"
+       x2="31.305"
+       y1="27.039"
+       y2="30.967"
+       id="line2009"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="30.787"
+       x2="60.768"
+       y1="92.05"
+       y2="88.122"
+       id="line2011"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="30.787"
+       x2="60.768"
+       y1="26.999"
+       y2="23.081"
+       id="line2013"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="61.286"
+       x2="31.305"
+       y1="92.09"
+       y2="96.008"
+       id="line2015"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m30.787 26.999a1.9988 1.9991 0 0 0 0.51828 3.9645"
+       id="path2017"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m61.286 92.09a1.9988 1.9991 0 0 0-0.51828-3.9645"
+       id="path2019"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m61.286 27.039a1.9988 1.9991 0 0 0-0.51828-3.9645"
+       id="path2021"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m30.787 92.05a1.9988 1.9991 0 0 0 0.51828 3.9645"
+       id="path2023"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="30.787"
+       x2="60.768"
+       y1="30.967"
+       y2="34.885"
+       id="line2025"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="61.286"
+       x2="31.305"
+       y1="88.122"
+       y2="84.204"
+       id="line2027"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="46.464"
+       x2="61.286"
+       y1="28.978"
+       y2="30.917"
+       id="line2029"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="45.609"
+       x2="30.787"
+       y1="90.111"
+       y2="88.172"
+       id="line2031"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="61.027"
+       cy="-32.896"
+       rx="1.9988"
+       ry="1.9991"
+       id="ellipse2033"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="31.046"
+       cy="-86.193"
+       rx="1.9988"
+       ry="1.9991"
+       id="ellipse2035"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     stroke="#ff0"
+     id="g2065"
+     style="stroke:#000000;stroke-opacity:1">
+    <g
+       stroke-width=".12993"
+       id="g2059"
+       style="stroke:#000000;stroke-opacity:1">
+      <line
+         x1="62.958"
+         x2="60.509"
+         y1="32.386"
+         y2="34.835"
+         id="line2039"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="29.115"
+         x2="31.563"
+         y1="86.703"
+         y2="84.254"
+         id="line2041"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="62.44"
+         x2="61.027"
+         y1="31.487"
+         y2="32.896"
+         id="line2043"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="29.633"
+         x2="31.046"
+         y1="87.602"
+         y2="86.193"
+         id="line2045"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="61.027"
+         x2="59.614"
+         y1="32.896"
+         y2="34.316"
+         id="line2047"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="31.046"
+         x2="32.459"
+         y1="86.193"
+         y2="84.773"
+         id="line2049"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="61.545"
+         x2="59.614"
+         y1="30.967"
+         y2="32.896"
+         id="line2051"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="30.528"
+         x2="32.459"
+         y1="88.122"
+         y2="86.193"
+         id="line2053"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="59.614"
+         x2="59.096"
+         y1="32.896"
+         y2="33.416"
+         id="line2055"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="32.459"
+         x2="32.977"
+         y1="86.193"
+         y2="85.673"
+         id="line2057"
+         style="stroke:#000000;stroke-opacity:1" />
+    </g>
+    <line
+       x1="46.036"
+       x2="46.036"
+       y1="20.062"
+       y2="45.051"
+       stroke-dasharray="25.7175, 4.2863, 4.2863, 4.2863"
+       stroke-dashoffset="38.935"
+       stroke-width=".089952"
+       id="line2061"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="46.036"
+       x2="46.036"
+       y1="99.027"
+       y2="71.039"
+       stroke-dasharray="25.7175, 4.2863, 4.2863, 4.2863"
+       stroke-dashoffset="56.723"
+       stroke-width=".089952"
+       id="line2063"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     fill="#ffff00"
+     font-family="Tahoma"
+     font-size="2.7985px"
+     stroke-width=".99947"
+     id="g2087"
+     style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="104.88348"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2067"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Illustr.1.</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="43.042183"
+       y="104.35717"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2069"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Spring ends lined</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="43.042183"
+       y="108.35505"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2071"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">up and ground</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="107.00826"
+       y="104.88348"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2073"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Illustr.2.</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="104.35717"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2075"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Spring ends</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="108.36984"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2077"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">lined up</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="146.98706"
+       y="104.88348"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2079"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Illustr.3.</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="162.97858"
+       y="104.35717"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2081"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Spring ends lined up,</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="162.97858"
+       y="108.34166"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2083"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">forged and ground</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="119.43488"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2085"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">No. of Active Coils</text>
+  </g>
+  <g
+     fill="#00ff00"
+     font-family="Tahoma"
+     stroke-width=".99947"
+     id="g2127"
+     style="fill:#000000;fill-opacity:1">
+    <g
+       font-size="2.7985px"
+       id="g2117"
+       style="fill:#000000;fill-opacity:1">
+      <g
+         text-anchor="end"
+         id="g2111"
+         style="fill:#000000;fill-opacity:1">
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="119.33553"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2089"
+           style="fill:#000000;fill-opacity:1">@1.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="123.33401"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2091"
+           style="fill:#000000;fill-opacity:1">@1.1</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="151.31856"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2093"
+           style="fill:#000000;fill-opacity:1">@4.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="179.30373"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2095"
+           style="fill:#000000;fill-opacity:1">@6.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="187.29948"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2097"
+           style="fill:#000000;fill-opacity:1">@7.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="215.28465"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2099"
+           style="fill:#000000;fill-opacity:1">@9.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="227.27829"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2101"
+           style="fill:#000000;fill-opacity:1">@10.1</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="231.27547"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2103"
+           style="fill:#000000;fill-opacity:1">@10.2</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="131.32846"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2105"
+           style="fill:#000000;fill-opacity:1">@2.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="155.31705"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2107"
+           style="fill:#000000;fill-opacity:1">@4.1</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="101.01144"
+           y="223.28041"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2109"
+           style="fill:#000000;fill-opacity:1">@10.0</text>
+      </g>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="31.048542"
+         y="243.26981"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2113"
+         style="fill:#000000;fill-opacity:1">@14.0</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="31.048542"
+         y="247.2683"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2115"
+         style="fill:#000000;fill-opacity:1">@14.1</text>
+    </g>
+    <g
+       font-size="4.8974px"
+       id="g2125"
+       style="fill:#000000;fill-opacity:1">
+      <text
+         transform="scale(.99991 1.0001)"
+         x="121.00084"
+         y="256.88358"
+         dx="0"
+         dy="3.4981451"
+         line-height="1.1"
+         id="text2119"
+         style="fill:#000000;fill-opacity:1">@15.0</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="121.00084"
+         y="276.87418"
+         dx="0"
+         dy="3.4981451"
+         line-height="1.1"
+         id="text2121"
+         style="fill:#000000;fill-opacity:1">@15.1</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="94.514885"
+         y="276.87189"
+         dx="0"
+         dy="3.4981451"
+         text-anchor="middle"
+         line-height="1.1"
+         id="text2123"
+         style="fill:#000000;fill-opacity:1">@15.2</text>
+    </g>
+  </g>
+  <g
+     fill="#ffff00"
+     font-family="Tahoma"
+     font-size="2.7985px"
+     stroke-width=".99947"
+     id="g2243"
+     style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="123.43276"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2129"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Total No. of Coils</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="139.42429"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2131"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Direction of Coils</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="101.01144"
+       y="139.16782"
+       dx="0"
+       dy="1.99894"
+       text-anchor="end"
+       line-height="1.1"
+       id="text2133"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">right</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="101.01144"
+       y="143.42546"
+       dx="0"
+       dy="1.99894"
+       text-anchor="end"
+       line-height="1.1"
+       id="text2135"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">left</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="163.14839"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2137"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Burring of Spring Ends</text>
+    <g
+       text-anchor="end"
+       id="g2145"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">
+      <text
+         transform="scale(.99991 1.0001)"
+         x="101.01144"
+         y="163.69211"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2139"
+         style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">no</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="101.01144"
+         y="167.41614"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2141"
+         style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">inside</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="101.01144"
+         y="171.41402"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2143"
+         style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">outside</text>
+    </g>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="151.41792"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2147"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Diameter of mandrel</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="179.15401"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2149"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Stress Cycle Frequency</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="187.13568"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2151"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Range of working temperature from / to</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="195.43958"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2153"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Wire or</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="101.01144"
+       y="195.40129"
+       dx="0"
+       dy="1.99894"
+       text-anchor="end"
+       line-height="1.1"
+       id="text2155"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">drawn</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="199.39247"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2157"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Rod Surface</text>
+    <g
+       text-anchor="end"
+       id="g2165"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">
+      <text
+         transform="scale(.99991 1.0001)"
+         x="101.01144"
+         y="199.39917"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2159"
+         style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">rolled</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="101.01144"
+         y="203.1339"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2161"
+         style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">tipless grinding</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="101.01144"
+         y="207.13916"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2163"
+         style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">shoot peened</text>
+    </g>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="215.38399"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2167"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Surface Treatment</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="227.12117"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2169"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Permissible Shearing Strain</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="231.3822"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2171"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Shear Modulus at 20 C°</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="131.19894"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2173"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Spring rate</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="155.4158"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2175"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Diameter of bush</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="27.050661"
+       y="239.37128"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2177"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Additional Information:</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="161.97911"
+       y="119.17841"
+       dx="0"
+       dy="1.99894"
+       text-anchor="middle"
+       line-height="1.1"
+       id="text2179"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Permissible Deviations according</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="161.97911"
+       y="123.18369"
+       dx="0"
+       dy="1.99894"
+       text-anchor="middle"
+       line-height="1.1"
+       id="text2181"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">to EN 15800 Quality Class</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="135.74353"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2183"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">De, Di</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="140.95497"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2185"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">L0</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="145.9899"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2187"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">F1</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="150.96986"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2189"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">F2</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="155.96721"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2191"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">e1</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="160.94707"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2193"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">e2</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="167.14627"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2195"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Manufacturing Tolerance</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="180.4693"
+       y="167.16037"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2197"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">by:</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="175.15613"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2199"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">a)</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="126.99766"
+       y="175.14203"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2201"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">if the spring force and the</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="126.99766"
+       y="179.13992"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2203"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">spring length are specified</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="187.14977"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2205"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">b)</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="126.99766"
+       y="187.13568"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2207"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">if the spring force, the spring</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="126.99766"
+       y="191.13356"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2209"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">length and L0 are specified</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="126.99766"
+       y="203.1272"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2211"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">if two spring forces and the</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="203.14128"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2213"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">c)</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="126.99766"
+       y="207.12508"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2215"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">spring lengths are specified</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="180.4693"
+       y="175.43668"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2217"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">L0</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="180.4693"
+       y="187.40553"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2219"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">n and d</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="180.4693"
+       y="195.17371"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2221"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">n and De, Di</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="180.4693"
+       y="203.16946"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2223"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">L0, n and d</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="180.4693"
+       y="211.16524"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2225"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">L0, n and</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="180.4693"
+       y="215.20139"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2227"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">De, Di</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="223.12329"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2229"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Setting Length</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="122.99978"
+       y="227.12117"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2231"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Supply remaining springs</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="166.97646"
+       y="227.46619"
+       dx="0"
+       dy="1.99894"
+       text-anchor="end"
+       line-height="1.1"
+       id="text2233"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">set</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="166.97646"
+       y="231.46136"
+       dx="0"
+       dy="1.99894"
+       text-anchor="end"
+       line-height="1.1"
+       id="text2235"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">not set</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="175.97169"
+       y="223.12329"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2237"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">Springs to be supplied</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="175.97169"
+       y="227.12117"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2239"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">not set may be longer</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="175.97169"
+       y="231.3822"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2241"
+       style="stroke:none;stroke-opacity:1;fill:#000000;fill-opacity:1">than L0</text>
+  </g>
+  <g
+     fill="#00ff00"
+     font-family="Tahoma"
+     font-size="2.7985px"
+     stroke-width=".99947"
+     id="g2287"
+     style="fill:#000000;fill-opacity:1">
+    <text
+       transform="matrix(0 -1.0001 .99991 0 0 0)"
+       x="-38.495502"
+       y="68.685394"
+       dx="0"
+       dy="1.99894"
+       text-anchor="end"
+       line-height="1.1"
+       id="text2245"
+       style="fill:#000000;fill-opacity:1">@0.02</text>
+    <g
+       text-anchor="middle"
+       id="g2253"
+       style="fill:#000000;fill-opacity:1">
+      <text
+         transform="scale(.99991 1.0001)"
+         x="46.043488"
+         y="47.700218"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2247"
+         style="fill:#000000;fill-opacity:1">@0.03</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="46.041492"
+         y="55.697273"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2249"
+         style="fill:#000000;fill-opacity:1">@0.04</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="46.09996"
+         y="63.693031"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2251"
+         style="fill:#000000;fill-opacity:1">@0.05</text>
+    </g>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="32.494576"
+       y="11.720593"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2255"
+       style="fill:#000000;fill-opacity:1">@0.00</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="81.022041"
+       y="11.720593"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2257"
+       style="fill:#000000;fill-opacity:1">@0.01</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="139.99367"
+       y="38.706284"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2259"
+       style="fill:#000000;fill-opacity:1">@0.17</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="139.99367"
+       y="31.709993"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2261"
+       style="fill:#000000;fill-opacity:1">@0.15</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="139.99367"
+       y="24.712391"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2263"
+       style="fill:#000000;fill-opacity:1">@0.13</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="139.99367"
+       y="17.717413"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2265"
+       style="fill:#000000;fill-opacity:1">@0.11</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="169.97487"
+       y="38.702286"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2267"
+       style="fill:#000000;fill-opacity:1">@0.18</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="169.97487"
+       y="31.711397"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2269"
+       style="fill:#000000;fill-opacity:1">@0.16</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="169.97487"
+       y="24.715107"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2271"
+       style="fill:#000000;fill-opacity:1">@0.14</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="169.97487"
+       y="17.717413"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2273"
+       style="fill:#000000;fill-opacity:1">@0.12</text>
+    <g
+       text-anchor="middle"
+       id="g2285"
+       style="fill:#000000;fill-opacity:1">
+      <text
+         transform="matrix(0 -1.0001 .99991 0 0 0)"
+         x="-62.967922"
+         y="84.701881"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2275"
+         style="fill:#000000;fill-opacity:1">@0.07</text>
+      <text
+         transform="matrix(0 -1.0001 .99991 0 0 0)"
+         x="-66.471458"
+         y="91.688179"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2277"
+         style="fill:#000000;fill-opacity:1">@0.08</text>
+      <text
+         transform="matrix(0 -1.0001 .99991 0 0 0)"
+         x="-69.964211"
+         y="98.694466"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2279"
+         style="fill:#000000;fill-opacity:1">@0.09</text>
+      <text
+         transform="matrix(0 -1.0001 .99991 0 0 0)"
+         x="-72.462883"
+         y="105.69075"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2281"
+         style="fill:#000000;fill-opacity:1">@0.10</text>
+      <text
+         transform="matrix(0 -1.0001 .99991 0 0 0)"
+         x="-59.469776"
+         y="77.705589"
+         dx="0"
+         dy="1.99894"
+         line-height="1.1"
+         id="text2283"
+         style="fill:#000000;fill-opacity:1">@0.06</text>
+    </g>
+  </g>
+  <g
+     stroke="#f00"
+     stroke-width=".24987"
+     id="g2315"
+     style="stroke:#000000;stroke-opacity:1">
+    <line
+       x1="138.98"
+       x2="138.98"
+       y1="97.028"
+       y2="93.03"
+       id="line2289"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="138.98"
+       x2="153.97"
+       y1="93.03"
+       y2="93.03"
+       id="line2291"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m153.97 97.028a1.9988 1.9991 0 0 0 0-3.9982"
+       id="path2293"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="138.98"
+       x2="153.97"
+       y1="97.028"
+       y2="97.028"
+       id="line2295"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="154.23"
+       x2="144.14"
+       y1="93.05"
+       y2="92.35"
+       id="line2297"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="123.73"
+       x2="138.98"
+       y1="94.959"
+       y2="95.998"
+       id="line2299"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="123.73"
+       x2="153.71"
+       y1="90.991"
+       y2="87.072"
+       id="line2301"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="154.23"
+       x2="124.25"
+       y1="91.031"
+       y2="94.959"
+       id="line2303"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m154.23 91.031a1.9988 1.9991 0 0 0-0.51827-3.9645"
+       id="path2305"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m123.73 90.991a1.9988 1.9992 0 0 0 0.51828 3.9646"
+       id="path2307"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="154.23"
+       x2="124.25"
+       y1="87.072"
+       y2="83.154"
+       id="line2309"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="138.55"
+       x2="123.73"
+       y1="89.052"
+       y2="87.112"
+       id="line2311"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="123.99"
+       cy="-85.133"
+       rx="1.9988"
+       ry="1.9991"
+       id="ellipse2313"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     stroke="#ff0"
+     id="g2337"
+     style="stroke:#000000;stroke-opacity:1">
+    <g
+       stroke-width=".12993"
+       id="g2327"
+       style="stroke:#000000;stroke-opacity:1">
+      <line
+         x1="122.06"
+         x2="124.51"
+         y1="85.653"
+         y2="83.204"
+         id="line2317"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="122.58"
+         x2="123.99"
+         y1="86.543"
+         y2="85.133"
+         id="line2319"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="123.99"
+         x2="125.4"
+         y1="85.133"
+         y2="83.724"
+         id="line2321"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="123.47"
+         x2="125.4"
+         y1="87.062"
+         y2="85.133"
+         id="line2323"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="125.4"
+         x2="125.92"
+         y1="85.133"
+         y2="84.613"
+         id="line2325"
+         style="stroke:#000000;stroke-opacity:1" />
+    </g>
+    <g
+       stroke-dasharray="25.7039, 4.28403, 4.28403, 4.28403"
+       stroke-dashoffset="41.413"
+       stroke-width=".089952"
+       id="g2335"
+       style="stroke:#000000;stroke-opacity:1">
+      <line
+         x1="123.99"
+         x2="123.99"
+         y1="99.027"
+         y2="79.036"
+         id="line2329"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="138.98"
+         x2="138.98"
+         y1="99.027"
+         y2="79.036"
+         id="line2331"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="153.97"
+         x2="153.97"
+         y1="99.027"
+         y2="79.036"
+         id="line2333"
+         style="stroke:#000000;stroke-opacity:1" />
+    </g>
+  </g>
+  <g
+     stroke="#f00"
+     stroke-width=".24987"
+     id="g2365"
+     style="stroke:#000000;stroke-opacity:1">
+    <line
+       x1="173.97"
+       x2="167.7"
+       y1="95.789"
+       y2="95.009"
+       id="line2339"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="165.96"
+       x2="199.94"
+       y1="96.028"
+       y2="95.029"
+       id="line2341"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="165.96"
+       x2="199.94"
+       y1="97.028"
+       y2="97.028"
+       id="line2343"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="199.94"
+       x2="184.02"
+       y1="95.029"
+       y2="92.95"
+       id="line2345"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="165.96"
+       x2="165.96"
+       y1="96.028"
+       y2="97.028"
+       id="line2347"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="199.94"
+       x2="199.94"
+       y1="97.028"
+       y2="95.029"
+       id="line2349"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="167.7"
+       x2="197.68"
+       y1="91.051"
+       y2="87.122"
+       id="line2351"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="198.2"
+       x2="168.22"
+       y1="91.091"
+       y2="95.009"
+       id="line2353"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m198.2 91.091a1.9988 1.9991 0 0 0-0.51827-3.9645"
+       id="path2355"
+       style="stroke:#000000;stroke-opacity:1" />
+    <path
+       d="m167.7 91.051a1.9988 1.9991 0 0 0 0.51828 3.9645"
+       id="path2357"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="198.2"
+       x2="168.22"
+       y1="87.122"
+       y2="83.204"
+       id="line2359"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="182.52"
+       x2="167.7"
+       y1="89.111"
+       y2="87.172"
+       id="line2361"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="167.96"
+       cy="-85.193"
+       rx="1.9988"
+       ry="1.9991"
+       id="ellipse2363"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     stroke="#ff0"
+     id="g2387"
+     style="stroke:#000000;stroke-opacity:1">
+    <g
+       stroke-width=".12993"
+       id="g2377"
+       style="stroke:#000000;stroke-opacity:1">
+      <line
+         x1="166.03"
+         x2="168.48"
+         y1="85.703"
+         y2="83.254"
+         id="line2367"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="166.55"
+         x2="167.96"
+         y1="86.603"
+         y2="85.193"
+         id="line2369"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="167.96"
+         x2="169.37"
+         y1="85.193"
+         y2="83.774"
+         id="line2371"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="167.44"
+         x2="169.37"
+         y1="87.122"
+         y2="85.193"
+         id="line2373"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="169.37"
+         x2="169.89"
+         y1="85.193"
+         y2="84.673"
+         id="line2375"
+         style="stroke:#000000;stroke-opacity:1" />
+    </g>
+    <g
+       stroke-dasharray="25.7039, 4.28403, 4.28403, 4.28403"
+       stroke-dashoffset="41.413"
+       stroke-width=".089952"
+       id="g2385"
+       style="stroke:#000000;stroke-opacity:1">
+      <line
+         x1="167.96"
+         x2="167.96"
+         y1="99.027"
+         y2="79.036"
+         id="line2379"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="182.95"
+         x2="182.95"
+         y1="99.027"
+         y2="79.036"
+         id="line2381"
+         style="stroke:#000000;stroke-opacity:1" />
+      <line
+         x1="197.94"
+         x2="197.94"
+         y1="99.027"
+         y2="79.036"
+         id="line2383"
+         style="stroke:#000000;stroke-opacity:1" />
+    </g>
+  </g>
+  <g
+     stroke="#f00"
+     stroke-width=".24987"
+     id="g2403"
+     style="stroke:#000000;stroke-opacity:1">
+    <line
+       x1="18.054"
+       x2="18.054"
+       y1="288.94"
+       y2="253.96"
+       id="line2389"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="18.054"
+       y1="253.96"
+       y2="5.0685"
+       id="line2391"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="204.94"
+       y1="5.0685"
+       y2="5.0685"
+       id="line2393"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="204.94"
+       x2="204.94"
+       y1="5.0685"
+       y2="253.96"
+       id="line2395"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="204.94"
+       x2="204.94"
+       y1="250.96"
+       y2="288.94"
+       id="line2397"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="204.94"
+       x2="18.054"
+       y1="288.94"
+       y2="288.94"
+       id="line2399"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="204.94"
+       y1="253.96"
+       y2="253.96"
+       id="line2401"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     stroke="#ff0"
+     stroke-width=".12993"
+     id="g2431"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+    <line
+       x1="73.02"
+       x2="73.02"
+       y1="288.94"
+       y2="253.96"
+       id="line2405"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="115.99"
+       y1="288.94"
+       y2="253.96"
+       id="line2407"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1=".064966"
+       x2=".064966"
+       y1="296.94"
+       y2=".07068"
+       id="line2409"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1=".064966"
+       x2="209.93"
+       y1=".07068"
+       y2=".07068"
+       id="line2411"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="209.93"
+       x2="209.93"
+       y1=".07068"
+       y2="296.94"
+       id="line2413"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="209.93"
+       x2=".064966"
+       y1="296.94"
+       y2="296.94"
+       id="line2415"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="73.02"
+       y1="273.95"
+       y2="273.95"
+       id="line2417"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="26.049"
+       x2="26.049"
+       y1="288.94"
+       y2="253.96"
+       id="line2419"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="52.033"
+       x2="52.033"
+       y1="288.94"
+       y2="253.96"
+       id="line2421"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="65.025"
+       x2="65.025"
+       y1="288.94"
+       y2="253.96"
+       id="line2423"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="82.014"
+       x2="82.014"
+       y1="273.95"
+       y2="253.96"
+       id="line2425"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="98.004"
+       x2="98.004"
+       y1="273.95"
+       y2="253.96"
+       id="line2427"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="159.97"
+       x2="159.97"
+       y1="288.94"
+       y2="283.95"
+       id="line2429"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     fill="#00ff00"
+     font-family="Tahoma"
+     font-size="2.5187px"
+     stroke-width=".99947"
+     id="g2465"
+     style="fill:#000000;fill-opacity:1">
+    <text
+       transform="scale(.99991 1.0001)"
+       x="22.053312"
+       y="285.46014"
+       dx="0"
+       dy="1.7990459"
+       text-anchor="middle"
+       line-height="1.1"
+       id="text2433"
+       style="fill:#000000;fill-opacity:1">Cond.</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="19.054901"
+       y="290.36145"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2435"
+       style="fill:#000000;fill-opacity:1">@15.3</text>
+    <g
+       text-anchor="middle"
+       id="g2447"
+       style="fill:#000000;fill-opacity:1">
+      <text
+         transform="scale(.99991 1.0001)"
+         x="39.0443"
+         y="285.45404"
+         dx="0"
+         dy="1.7990459"
+         line-height="1.1"
+         id="text2437"
+         style="fill:#000000;fill-opacity:1">Modification</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="58.533966"
+         y="285.50061"
+         dx="0"
+         dy="1.7990459"
+         line-height="1.1"
+         id="text2439"
+         style="fill:#000000;fill-opacity:1">Date</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="69.028404"
+         y="285.50061"
+         dx="0"
+         dy="1.7990459"
+         line-height="1.1"
+         id="text2441"
+         style="fill:#000000;fill-opacity:1">Name</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="90.017273"
+         y="255.51651"
+         dx="0"
+         dy="1.7990459"
+         line-height="1.1"
+         id="text2443"
+         style="fill:#000000;fill-opacity:1">Date</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="106.00879"
+         y="255.51651"
+         dx="0"
+         dy="1.7990459"
+         line-height="1.1"
+         id="text2445"
+         style="fill:#000000;fill-opacity:1">Name</text>
+    </g>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="74.025749"
+       y="260.24319"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2449"
+       style="fill:#000000;fill-opacity:1">Compl.</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="74.025749"
+       y="265.47314"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2451"
+       style="fill:#000000;fill-opacity:1">Check</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="74.025749"
+       y="270.46808"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2453"
+       style="fill:#000000;fill-opacity:1">Stand.</text>
+    <text
+       transform="matrix(0 -1.0001 .99991 0 0 0)"
+       x="-286.91855"
+       y="3.8589594"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2455"
+       style="fill:#000000;fill-opacity:1">Copying of this document and giving it to other and the use</text>
+    <text
+       transform="matrix(0 -1.0001 .99991 0 0 0)"
+       x="-286.91855"
+       y="6.6214952"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2457"
+       style="fill:#000000;fill-opacity:1">or communication of the contents therof, are forbidden with-</text>
+    <text
+       transform="matrix(0 -1.0001 .99991 0 0 0)"
+       x="-286.91858"
+       y="9.2690907"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2459"
+       style="fill:#000000;fill-opacity:1">out express authority. Offenders are liable to the payment</text>
+    <text
+       transform="matrix(0 -1.0001 .99991 0 0 0)"
+       x="-286.91858"
+       y="11.954666"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2461"
+       style="fill:#000000;fill-opacity:1">of damages. All rights are reserved in the event of the grant</text>
+    <text
+       transform="matrix(0 -1.0001 .99991 0 0 0)"
+       x="-286.91858"
+       y="14.653235"
+       dx="0"
+       dy="1.7990459"
+       line-height="1.1"
+       id="text2463"
+       style="fill:#000000;fill-opacity:1">of a patent or the registration of a utility model or design.</text>
+  </g>
+  <g
+     stroke="#ff0"
+     stroke-width=".12993"
+     id="g2529"
+     style="stroke:#000000;stroke-opacity:1">
+    <line
+       x1="18.054"
+       x2="23.051"
+       y1="116.52"
+       y2="116.52"
+       id="line2467"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="109"
+       y1="116.52"
+       y2="116.52"
+       id="line2469"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="23.051"
+       y1="136.51"
+       y2="136.51"
+       id="line2471"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="23.051"
+       y1="128.51"
+       y2="128.51"
+       id="line2473"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="23.051"
+       y1="236.47"
+       y2="236.47"
+       id="line2475"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="109"
+       y1="236.47"
+       y2="236.47"
+       id="line2477"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="23.051"
+       y1="176.49"
+       y2="176.49"
+       id="line2479"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="109"
+       y1="176.49"
+       y2="176.49"
+       id="line2481"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="18.054"
+       x2="23.051"
+       y1="192.49"
+       y2="192.49"
+       id="line2483"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="109"
+       y1="192.49"
+       y2="192.49"
+       id="line2485"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="185.49"
+       y2="176.49"
+       id="line2487"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="212.48"
+       y2="192.49"
+       id="line2489"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="253.96"
+       y2="236.47"
+       id="line2491"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="236.47"
+       y2="220.47"
+       id="line2493"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="220.47"
+       y2="212.48"
+       id="line2495"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="192.49"
+       y2="185.49"
+       id="line2497"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="160.5"
+       y2="148.51"
+       id="line2499"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="136.51"
+       y2="128.51"
+       id="line2501"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="128.51"
+       y2="116.52"
+       id="line2503"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="176.49"
+       y2="160.5"
+       id="line2505"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="23.051"
+       x2="23.051"
+       y1="148.51"
+       y2="136.51"
+       id="line2507"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="148.51"
+       y2="136.51"
+       id="line2509"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="236.47"
+       y2="220.47"
+       id="line2511"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="220.47"
+       y2="212.48"
+       id="line2513"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="212.48"
+       y2="192.49"
+       id="line2515"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="192.49"
+       y2="184.49"
+       id="line2517"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="184.49"
+       y2="176.49"
+       id="line2519"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="160.5"
+       y2="148.51"
+       id="line2521"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="176.49"
+       y2="160.5"
+       id="line2523"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="136.51"
+       y2="128.51"
+       id="line2525"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="109"
+       x2="109"
+       y1="128.51"
+       y2="116.52"
+       id="line2527"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     fill="#00ff00"
+     font-family="Tahoma"
+     stroke-width=".99947"
+     id="g2643"
+     style="fill:#000000;fill-opacity:1">
+    <g
+       font-size="2.7985px"
+       id="g2611"
+       style="fill:#000000;fill-opacity:1">
+      <g
+         text-anchor="middle"
+         id="g2585"
+         style="fill:#000000;fill-opacity:1">
+        <text
+           transform="scale(.99991 1.0001)"
+           x="33.047482"
+           y="108.84039"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2531"
+           style="fill:#000000;fill-opacity:1">@0.20</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="154.98282"
+           y="135.82678"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2533"
+           style="fill:#000000;fill-opacity:1">@11.00</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="174.97221"
+           y="135.82678"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2535"
+           style="fill:#000000;fill-opacity:1">@11.01</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="194.96162"
+           y="135.82608"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2537"
+           style="fill:#000000;fill-opacity:1">@11.02</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="154.98282"
+           y="140.82413"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2539"
+           style="fill:#000000;fill-opacity:1">@11.10</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="174.97221"
+           y="140.82474"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2541"
+           style="fill:#000000;fill-opacity:1">@11.11</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="194.96162"
+           y="140.82343"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2543"
+           style="fill:#000000;fill-opacity:1">@11.12</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="154.98282"
+           y="145.82077"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2545"
+           style="fill:#000000;fill-opacity:1">@11.20</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="174.97221"
+           y="145.82077"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2547"
+           style="fill:#000000;fill-opacity:1">@11.21</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="194.96162"
+           y="145.82077"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2549"
+           style="fill:#000000;fill-opacity:1">@11.22</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="154.98282"
+           y="150.81813"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2551"
+           style="fill:#000000;fill-opacity:1">@11.30</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="174.97221"
+           y="150.81813"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2553"
+           style="fill:#000000;fill-opacity:1">@11.31</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="194.96162"
+           y="150.81813"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2555"
+           style="fill:#000000;fill-opacity:1">@11.32</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="154.98282"
+           y="155.81618"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2557"
+           style="fill:#000000;fill-opacity:1">@11.40</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="174.97221"
+           y="155.81679"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2559"
+           style="fill:#000000;fill-opacity:1">@11.41</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="194.96162"
+           y="155.81548"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2561"
+           style="fill:#000000;fill-opacity:1">@11.42</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="154.98282"
+           y="160.81352"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2563"
+           style="fill:#000000;fill-opacity:1">@11.50</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="174.97221"
+           y="160.81413"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2565"
+           style="fill:#000000;fill-opacity:1">@11.51</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="194.96162"
+           y="160.81282"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2567"
+           style="fill:#000000;fill-opacity:1">@11.52</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="113.00508"
+           y="108.84039"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2569"
+           style="fill:#000000;fill-opacity:1">@0.21</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="152.98389"
+           y="108.84039"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2571"
+           style="fill:#000000;fill-opacity:1">@0.22</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="199.95897"
+           y="175.30515"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2573"
+           style="fill:#000000;fill-opacity:1">@12.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="199.95897"
+           y="187.29878"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2575"
+           style="fill:#000000;fill-opacity:1">@12.1</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="199.95897"
+           y="195.29456"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2577"
+           style="fill:#000000;fill-opacity:1">@12.2</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="199.95897"
+           y="203.29031"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2579"
+           style="fill:#000000;fill-opacity:1">@12.3</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="199.95897"
+           y="211.28607"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2581"
+           style="fill:#000000;fill-opacity:1">@12.4</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="169.97487"
+           y="227.27759"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2583"
+           style="fill:#000000;fill-opacity:1">@13.1</text>
+      </g>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="169.97487"
+         y="223.27971"
+         dx="0"
+         dy="1.99894"
+         text-anchor="end"
+         line-height="1.1"
+         id="text2587"
+         style="fill:#000000;fill-opacity:1">@13.0</text>
+      <g
+         text-anchor="middle"
+         id="g2609"
+         style="fill:#000000;fill-opacity:1">
+        <text
+           transform="scale(.99991 1.0001)"
+           x="169.97487"
+           y="231.27547"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2589"
+           style="fill:#000000;fill-opacity:1">@13.2</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="143.3221"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2591"
+           style="fill:#000000;fill-opacity:1">@3.1</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="139.32422"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2593"
+           style="fill:#000000;fill-opacity:1">@3.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="163.31221"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2595"
+           style="fill:#000000;fill-opacity:1">@5.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="167.3107"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2597"
+           style="fill:#000000;fill-opacity:1">@5.1</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="171.30727"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2599"
+           style="fill:#000000;fill-opacity:1">@5.2</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="195.29256"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2601"
+           style="fill:#000000;fill-opacity:1">@8.0</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="199.29044"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2603"
+           style="fill:#000000;fill-opacity:1">@8.1</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="203.28831"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2605"
+           style="fill:#000000;fill-opacity:1">@8.2</text>
+        <text
+           transform="scale(.99991 1.0001)"
+           x="104.00985"
+           y="207.28619"
+           dx="0"
+           dy="1.99894"
+           line-height="1.1"
+           id="text2607"
+           style="fill:#000000;fill-opacity:1">@8.3</text>
+      </g>
+    </g>
+    <g
+       font-size="3.4982px"
+       text-anchor="middle"
+       id="g2641"
+       style="fill:#000000;fill-opacity:1">
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="131.22513"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2613"
+         style="fill:#000000;fill-opacity:1">2</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="119.25327"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2615"
+         style="fill:#000000;fill-opacity:1">1</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="139.1949"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2617"
+         style="fill:#000000;fill-opacity:1">3</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="163.20816"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2619"
+         style="fill:#000000;fill-opacity:1">5</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="151.24051"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2621"
+         style="fill:#000000;fill-opacity:1">4</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="179.17619"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2623"
+         style="fill:#000000;fill-opacity:1">6</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="187.22144"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2625"
+         style="fill:#000000;fill-opacity:1">7</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="195.16013"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2627"
+         style="fill:#000000;fill-opacity:1">8</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="215.15712"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2629"
+         style="fill:#000000;fill-opacity:1">9</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="223.15118"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2631"
+         style="fill:#000000;fill-opacity:1">10</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="116.50323"
+         y="119.25327"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2633"
+         style="fill:#000000;fill-opacity:1">11</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="116.50323"
+         y="167.20604"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2635"
+         style="fill:#000000;fill-opacity:1">12</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="116.50323"
+         y="223.15038"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2637"
+         style="fill:#000000;fill-opacity:1">13</text>
+      <text
+         transform="scale(.99991 1.0001)"
+         x="20.554108"
+         y="239.18967"
+         dx="0"
+         dy="2.4986751"
+         line-height="1.1"
+         id="text2639"
+         style="fill:#000000;fill-opacity:1">14</text>
+    </g>
+  </g>
+  <g
+     fill="#ffff00"
+     font-family="Tahoma"
+     font-size="2.7985px"
+     stroke-width=".99947"
+     text-anchor="middle"
+     id="g2651"
+     style="fill:#000000;fill-opacity:1">
+    <text
+       transform="scale(.99991 1.0001)"
+       x="154.98282"
+       y="130.99785"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2645"
+       style="fill:#000000;fill-opacity:1">1</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="174.97221"
+       y="130.98045"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2647"
+       style="fill:#000000;fill-opacity:1">2</text>
+    <text
+       transform="scale(.99991 1.0001)"
+       x="194.96162"
+       y="130.95967"
+       dx="0"
+       dy="1.99894"
+       line-height="1.1"
+       id="text2649"
+       style="fill:#000000;fill-opacity:1">3</text>
+  </g>
+  <g
+     stroke="#ff0"
+     stroke-width=".12993"
+     id="g2671"
+     style="stroke:#000000;stroke-opacity:1">
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-140.51"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2653"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-144.51"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2655"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-164.5"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2657"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-168.5"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2659"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-172.49"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2661"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-196.48"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2663"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-200.48"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2665"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-204.48"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2667"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="104"
+       cy="-208.48"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2669"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <text
+     transform="scale(.99991 1.0001)"
+     x="27.050661"
+     y="223.38644"
+     dx="0"
+     dy="1.99894"
+     fill="#ffff00"
+     font-family="Tahoma"
+     font-size="2.7985px"
+     stroke-width=".99947"
+     line-height="1.1"
+     id="text2673"
+     style="fill:#000000;fill-opacity:1;">Material</text>
+  <g
+     stroke="#ff0"
+     stroke-width=".12993"
+     id="g2817"
+     style="stroke:#000000;stroke-opacity:1">
+    <line
+       x1="113.99"
+       x2="118.99"
+       y1="116.52"
+       y2="116.52"
+       id="line2675"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="204.94"
+       y1="116.52"
+       y2="116.52"
+       id="line2677"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="113.99"
+       x2="118.99"
+       y1="172.49"
+       y2="172.49"
+       id="line2679"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="177.95"
+       y1="172.49"
+       y2="172.49"
+       id="line2681"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="177.95"
+       x2="204.94"
+       y1="172.49"
+       y2="172.49"
+       id="line2683"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="122.99"
+       y1="134.51"
+       y2="134.51"
+       id="line2685"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="122.99"
+       x2="141.98"
+       y1="134.51"
+       y2="134.51"
+       id="line2687"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="141.98"
+       x2="162.96"
+       y1="134.51"
+       y2="134.51"
+       id="line2689"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="162.96"
+       x2="183.95"
+       y1="134.51"
+       y2="134.51"
+       id="line2691"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="183.95"
+       x2="204.94"
+       y1="134.51"
+       y2="134.51"
+       id="line2693"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="177.95"
+       x2="204.94"
+       y1="208.48"
+       y2="208.48"
+       id="line2695"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="113.99"
+       x2="113.99"
+       y1="164.5"
+       y2="116.52"
+       id="line2697"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="118.99"
+       y1="164.5"
+       y2="159.5"
+       id="line2699"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="118.99"
+       y1="159.5"
+       y2="154.5"
+       id="line2701"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="118.99"
+       y1="154.5"
+       y2="149.5"
+       id="line2703"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="118.99"
+       y1="149.5"
+       y2="144.51"
+       id="line2705"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="118.99"
+       y1="144.51"
+       y2="139.51"
+       id="line2707"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="118.99"
+       y1="139.51"
+       y2="134.51"
+       id="line2709"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="118.99"
+       x2="118.99"
+       y1="134.51"
+       y2="116.52"
+       id="line2711"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="177.95"
+       x2="177.95"
+       y1="172.49"
+       y2="164.5"
+       id="line2713"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="177.95"
+       x2="177.95"
+       y1="220.47"
+       y2="184.49"
+       id="line2715"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="177.95"
+       x2="177.95"
+       y1="184.49"
+       y2="172.49"
+       id="line2717"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="144.98"
+       x2="144.98"
+       y1="134.51"
+       y2="130.51"
+       id="line2719"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="144.98"
+       x2="144.98"
+       y1="139.51"
+       y2="134.51"
+       id="line2721"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="144.98"
+       x2="144.98"
+       y1="144.51"
+       y2="139.51"
+       id="line2723"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="144.98"
+       x2="144.98"
+       y1="149.5"
+       y2="144.51"
+       id="line2725"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="144.98"
+       x2="144.98"
+       y1="154.5"
+       y2="149.5"
+       id="line2727"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="144.98"
+       x2="144.98"
+       y1="164.5"
+       y2="159.5"
+       id="line2729"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="144.98"
+       x2="144.98"
+       y1="159.5"
+       y2="154.5"
+       id="line2731"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="164.96"
+       x2="164.96"
+       y1="164.5"
+       y2="159.5"
+       id="line2733"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="164.96"
+       x2="164.96"
+       y1="159.5"
+       y2="154.5"
+       id="line2735"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="164.96"
+       x2="164.96"
+       y1="154.5"
+       y2="149.5"
+       id="line2737"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="164.96"
+       x2="164.96"
+       y1="149.5"
+       y2="144.51"
+       id="line2739"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="164.96"
+       x2="164.96"
+       y1="144.51"
+       y2="139.51"
+       id="line2741"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="164.96"
+       x2="164.96"
+       y1="139.51"
+       y2="134.51"
+       id="line2743"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="164.96"
+       x2="164.96"
+       y1="134.51"
+       y2="130.51"
+       id="line2745"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="184.95"
+       x2="184.95"
+       y1="134.51"
+       y2="130.51"
+       id="line2747"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="184.95"
+       x2="184.95"
+       y1="139.51"
+       y2="134.51"
+       id="line2749"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="184.95"
+       x2="184.95"
+       y1="144.51"
+       y2="139.51"
+       id="line2751"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="184.95"
+       x2="184.95"
+       y1="149.5"
+       y2="144.51"
+       id="line2753"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="184.95"
+       x2="184.95"
+       y1="154.5"
+       y2="149.5"
+       id="line2755"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="184.95"
+       x2="184.95"
+       y1="164.5"
+       y2="159.5"
+       id="line2757"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="184.95"
+       x2="184.95"
+       y1="159.5"
+       y2="154.5"
+       id="line2759"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="154.97"
+       cy="-137.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2761"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="174.96"
+       cy="-137.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2763"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="194.94"
+       cy="-137.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2765"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="154.97"
+       cy="-142.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2767"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="174.96"
+       cy="-142.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2769"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="194.94"
+       cy="-142.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2771"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="154.97"
+       cy="-147.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2773"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="174.96"
+       cy="-147.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2775"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="194.94"
+       cy="-147.01"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2777"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="154.97"
+       cy="-152"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2779"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="174.96"
+       cy="-152"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2781"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="194.94"
+       cy="-152"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2783"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="154.97"
+       cy="-157"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2785"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="174.96"
+       cy="-157"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2787"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="194.94"
+       cy="-157"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2789"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="154.97"
+       cy="-162"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2791"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="174.96"
+       cy="-162"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2793"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="194.94"
+       cy="-162"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2795"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="199.94"
+       cy="-176.49"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2797"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="199.94"
+       cy="-188.49"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2799"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="199.94"
+       cy="-196.48"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2801"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="199.94"
+       cy="-204.48"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2803"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="199.94"
+       cy="-212.48"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2805"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="169.96"
+       cy="-228.47"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2807"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="169.96"
+       cy="-232.47"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2809"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="33.045"
+       cy="-110.02"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2811"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="112.99"
+       cy="-110.02"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2813"
+       style="stroke:#000000;stroke-opacity:1" />
+    <ellipse
+       transform="scale(1,-1)"
+       cx="152.97"
+       cy="-110.02"
+       rx="1.4991"
+       ry="1.4993"
+       id="ellipse2815"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     stroke="#f00"
+     stroke-width=".24987"
+     id="g2843"
+     style="stroke:#000000;stroke-opacity:1">
+    <line
+       x1="115.99"
+       x2="133.98"
+       y1="48.05"
+       y2="48.05"
+       id="line2819"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="133.98"
+       x2="130.52"
+       y1="48.05"
+       y2="43.052"
+       id="line2821"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="130.52"
+       x2="125.68"
+       y1="43.052"
+       y2="36.055"
+       id="line2823"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="125.68"
+       x2="120.84"
+       y1="36.055"
+       y2="29.058"
+       id="line2825"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="120.84"
+       x2="115.99"
+       y1="29.058"
+       y2="22.061"
+       id="line2827"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="115.99"
+       y1="22.061"
+       y2="29.058"
+       id="line2829"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="115.99"
+       y1="29.058"
+       y2="36.055"
+       id="line2831"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="115.99"
+       y1="36.055"
+       y2="43.052"
+       id="line2833"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="115.99"
+       y1="43.052"
+       y2="48.05"
+       id="line2835"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="120.84"
+       y1="29.058"
+       y2="29.058"
+       id="line2837"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="125.69"
+       y1="36.055"
+       y2="36.055"
+       id="line2839"
+       style="stroke:#000000;stroke-opacity:1" />
+    <line
+       x1="115.99"
+       x2="130.52"
+       y1="43.052"
+       y2="43.052"
+       id="line2841"
+       style="stroke:#000000;stroke-opacity:1" />
+  </g>
+  <g
+     stroke="#ff0"
+     id="g3133"
+     style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1">
+    <g
+       stroke-width=".12993"
+       id="g2967"
+       style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1">
+      <line
+         x1="139.98"
+         x2="164.96"
+         y1="42.052"
+         y2="42.052"
+         id="line2845"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="169.96"
+         x2="199.94"
+         y1="42.052"
+         y2="42.052"
+         id="line2847"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="62.758"
+         x2="115.99"
+         y1="22.061"
+         y2="22.061"
+         id="line2849"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="80.015"
+         x2="138.98"
+         y1="97.028"
+         y2="97.028"
+         id="line2851"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="153.97"
+         x2="165.96"
+         y1="97.028"
+         y2="97.028"
+         id="line2853"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="86.012"
+         x2="115.99"
+         y1="29.058"
+         y2="29.058"
+         id="line2855"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="94.007"
+         x2="115.99"
+         y1="36.055"
+         y2="36.055"
+         id="line2857"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="101"
+         x2="115.99"
+         y1="43.052"
+         y2="43.052"
+         id="line2859"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="108"
+         x2="115.99"
+         y1="48.05"
+         y2="48.05"
+         id="line2861"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="24.05"
+         y1="97.028"
+         y2="22.061"
+         id="line2863"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="24.05"
+         x2="24.05"
+         y1="22.061"
+         y2="14.065"
+         id="line2865"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="29.047"
+         y1="22.061"
+         y2="14.065"
+         id="line2867"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="63.026"
+         y1="22.061"
+         y2="20.062"
+         id="line2869"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="63.026"
+         x2="82.014"
+         y1="20.062"
+         y2="20.062"
+         id="line2871"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="61.027"
+         x2="73.02"
+         y1="35.055"
+         y2="35.055"
+         id="line2873"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="61.027"
+         x2="73.02"
+         y1="31.057"
+         y2="31.057"
+         id="line2875"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="24.05"
+         x2="19.053"
+         y1="15.064"
+         y2="15.064"
+         id="line2877"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="46.036"
+         y1="15.064"
+         y2="15.064"
+         id="line2879"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m24.05 15.064-3.4447 0.60753-0.05317-0.60753 0.05317-0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2881"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="20.552"
+         y1="15.064"
+         y2="15.064"
+         id="line2883"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m29.047 15.064 3.4447-0.60753 0.05317 0.60753-0.05317 0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2885"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="32.545"
+         y1="15.064"
+         y2="15.064"
+         id="line2887"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="81.015"
+         x2="81.015"
+         y1="20.062"
+         y2="15.064"
+         id="line2889"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m81.015 20.062-0.60742-3.4453 0.60742-0.05318 0.60742 0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2891"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="81.015"
+         x2="81.015"
+         y1="20.062"
+         y2="16.563"
+         id="line2893"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="81.015"
+         x2="81.015"
+         y1="97.028"
+         y2="22.061"
+         id="line2895"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m81.015 97.028-0.60742-3.4453 0.60742-0.05318 0.60742 0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2897"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m81.015 22.061 0.60742 3.4453-0.60742 0.05318-0.60742-0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2899"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="88.01"
+         x2="88.01"
+         y1="97.028"
+         y2="29.058"
+         id="line2901"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m88.01 97.028-0.60742-3.4453 0.60742-0.05318 0.60742 0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2903"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m88.01 29.058 0.60742 3.4453-0.60742 0.05318-0.60742-0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2905"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="95.006"
+         x2="95.006"
+         y1="97.028"
+         y2="36.055"
+         id="line2907"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m95.006 97.028-0.60742-3.4453 0.60742-0.05318 0.60742 0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2909"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="88.01"
+         x2="88.01"
+         y1="97.028"
+         y2="93.53"
+         id="line2911"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m95.006 36.055 0.60742 3.4453-0.60742 0.05318-0.60742-0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2913"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="102"
+         x2="102"
+         y1="97.028"
+         y2="43.052"
+         id="line2915"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m102 97.028-0.60743-3.4453 0.60743-0.05318 0.60742 0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2917"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m102 43.052 0.60742 3.4453-0.60742 0.05318-0.60743-0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2919"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="109"
+         x2="109"
+         y1="97.028"
+         y2="48.05"
+         id="line2921"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m109 97.028-0.60743-3.4453 0.60743-0.05318 0.60742 0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2923"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m109 48.05 0.60742 3.4453-0.60742 0.05318-0.60743-0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2925"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="72.02"
+         x2="72.02"
+         y1="35.055"
+         y2="51.048"
+         id="line2927"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="72.02"
+         x2="72.02"
+         y1="31.057"
+         y2="26.059"
+         id="line2929"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m72.02 35.055 0.60742 3.4453-0.60742 0.05318-0.60742-0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2931"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="72.02"
+         x2="72.02"
+         y1="35.055"
+         y2="38.554"
+         id="line2933"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m72.02 31.057-0.60742-3.4453 0.60742-0.05318 0.60742 0.05318z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2935"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="72.02"
+         x2="72.02"
+         y1="31.057"
+         y2="27.559"
+         id="line2937"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="29.047"
+         y1="86.033"
+         y2="50.049"
+         id="line2939"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="63.026"
+         x2="63.026"
+         y1="33.056"
+         y2="52.048"
+         id="line2941"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="63.026"
+         y1="51.048"
+         y2="51.048"
+         id="line2943"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m29.047 51.048 3.4447-0.60753 0.05317 0.60753-0.05317 0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2945"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="29.047"
+         x2="32.545"
+         y1="51.048"
+         y2="51.048"
+         id="line2947"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m63.026 51.048-3.4447 0.60753-0.05317-0.60753 0.05317-0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2949"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="63.026"
+         x2="59.528"
+         y1="51.048"
+         y2="51.048"
+         id="line2951"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="33.045"
+         x2="33.045"
+         y1="86.033"
+         y2="66.042"
+         id="line2953"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="59.028"
+         x2="59.028"
+         y1="33.056"
+         y2="68.041"
+         id="line2955"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="33.045"
+         x2="59.028"
+         y1="67.041"
+         y2="67.041"
+         id="line2957"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m33.045 67.041 3.4447-0.60753 0.05317 0.60753-0.05317 0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2959"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="33.045"
+         x2="36.542"
+         y1="67.041"
+         y2="67.041"
+         id="line2961"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m59.028 67.041-3.4447 0.60753-0.05317-0.60753 0.05317-0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2963"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="59.028"
+         x2="55.531"
+         y1="67.041"
+         y2="67.041"
+         id="line2965"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+    </g>
+    <line
+       x1="31.046"
+       x2="31.046"
+       y1="99.027"
+       y2="20.062"
+       stroke-dasharray="25.7175, 4.2863, 4.2863, 4.2863"
+       stroke-dashoffset="11.935"
+       stroke-width=".089952"
+       id="line2969"
+       style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+    <line
+       x1="61.027"
+       x2="61.027"
+       y1="99.027"
+       y2="20.062"
+       stroke-dasharray="25.7175, 4.2863, 4.2863, 4.2863"
+       stroke-dashoffset="11.935"
+       stroke-width=".089952"
+       id="line2971"
+       style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+    <g
+       stroke-width=".12993"
+       id="g3131"
+       style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1">
+      <line
+         x1="31.046"
+         x2="61.027"
+         y1="59.045"
+         y2="59.045"
+         id="line2973"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m31.046 59.045 3.4447-0.60753 0.05317 0.60753-0.05317 0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2975"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="31.046"
+         x2="34.544"
+         y1="59.045"
+         y2="59.045"
+         id="line2977"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <path
+         d="m61.027 59.045-3.4447 0.60753-0.05317-0.60753 0.05317-0.60753z"
+         fill="#ff0"
+         fill-rule="evenodd"
+         id="path2979"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="61.027"
+         x2="57.529"
+         y1="59.045"
+         y2="59.045"
+         id="line2981"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="120.84"
+         x2="128.84"
+         y1="29.058"
+         y2="21.061"
+         id="line2983"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="125.68"
+         x2="133.67"
+         y1="36.055"
+         y2="28.058"
+         id="line2985"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="130.52"
+         x2="138.52"
+         y1="43.052"
+         y2="35.055"
+         id="line2987"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="133.98"
+         x2="139.98"
+         y1="48.05"
+         y2="42.052"
+         id="line2989"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="138.52"
+         x2="164.96"
+         y1="35.055"
+         y2="35.055"
+         id="line2991"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="169.96"
+         x2="199.94"
+         y1="35.055"
+         y2="35.055"
+         id="line2993"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="133.67"
+         x2="164.96"
+         y1="28.058"
+         y2="28.058"
+         id="line2995"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="169.96"
+         x2="199.94"
+         y1="28.058"
+         y2="28.058"
+         id="line2997"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="128.84"
+         x2="164.96"
+         y1="21.061"
+         y2="21.061"
+         id="line2999"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="169.96"
+         x2="199.94"
+         y1="21.061"
+         y2="21.061"
+         id="line3001"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="81.015"
+         x2="96.005"
+         y1="15.064"
+         y2="15.064"
+         id="line3003"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="23.051"
+         y1="184.49"
+         y2="184.49"
+         id="line3005"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="23.051"
+         x2="109"
+         y1="184.49"
+         y2="184.49"
+         id="line3007"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="23.051"
+         y1="212.48"
+         y2="212.48"
+         id="line3009"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="23.051"
+         x2="109"
+         y1="212.48"
+         y2="212.48"
+         id="line3011"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="23.051"
+         y1="220.47"
+         y2="220.47"
+         id="line3013"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="23.051"
+         x2="109"
+         y1="220.47"
+         y2="220.47"
+         id="line3015"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="23.051"
+         y1="148.51"
+         y2="148.51"
+         id="line3017"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="23.051"
+         x2="109"
+         y1="148.51"
+         y2="148.51"
+         id="line3019"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="23.051"
+         y1="160.5"
+         y2="160.5"
+         id="line3021"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="23.051"
+         x2="109"
+         y1="128.51"
+         y2="128.51"
+         id="line3023"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="23.051"
+         x2="109"
+         y1="136.51"
+         y2="136.51"
+         id="line3025"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="23.051"
+         x2="109"
+         y1="160.5"
+         y2="160.5"
+         id="line3027"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="113.99"
+         x2="118.99"
+         y1="164.5"
+         y2="164.5"
+         id="line3029"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="204.94"
+         y1="164.5"
+         y2="164.5"
+         id="line3031"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="118.99"
+         y1="164.5"
+         y2="172.49"
+         id="line3033"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="118.99"
+         y1="172.49"
+         y2="220.47"
+         id="line3035"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="118.99"
+         y1="220.47"
+         y2="236.47"
+         id="line3037"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="204.94"
+         y1="184.49"
+         y2="184.49"
+         id="line3039"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="177.95"
+         x2="204.94"
+         y1="192.49"
+         y2="192.49"
+         id="line3041"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="204.94"
+         y1="200.48"
+         y2="200.48"
+         id="line3043"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="204.94"
+         x2="177.95"
+         y1="220.47"
+         y2="220.47"
+         id="line3045"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="177.95"
+         x2="118.99"
+         y1="220.47"
+         y2="220.47"
+         id="line3047"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="113.99"
+         y1="220.47"
+         y2="220.47"
+         id="line3049"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="113.99"
+         x2="118.99"
+         y1="236.47"
+         y2="236.47"
+         id="line3051"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="204.94"
+         y1="236.47"
+         y2="236.47"
+         id="line3053"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="113.99"
+         x2="113.99"
+         y1="236.47"
+         y2="164.5"
+         id="line3055"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="183.95"
+         x2="204.94"
+         y1="139.51"
+         y2="139.51"
+         id="line3057"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="162.96"
+         x2="183.95"
+         y1="139.51"
+         y2="139.51"
+         id="line3059"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="141.98"
+         x2="162.96"
+         y1="139.51"
+         y2="139.51"
+         id="line3061"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="122.99"
+         y1="139.51"
+         y2="139.51"
+         id="line3063"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="122.99"
+         x2="141.98"
+         y1="139.51"
+         y2="139.51"
+         id="line3065"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="141.98"
+         x2="162.96"
+         y1="144.51"
+         y2="144.51"
+         id="line3067"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="162.96"
+         x2="183.95"
+         y1="144.51"
+         y2="144.51"
+         id="line3069"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="183.95"
+         x2="204.94"
+         y1="144.51"
+         y2="144.51"
+         id="line3071"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="122.99"
+         y1="144.51"
+         y2="144.51"
+         id="line3073"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="122.99"
+         x2="141.98"
+         y1="144.51"
+         y2="144.51"
+         id="line3075"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="183.95"
+         x2="204.94"
+         y1="149.5"
+         y2="149.5"
+         id="line3077"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="162.96"
+         x2="183.95"
+         y1="149.5"
+         y2="149.5"
+         id="line3079"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="141.98"
+         x2="162.96"
+         y1="149.5"
+         y2="149.5"
+         id="line3081"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="122.99"
+         y1="149.5"
+         y2="149.5"
+         id="line3083"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="122.99"
+         x2="141.98"
+         y1="149.5"
+         y2="149.5"
+         id="line3085"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="141.98"
+         x2="162.96"
+         y1="154.5"
+         y2="154.5"
+         id="line3087"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="162.96"
+         x2="183.95"
+         y1="154.5"
+         y2="154.5"
+         id="line3089"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="183.95"
+         x2="204.94"
+         y1="154.5"
+         y2="154.5"
+         id="line3091"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="122.99"
+         y1="154.5"
+         y2="154.5"
+         id="line3093"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="122.99"
+         x2="141.98"
+         y1="154.5"
+         y2="154.5"
+         id="line3095"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="183.95"
+         x2="204.94"
+         y1="159.5"
+         y2="159.5"
+         id="line3097"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="162.96"
+         x2="183.95"
+         y1="159.5"
+         y2="159.5"
+         id="line3099"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="141.98"
+         x2="162.96"
+         y1="159.5"
+         y2="159.5"
+         id="line3101"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="118.99"
+         x2="122.99"
+         y1="159.5"
+         y2="159.5"
+         id="line3103"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="122.99"
+         x2="141.98"
+         y1="159.5"
+         y2="159.5"
+         id="line3105"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="73.02"
+         x2="115.99"
+         y1="273.95"
+         y2="273.95"
+         id="line3107"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="73.02"
+         y1="268.95"
+         y2="268.95"
+         id="line3109"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="73.02"
+         y1="263.95"
+         y2="263.95"
+         id="line3111"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="73.02"
+         y1="258.96"
+         y2="258.96"
+         id="line3113"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="73.02"
+         x2="115.99"
+         y1="268.95"
+         y2="268.95"
+         id="line3115"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="73.02"
+         x2="115.99"
+         y1="263.95"
+         y2="263.95"
+         id="line3117"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="73.02"
+         x2="115.99"
+         y1="258.96"
+         y2="258.96"
+         id="line3119"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="115.99"
+         x2="204.94"
+         y1="273.95"
+         y2="273.95"
+         id="line3121"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="204.94"
+         x2="18.054"
+         y1="283.95"
+         y2="283.95"
+         id="line3123"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="105"
+         x2="105"
+         y1="291.44"
+         y2="296.94"
+         id="line3125"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1=".064966"
+         x2="15.555"
+         y1="148.51"
+         y2="148.51"
+         id="line3127"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+      <line
+         x1="18.054"
+         x2="73.02"
+         y1="278.95"
+         y2="278.95"
+         id="line3129"
+         style="fill:#000000;fill-opacity:1;stroke:#000900;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

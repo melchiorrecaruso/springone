@@ -43,7 +43,7 @@ uses
 begin
   OpeSettingFile;
   RequireDerivedFormResource:=True;
-  Application.Title:=ApplicationName;
+  Application.Title:='SpringOne';
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
