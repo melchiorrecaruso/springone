@@ -738,8 +738,8 @@
         <UnitName Value="ReportFrm"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="84"/>
-        <CursorPos X="137" Y="99"/>
+        <TopLine Value="68"/>
+        <CursorPos X="44" Y="91"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

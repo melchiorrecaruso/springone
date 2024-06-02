@@ -1,8 +1,8 @@
 [TDrawingTextForm]
-DrawingName=Spring Test
+DrawingName=Spring Design
 DrawingNumber=X-123456
-AuthorName=Melchiorre Caruso
-CompanyName=QK-NET
+AuthorName=David Ross
+CompanyName=My Company
 Note1=
 Note2=
 
@@ -62,7 +62,7 @@ L0=false
 nAndd=false
 nAndDeDi=false
 L0nAndd=false
-L0nAndDeDi=true
+L0nAndDeDi=false
 
 [TGeometryForm1]
 WireDiameter=2.6
