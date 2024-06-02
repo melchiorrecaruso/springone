@@ -675,7 +675,7 @@ begin
     // La frequenza naturale del primo ordine della molla, avente entrambe le estremità vincolate ed
     // eccitare periodicamente ad una estremità durante il funzionamento, è determinata mediante la
     // seguente formula:
-    //fNaturalFrequency := (Fd/FDm) / (2*pi*sqrt(2)*fn) * (Sqrt(FG.Value/FRho.Value)*(m/s))/FDm;
+    // fNaturalFrequency := (Fd/FDm) / (2*pi*sqrt(2)*fn) * (Sqrt(FG.Value/FRho.Value)*(m/s))/FDm;
 
     fNaturalFrequency := 2/ ( (fn*FDm*FDm) / (2*pi*sqrt(2)*fd) / SquareRoot(FG/FRho) );
   end;
@@ -756,7 +756,7 @@ begin
     fStaticSafetyFactor := fTauz / fTauc;
 
     if fStaticSafetyFactor < 1 then
-      ErrorMessage.Add('Static safety factor < 1 !');
+      WarningMessage.Add('Static safety factor < 1 !');
 
     fCheck := ErrorMessage.Count = 0;
   end;
