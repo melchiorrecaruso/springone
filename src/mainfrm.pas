@@ -282,7 +282,7 @@ begin
   Logo := TBGRABitmap.Create;
   Logo.SetSize(ScreenImageWidth, ScreenImageHeight);
   DrawLogo(Logo.Canvas, Logo.Width, Logo.Height);
-  Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'BACKGROUND.png');
+  Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'background.png');
   Logo.Destroy;
   {$endif}
   SessionFileName := '';
@@ -935,7 +935,7 @@ begin
   begin
     MoveX := (VirtualScreen.Width  - ScreenImageWidth ) div 2;
     MoveY := (VirtualScreen.Height - ScreenImageHeight) div 2;
-    ScreenImage.LoadFromResource('BACKGROUND');
+    ScreenImage.LoadFromResource('background');
     VirtualScreen.RedrawBitmap;
   end;
 end;
