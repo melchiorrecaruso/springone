@@ -54,18 +54,24 @@ type
     fQualityGradeOnF2: TQualityGrade;
     fQualityGradeOnE1: TQualityGrade;
     fQualityGradeOnE2: TQualityGrade;
+
+    procedure SetWireDiameter(const AValue: TMeters);
+    procedure SetCoilDiameter(const AValue: TMeters);
+    procedure SetFreeBodyLength(const AValue: TMeters);
+    procedure SetNumActiveCoils(const AValue: double);
+    procedure SetSpringIndex(const AValue: double);
   public
     constructor Create;
     destructor Destroy; override;
     procedure Solve;
     procedure Clear;
   public
-    property WireDiameter: TMeters read fWireDiameter write fWireDiameter;
-    property CoilDiameter: TMeters read fCoilDiameterDm write fCoilDiameterDm;
+    property WireDiameter: TMeters read fWireDiameter write SetWireDiameter;
+    property CoilDiameter: TMeters read fCoilDiameterDm write SetCoilDiameter;
     property Load1: TNewtons read fLoadF1 write fLoadF1;
     property Load2: TNewtons read fLoadF2 write fLoadF2;
-    property FreeBodyLength: TMeters read fLengthL0 write fLengthL0;
-    property ActiveCoils: double read fActiveCoils write fActiveCoils;
+    property FreeBodyLength: TMeters read fLengthL0 write SetFreeBodyLength;
+    property NumActiveCoils: double read fActiveCoils write SetNumActiveCoils;
     property SpringIndex: double read fSpringIndexW write fSpringIndexW;
     property SpringRate: TNewtonsPerMeter read fSpringRateR write fSpringRateR;
 
@@ -138,7 +144,7 @@ type
     property MaterialID: string read fMaterialID write fMaterialID;
     property ActiveCoils: double read fActiveCoils write fActiveCoils;
     property WireDiameter: TMeters read fWireDiameter write fWireDiameter;
-    property CoilDiameter: TMeters read fCoilDiameter write fCoilDiameter;
+    property MeanCoilDiameter: TMeters read fCoilDiameter write fCoilDiameter;
     property FreeBodyLengthLk: TMeters read fFreeBodyLengthLk;
 
     property SpringIndex: double read fSpringIndex;
@@ -265,6 +271,44 @@ begin
   fQualityGradeOnE2 := QualityGrade2;
 end;
 
+procedure TEN15800.SetWireDiameter(const AValue: TMeters);
+begin
+  if AValue < MinWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter < %s.', [MinWireDiameter.ToString(5, 5, [pMilli])]));
+  if AValue > MaxWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter > %s.', [MaxWireDiameter.ToString(5, 5, [pMilli])]));
+
+  fWireDiameter := specialize Max<TMeters>(specialize Min<TMeters>(AValue, MaxWireDiameter), MinWireDiameter);
+end;
+
+procedure TEN15800.SetCoilDiameter(const AValue: TMeters);
+begin
+  if AValue < MinCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter < %s.', [MinCoilDiameter.ToString(5, 5, [pMilli])]));
+  if AValue > MaxCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter > %s.', [MaxCoilDiameter.ToString(5, 5, [pMilli])]));
+
+  fCoilDiameterDm := specialize Max<TMeters>(specialize Min<TMeters>(AValue, MaxCoilDiameter), MinCoilDiameter);
+end;
+
+procedure TEN15800.SetFreeBodyLength(const AValue: TMeters);
+begin
+  if AValue > MaxFreeLength then WarningMessage.Add(Format('EN15800: Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
+
+  fLengthL0 := specialize Min<TMeters>(AValue, MaxFreeLength);
+end;
+
+procedure TEN15800.SetNumActiveCoils(const AValue: double);
+begin
+  if AValue < MinActiveCoils then WarningMessage.Add(Format('EN15800: Number of active coils < %d.', [MinActiveCoils]));
+
+  fActiveCoils := Max(AValue, MinActiveCoils);
+end;
+
+procedure TEN15800.SetSpringIndex(const AValue: double);
+begin
+  if AValue < MinSpringIndex then WarningMessage.Add(Format('EN15800: Spring Index < %d.', [MinSpringIndex]));
+  if AValue > MaxSpringIndex then WarningMessage.Add(Format('EN15800: Spring Index > %d.', [MaxSpringIndex]));
+
+  fSpringIndexW := Max(Min(AValue, MaxSpringIndex), MinSpringIndex);
+end;
+
 procedure TEN15800.Solve;
 var
   Check:  boolean;
@@ -272,30 +316,27 @@ var
 begin
   Check := True;
   // Scopo e campo di applicazione
-  if fWireDiameter   < MinWireDiameter then ErrorMessage  .Add(Format('Wire diameter < %s.', [MinWireDiameter.ToString(5, 5, [pMilli])]));
-  if fWireDiameter   > MaxWireDiameter then ErrorMessage  .Add(Format('Wire diameter > %s.', [MaxWireDiameter.ToString(5, 5, [pMilli])]));
-  if fCoilDiameterDm < MinCoilDiameter then ErrorMessage  .Add(Format('Mean coil diameter < %s.', [MinCoilDiameter.ToString(5, 5, [pMilli])]));
-  if fCoilDiameterDm > MaxCoilDiameter then ErrorMessage  .Add(Format('Mean coil diameter > %s.', [MaxCoilDiameter.ToString(5, 5, [pMilli])]));
-  if fLengthL0       > MaxFreeLength   then WarningMessage.Add(Format('Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
-  if fActiveCoils    < MinActiveCoils  then ErrorMessage  .Add(Format('Number of active coils < %d.', [MinActiveCoils]));
-  if fSpringIndexW   < MinSpringIndex  then ErrorMessage  .Add(Format('Spring Index < %d.', [MinSpringIndex]));
-  if fSpringIndexW   > MaxSpringIndex  then ErrorMessage  .Add(Format('Spring Index > %d.', [MaxSpringIndex]));
+  if fWireDiameter   <= 0*m then WarningMessage.Add(Format('EN15800: Wire diameter unassigned.', []));
+  if fCoilDiameterDm <= 0*m then WarningMessage.Add(Format('EN15800: Mean coil diameter unassigned.', []));
+  if fLengthL0       <= 0*m then WarningMessage.Add(Format('EN15800: Length of unloaded spring unassigned.', []));
+  if fActiveCoils    <= 0   then WarningMessage.Add(Format('EN15800: Number of active coils unassigned.', []));
+  if fSpringIndexW   <= 0   then WarningMessage.Add(Format('EN15800: Spring Index unassigned.', []));
+
 
   Check := ErrorMessage.Count = 0;
   if Check then
   begin
     // Tolleranza AD sul diametro medio di avvolgimento Dm di una molla libera
     Index := -1;
-    if (fCoilDiameterDm >  MinCoilDiameter) and
-       (fCoilDiameterDm <= MaxCoilDiameter) then
+
+    for I := 0 to 16 do
     begin
-      for I := 0 to 16 do
-        if (fCoilDiameterDm >  (AD_TABLE[I].DmMin*mm)) and
-           (fCoilDiameterDm <= (AD_TABLE[I].DmMax*mm)) then
-        begin
-          Index := I;
-          Break;
-        end;
+      if (fCoilDiameterDm >= (AD_TABLE[I].DmMin*mm)) and
+         (fCoilDiameterDm <= (AD_TABLE[I].DmMax*mm)) then
+      begin
+        Index := I;
+        Break;
+      end;
     end;
 
     if (fSpringIndexW >=  4.0) and (fSpringIndexW <=  8.0) then
@@ -374,7 +415,7 @@ begin
   Result := 0*m;
   for I := Low(WIRETOL_TABLE) to High(WIRETOL_TABLE) do
   begin
-    if (aWireRegulation  = (WIRETOL_TABLE[i].WireReg)) and
+    if (aWireRegulation >= (WIRETOL_TABLE[i].WireReg)) and
        (aWireDiameter   >  (WIRETOL_TABLE[I].DMin*mm)) and
        (aWireDiameter   <= (WIRETOL_TABLE[I].DMax*mm)) then
     begin
