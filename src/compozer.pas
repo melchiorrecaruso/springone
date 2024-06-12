@@ -1446,17 +1446,17 @@ begin
   SpringDrawing.AutoFit := True;
   SpringDrawing.Lx := SpringSolver.LengthL0.Value([pMilli]);
   SpringDrawing.Caption := Format('L0 = %s', [GetString(SpringDrawing.Lx)]);
-  SpringDrawing.DrawInSection(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
+  SpringDrawing.DrawInProfile(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
 
   SpringDrawing.AutoFit := False;
   SpringDrawing.Lx := SpringSolver.LengthL1.Value([pMilli]);
   SpringDrawing.Caption := Format('L1 = %s', [GetString(SpringDrawing.Lx)]);
-  SpringDrawing.DrawInSection(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
+  SpringDrawing.DrawInProfile(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
 
   SpringDrawing.AutoFit := False;
   SpringDrawing.Lx := SpringSolver.LengthL2.Value([pMilli]);
   SpringDrawing.Caption := Format('L2 = %s', [GetString(SpringDrawing.Lx)]);
-  SpringDrawing.DrawInSection(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
+  SpringDrawing.DrawInProfile(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
 
   Bit[6].Draw(aScreen.Canvas, 0, 0, True);
   Bit[7].Draw(aScreen.Canvas, Bit[6].Width, 0, True);
