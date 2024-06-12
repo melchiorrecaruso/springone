@@ -411,31 +411,29 @@ procedure TCompressionSpringSolver.PreCheck;
 begin
   fCheck := True;
   // Controllo validità dati inseriti
-  if Fd.Value        <= 0 then ErrorMessage.Add('Wire diameter "d" unassigned.');
-  if FDm.Value       <= 0 then ErrorMessage.Add('Coil diameter "Dm" unassigned.');
-  if fE.Value        <= 0 then ErrorMessage.Add('Young''s modulus "E" unassigned.');
-  if fG.Value        <= 0 then ErrorMessage.Add('Shear modulus "G" unassigned.');
-  if FLengthL0.Value <= 0 then ErrorMessage.Add('Spring length "L0" unassigned.');
-  if FLengthL1.Value <= 0 then ErrorMessage.Add('Spring length "L1" unassigned.');
-  if FLengthL2.Value <= 0 then ErrorMessage.Add('Spring length "L2" unassigned.');
-  if fn              <= 0 then ErrorMessage.Add('Number of active coil "n" unassigned.');
-  if fnt             <= 0 then ErrorMessage.Add('Number of total coil "nt" unassigned.');
-  if fnu             <= 0 then ErrorMessage.Add('Seat coefficent "nu" unassigned.');
-  if fRm.Value       <= 0 then ErrorMessage.Add('Tensile strength "Rm" unassigned.');
-  if fRho.Value      <= 0 then ErrorMessage.Add('Material density "rho" unassigned.');
+  if Fd.Value        <= 0 then ErrorMessage.Add('EN13906-1: Wire diameter "d" unassigned.');
+  if FDm.Value       <= 0 then ErrorMessage.Add('EN13906-1: Coil diameter "Dm" unassigned.');
+  if fE.Value        <= 0 then ErrorMessage.Add('EN13906-1: Young''s modulus "E" unassigned.');
+  if fG.Value        <= 0 then ErrorMessage.Add('EN13906-1: Shear modulus "G" unassigned.');
+  if FLengthL0.Value <= 0 then ErrorMessage.Add('EN13906-1: Spring length "L0" unassigned.');
+  if FLengthL1.Value <= 0 then ErrorMessage.Add('EN13906-1: Spring length "L1" unassigned.');
+  if FLengthL2.Value <= 0 then ErrorMessage.Add('EN13906-1: Spring length "L2" unassigned.');
+  if fn              <= 0 then ErrorMessage.Add('EN13906-1: Number of active coil "n" unassigned.');
+  if fnt             <= 0 then ErrorMessage.Add('EN13906-1: Number of total coil "nt" unassigned.');
+  if fnu             <= 0 then ErrorMessage.Add('EN13906-1: Seat coefficent "nu" unassigned.');
+  if fRm.Value       <= 0 then ErrorMessage.Add('EN13906-1: Tensile strength "Rm" unassigned.');
+  if fRho.Value      <= 0 then ErrorMessage.Add('EN13906-1: Material density "rho" unassigned.');
 
-  if FLengthL0 <= FLengthL1 then ErrorMessage.Add('Wrong L0 and L1 values, L0 must be > L1.');
-  if FLengthL1 <= FLengthL2 then ErrorMessage.Add('Wrong L1 and L2 values, L1 must be > L2.');
+  if FLengthL0 <= FLengthL1 then ErrorMessage.Add('EN13906-1: Wrong L0 and L1 values, L0 must be > L1.');
+  if FLengthL1 <= FLengthL2 then ErrorMessage.Add('EN13906-1: Wrong L1 and L2 values, L1 must be > L2.');
 
   fCheck := ErrorMessage.Count = 0;
 
   // Poisson's ratio
   if fCheck then
   begin
-    if (fE / (2 * fG) - 1) > 0.45 then ErrorMessage.Add('Wrong values for Young''s modulus "E" and Shear modulus "G".');
-    if (fE / (2 * fG) - 1) < 0.10 then ErrorMessage.Add('Wrong values for Young''s modulus "E" and Shear modulus "G".');
-
-    fCheck := ErrorMessage.Count = 0;
+    if (fE / (2 * fG) - 1) > 0.45 then WarningMessage.Add('EN13906-1: Wrong values for Young''s modulus "E" and Shear modulus "G".');
+    if (fE / (2 * fG) - 1) < 0.10 then WarningMessage.Add('EN13906-1: Wrong values for Young''s modulus "E" and Shear modulus "G".');
   end;
 
   // Scopo e campo di applicazione della norma
@@ -444,32 +442,32 @@ begin
     fw := FDm / Fd;
     if FColdCoiled then
     begin
-      if Fd > (20*mm)  then WarningMessage.Add('Wire diameter > 20mm.');
-      if fn < (2)      then WarningMessage.Add('Number of active coils < 2.');
-      if fw < (4)      then WarningMessage.Add('Spring Index < 4.');
-      if fw > (20)     then WarningMessage.Add('Spring Index > 20.');
+      if Fd > (20*mm)  then WarningMessage.Add('EN13906-1: Wire diameter > 20mm.');
+      if fn < (2)      then WarningMessage.Add('EN13906-1: Number of active coils < 2.');
+      if fw < (4)      then WarningMessage.Add('EN13906-1: Spring Index < 4.');
+      if fw > (20)     then WarningMessage.Add('EN13906-1: Spring Index > 20.');
     end else
     begin
-      if Fd < (8*mm)   then WarningMessage.Add('Wire diameter < 8mm.');
-      if Fd > (100*mm) then WarningMessage.Add('Wire diameter > 100mm.');
-      if fn < (3)      then WarningMessage.Add('Number of active coils < 3.');
-      if fw < (3)      then WarningMessage.Add('Spring Index < 3.');
-      if fw > (12)     then WarningMessage.Add('Spring Index > 12.');
+      if Fd < (8*mm)   then WarningMessage.Add('EN13906-1: Wire diameter < 8mm.');
+      if Fd > (100*mm) then WarningMessage.Add('EN13906-1: Wire diameter > 100mm.');
+      if fn < (3)      then WarningMessage.Add('EN13906-1: Number of active coils < 3.');
+      if fw < (3)      then WarningMessage.Add('EN13906-1: Spring Index < 3.');
+      if fw > (12)     then WarningMessage.Add('EN13906-1: Spring Index > 12.');
     end;
 
     if (fClosedEnds = True) then
     begin
       if (FColdCoiled = False) and (fGroundEnds = False) then
-        ErrorMessage.Add('Length "Lc" undefined.');
+        ErrorMessage.Add('EN13906-1: Length "Lc" undefined.');
     end else
     begin
       if (FColdCoiled <> False) and (fGroundEnds <> False) then
-        ErrorMessage.Add('Length "Lc" undefined.');
+        ErrorMessage.Add('EN13906-1: Length "Lc" undefined.');
     end;
 
     if (fClosedEnds <> GroundEnds = True) then
     begin
-      WarningMessage.Add('"DeltaDE" undefined.');
+      WarningMessage.Add('EN13906-1: "DeltaDE" undefined.');
     end;
 
     fCheck := ErrorMessage.Count = 0;
@@ -527,10 +525,10 @@ begin
         FLengthLc := (0*mm);
     end;
 
-    if FLengthLc <= (0*mm)    then ErrorMessage.Add('Wrong Lc value, Lc must be > 0.');
-    if FLengthLc >  FLengthL0 then ErrorMessage.Add('Wrong L0 or nt value, Lc must be < L0.');
-    if FLengthLc >  FLengthL1 then ErrorMessage.Add('Wrong L1 or nt value, Lc must be < L1.');
-    if FLengthLc >  FLengthL2 then ErrorMessage.Add('Wrong L2 or nt value, Lc must be < L2.');
+    if FLengthLc <= (0*mm)    then ErrorMessage.Add('EN13906-1: Lc value, Lc must be > 0.');
+    if FLengthLc >  FLengthL0 then ErrorMessage.Add('EN13906-1: L0 or nt value, Lc must be < L0.');
+    if FLengthLc >  FLengthL1 then ErrorMessage.Add('EN13906-1: L1 or nt value, Lc must be < L1.');
+    if FLengthLc >  FLengthL2 then ErrorMessage.Add('EN13906-1: L2 or nt value, Lc must be < L2.');
 
     fCheck := ErrorMessage.Count = 0;
   end;
@@ -555,10 +553,10 @@ begin
     end;
     FLengthLn := FLengthLc + fSa;
 
-    if FLengthLn < FLengthLc then ErrorMessage  .Add('Error: Wrong Ln value, Ln must be > Lc.');
-    if FLengthLn > FLengthL0 then ErrorMessage  .Add('Error: Wrong Ln value, Ln must be < L0.');
-    if FLengthLn > FLengthL1 then WarningMessage.Add('Warning: Wrong Ln value, Ln must be < L1.');
-    if FLengthLn > FLengthL2 then WarningMessage.Add('Warning: Wrong Ln value, Ln must be < L2.');
+    if FLengthLn < FLengthLc then ErrorMessage  .Add('EN13906-1: Wrong Ln value, Ln must be > Lc.');
+    if FLengthLn > FLengthL0 then ErrorMessage  .Add('EN13906-1: Wrong Ln value, Ln must be < L0.');
+    if FLengthLn > FLengthL1 then WarningMessage.Add('EN13906-1: Wrong Ln value, Ln must be < L1.');
+    if FLengthLn > FLengthL2 then WarningMessage.Add('EN13906-1: Wrong Ln value, Ln must be < L2.');
 
     fCheck := ErrorMessage.Count = 0;
   end;
@@ -598,7 +596,7 @@ begin
 
     if mDe.Value = 0 then
     begin
-      WarningMessage.Add('DeltaDe undefined. Please change kind spring ends.');
+      WarningMessage.Add('EN13906-1: "DeltaDe" undefined. Please change kind spring ends.');
     end else
     begin
       FDeltaDe := 0.1 * ((mDe*mDe) - 0.8 * mDe*Fd - 0.2 * Fd*Fd) / FDm;
@@ -635,13 +633,13 @@ begin
     ASpringTolerance.Load1          := FLoadF1;
     ASpringTolerance.Load2          := FLoadF2;
     ASpringTolerance.FreeBodyLength := FLengthL0;
-    ASpringTolerance.ActiveCoils    := fn;
+    ASpringTolerance.NumActiveCoils := fn;
     ASpringTolerance.SpringIndex    := fw;
     ASpringTolerance.SpringRate     := fR;
     ASpringTolerance.Solve;
-  end;
 
-  fCheck := ErrorMessage.Count = 0;
+    fCheck := ErrorMessage.Count = 0;
+  end;
 
   // Calcolo diametro minimo e massimo della molla in esercizio:
   if fCheck then
@@ -699,14 +697,14 @@ begin
 
     if mSk < 0 then
     begin
-      ErrorMessage.Add('Wrong G and E values, unable to calculate Sk.');
+      fSk := FLengthL0;
     end else
     begin
       fSk := FLengthL0 * (0.5 / (1 - fG/fE) * (1 - Sqrt(mSk)));
     end;
     // La sicurezza contro l'instabilità è raggiunta in teoria per un valore immaginario della radice
     // quadrata e per Sk/s > 1.
-    if not ((fSk / FStrokeSc) > 1) then WarningMessage.Add('Warning: Buckling!');
+    if not ((fSk / FStrokeSc) > 1) then WarningMessage.Add('EN13906-1: Buckling!');
 
     fCheck := ErrorMessage.Count = 0;
   end;
@@ -756,7 +754,7 @@ begin
     fStaticSafetyFactor := fTauz / fTauc;
 
     if fStaticSafetyFactor < 1 then
-      WarningMessage.Add('Static safety factor < 1 !');
+      WarningMessage.Add('EN13906-1: Static safety factor < 1 !');
 
     fCheck := ErrorMessage.Count = 0;
   end;
@@ -765,7 +763,7 @@ begin
   if fCheck then
   begin
     if MAT.Name = '' then
-      WarningMessage.Add('Warning: spring material data unavailable (dyn).');
+      WarningMessage.Add('EN13906-1: Spring material data unavailable (dyn).');
 
     if (MAT.TorsionalStressTauStar  > 0*Pa) and
        (MAT.TorsionalStressTauYield > 0*Pa) and
@@ -876,10 +874,10 @@ end;
 
 procedure TCompressionSpringSolver.PostCheck(ASpringTolerance: TEN15800);
 begin
-  if (fnt - fn) < 2 then WarningMessage.Add('Warning: inactive end coild < 1.');
+  if (fnt - fn) < 2 then WarningMessage.Add('EN13906-1: Inactive end coild < 1.');
 
-  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFn then WarningMessage.Add('Warning: Load F2 max > Fn.');
-  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFc then WarningMessage.Add('Warning: Load F2 max > Fc.');
+  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFn then WarningMessage.Add('EN13906-1: Load F2 + TOL. > Fn.');
+  if (FLoadF2 + ASpringTolerance.ToleranceOnLoad2) > FLoadFc then WarningMessage.Add('EN13906-1: Load F2 + TOL. > Fc.');
 end;
 
 // TTorsionSpringSolver
