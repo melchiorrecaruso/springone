@@ -1,7 +1,7 @@
 object AboutForm: TAboutForm
-  Left = 229
+  Left = 297
   Height = 362
-  Top = 117
+  Top = 225
   Width = 402
   BorderIcons = [biSystemMenu]
   Caption = 'About ...'
@@ -291,7 +291,7 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 6
-    Caption = 'Build 20240601'
+    Caption = 'Build 20240613'
     Layout = tlCenter
     ParentFont = False
   end
