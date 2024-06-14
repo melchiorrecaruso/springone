@@ -384,7 +384,6 @@ begin
   FStrokeSc            := 0*m;
 
   fSa                  := 0*m;
-
   fSk                  := 0*m;
 
   fStaticSafetyFactor  := 0;
@@ -693,19 +692,14 @@ begin
     // - base incastrata e punto di applicazione della forza guidato ma flottante,  v = 0.7
     // - base incastrata e punto di applicazione della forza guidato non flottante, v = 0.5
     // La freccia della molla sotto il carico di instabilità viene determinata con la seguente formula:
-    mSk := 1 - (1 - fG/fE) / (0.5 + fG/fE) * Sqr((pi*FDm.Value)/(fnu*FLengthL0.Value));
+    mSk := 1 - (1 - fG/fE) / (0.5 + fG/fE) * Sqr(pi*FDm/fnu/FLengthL0);
 
-    if mSk < 0 then
-    begin
-      fSk := FLengthL0;
-    end else
+    if mSk >= 0 then
     begin
       fSk := FLengthL0 * (0.5 / (1 - fG/fE) * (1 - Sqrt(mSk)));
+      // La sicurezza contro l'instabilità è raggiunta in teoria per un valore immaginario della radice quadrata e per Sk/s > 1.
+      if not ((fSk / FStrokeSc) > 1) then WarningMessage.Add('EN13906-1: Buckling!');
     end;
-    // La sicurezza contro l'instabilità è raggiunta in teoria per un valore immaginario della radice
-    // quadrata e per Sk/s > 1.
-    if not ((fSk / FStrokeSc) > 1) then WarningMessage.Add('EN13906-1: Buckling!');
-
     fCheck := ErrorMessage.Count = 0;
   end;
 
@@ -967,10 +961,6 @@ begin
 
   for i := 0 to ErrorMessage  .Count -1 do writeln(ErrorMessage  [i]);
   for i := 0 to WarningMessage.Count -1 do writeln(WarningMessage[i]);
-
-
-
-
 end;
 
 function TTorsionSpringSolver.CalcRadialEndFlex(ArmLength: TMeters): double;
@@ -1123,11 +1113,6 @@ begin
     writeln(fSigmaq2.ToString(4, 0, [pMega]));
     writeln;
     writeln(fSigmaz .ToString(4, 0, [pMega]));
-
-
-
-
-
   end;
 
 end;
