@@ -79,6 +79,7 @@ type
     FSa: TMeters;
     FStaticSafetyFactor: double;
     FSk: TMeters;
+    FBucklingStability: boolean;
     FTau1: TPascals;
     FTau2: TPascals;
     FTauh: TPascals;
@@ -385,6 +386,7 @@ begin
 
   fSa                  := 0*m;
   fSk                  := 0*m;
+  FBucklingStability   := False;
 
   fStaticSafetyFactor  := 0;
   fTau1                := 0*Pa;
@@ -694,10 +696,12 @@ begin
     // La freccia della molla sotto il carico di instabilità viene determinata con la seguente formula:
     mSk := 1 - (1 - fG/fE) / (0.5 + fG/fE) * Sqr(pi*FDm/fnu/FLengthL0);
 
-    if mSk >= 0 then
+    FBucklingStability := mSk < 0;
+    if FBucklingStability = False then
     begin
       fSk := FLengthL0 * (0.5 / (1 - fG/fE) * (1 - Sqrt(mSk)));
-      // La sicurezza contro l'instabilità è raggiunta in teoria per un valore immaginario della radice quadrata e per Sk/s > 1.
+      // La sicurezza contro l'instabilità è raggiunta in teoria per un valore immaginario
+      // della radice quadrata e per Sk/s > 1.
       if not ((fSk / FStrokeSc) > 1) then WarningMessage.Add('EN13906-1: Buckling!');
     end;
     fCheck := ErrorMessage.Count = 0;
@@ -849,21 +853,23 @@ procedure TCompressionSpringSolver.GetBucklingCurve(var aPoints: ArrayOfTPointF)
 var
   Value: single;
   Y, DY: single;
+  C1, C2: double;
 begin
-  try
-    Y  := 0.980;
-    DY := 0.001;
-    repeat
-      Value := Pi/(Sqrt((1-Sqr(1-Y*2*(1-fG/fE)))*(0.5+fG/fE)/(1-fG/fE)));
+  C1 := fE/(2*(fE-fG));
+  C2 := (2*Pi*Pi*(fE-fG)/(2*fG+fE));
 
+  Y  := 0.950;
+  DY := 0.001;
+  repeat
+    try
+      Value := Sqrt(C2/(1-Sqr(1-Y/C1)));
       SetLength(aPoints, Length(aPoints) + 1);
       aPoints[High(aPoints)].x := Value;
       aPoints[High(aPoints)].y := Y;
       Y := Y - DY;
-    until Value > (1.25*(fnu*FLengthL0/FDm));
-  except
-    aPoints := nil;
-  end;
+    except
+    end;
+  until (Value > (1.25*(fnu*FLengthL0/FDm))) or (Y < 0);
 end;
 
 procedure TCompressionSpringSolver.PostCheck(ASpringTolerance: TEN15800);
@@ -1116,7 +1122,6 @@ begin
   end;
 
 end;
-
 
 function TTorsionSpringSolver.AlphaCoil(const Alpha: TRadians): TRadians;
 begin
