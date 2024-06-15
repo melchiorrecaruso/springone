@@ -94,6 +94,7 @@ type
     FItems: TList;
 
     FWidth, FHeight: longint;
+    FShowOrigin: boolean;
     FSpacer: longint;
     FScale: single;
 
@@ -199,6 +200,7 @@ type
     property XCount: longint read FXCount write SetXCount;
     property YCount: longint read FYCount write SetYCount;
 
+    property ShowOrigin: boolean read FShowOrigin write FShowOrigin;
     property Spacer: longint read FSpacer write FSpacer;
     property Scale: single read FScale write FScale;
   end;
@@ -665,6 +667,7 @@ begin
   FIsNeededCalcXCount  := True;
   FIsNeededCalcYCount  := True;
 
+  FShowOrigin := False;
   FSpacer := DefaultSpacer;
   FScale  := 1.0;
 
@@ -808,6 +811,12 @@ begin
       FXMinF := GetMin(FXMinF);
       FYMinF := GetMin(FYMinF);
     end;
+  end;
+
+  if FShowOrigin then
+  begin
+    FXMinF := Min(FXMinF, 0);
+    FYMinF := Min(FYMinF, 0);
   end;
 end;
 
