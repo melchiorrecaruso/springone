@@ -601,17 +601,15 @@ begin
   {$IFDEF MODULE1}
   // Draw buckling curve
   SpringSolver.GetBucklingCurve(Points);
-  if (Length(Points) > 0) then
-  begin
-    LoadChart2(Result, 'BucklingChart', 'BucklingCurve');
-    Result.XMinF := 0.0;
-    Result.YMinF := 0.0;
-    Result.YMaxF := 1.0;
-    Result.YDeltaF := 0.1;
-    Result.YCount  := 10;
-    Result.AddPolyLine(Points, False, 'Buckling-Curve');
-    Points := nil;
-  end;
+  LoadChart2(Result, 'BucklingChart', 'BucklingCurve');
+  Result.XMinF := 0.0;
+  Result.YMinF := 0.0;
+  Result.YMaxF := 1.0;
+  Result.YDeltaF := 0.1;
+  Result.YCount  := 10;
+  Result.ShowOrigin := True;
+  Result.AddPolyLine(Points, False, 'Buckling-Curve');
+  Points := nil;
 
   if (SpringSolver.Dm.Value > 0) and (SpringSolver.LengthL0.Value > 0) then
   begin
