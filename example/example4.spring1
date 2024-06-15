@@ -32,18 +32,18 @@ SeatingCoefficent=1
 
 [TMaterialForm]
 Material=3
-YoungModulus=0
+YoungModulus=206000
 YoungModulusUnit=0
-ShearModulus=0
+ShearModulus=81500
 ShearModulusUnit=0
-TensileStrength=0
+TensileStrength=1437.52114225975
 TensileStrengthUnit=0
-MaterialDensity=0
+MaterialDensity=7850
 MaterialDensityUnit=0
 CoilingType=0
 
 [TQualityForm]
-ToleranceWireDiameter=0
+ToleranceWireDiameter=0.045
 ToleranceWireDiameterUnit=0
 ToleranceCoilDiameter=1
 ToleranceLengthL0=1

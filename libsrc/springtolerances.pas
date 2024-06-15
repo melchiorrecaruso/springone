@@ -390,8 +390,8 @@ begin
     if (fQualityGradeOnE1 = QualityGrade1) or
        (fQualityGradeOnE2 = QualityGrade1) then
     begin
-      if (fSpringIndexW            ) > 12 then WarningMessage.Add('If "e" Quality Grade = 1 then "w" must be <= 12');
-      if (fLengthL0/fCoilDiameterDm) >  5 then WarningMessage.Add('If "e" Quality Grade = 1 then "L0/Dm" must be <= 5');
+      if (fSpringIndexW            ) > 12 then WarningMessage.Add('EN15800: If "e" Quality Grade = 1 then "w" must be <= 12');
+      if (fLengthL0/fCoilDiameterDm) >  5 then WarningMessage.Add('EN15800: If "e" Quality Grade = 1 then "L0/Dm" must be <= 5');
     end;
     case fQualityGradeOnE1 of
       QualityGrade1: fe1 := 0.030*fLengthL0;
