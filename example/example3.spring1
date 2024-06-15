@@ -12,7 +12,7 @@ WireDiameterUnit=0
 CoilDiameterIndex=1
 CoilDiameter=12.3
 CoilDiameterUnit=0
-ActiveCoil=4.67
+ActiveCoil=4.62
 InactiveCoil1=0.75
 InactiveCoil2=0.75
 LengthL0=29.88
@@ -28,7 +28,7 @@ LoadType=0
 CycleFrequency=1
 Temperature=400
 TemperatureUnit=0
-SeatingCoefficent=0
+SeatingCoefficent=1
 
 [TMaterialForm]
 Material=14
@@ -43,7 +43,7 @@ MaterialDensityUnit=0
 CoilingType=0
 
 [TQualityForm]
-ToleranceWireDiameter=0.025
+ToleranceWireDiameter=0.03
 ToleranceWireDiameterUnit=0
 ToleranceCoilDiameter=2
 ToleranceLengthL0=2
