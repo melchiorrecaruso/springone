@@ -25,7 +25,7 @@ unit BaseUtils;
 interface
 
 uses
-  ADim, Classes, SysUtils;
+  ADimRT, Classes, SysUtils;
 
 
 type
@@ -34,47 +34,47 @@ type
 
 function GetString(const AValue: double): string;
 
-function GetSymbol(const AValue: TMeters): string;
-function GetValue (const AValue: TMeters): double;
-function GetString(const AValue: TMeters): string;
-function GetString(const AValue, ATol: TMeters): string;
+function GetLengthSymbol(const AQuantity: TQuantity): string;
+function GetLengthValue (const AQuantity: TQuantity): double;
+function GetLengthString(const AQuantity: TQuantity): string;
+function GetLengthString(const AQuantity, ATol: TQuantity): string;
 
-function GetSymbol(const AValue: TNewtons): string;
-function GetValue (const AValue: TNewtons): double;
-function GetString(const AValue: TNewtons): string;
-function GetString(const AValue, ATol: TNewtons): string;
+function GetForceSymbol(const AQuantity: TQuantity): string;
+function GetForceValue (const AQuantity: TQuantity): double;
+function GetForceString(const AQuantity: TQuantity): string;
+function GetForceString(const AQuantity, ATol: TQuantity): string;
 
-function GetSymbol(const AValue: TPascals): string;
-function GetValue (const AValue: TPascals): double;
-function GetString(const AValue: TPascals): string;
+function GetPressureSymbol(const AQuantity: TQuantity): string;
+function GetPressureValue (const AQuantity: TQuantity): double;
+function GetPressureString(const AQuantity: TQuantity): string;
 
-function GetSymbol(const AValue: TNewtonsPerMeter): string;
-function GetValue (const AValue: TNewtonsPerMeter): double;
-function GetString(const AValue: TNewtonsPerMeter): string;
+function GetStiffnessSymbol(const AQuantity: TQuantity): string;
+function GetStiffnessValue (const AQuantity: TQuantity): double;
+function GetStiffnessString(const AQuantity: TQuantity): string;
 
-function GetSymbol(const AValue: TKilograms): string;
-function GetValue (const AValue: TKilograms): double;
-function GetString(const AValue: TKilograms): string;
+function GetMassSymbol(const AQuantity: TQuantity): string;
+function GetMassValue (const AQuantity: TQuantity): double;
+function GetMassString(const AQuantity: TQuantity): string;
 
-function GetSymbol(const AValue: TJoules): string;
-function GetValue (const AValue: TJoules): double;
-function GetString(const AValue: TJoules): string;
+function GetEnergySymbol(const AQuantity: TQuantity): string;
+function GetEnergyValue (const AQuantity: TQuantity): double;
+function GetEnergyString(const AQuantity: TQuantity): string;
 
-function GetSymbol(const AValue: THertz): string;
-function GetValue (const AValue: THertz): double;
-function GetString(const AValue: THertz): string;
+function GetFrequencySymbol(const AQuantity: TQuantity): string;
+function GetFrequencyValue (const AQuantity: TQuantity): double;
+function GetFrequencyString(const AQuantity: TQuantity): string;
 
-function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
-function GetValue (const AValue: TKilogramsPerCubicMeter): double;
-function GetString(const AValue: TKilogramsPerCubicMeter): string;
+function GetDensitySymbol(const AQuantity: TQuantity): string;
+function GetDensityValue (const AQuantity: TQuantity): double;
+function GetDensityString(const AQuantity: TQuantity): string;
 
-function GetSymbol(const AValue: TRadians): string;
-function GetValue (const AValue: TRadians): double;
-function GetString(const AValue: TRadians): string;
+function GetAngleSymbol(const AQuantity: TQuantity): string;
+function GetAngleValue (const AQuantity: TQuantity): double;
+function GetAngleString(const AQuantity: TQuantity): string;
 
-function GetSymbol(const AValue: TKelvins): string;
-function GetValue (const AValue: TKelvins): double;
-function GetString(const AValue: TKelvins): string;
+function GetTemperatureSymbol(const AQuantity: TQuantity): string;
+function GetTemperatureValue (const AQuantity: TQuantity): double;
+function GetTemperatureString(const AQuantity: TQuantity): string;
 
 const
   DefaultDigits    = 5;
@@ -103,281 +103,273 @@ begin
       Result := FloatToStrF(AValue, ffGeneral, 4, 0);
 end;
 
-function GetSymbol(const AValue: TMeters): string;
+function GetLengthSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsInchSymbol, []);
-    False: result := ADim.GetSymbol(rsMeterSymbol, [pMilli]);
+    True:  result := InchUnit.GetSymbol([]);
+    False: result := MeterUnit.GetSymbol([pMilli]);
   end;
 end;
 
-function GetValue(const AValue: TMeters): double;
+function GetLengthValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToInch.Value;
-    False: result := AValue.Value([pMilli]);
+    True:  result := InchUnit.ToFloat(AQuantity);
+    False: result := MeterUnit.ToFloat(AQuantity, [pMilli]);
   end;
 end;
 
-function GetString(const AValue: TMeters): string;
+function GetLengthString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToInch.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(DefaultPrecision, DefaultDigits, [pMilli]);
+      True:  result := InchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := MeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pMilli]);
     end
   else
     result := '---';
 end;
 
-function GetString(const AValue, ATol: TMeters): string;
+function GetLengthString(const AQuantity, ATol: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToInch.ToString(ATol.ToInch, DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(ATol, DefaultPrecision, DefaultDigits, [pMilli]);
+      True:  result := InchUnit.ToString(AQuantity, ATol, DefaultPrecision, DefaultDigits, []);
+      False: result := Meterunit.ToString(AQuantity, ATol, DefaultPrecision, DefaultDigits, [pMilli]);
     end
   else
     result := '---';
 end;
 
-function GetSymbol(const AValue: TNewtons): string;
+function GetForceSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsPoundSymbol, []);
-    False: result := ADim.GetSymbol(rsNewtonSymbol, [pNone]);
+    True:  result := NewtonUnit.GetSymbol([]);
+    False: result := NewtonUnit.GetSymbol([pNone]);
   end;
 end;
 
-function GetValue(const AValue: TNewtons): double;
+function GetForceValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToPoundForce.Value;
-    False: result := AValue.Value;
+    True:  result := PoundForceUnit.ToFloat(AQuantity);
+    False: result := NewtonUnit.ToFloat(AQuantity);
   end;
 end;
 
-function GetString(const AValue: TNewtons): string;
+function GetForceString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToPoundForce.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(DefaultPrecision, DefaultDigits, []);
+      True:  result := PoundForceUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := NewtonUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
     end
   else
     result := '---';
 end;
 
-function GetString(const AValue, ATol: TNewtons): string;
+function GetForceString(const AQuantity, ATol: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToPoundForce.ToString(ATol.ToPoundForce, DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(ATol, DefaultPrecision, DefaultDigits, []);
+      True:  result := PoundForceUnit.ToString(AQuantity, ATol, DefaultPrecision, DefaultDigits, []);
+      False: result := NewtonUnit.ToString(AQuantity, ATol, DefaultPrecision, DefaultDigits, []);
     end
   else
     result := '---';
 end;
 
-function GetSymbol(const AValue: TPascals): string;
+function GetPressureSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsPoundPerSquareInchSymbol, [pKilo]);
-    False: result := ADim.GetSymbol(rsPascalSymbol, [pMega]);
+    True:  result := PoundPerSquareInchUnit.GetSymbol([pKilo]);
+    False: result := PascalUnit.GetSymbol([pMega]);
   end;
 end;
 
-function GetValue(const AValue: TPascals): double;
+function GetPressureValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToPoundPerSquareInch.Value([pKilo]);
-    False: result := AValue.Value([pMega]);
+    True:  result := PoundPerSquareInchUnit.ToFloat(AQuantity, [pKilo]);
+    False: result := PascalUnit.ToFloat(AQuantity, [pMega]);
   end;
 end;
 
-function GetString(const AValue: TPascals): string;
+function GetPressureString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToPoundPerSquareInch.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(DefaultPrecision, DefaultDigits, [pMega]);
+      True:  result := PoundPerSquareInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := PascalUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pMega]);
     end
   else
     Result := '---';
 end;
 
-function GetSymbol(const AValue: TNewtonsPerMeter): string;
+function GetStiffnessSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := Adim.GetSymbol(rsPoundForcePerInchSymbol,[]);
-    False: result := ADim.GetSymbol(rsNewtonPerMeterSymbol, [pNone, pMilli]);
+    True:  result := PoundForcePerInchUnit.GetSymbol([]);
+    False: result := NewtonPerMeterUnit.GetSymbol([pNone, pMilli]);
   end;
 end;
 
-function GetValue(const AValue: TNewtonsPerMeter): double;
+function GetStiffnessValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToPoundForcePerInch.Value;
-    False: result := AValue.Value([pNone, pMilli]);
+    True:  result := PoundForcePerInchUnit.ToFloat(AQuantity);
+    False: result := NewtonPerMeterUnit.ToFloat(AQuantity, [pNone, pMilli]);
   end;
 end;
 
-function GetString(const AValue: TNewtonsPerMeter): string;
+function GetStiffnessString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  Result := AValue.ToPoundForcePerInch.ToString(DefaultPrecision, DefaultDigits, []);
-      False: Result := AValue.ToString(DefaultPrecision, DefaultDigits, [pNone, pMilli]);
+      True:  Result := PoundForcePerInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: Result := NewtonPerMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pNone, pMilli]);
     end
   else
     Result := '---';
 end;
 
-function GetSymbol(const AValue: TKilograms): string;
+function GetMassSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsPoundSymbol, []);
-    False: result := ADim.GetSymbol(rsKilogramSymbol, [pNone]);
+    True:  result := PoundUnit.GetSymbol([]);
+    False: result := KilogramUnit.GetSymbol([pNone]);
   end;
 end;
 
-function GetValue(const AValue: TKilograms): double;
+function GetMassValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToPound.Value;
-    False: result := AValue.Value;
+    True:  result := PoundUnit.ToFloat(AQuantity);
+    False: result := KilogramUnit.ToFloat(AQuantity);
   end;
 end;
 
-function GetString(const AValue: TKilograms): string;
+function GetMassString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToPound.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(DefaultPrecision, DefaultDigits, [pNone]);
+      True:  result := PoundUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := KilogramUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pNone]);
     end
   else
     Result := '---';
 end;
 
-function GetSymbol(const AValue: TJoules): string;
+function GetEnergySymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsPoundForceInchSymbol, []);
-    False: result := ADim.GetSymbol(rsNewtonMeterSymbol, [pNone, pMilli]);
+    True:  result := PoundForceInchUnit.GetSymbol([]);
+    False: result := NewtonMeterUnit.GetSymbol([pNone, pMilli]);
   end;
 end;
 
-function GetValue(const AValue: TJoules): double;
+function GetEnergyValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToPoundForceInch.Value;
-    False: result := AValue.ToNewtonMeter.Value([pNone, pMilli]);
+    True:  result := PoundForceInchUnit.ToFloat(AQuantity);
+    False: result := NewtonMeterUnit.Tofloat(AQuantity, [pNone, pMilli]);
   end;
 end;
 
-function GetString(const AValue: TJoules): string;
+function GetEnergyString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToPoundForceInch.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(DefaultPrecision, DefaultDigits, []);
+      True:  result := PoundForceInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := NewtonMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
     end
   else
     Result := '---';
 end;
 
-function GetSymbol(const AValue: THertz): string;
+function GetFrequencySymbol(const AQuantity: TQuantity): string;
 begin
-  case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsHertzSymbol, [pNone]);
-    False: result := ADim.GetSymbol(rsHertzSymbol, [pNone]);
-  end;
+  result := HertzUnit.GetSymbol([pNone]);
 end;
 
-function GetValue(const AValue: THertz): double;
+function GetFrequencyValue(const AQuantity: TQuantity): double;
 begin
-  case UseImperialSystem of
-    True:  result := AValue.Value;
-    False: result := AValue.Value;
-  end;
+ result := HertzUnit.ToFloat(AQuantity);
 end;
 
-function GetString(const AValue: THertz): string;
+function GetFrequencyString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
-    case UseImperialSystem of
-      True:  result := AValue.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(DefaultPrecision, DefaultDigits, []);
-    end
-  else
+  if not EqualToZero(AQuantity) then
+  begin
+    result := HertzUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+  end else
     Result := '---';
 end;
 
-function GetSymbol(const AValue: TKilogramsPerCubicMeter): string;
+function GetDensitySymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsKilogramPerCubicMeterSymbol, [pNone, pNone]);
-    False: result := ADim.GetSymbol(rsKilogramPerCubicMeterSymbol, [pNone, pNone]);
+    True:  result := PoundPerCubicInchUnit.GetSymbol([pNone, pNone]);
+    False: result := KilogramPerCubicMeterUnit.GetSymbol([pNone, pNone]);
   end;
 end;
 
-function GetValue(const AValue: TKilogramsPerCubicMeter): double;
+function GetDensityValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.Value;
-    False: result := AValue.Value;
+    True:  result := PoundPerCubicInchUnit.ToFloat(AQuantity);
+    False: result := KilogramPerCubicMeterUnit.ToFloat(AQuantity);
   end;
 end;
 
-function GetString(const AValue: TKilogramsPerCubicMeter): string;
+function GetDensityString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToPoundPerCubicInch.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToString(DefaultPrecision, DefaultDigits, [pNone, pDeci]);
+      True:  result := PoundPerCubicInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := KilogramPerCubicMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pNone, pDeci]);
     end
   else
     result := '---';
 end;
 
-function GetSymbol(const AValue: TRadians): string;
+function GetAngleSymbol(const AQuantity: TQuantity): string;
 begin
-  result := ADim.GetSymbol(rsDegreeSymbol, []);
+  result := RadianUnit.GetSymbol([]);
 end;
 
-function GetValue(const AValue: TRadians): double;
+function GetAngleValue(const AQuantity: TQuantity): double;
 begin
-  result := AValue.ToDegree.Value;
+  result := DegreeUnit.ToFloat(AQuantity);
 end;
 
-function GetString(const AValue: TRadians): string;
+function GetAngleString(const AQuantity: TQuantity): string;
 begin
-  result := AValue.ToString(DefaultPrecision, DefaultDigits, []);
+  result := DegreeUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
 end;
 
-function GetSymbol(const AValue: TKelvins): string;
+function GetTemperatureSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := ADim.GetSymbol(rsDegreeFahrenheitSymbol, []);
-    False: result := ADim.GetSymbol(rsDegreeCelsiusSymbol, []);
+    True:  result := degF.GetSymbol([]);
+    False: result := degC.GetSymbol([]);
   end;
 end;
 
-function GetValue(const AValue: TKelvins): double;
+function GetTemperatureValue(const AQuantity: TQuantity): double;
 begin
   case UseImperialSystem of
-    True:  result := AValue.ToDegreeFahrenheit.Value;
-    False: result := AValue.ToDegreeCelsius.Value;
+    True:  result := degF.ToFloat(AQuantity);
+    False: result := degC.ToFloat(AQuantity);
   end;
 end;
 
-function GetString(const AValue: TKelvins): string;
+function GetTemperatureString(const AQuantity: TQuantity): string;
 begin
-  if AValue.Value <> 0 then
+  if not EqualToZero(AQuantity) then
     case UseImperialSystem of
-      True:  result := AValue.ToDegreeFahrenheit.ToString(DefaultPrecision, DefaultDigits, []);
-      False: result := AValue.ToDegreeCelsius.ToString(DefaultPrecision, DefaultDigits, []);
+      True:  result := degF.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := degC.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
     end
   else
     Result := '---';

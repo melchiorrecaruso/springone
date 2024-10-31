@@ -26,7 +26,7 @@ unit Compozer;
 interface
 
 uses
-  ADim, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, BaseGraphics,
+  ADimRT, BGRABitmap, BGRABitmapTypes, Classes, DateUtils, BaseGraphics,
   Graphics, IniFiles, LibLink, SysUtils, Dialogs;
 
 type
@@ -250,19 +250,19 @@ begin
 
   {$IFDEF MODULE1}
   Result.Title := 'Force & Displacement Chart';
-  Result.XAxisLabel := 's [' + GetSymbol(SpringSolver.LengthLc) + ']';
-  Result.YAxisLabel := 'F [' + GetSymbol(SpringSolver.LoadFc) + ']';
+  Result.XAxisLabel := 's [' + GetLengthSymbol(SpringSolver.LengthLc) + ']';
+  Result.YAxisLabel := 'F [' + GetForceSymbol(SpringSolver.LoadFc) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
   // Drawing bisector line
-  if (SpringSolver.LoadFc.Value > 0) then
+  if GreaterThanZero(SpringSolver.LoadFc) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'BisectorLine');
     SetLength(Points, 2);
     Points[0].X := 0;
     Points[0].Y := 0;
-    Points[1].X := GetValue(SpringSolver.StrokeSc);
-    Points[1].Y := GetValue(SpringSolver.LoadFc);
+    Points[1].X := GetLengthValue(SpringSolver.StrokeSc);
+    Points[1].Y := GetForceValue(SpringSolver.LoadFc);
     Result.AddPolyLine(Points, True, 'Bisector');
     Points := nil;
   end;
@@ -270,20 +270,20 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing tolerance lines
-  if (SpringTolerance.Load1.Value > 0) and
-     (SpringTolerance.Load2.Value > 0) then
+  if GreaterThanZero(SpringTolerance.Load1) and
+     GreaterThanZero(SpringTolerance.Load2) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'ToleranceLine');
     SetLength(Points, 2);
-    Points[0].X := GetValue(SpringSolver.StrokeS1);
-    Points[0].Y := GetValue(SpringTolerance.Load1 + SpringTolerance.ToleranceOnLoad1);
-    Points[1].X := GetValue(SpringSolver.StrokeS2);
-    Points[1].Y := GetValue(SpringTolerance.Load2 + SpringTolerance.ToleranceOnLoad2);
+    Points[0].X := GetLengthValue(SpringSolver.StrokeS1);
+    Points[0].Y := GetForceValue(SpringTolerance.Load1 + SpringTolerance.ToleranceOnLoad1);
+    Points[1].X := GetLengthValue(SpringSolver.StrokeS2);
+    Points[1].Y := GetForceValue(SpringTolerance.Load2 + SpringTolerance.ToleranceOnLoad2);
     Result.AddPolyLine(Points, True, 'Tolerance +');
-    Points[0].X := GetValue(SpringSolver.StrokeS1);
-    Points[0].Y := GetValue(SpringTolerance.Load1 - SpringTolerance.ToleranceOnLoad1);
-    Points[1].X := GetValue(SpringSolver.StrokeS2);
-    Points[1].Y := GetValue(SpringTolerance.Load2 - SpringTolerance.ToleranceOnLoad2);
+    Points[0].X := GetLengthValue(SpringSolver.StrokeS1);
+    Points[0].Y := GetForceValue(SpringTolerance.Load1 - SpringTolerance.ToleranceOnLoad1);
+    Points[1].X := GetLengthValue(SpringSolver.StrokeS2);
+    Points[1].Y := GetForceValue(SpringTolerance.Load2 - SpringTolerance.ToleranceOnLoad2);
     Result.AddPolyLine(Points, True, 'Tolerance -');
     Points := nil;
   end;
@@ -295,15 +295,15 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing Load-F1
-  if SpringSolver.LoadF1.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadF1) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-F1');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := GetValue(SpringSolver.LoadF1);
-    Points[1].X := GetValue(SpringSolver.StrokeS1);
-    Points[1].Y := GetValue(SpringSolver.LoadF1);
-    Points[2].X := GetValue(SpringSolver.StrokeS1);
+    Points[0].Y := GetForceValue(SpringSolver.LoadF1);
+    Points[1].X := GetLengthValue(SpringSolver.StrokeS1);
+    Points[1].Y := GetForceValue(SpringSolver.LoadF1);
+    Points[2].X := GetLengthValue(SpringSolver.StrokeS1);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'F1');
     Points := nil;
@@ -313,15 +313,15 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing Load F2
-  if SpringSolver.LoadF2.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadF2) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-F2');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := GetValue(SpringSolver.LoadF2);
-    Points[1].X := GetValue(SpringSolver.StrokeS2);
-    Points[1].Y := GetValue(SpringSolver.LoadF2);
-    Points[2].X := GetValue(SpringSolver.StrokeS2);
+    Points[0].Y := GetForceValue(SpringSolver.LoadF2);
+    Points[1].X := GetLengthValue(SpringSolver.StrokeS2);
+    Points[1].Y := GetForceValue(SpringSolver.LoadF2);
+    Points[2].X := GetLengthValue(SpringSolver.StrokeS2);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'F2');
     Points := nil;
@@ -330,15 +330,15 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing Load Fn
-  if SpringSolver.LoadFn.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadFn) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fn');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := GetValue(SpringSolver.LoadFn);
-    Points[1].X := GetValue(SpringSolver.StrokeSn);
-    Points[1].Y := GetValue(SpringSolver.LoadFn);
-    Points[2].X := GetValue(SpringSolver.StrokeSn);
+    Points[0].Y := GetForceValue(SpringSolver.LoadFn);
+    Points[1].X := GetLengthValue(SpringSolver.StrokeSn);
+    Points[1].Y := GetForceValue(SpringSolver.LoadFn);
+    Points[2].X := GetLengthValue(SpringSolver.StrokeSn);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'Fn');
     Points := nil;
@@ -347,15 +347,15 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing Load Fc
-  if SpringSolver.LoadFc.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadFc) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fc');
     SetLength(Points, 3);
     Points[0].X := 0;
-    Points[0].Y := GetValue(SpringSolver.LoadFc);
-    Points[1].X := GetValue(SpringSolver.StrokeSc);
-    Points[1].Y := GetValue(SpringSolver.LoadFc);
-    Points[2].X := GetValue(SpringSolver.StrokeSc);
+    Points[0].Y := GetForceValue(SpringSolver.LoadFc);
+    Points[1].X := GetLengthValue(SpringSolver.StrokeSc);
+    Points[1].Y := GetForceValue(SpringSolver.LoadFc);
+    Points[2].X := GetLengthValue(SpringSolver.StrokeSc);
     Points[2].Y := 0;
     Result.AddPolyLine(Points, False, 'Fc');
     Points := nil;
@@ -364,31 +364,31 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing label Load-F1
-  if SpringSolver.LoadF1.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadF1) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-F1');
-    Result.AddLabel(0, GetValue(SpringSolver.LoadF1),
+    Result.AddLabel(0, GetForceValue(SpringSolver.LoadF1),
       32, 0, taLeftJustify, taAlignBottom, 'F1');
   end;
   // Drawing label Load-F2
-  if SpringSolver.LoadF2.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadF2) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-F2');
-    Result.AddLabel(0, GetValue(SpringSolver.LoadF2),
+    Result.AddLabel(0, GetForceValue(SpringSolver.LoadF2),
       64, 0, taLeftJustify, taAlignBottom, 'F2');
   end;
   // Drawing label Load-Fn
-  if SpringSolver.LoadFn.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadFn) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fn');
-    Result.AddLabel(0, GetValue(SpringSolver.LoadFn),
+    Result.AddLabel(0, GetforceValue(SpringSolver.LoadFn),
       96, 0, taLeftJustify, taAlignBottom, 'Fn');
   end;
   // Drawing label Load-Fc
-  if SpringSolver.LoadFc.Value > 0 then
+  if GreaterThanZero(SpringSolver.LoadFc) then
   begin
     LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fc');
-    Result.AddLabel(0, GetValue(SpringSolver.LoadFc),
+    Result.AddLabel(0, GetForceValue(SpringSolver.LoadFc),
       128, 0, taLeftJustify, taAlignBottom, 'Fc');
   end;
   {$ENDIF}
@@ -406,21 +406,21 @@ begin
   else
     Result.Title := Format('Goodman Chart: %s', [MAT.Name]);
 
-  Result.XAxisLabel := 'tauU [' + GetSymbol(SpringSolver.TensileStrengthRm) + ']';
-  Result.YAxisLabel := 'tauO [' + GetSymbol(SpringSolver.TensileStrengthRm) + ']';
+  Result.XAxisLabel := 'tauU [' + GetPressureSymbol(SpringSolver.TensileStrengthRm) + ']';
+  Result.YAxisLabel := 'tauO [' + GetPressureSymbol(SpringSolver.TensileStrengthRm) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
   {$IFDEF MODULE1}
   // Drawing bisector line
-  if SpringSolver.AdmStaticTorsionalStressTauz.Value > 0 then
+  if GreaterThanZero(SpringSolver.AdmStaticTorsionalStressTauz) then
   begin
     LoadChart2(Result, 'GoodmanChart', 'BisectorLine');
     SetLength(Points, 2);
     Points[0].X := 0;
     Points[0].Y := 0;
-    Points[1].X := GetValue(SpringSolver.AdmStaticTorsionalStressTauz);
-    Points[1].Y := GetValue(SpringSolver.AdmStaticTorsionalStressTauz);
+    Points[1].X := GetPressureValue(SpringSolver.AdmStaticTorsionalStressTauz);
+    Points[1].Y := GetPressureValue(SpringSolver.AdmStaticTorsionalStressTauz);
     Result.AddPolyLine(Points, True, 'Bisector');
     Points := nil;
   end;
@@ -444,19 +444,19 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing Tauk-Tolerances
-  if (SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1).Value > 0) and
-     (SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad2).Value > 0) then
+  if GreaterThanZero(SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1)) and
+     GreaterThanZero(SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad2)) then
   begin
     LoadChart2(Result, 'GoodmanChart', 'TaukTol');
     SetLength(Points, 4);
-    Points[0].X := GetValue(SpringSolver.TorsionalStressTauk1 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
-    Points[0].Y := GetValue(SpringSolver.TorsionalStressTauk1 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
-    Points[1].X := GetValue(SpringSolver.TorsionalStressTauk1 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
-    Points[1].Y := GetValue(SpringSolver.TorsionalStressTauk1 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
-    Points[2].X := GetValue(SpringSolver.TorsionalStressTauk1 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
-    Points[2].Y := GetValue(SpringSolver.TorsionalStressTauk2 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
-    Points[3].X := GetValue(SpringSolver.TorsionalStressTauk1 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
-    Points[3].Y := GetValue(SpringSolver.TorsionalStressTauk2 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[0].X := GetPressureValue(SpringSolver.TorsionalStressTauk1 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[0].Y := GetPressureValue(SpringSolver.TorsionalStressTauk1 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[1].X := GetPressureValue(SpringSolver.TorsionalStressTauk1 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[1].Y := GetPressureValue(SpringSolver.TorsionalStressTauk1 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[2].X := GetPressureValue(SpringSolver.TorsionalStressTauk1 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[2].Y := GetPressureValue(SpringSolver.TorsionalStressTauk2 + SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[3].X := GetPressureValue(SpringSolver.TorsionalStressTauk1 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
+    Points[3].Y := GetPressureValue(SpringSolver.TorsionalStressTauk2 - SpringSolver.GetTauk(SpringTolerance.ToleranceOnLoad1));
     Result.AddPolygon(Points, 'TaukTol');
     Result.AddLabel(Points[1].X, Points[1].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk1');
     Result.AddLabel(Points[2].X, Points[2].Y, 6, 3, taLeftJustify, taAlignTop, 'tauk2');
@@ -488,15 +488,15 @@ begin
 
   {$IFDEF MODULE1}
   // Drawing Tauk1-Tauk2
-  if (SpringSolver.TorsionalStressTauk1.Value > 0) and
-     (SpringSolver.TorsionalStressTauk2.Value > 0) then
+  if GreaterThanZero(SpringSolver.TorsionalStressTauk1) and
+     GreaterThanZero(SpringSolver.TorsionalStressTauk2) then
   begin
     LoadChart2(Result, 'GoodmanChart', 'Tauk');
     SetLength(Points, 2);
-    Points[0].X := GetValue(SpringSolver.TorsionalStressTauk1);
-    Points[0].Y := GetValue(SpringSolver.TorsionalStressTauk1);
-    Points[1].X := GetValue(SpringSolver.TorsionalStressTauk1);
-    Points[1].Y := GetValue(SpringSolver.TorsionalStressTauk2);
+    Points[0].X := GetPressureValue(SpringSolver.TorsionalStressTauk1);
+    Points[0].Y := GetPressureValue(SpringSolver.TorsionalStressTauk1);
+    Points[1].X := GetPressureValue(SpringSolver.TorsionalStressTauk1);
+    Points[1].Y := GetPressureValue(SpringSolver.TorsionalStressTauk2);
     Result.AddPolyLine(Points, False, 'Tauk1-Tauk2');
     Points := nil;
   end;
@@ -521,64 +521,64 @@ begin
   // Drawing Goodmand curve
   if MAT.Name <> '' then
   begin
-    if (MAT.TorsionalStressTauOE5  .Value > 0) and
-       (MAT.TorsionalStressTauUE5  .Value > 0) and
-       (MAT.TorsionalStressTauYield.Value > 0) and
-       (MAT.TorsionalStressTauUE6  .Value > 0) then
+    if GreaterThanZero(MAT.TorsionalStressTauOE5  ) and
+       GreaterThanZero(MAT.TorsionalStressTauUE5  ) and
+       GreaterThanZero(MAT.TorsionalStressTauYield) and
+       GreaterThanZero(MAT.TorsionalStressTauUE6  ) then
     begin
       LoadChart2(Result, 'GoodmanChart', '1E5');
       SetLength(Points, 3);
       Points[0].X := 0;
-      Points[0].Y := GetValue(MAT.TorsionalStressTauOE5);
-      Points[1].X := GetValue(MAT.TorsionalStressTauUE5);
-      Points[1].Y := GetValue(MAT.TorsionalStressTauYield);
-      Points[2].X := GetValue(MAT.TorsionalStressTauUE6);
-      Points[2].Y := GetValue(MAT.TorsionalStressTauYield);
+      Points[0].Y := GetPressureValue(MAT.TorsionalStressTauOE5);
+      Points[1].X := GetPressureValue(MAT.TorsionalStressTauUE5);
+      Points[1].Y := GetPressureValue(MAT.TorsionalStressTauYield);
+      Points[2].X := GetPressureValue(MAT.TorsionalStressTauUE6);
+      Points[2].Y := GetPressureValue(MAT.TorsionalStressTauYield);
       Result.AddPolyLine(Points, False, '1E5 Cycles');
       Result.AddLabel(
-        GetValue(MAT.TorsionalStressTauUE5),
-        GetValue(MAT.TorsionalStressTauYield),
+        GetPressureValue(MAT.TorsionalStressTauUE5),
+        GetPressureValue(MAT.TorsionalStressTauYield),
         0, 0, taLeftJustify, taAlignBottom, '1E5');
       Points := nil;
     end;
 
-    if (MAT.TorsionalStressTauOE6  .Value > 0) and
-       (MAT.TorsionalStressTauUE6  .Value > 0) and
-       (MAT.TorsionalStressTauYield.Value > 0) and
-       (MAT.TorsionalStressTauUE7  .Value > 0) then
+    if GreaterThanZero(MAT.TorsionalStressTauOE6  ) and
+       GreaterThanZero(MAT.TorsionalStressTauUE6  ) and
+       GreaterThanZero(MAT.TorsionalStressTauYield) and
+       GreaterThanZero(MAT.TorsionalStressTauUE7  ) then
     begin
       LoadChart2(Result, 'GoodmanChart', '1E6');
       SetLength(Points, 3);
       Points[0].X := 0;
-      Points[0].Y := GetValue(MAT.TorsionalStressTauOE6);
-      Points[1].X := GetValue(MAT.TorsionalStressTauUE6);
-      Points[1].Y := GetValue(MAT.TorsionalStressTauYield);
-      Points[2].X := GetValue(MAT.TorsionalStressTauUE7);
-      Points[2].Y := GetValue(MAT.TorsionalStressTauYield);
+      Points[0].Y := GetPressureValue(MAT.TorsionalStressTauOE6);
+      Points[1].X := GetPressureValue(MAT.TorsionalStressTauUE6);
+      Points[1].Y := GetPressureValue(MAT.TorsionalStressTauYield);
+      Points[2].X := GetPressureValue(MAT.TorsionalStressTauUE7);
+      Points[2].Y := GetPressureValue(MAT.TorsionalStressTauYield);
       Result.AddPolyLine(Points, False, '1E6 Cycles');
       Result.AddLabel(
-        GetValue(MAT.TorsionalStressTauUE6),
-        GetValue(MAT.TorsionalStressTauYield),
+        GetPressureValue(MAT.TorsionalStressTauUE6),
+        GetPressureValue(MAT.TorsionalStressTauYield),
         0, 0, taLeftJustify, taAlignBottom, '1E6');
       Points := nil;
     end;
 
-    if (MAT.TorsionalStressTauOE7  .Value > 0) and
-       (MAT.TorsionalStressTauUE7  .Value > 0) and
-       (MAT.TorsionalStressTauYield.Value > 0) then
+    if GreaterThanZero(MAT.TorsionalStressTauOE7  ) and
+       GreaterThanZero(MAT.TorsionalStressTauUE7  ) and
+       GreaterThanZero(MAT.TorsionalStressTauYield) then
     begin
       LoadChart2(Result, 'GoodmanChart', '1E7');
       SetLength(Points, 3);
       Points[0].X := 0;
-      Points[0].Y := GetValue(MAT.TorsionalStressTauOE7);
-      Points[1].X := GetValue(MAT.TorsionalStressTauUE7);
-      Points[1].Y := GetValue(MAT.TorsionalStressTauYield);
-      Points[2].X := GetValue(MAT.TorsionalStressTauYield);
-      Points[2].Y := GetValue(MAT.TorsionalStressTauYield);
+      Points[0].Y := GetPressureValue(MAT.TorsionalStressTauOE7);
+      Points[1].X := GetPressureValue(MAT.TorsionalStressTauUE7);
+      Points[1].Y := GetPressureValue(MAT.TorsionalStressTauYield);
+      Points[2].X := GetPressureValue(MAT.TorsionalStressTauYield);
+      Points[2].Y := GetPressureValue(MAT.TorsionalStressTauYield);
       Result.AddPolyLine(Points, False, '1E7 Cycles');
       Result.AddLabel(
-        GetValue(MAT.TorsionalStressTauUE7),
-        GetValue(MAT.TorsionalStressTauYield),
+        GetPressureValue(MAT.TorsionalStressTauUE7),
+        GetPressureValue(MAT.TorsionalStressTauYield),
         0, 0, taLeftJustify, taAlignBottom, '1E7 Cycles');
       Points := nil;
     end;
@@ -611,15 +611,16 @@ begin
   Result.AddPolyLine(Points, False, 'Buckling-Curve');
   Points := nil;
 
-  if (SpringSolver.Dm.Value > 0) and (SpringSolver.LengthL0.Value > 0) then
+  if GreaterThanZero(SpringSolver.Dm      ) and
+     GreaterThanZero(SpringSolver.LengthL0) then
   begin
     LoadChart2(Result, 'BucklingChart', 'Sc');
-    X := SpringSolver.SeatingCoefficent * SpringSolver.LengthL0 / SpringSolver.Dm;
+    X := SpringSolver.SeatingCoefficent * ScalarUnit.ToFloat(SpringSolver.LengthL0 / SpringSolver.Dm);
 
     if SpringSolver.StrokeSc > SpringSolver.DeflectionSk then
-      Y := SpringSolver.StrokeSc / SpringSolver.LengthL0
+      Y := ScalarUnit.ToFloat(SpringSolver.StrokeSc / SpringSolver.LengthL0)
     else
-      Y := SpringSolver.DeflectionSk / SpringSolver.LengthL0;
+      Y := ScalarUnit.ToFloat(SpringSolver.DeflectionSk / SpringSolver.LengthL0);
 
     SetLength(Points, 2);
     Points[0].x := X;
@@ -627,13 +628,13 @@ begin
     Points[1].x := X;
     Points[1].y := Y;
     Result.AddPolyLine(Points, False, 'Sc');
-    Result.AddDotLabel(X, SpringSolver.StrokeSc / SpringSolver.LengthL0,
+    Result.AddDotLabel(X, ScalarUnit.ToFloat(SpringSolver.StrokeSc / SpringSolver.LengthL0),
       5, 10, 0, taLeftJustify, taVerticalCenter, 'Sc');
     Points := nil;
     LoadChart2(Result, 'BucklingChart', 'Sx');
-    Result.AddDotLabel(X, SpringSolver.StrokeS1 / SpringSolver.LengthL0,
+    Result.AddDotLabel(X, ScalarUnit.ToFloat(SpringSolver.StrokeS1 / SpringSolver.LengthL0),
       5, 10, 0, taLeftJustify, taVerticalCenter, 'S1');
-    Result.AddDotLabel(X, SpringSolver.StrokeS2 / SpringSolver.LengthL0,
+    Result.AddDotLabel(X, ScalarUnit.ToFloat(SpringSolver.StrokeS2 / SpringSolver.LengthL0),
       5, 10, 0, taLeftJustify, taVerticalCenter, 'S2');
   end;
   {$ENDIF}
@@ -641,7 +642,7 @@ end;
 
 function TCompozer.CreateLoadF1Chart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TKelvins = (FValue: 323.15);
+  DeltaTemp : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cKelvin; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -651,30 +652,30 @@ begin
   {$IFDEF MODULE1}
   Result.Title := 'Load F1-Temperature Chart';
   Result.XAxisLabel := 'T [C°]';
-  Result.YAxisLabel := 'F1 [' + GetSymbol(SpringSolver.LoadF1) + ']';
+  Result.YAxisLabel := 'F1 [' + GetForceSymbol(SpringSolver.LoadF1) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  if (SpringSolver.GetF1(MAT.Tempetature - DeltaTemp).Value > 0) and
-     (SpringSolver.GetF1(MAT.Tempetature + DeltaTemp).Value > 0) then
+  if GreaterThanZero(SpringSolver.GetF1(MAT.Temperature - DeltaTemp)) and
+     GreaterThanZero(SpringSolver.GetF1(MAT.Temperature + DeltaTemp)) then
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
-    Points[0].y := GetValue(SpringSolver.GetF1(MAT.Tempetature - DeltaTemp));
-    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
-    Points[1].y := GetValue(SpringSolver.GetF1(MAT.Tempetature + DeltaTemp));
+    Points[0].x := GetTemperatureValue(MAT.Temperature - DeltaTemp);
+    Points[0].y := GetForceValue(SpringSolver.GetF1(MAT.Temperature - DeltaTemp));
+    Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
+    Points[1].y := GetforceValue(SpringSolver.GetF1(MAT.Temperature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'F1(T°)');
     Points := nil;
-    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(SpringSolver.GetF1(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.ToString);
+    Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetForceValue(SpringSolver.GetF1(MAT.Temperature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, GetTemperatureString(MAT.Temperature));
   end;
   {$ENDIF}
 end;
 
 function TCompozer.CreateLoadF2Chart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TKelvins = (FValue: 323.15);
+  DeltaTemp : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cKelvin; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -684,23 +685,23 @@ begin
   {$IFDEF MODULE1}
   Result.Title := 'Load F2-Temperature Chart';
   Result.XAxisLabel := 'T [C°]';
-  Result.YAxisLabel := 'F2 [' + GetSymbol(SpringSolver.LoadF2) + ']';
+  Result.YAxisLabel := 'F2 [' + GetForceSymbol(SpringSolver.LoadF2) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  if (not SpringSolver.GetF2(MAT.Tempetature - DeltaTemp).IsZero) and
-     (not SpringSolver.GetF2(MAT.Tempetature + DeltaTemp).IsZero) then
+  if GreaterThanZero(SpringSolver.GetF2(MAT.Temperature - DeltaTemp)) and
+     GreaterThanZero(SpringSolver.GetF2(MAT.Temperature + DeltaTemp)) then
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
-    Points[0].y := GetValue(SpringSolver.GetF2(MAT.Tempetature - DeltaTemp));
-    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
-    Points[1].y := GetValue(SpringSolver.GetF2(MAT.Tempetature + DeltaTemp));
+    Points[0].x := GetTemperatureValue(MAT.Temperature - DeltaTemp);
+    Points[0].y := GetForceValue(SpringSolver.GetF2(MAT.Temperature - DeltaTemp));
+    Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
+    Points[1].y := GetForceValue(SpringSolver.GetF2(MAT.Temperature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'F2(T°)');
     Points := nil;
-    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(SpringSolver.GetF2(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.ToString);
+    Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetForceValue(SpringSolver.GetF2(MAT.Temperature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, GetTemperatureString(MAT.Temperature));
   end;
   {$ENDIF}
 
@@ -708,7 +709,7 @@ end;
 
 function TCompozer.CreateShearModulusChart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TKelvins = (FValue: 323.15);
+  DeltaTemp : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cKelvin; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -716,29 +717,29 @@ begin
   Result.LegendEnabled := False;
   Result.Title := 'Shear Modulus G-Temperature Chart';
   Result.XAxisLabel := 'T [C°]';
-  Result.YAxisLabel := 'G [' + GetSymbol(SpringSolver.ShearModulus) + ']';
+  Result.YAxisLabel := 'G [' + GetPressureSymbol(SpringSolver.ShearModulus) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  if (not MAT.GetG(MAT.Tempetature - DeltaTemp).IsZero) and
-     (not MAT.GetG(MAT.Tempetature + DeltaTemp).IsZero) then
+  if GreaterThanZero(MAT.GetG(MAT.Temperature - DeltaTemp)) and
+     GreaterThanZero(MAT.GetG(MAT.Temperature + DeltaTemp)) then
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
-    Points[0].y := GetValue(MAT.GetG(MAT.Tempetature - DeltaTemp));
-    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
-    Points[1].y := GetValue(MAT.GetG(MAT.Tempetature + DeltaTemp));
+    Points[0].x := GetTemperatureValue(MAT.Temperature - DeltaTemp);
+    Points[0].y := GetPressureValue(MAT.GetG(MAT.Temperature - DeltaTemp));
+    Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
+    Points[1].y := GetPressureValue(MAT.GetG(MAT.Temperature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'G(T°)');
     Points := nil;
-    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(MAT.GetG(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.toString);
+    Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetPressureValue(MAT.GetG(MAT.Temperature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, GetTemperatureString(MAT.Temperature));
   end;
 end;
 
 function TCompozer.CreateYoungModulusChart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TKelvins = (FValue: 323.15);
+  DeltaTemp : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cKelvin; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -746,24 +747,24 @@ begin
   Result.LegendEnabled := False;
   Result.Title := 'Young Modulus G-Temperature Chart';
   Result.XAxisLabel := 'T [C°]';
-  Result.YAxisLabel := 'E [' + GetSymbol(SpringSolver.YoungModulus) + ']';
+  Result.YAxisLabel := 'E [' + GetPressureSymbol(SpringSolver.YoungModulus) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  if (not MAT.GetE(MAT.Tempetature - DeltaTemp).IsZero) and
-     (not MAT.GetE(MAT.Tempetature + DeltaTemp).IsZero) then
+  if GreaterThanZero(MAT.GetE(MAT.Temperature - DeltaTemp)) and
+     GreaterThanZero(MAT.GetE(MAT.Temperature + DeltaTemp)) then
   begin
     LoadChart2(Result, 'LinearChart', 'Line');
     SetLength(Points, 2);
-    Points[0].x := GetValue(MAT.Tempetature - DeltaTemp);
-    Points[0].y := GetValue(MAT.GetE(MAT.Tempetature - DeltaTemp));
-    Points[1].x := GetValue(MAT.Tempetature + DeltaTemp);
-    Points[1].y := GetValue(MAT.GetE(MAT.Tempetature + DeltaTemp));
+    Points[0].x := GetTemperatureValue(MAT.Temperature - DeltaTemp);
+    Points[0].y := GetPressureValue(MAT.GetE(MAT.Temperature - DeltaTemp));
+    Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
+    Points[1].y := GetPressureValue(MAT.GetE(MAT.Temperature + DeltaTemp));
     Result.AddPolyLine(Points, True, 'E(T°)');
     Points := nil;
 
-    Result.AddDotLabel(GetValue(MAT.Tempetature), GetValue(MAT.GetE(MAT.Tempetature)),
-      5, 0, 10, taLeftJustify, taAlignBottom, MAT.Tempetature.toString);
+    Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetPressureValue(MAT.GetE(MAT.Temperature)),
+      5, 0, 10, taLeftJustify, taAlignBottom, GetTemperatureString(MAT.Temperature));
   end;
 end;
 
@@ -774,9 +775,9 @@ begin
   LoadSpring(Result, 'SpringDrawing', 'Spring');
 
   {$IFDEF MODULE1}
-  Result.d  := SpringSolver.WireDiameter.Value([pMilli]);
-  Result.Dm := SpringSolver.Dm.Value([pMilli]);
-  Result.Lc := SpringSolver.LengthLc.Value([pMilli]);
+  Result.d  := MeterUnit.ToFloat(SpringSolver.WireDiameter, [pMilli]);
+  Result.Dm := MeterUnit.ToFloat(SpringSolver.Dm, [pMilli]);
+  Result.Lc := MeterUnit.ToFloat(SpringSolver.LengthLc, [pMilli]);
   Result.n  := SpringSolver.ActiveColis;
   Result.nt1 := (SpringSolver.TotalCoils - SpringSolver.ActiveColis) / 2;
   Result.nt2 := (SpringSolver.TotalCoils - SpringSolver.ActiveColis) / 2;
@@ -837,12 +838,12 @@ begin
   Result[6, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade3);
 
   Result[0, 4] := 'Tol.';
-  Result[1, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnCoilDiameter));
-  Result[2, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceFreeBodyLength));
-  Result[3, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnLoad1));
-  Result[4, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnLoad2));
-  Result[5, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnPerpendicularity));
-  Result[6, 4] := '± ' + GetString(GetValue(SpringTolerance.ToleranceOnParallelism));
+  Result[1, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceOnCoilDiameter));
+  Result[2, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceFreeBodyLength));
+  Result[3, 4] := '± ' + GetString(GetForceValue(SpringTolerance.ToleranceOnLoad1));
+  Result[4, 4] := '± ' + GetString(GetForceValue(SpringTolerance.ToleranceOnLoad2));
+  Result[5, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceOnPerpendicularity));
+  Result[6, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceOnParallelism));
 
   {$ENDIF}
 end;
@@ -857,12 +858,12 @@ begin
   Result.Zoom := AScreenScale;
   LoadTable(Result, 'CommonTable', 'Table');
   {$IFDEF MODULE1}
-  Result[0, 0] := 'L [' + GetSymbol(SpringSolver.LengthL0) + ']';
-  Result[1, 0] := Format('L0: %s', [GetString(GetValue(SpringSolver.LengthL0))]);
-  Result[2, 0] := Format('L1: %s', [GetString(GetValue(SpringSolver.LengthL1))]);
-  Result[3, 0] := Format('L2: %s', [GetString(GetValue(SpringSolver.LengthL2))]);
-  Result[4, 0] := Format('Ln: %s', [GetString(GetValue(SpringSolver.LengthLn))]);
-  Result[5, 0] := Format('Lc: %s', [GetString(GetValue(SpringSolver.LengthLc))]);
+  Result[0, 0] := 'L [' + GetLengthSymbol(SpringSolver.LengthL0) + ']';
+  Result[1, 0] := Format('L0: %s', [GetString(GetLengthValue(SpringSolver.LengthL0))]);
+  Result[2, 0] := Format('L1: %s', [GetString(GetLengthValue(SpringSolver.LengthL1))]);
+  Result[3, 0] := Format('L2: %s', [GetString(GetLengthValue(SpringSolver.LengthL2))]);
+  Result[4, 0] := Format('Ln: %s', [GetString(GetLengthValue(SpringSolver.LengthLn))]);
+  Result[5, 0] := Format('Lc: %s', [GetString(GetLengthValue(SpringSolver.LengthLc))]);
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 0] := 'angle [' + GetSymbol(0*deg) + ']';
@@ -873,12 +874,12 @@ begin
   {$ENDIF}
 
   {$IFDEF MODULE1}
-  Result[0, 1] := 'F [' + GetSymbol(SpringSolver.LoadF1) + ']';
+  Result[0, 1] := 'F [' + GetForceSymbol(SpringSolver.LoadF1) + ']';
   Result[1, 1] := '';
-  Result[2, 1] := Format('F1: %s', [GetString(GetValue(SpringSolver.LoadF1))]);
-  Result[3, 1] := Format('F2: %s', [GetString(GetValue(SpringSolver.LoadF2))]);
-  Result[4, 1] := Format('Fn: %s', [GetString(GetValue(SpringSolver.LoadFn))]);
-  Result[5, 1] := Format('Fc: %s', [GetString(GetValue(SpringSolver.LoadFc))]);
+  Result[2, 1] := Format('F1: %s', [GetString(GetForceValue(SpringSolver.LoadF1))]);
+  Result[3, 1] := Format('F2: %s', [GetString(GetForceValue(SpringSolver.LoadF2))]);
+  Result[4, 1] := Format('Fn: %s', [GetString(GetForceValue(SpringSolver.LoadFn))]);
+  Result[5, 1] := Format('Fc: %s', [GetString(GetForceValue(SpringSolver.LoadFc))]);
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 1] := 'torque [' + GetSymbol(SpringSolver.TorqueT1) + ']';
@@ -889,12 +890,12 @@ begin
   {$ENDIF}
 
   {$IFDEF MODULE1}
-  Result[0, 2] := 'tau [' + GetSymbol(SpringSolver.TorsionalStressTauk1) + ']';
+  Result[0, 2] := 'tau [' + GetPressureSymbol(SpringSolver.TorsionalStressTauk1) + ']';
   Result[1, 2] := '';
-  Result[2, 2] := Format('tauk1: %s', [GetString(GetValue(SpringSolver.TorsionalStressTauk1))]);
-  Result[3, 2] := Format('tauk2: %s', [GetString(GetValue(SpringSolver.TorsionalStressTauk2))]);
-  Result[4, 2] := Format('tau n: %s', [GetString(GetValue(SpringSolver.TorsionalStressTaun ))]);
-  Result[5, 2] := Format('tau k: %s', [GetString(GetValue(SpringSolver.TorsionalStressTauc ))]);
+  Result[2, 2] := Format('tauk1: %s', [GetString(GetPressureValue(SpringSolver.TorsionalStressTauk1))]);
+  Result[3, 2] := Format('tauk2: %s', [GetString(GetPressureValue(SpringSolver.TorsionalStressTauk2))]);
+  Result[4, 2] := Format('tau n: %s', [GetString(GetPressureValue(SpringSolver.TorsionalStressTaun ))]);
+  Result[5, 2] := Format('tau k: %s', [GetString(GetPressureValue(SpringSolver.TorsionalStressTauc ))]);
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 2] := 'σ [' + GetSymbol(SpringSolver.BendingStressSigmaq1) + ']';
@@ -905,23 +906,23 @@ begin
   {$ENDIF}
 
   {$IFDEF MODULE1}
-  Result[0, 3] := 's [' + GetSymbol(SpringSolver.LengthL1) + ']';
+  Result[0, 3] := 's [' + GetLengthSymbol(SpringSolver.LengthL1) + ']';
   Result[1, 3] := '';
-  Result[2, 3] := Format('s1: %s', [GetString(GetValue(SpringSolver.StrokeS1))]);
-  Result[3, 3] := Format('s2: %s', [GetString(GetValue(SpringSolver.StrokeS2))]);
-  Result[4, 3] := Format('sn: %s', [GetString(GetValue(SpringSolver.StrokeSn))]);
-  Result[5, 3] := Format('sc: %s', [GetString(GetValue(SpringSolver.StrokeSc))]);
+  Result[2, 3] := Format('s1: %s', [GetString(GetLengthValue(SpringSolver.StrokeS1))]);
+  Result[3, 3] := Format('s2: %s', [GetString(GetLengthValue(SpringSolver.StrokeS2))]);
+  Result[4, 3] := Format('sn: %s', [GetString(GetLengthValue(SpringSolver.StrokeSn))]);
+  Result[5, 3] := Format('sc: %s', [GetString(GetLengthValue(SpringSolver.StrokeSc))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
   Result[0, 4] := 'tau/tauz';
-  if SpringSolver.AdmStaticTorsionalStressTauz.Value > 0 then
+  if GreaterThanZero(SpringSolver.AdmStaticTorsionalStressTauz) then
   begin
     Result[1, 4] := '';
-    Result[2, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTau1 / SpringSolver.AdmStaticTorsionalStressTauz]);
-    Result[3, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTau2 / SpringSolver.AdmStaticTorsionalStressTauz]);
-    Result[4, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTaun / SpringSolver.AdmStaticTorsionalStressTauz]);
-    Result[5, 4] := Format('%0.3f', [SpringSolver.TorsionalStressTauc / SpringSolver.AdmStaticTorsionalStressTauz]);
+    Result[2, 4] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTau1 / SpringSolver.AdmStaticTorsionalStressTauz)]);
+    Result[3, 4] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTau2 / SpringSolver.AdmStaticTorsionalStressTauz)]);
+    Result[4, 4] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTaun / SpringSolver.AdmStaticTorsionalStressTauz)]);
+    Result[5, 4] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTauc / SpringSolver.AdmStaticTorsionalStressTauz)]);
   end;
   {$ENDIF}
   {$IFDEF MODULE3}
@@ -937,13 +938,13 @@ begin
 
   {$IFDEF MODULE1}
   Result[0, 5] := 'tau/Rm';
-  if SpringSolver.TensileStrengthRm.Value > 0 then
+  if GreaterThanZero(SpringSolver.TensileStrengthRm) then
   begin
     Result[1, 5] := '';
-    Result[2, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTau1 / SpringSolver.TensileStrengthRm]);
-    Result[3, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTau2 / SpringSolver.TensileStrengthRm]);
-    Result[4, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTaun / SpringSolver.TensileStrengthRm]);
-    Result[5, 5] := Format('%0.3f', [SpringSolver.TorsionalStressTauc / SpringSolver.TensileStrengthRm]);
+    Result[2, 5] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTau1 / SpringSolver.TensileStrengthRm)]);
+    Result[3, 5] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTau2 / SpringSolver.TensileStrengthRm)]);
+    Result[4, 5] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTaun / SpringSolver.TensileStrengthRm)]);
+    Result[5, 5] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.TorsionalStressTauc / SpringSolver.TensileStrengthRm)]);
   end;
   {$ENDIF}
   {$IFDEF MODULE3}
@@ -958,14 +959,14 @@ begin
   {$ENDIF}
 
   {$IFDEF MODULE1}
-  Result[0, 6] := 'De [' + GetSymbol(SpringSolver.De) + ']';
-  if SpringSolver.StrokeSc.Value > 0 then
+  Result[0, 6] := 'De [' + GetLengthSymbol(SpringSolver.De) + ']';
+  if GreaterThanZero(SpringSolver.StrokeSc) then
   begin
-    Result[1, 6] := Format('%s', [GetString(GetValue(SpringSolver.De))]);
-    Result[2, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeS1 / SpringSolver.StrokeSc))]);
-    Result[3, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeS2 / SpringSolver.StrokeSc))]);
-    Result[4, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeSn / SpringSolver.StrokeSc))]);
-    Result[5, 6] := Format('%s', [GetString(GetValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeSc / SpringSolver.StrokeSc))]);
+    Result[1, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.De))]);
+    Result[2, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeS1 / SpringSolver.StrokeSc))]);
+    Result[3, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeS2 / SpringSolver.StrokeSc))]);
+    Result[4, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeSn / SpringSolver.StrokeSc))]);
+    Result[5, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.De + SpringSolver.DeltaDe * SpringSolver.StrokeSc / SpringSolver.StrokeSc))]);
   end;
   {$ENDIF}
   {$IFDEF MODULE3}
@@ -991,19 +992,19 @@ begin
 
   Result.Items[0, 0] := 'd';
   Result.Items[0, 1] := '=';
-  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
+  Result.Items[0, 2] := GetLengthString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
 
   Result.Items[1, 0] := 'Di';
   Result.Items[1, 1] := '=';
-  Result.Items[1, 2] := GetString(SpringSolver.Di);
+  Result.Items[1, 2] := GetLengthString(SpringSolver.Di);
 
   Result.Items[2, 0] := 'Dm';
   Result.Items[2, 1] := '=';
-  Result.Items[2, 2] := GetString(SpringSolver.Dm);
+  Result.Items[2, 2] := GetLengthString(SpringSolver.Dm);
 
   Result.Items[3, 0] := 'De';
   Result.Items[3, 1] := '=';
-  Result.Items[3, 2] := GetString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter);
+  Result.Items[3, 2] := GetLengthString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter);
 
   Result.Items[4, 0] := 'n';
   Result.Items[4, 1] := '=';
@@ -1016,43 +1017,43 @@ begin
 
   Result.Items[6, 0] := 'R';
   Result.Items[6, 1] := '=';
-  Result.Items[6, 2] := GetString(SpringSolver.SpringRateR);
+  Result.Items[6, 2] := GetStiffnessString(SpringSolver.SpringRateR);
 
   Result.Items[7, 0] := 'Dec';
   Result.Items[7, 1] := '=';
-  Result.Items[7, 2] := GetString(SpringSolver.De + SpringSolver.DeltaDe);
+  Result.Items[7, 2] := GetLengthString(SpringSolver.De + SpringSolver.DeltaDe);
 
   Result.Items[8, 0] := 'Di.min';
   Result.Items[8, 1] := '=';
-  Result.Items[8, 2] := GetString(SpringSolver.DiMin);
+  Result.Items[8, 2] := GetLengthString(SpringSolver.DiMin);
 
   Result.Items[9, 0] := 'De.max';
   Result.Items[9, 1] := '=';
-  Result.Items[9, 2] := GetString(SpringSolver.DeMax);
+  Result.Items[9, 2] := GetLengthString(SpringSolver.DeMax);
 
   Result.Items[10, 0] := 'sk';
   Result.Items[10, 1] := '=';
-  Result.Items[10, 2] := GetString(SpringSolver.DeflectionSk);
+  Result.Items[10, 2] := GetLengthString(SpringSolver.DeflectionSk);
 
   Result.Items[11, 0] := 'L';
   Result.Items[11, 1] := '=';
-  Result.Items[11, 2] := GetString(SpringSolver.WireLength);
+  Result.Items[11, 2] := GetLengthString(SpringSolver.WireLength);
 
   Result.Items[12, 0] := 'm';
   Result.Items[12, 1] := '=';
-  Result.Items[12, 2] := GetString(SpringSolver.Mass);
+  Result.Items[12, 2] := GetMassString(SpringSolver.Mass);
 
   Result.Items[13, 0] := 'W12';
   Result.Items[13, 1] := '=';
-  Result.Items[13, 2] := GetString(SpringSolver.SpringWorkW12);
+  Result.Items[13, 2] := GetEnergyString(SpringSolver.SpringWorkW12);
 
   Result.Items[14, 0] := 'W0n';
   Result.Items[14, 1] := '=';
-  Result.Items[14, 2] := GetString(SpringSolver.SpringWorkW0n);
+  Result.Items[14, 2] := GetEnergyString(SpringSolver.SpringWorkW0n);
 
   Result.Items[15, 0] := 'fe';
   Result.Items[15, 1] := '=';
-  Result.Items[15, 2] := GetString(SpringSolver.NaturalFrequency);
+  Result.Items[15, 2] := GetFrequencyString(SpringSolver.NaturalFrequency);
 
   Result.Items[16, 0] := 'nu';
   Result.Items[16, 1] := '=';
@@ -1091,35 +1092,35 @@ begin
   k := 2;
   Result.Items[0+k, 0] := 'tauk1';
   Result.Items[0+k, 1] := '=';
-  Result.Items[0+k, 2] := GetString(SpringSolver.TorsionalStressTauk1);
+  Result.Items[0+k, 2] := GetPressureString(SpringSolver.TorsionalStressTauk1);
 
   Result.Items[1+k, 0] := 'tauk2';
   Result.Items[1+k, 1] := '=';
-  Result.Items[1+k, 2] := GetString(SpringSolver.TorsionalStressTauk2);
+  Result.Items[1+k, 2] := GetPressureString(SpringSolver.TorsionalStressTauk2);
 
   Result.Items[2+k, 0] := 'taukh';
   Result.Items[2+k, 1] := '=';
-  Result.Items[2+k, 2] := GetString(SpringSolver.TorsionalStressTaukh);
+  Result.Items[2+k, 2] := GetPressureString(SpringSolver.TorsionalStressTaukh);
 
   Result.Items[3+k, 0] := 'E';
   Result.Items[3+k, 1] := '=';
-  Result.Items[3+k, 2] := GetString(SpringSolver.YoungModulus);
+  Result.Items[3+k, 2] := GetPressureString(SpringSolver.YoungModulus);
 
   Result.Items[4+k, 0] := 'G';
   Result.Items[4+k, 1] := '=';
-  Result.Items[4+k, 2] := GetString(SpringSolver.ShearModulus);
+  Result.Items[4+k, 2] := GetPressureString(SpringSolver.ShearModulus);
 
   Result.Items[5+k, 0] := 'rho';
   Result.Items[5+k, 1] := '=';
-  Result.Items[5+k, 2] := GetString(SpringSolver.MaterialDensity);
+  Result.Items[5+k, 2] := GetDensityString(SpringSolver.MaterialDensity);
 
   Result.Items[6+k, 0] := 'Rm';
   Result.Items[6+k, 1] := '=';
-  Result.Items[6+k, 2] := GetString(SpringSolver.TensileStrengthRm);
+  Result.Items[6+k, 2] := GetPressureString(SpringSolver.TensileStrengthRm);
 
   Result.Items[7+k, 0] := 'tauz';
   Result.Items[7+k, 1] := '=';
-  Result.Items[7+k, 2] := GetString(SpringSolver.AdmStaticTorsionalStressTauz);
+  Result.Items[7+k, 2] := GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz);
 
   Result.Items[8+k, 0] := 'ns';
   Result.Items[8+k, 1] := '=';
@@ -1129,15 +1130,15 @@ begin
   begin
     Result.Items[9+k, 0] := 'tauoz';
     Result.Items[9+k, 1] := '=';
-    Result.Items[9+k, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressTauoz);
+    Result.Items[9+k, 2] := GetPressureString(SpringSolver.AdmDynamicTorsionalStressTauoz);
 
     Result.Items[10+k, 0] := 'tauhz';
     Result.Items[10+k, 1] := '=';
-    Result.Items[10+k, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
+    Result.Items[10+k, 2] := GetPressureString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
 
     Result.Items[11+k, 0] := 'nf';
     Result.Items[11+k, 1] := '=';
-    Result.Items[11+k, 2] := Format('%02f', [SpringSolver.DynamicSafetyFactor]);
+    Result.Items[11+k, 2] := Format('%02f', [ScalarUnit.ToFloat(SpringSolver.DynamicSafetyFactor)]);
 
 
     Result.Items[13+k, 0] := 'N';
@@ -1147,17 +1148,17 @@ begin
     begin
       Result.Items[13+k, 0] := 'N';
       Result.Items[13+k, 1] := '=';
-      Result.Items[13+k, 2] := Format('%0.0f cycles', [SpringSolver.NumOfCycles]);
+      Result.Items[13+k, 2] := Format('%0.0f cycles', [ScalarUnit.ToFloat(SpringSolver.NumOfCycles)]);
     end;
 
     Result.Items[14+k, 0] := 'Nh';
     Result.Items[14+k, 1] := '=';
     Result.Items[14+k, 2] := '---';
-    if SpringSolver.CycleFrequency > (0*Hz) then
+    if GreaterThanZero(SpringSolver.CycleFrequency) then
     begin
       Result.Items[14+k, 0] := 'Nh';
       Result.Items[14+k, 1] := '=';
-      Result.Items[14+k, 2] := (SpringSolver.NumOfCycles / SpringSolver.CycleFrequency).ToHour.ToString(5, 5, []);
+      Result.Items[14+k, 2] := HourUnit.ToString(SpringSolver.NumOfCycles / SpringSolver.CycleFrequency, 5, 5, []);
     end;
   end;
   {$ENDIF}
@@ -1213,19 +1214,19 @@ begin
 
   Result.Items[0, 0] := 'd';
   Result.Items[0, 1] := '=';
-  Result.Items[0, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
+  Result.Items[0, 2] := GetLengthString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
 
   Result.Items[1, 0] := 'Di';
   Result.Items[1, 1] := '=';
-  Result.Items[1, 2] := GetString(SpringSolver.Di);
+  Result.Items[1, 2] := GetLengthString(SpringSolver.Di);
 
   Result.Items[2, 0] := 'Dm';
   Result.Items[2, 1] := '=';
-  Result.Items[2, 2] := GetString(SpringSolver.Dm);
+  Result.Items[2, 2] := GetLengthString(SpringSolver.Dm);
 
   Result.Items[3, 0] := 'De';
   Result.Items[3, 1] := '=';
-  Result.Items[3, 2] := GetString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter);
+  Result.Items[3, 2] := GetLengthString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter);
 
   Result.Items[4, 0] := 'n';
   Result.Items[4, 1] := '=';
@@ -1237,51 +1238,51 @@ begin
 
   Result.Items[6, 0] := 'R';
   Result.Items[6, 1] := '=';
-  Result.Items[6, 2] := GetString(SpringSolver.SpringRateR);
+  Result.Items[6, 2] := GetStiffnessString(SpringSolver.SpringRateR);
 
   Result.Items[7, 0] := 'Dec';
   Result.Items[7, 1] := '=';
-  Result.Items[7, 2] := GetString(SpringSolver.De + SpringSolver.DeltaDe);
+  Result.Items[7, 2] := GetLengthString(SpringSolver.De + SpringSolver.DeltaDe);
 
   Result.Items[8, 0] := 'Di.min';
   Result.Items[8, 1] := '=';
-  Result.Items[8, 2] := GetString(SpringSolver.DiMin);
+  Result.Items[8, 2] := GetLengthString(SpringSolver.DiMin);
 
   Result.Items[9, 0] := 'De.max';
   Result.Items[9, 1] := '=';
-  Result.Items[9, 2] := GetString(SpringSolver.DeMax);
+  Result.Items[9, 2] := GetLengthString(SpringSolver.DeMax);
 
   Result.Items[10, 0] := 'sk';
   Result.Items[10, 1] := '=';
-  Result.Items[10, 2] := GetString(SpringSolver.DeflectionSk);
+  Result.Items[10, 2] := GetLengthString(SpringSolver.DeflectionSk);
 
   Result.Items[11, 0] := 'L';
   Result.Items[11, 1] := '=';
-  Result.Items[11, 2] := GetString(SpringSolver.WireLength);
+  Result.Items[11, 2] := GetLengthString(SpringSolver.WireLength);
 
   Result.Items[12, 0] := 'm';
   Result.Items[12, 1] := '=';
-  Result.Items[12, 2] := GetString(SpringSolver.Mass);
+  Result.Items[12, 2] := GetMassString(SpringSolver.Mass);
 
   Result.Items[13, 0] := 'W12';
   Result.Items[13, 1] := '=';
-  Result.Items[13, 2] := GetString(SpringSolver.SpringWorkW12);
+  Result.Items[13, 2] := GetEnergyString(SpringSolver.SpringWorkW12);
 
   Result.Items[14, 0] := 'W0n';
   Result.Items[14, 1] := '=';
-  Result.Items[14, 2] := GetString(SpringSolver.SpringWorkW0n);
+  Result.Items[14, 2] := GetEnergyString(SpringSolver.SpringWorkW0n);
 
   Result.Items[15, 0] := 'fe';
   Result.Items[15, 1] := '=';
-  Result.Items[15, 2] := GetString(SpringSolver.NaturalFrequency);
+  Result.Items[15, 2] := GetFrequencyString(SpringSolver.NaturalFrequency);
 
   Result.Items[16, 0] := 'Pitch';
   Result.Items[16, 1] := '=';
-  Result.Items[16, 2] := GetString(SpringSolver.Pitch);
+  Result.Items[16, 2] := GetLengthString(SpringSolver.Pitch);
 
   Result.Items[17, 0] := 'PitchRatio';
   Result.Items[17, 1] := '=';
-  Result.Items[17, 2] := Format('%0.4f', [SpringSolver.PitchRatio]);
+  Result.Items[17, 2] := Format('%0.4f', [ScalarUnit.ToFloat(SpringSolver.PitchRatio)]);
 
   Result.Items[18, 0] := 'nu';
   Result.Items[18, 1] := '=';
@@ -1296,35 +1297,35 @@ begin
 
   Result.Items[22, 0] := 'tauk1';
   Result.Items[22, 1] := '=';
-  Result.Items[22, 2] := GetString(SpringSolver.TorsionalStressTauk1);
+  Result.Items[22, 2] := GetPressureString(SpringSolver.TorsionalStressTauk1);
 
   Result.Items[23, 0] := 'tauk2';
   Result.Items[23, 1] := '=';
-  Result.Items[23, 2] := GetString(SpringSolver.TorsionalStressTauk2);
+  Result.Items[23, 2] := GetPressureString(SpringSolver.TorsionalStressTauk2);
 
   Result.Items[24, 0] := 'taukh';
   Result.Items[24, 1] := '=';
-  Result.Items[24, 2] := GetString(SpringSolver.TorsionalStressTaukh);
+  Result.Items[24, 2] := GetPressureString(SpringSolver.TorsionalStressTaukh);
 
   Result.Items[26, 0] := 'E';
   Result.Items[26, 1] := '=';
-  Result.Items[26, 2] := SpringSolver.YoungModulus.ToString(5, 5, [pMilli]);
+  Result.Items[26, 2] := GetPressureString(SpringSolver.YoungModulus);
 
   Result.Items[27, 0] := 'G';
   Result.Items[27, 1] := '=';
-  Result.Items[27, 2] := SpringSolver.ShearModulus.ToString(5, 5, [pMega]);
+  Result.Items[27, 2] := GetPressureString(SpringSolver.ShearModulus);
 
   Result.Items[28, 0] := 'rho';
   Result.Items[28, 1] := '=';
-  Result.Items[28, 2] := GetString(SpringSolver.MaterialDensity);
+  Result.Items[28, 2] := GetDensityString(SpringSolver.MaterialDensity);
 
   Result.Items[29, 0] := 'Rm';
   Result.Items[29, 1] := '=';
-  Result.Items[29, 2] := GetString(SpringSolver.TensileStrengthRm);
+  Result.Items[29, 2] := GetPressureString(SpringSolver.TensileStrengthRm);
 
   Result.Items[30, 0] := 'tauz';
   Result.Items[30, 1] := '=';
-  Result.Items[30, 2] := GetString(SpringSolver.AdmStaticTorsionalStressTauz);
+  Result.Items[30, 2] := GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz);
 
   Result.Items[31, 0] := 'ns';
   Result.Items[31, 1] := '=';
@@ -1334,15 +1335,15 @@ begin
   begin
     Result.Items[33, 0] := 'tauoz';
     Result.Items[33, 1] := '=';
-    Result.Items[33, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressTauoz);
+    Result.Items[33, 2] := GetPressureString(SpringSolver.AdmDynamicTorsionalStressTauoz);
 
     Result.Items[34, 0] := 'tauhz';
     Result.Items[34, 1] := '=';
-    Result.Items[34, 2] := GetString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
+    Result.Items[34, 2] := GetPressureString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
 
     Result.Items[35, 0] := 'nf';
     Result.Items[35, 1] := '=';
-    Result.Items[35, 2] := Format('%0.2f', [SpringSolver.DynamicSafetyFactor]);
+    Result.Items[35, 2] := Format('%0.2f', [ScalarUnit.ToFloat(SpringSolver.DynamicSafetyFactor)]);
 
 
     Result.Items[36, 0] := 'N';
@@ -1350,7 +1351,7 @@ begin
     Result.Items[36, 2] := '---';
     if SpringSolver.NumOfCycles > 0 then
     begin
-      Result.Items[36, 2] := Format('%0.0f cycles', [SpringSolver.NumOfCycles]);
+      Result.Items[36, 2] := Format('%0.0f cycles', [ScalarUnit.ToFloat(SpringSolver.NumOfCycles)]);
     end;
 
     Result.Items[37, 0] := 'Nh';
@@ -1358,7 +1359,7 @@ begin
     Result.Items[37, 2] := '---';
     if SpringSolver.CycleFrequency > (0*Hz) then
     begin
-      Result.Items[37, 2] := (SpringSolver.NumOfCycles / SpringSolver.CycleFrequency).ToHour.toString(5, 5, []);
+      Result.Items[37, 2] := HourUnit.ToString(SpringSolver.NumOfCycles / SpringSolver.CycleFrequency, 5, 5, []);
     end;
   end;
   {$ENDIF}
@@ -1442,17 +1443,17 @@ begin
 
   {$IFDEF MODULE1}
   SpringDrawing.AutoFit := True;
-  SpringDrawing.Lx := SpringSolver.LengthL0.Value([pMilli]);
+  SpringDrawing.Lx := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
   SpringDrawing.Caption := Format('L0 = %s', [GetString(SpringDrawing.Lx)]);
   SpringDrawing.DrawInProfile(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
 
   SpringDrawing.AutoFit := False;
-  SpringDrawing.Lx := SpringSolver.LengthL1.Value([pMilli]);
+  SpringDrawing.Lx := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
   SpringDrawing.Caption := Format('L1 = %s', [GetString(SpringDrawing.Lx)]);
   SpringDrawing.DrawInProfile(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
 
   SpringDrawing.AutoFit := False;
-  SpringDrawing.Lx := SpringSolver.LengthL2.Value([pMilli]);
+  SpringDrawing.Lx := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
   SpringDrawing.Caption := Format('L2 = %s', [GetString(SpringDrawing.Lx)]);
   SpringDrawing.DrawInProfile(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
 
@@ -1506,22 +1507,22 @@ begin
   Row := 0;
   QuickXList.Items[Row, 0] := 'd';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Di';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.Di);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.Di);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Dm';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.Dm, SpringTolerance.ToleranceOnCoilDiameter);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.Dm, SpringTolerance.ToleranceOnCoilDiameter);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'De';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.De);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.De);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'n';
@@ -1542,27 +1543,27 @@ begin
   Inc(Row, 2);
   QuickXList.Items[Row, 0] := 'L0';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthL0, SpringTolerance.ToleranceFreeBodyLength);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.LengthL0, SpringTolerance.ToleranceFreeBodyLength);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'L1';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthL1);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.LengthL1);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'L2';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthL2);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.LengthL2);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Ln';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthLn);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.LengthLn);
 
   Inc(Row);
   QuickXList.Items[Row, 0] := 'Lc';
   QuickXList.Items[Row, 1] := '=';
-  QuickXList.Items[Row, 2] := GetString(SpringSolver.LengthLc);
+  QuickXList.Items[Row, 2] := GetLengthString(SpringSolver.LengthLc);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 0] := 'Quality specs.';
@@ -1636,72 +1637,72 @@ begin
   Inc(Row);
   QuickXList.Items[Row, 4] := 'Rm';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.TensileStrengthRm);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.TensileStrengthRm);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'G';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.ShearModulus);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.ShearModulus);
 
   Inc(Row);
-  QuickXList.Items[Row, 4] := Format('G(%s°)', [GetString(MAT.Tempetature)]);
+  QuickXList.Items[Row, 4] := Format('G(%s°)', [GetTemperatureString(MAT.Temperature)]);
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(MAT.GetG(MAT.Tempetature));
+  QuickXList.Items[Row, 6] := GetPressureString(MAT.GetG(MAT.Temperature));
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'rho';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.MaterialDensity);
+  QuickXList.Items[Row, 6] := GetDensityString(SpringSolver.MaterialDensity);
 
   Inc(Row, 3);
   QuickXList.Items[Row, 4] := 'F1';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadF1, SpringTolerance.ToleranceOnLoad1);
+  QuickXList.Items[Row, 6] := GetForceString(SpringSolver.LoadF1, SpringTolerance.ToleranceOnLoad1);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'F2';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadF2, SpringTolerance.ToleranceOnLoad2);
+  QuickXList.Items[Row, 6] := GetForceString(SpringSolver.LoadF2, SpringTolerance.ToleranceOnLoad2);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'Fn';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadFn);
+  QuickXList.Items[Row, 6] := GetForceString(SpringSolver.LoadFn);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'Fc';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.LoadFc);
+  QuickXList.Items[Row, 6] := GetForceString(SpringSolver.LoadFc);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 4] := 'tauk1';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.TorsionalStressTauk1);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.TorsionalStressTauk1);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'tauk2';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.TorsionalStressTauk2);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.TorsionalStressTauk2);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'taukh';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.TorsionalStressTaukh);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.TorsionalStressTaukh);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 4] := 'tauhz';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.AdmDynamicTorsionalStressRangeTauhz);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'tauoz';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.AdmDynamicTorsionalStressTauoz);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.AdmDynamicTorsionalStressTauoz);
 
   Inc(Row);
   QuickXList.Items[Row, 4] := 'tauz';
   QuickXList.Items[Row, 5] := '=';
-  QuickXList.Items[Row, 6] := GetString(SpringSolver.AdmStaticTorsionalStressTauz);
+  QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz);
 
   Inc(Row, 2);
   QuickXList.Items[Row, 4] := 'Static safety factor';
@@ -1713,7 +1714,7 @@ begin
     Inc(Row);
     QuickXList.Items[Row, 4] := 'Dynamic safety factor';
     QuickXList.Items[Row, 5] := '=';
-    QuickXList.Items[Row, 6] := Format('%0.2f', [SpringSolver.DynamicSafetyFactor]);
+    QuickXList.Items[Row, 6] := Format('%0.2f', [ScalarUnit.ToFloat(SpringSolver.DynamicSafetyFactor)]);
 
     Inc(Row);
     QuickXList.Items[Row, 4] := 'N';
@@ -1723,18 +1724,18 @@ begin
     begin
       QuickXList.Items[Row, 4] := 'N';
       QuickXList.Items[Row, 5] := '=';
-      QuickXList.Items[Row, 6] := Format('%0.0f cycles', [SpringSolver.NumOfCycles]);
+      QuickXList.Items[Row, 6] := Format('%0.0f cycles', [ScalarUnit.ToFloat(SpringSolver.NumOfCycles)]);
     end;
 
     Inc(Row);
     QuickXList.Items[Row, 4] := 'Nh';
     QuickXList.Items[Row, 5] := '=';
     QuickXList.Items[Row, 6] := '---';
-    if SpringSolver.CycleFrequency > (0*Hz) then
+    if GreaterThanZero(SpringSolver.CycleFrequency) then
     begin
       QuickXList.Items[Row, 4] := 'Nh';
       QuickXList.Items[Row, 5] := '=';
-      QuickXList.Items[Row, 6] := (SpringSolver.NumOfCycles / SpringSolver.CycleFrequency).ToHour.ToString;
+      QuickXList.Items[Row, 6] := HourUnit.ToString(SpringSolver.NumOfCycles / SpringSolver.CycleFrequency);
     end;
   end;
 

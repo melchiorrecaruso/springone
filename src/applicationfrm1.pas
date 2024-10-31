@@ -67,7 +67,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, LibLink, SpringSolvers, MaterialFrm, Math, baseutils, Setting;
+  ADimRT, LibLink, SpringSolvers, MaterialFrm, Math, baseutils, Setting;
 
 // TApplicationForm1
 
@@ -131,7 +131,7 @@ begin
    1: SpringSolver.DynamicLoad := False;
   end;
   SpringSolver.SeatingCoefficent := StrToFloat(SeatingCoefficent.Text);
-  SpringSolver.Temperature       := (Temperature.Value * degC).ToKelvin;
+  SpringSolver.Temperature       := Temperature.Value * degC;
   {$ENDIF}
   {$IFDEF MODULE3}
   case LoadType.ItemIndex of

@@ -84,7 +84,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, LibLink, MainFrm, baseutils, Setting;
+  ADimRT, LibLink, MainFrm, baseutils, Setting;
 
 // TGeometryForm1
 

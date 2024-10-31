@@ -23,7 +23,7 @@ unit SpringMaterials;
 interface
 
 uses
-  ADim, Classes, SysUtils, BaseUtils;
+  ADimRT, Classes, SysUtils, BaseUtils;
 
 type
   TMaterial = class
@@ -31,30 +31,30 @@ type
     FName: string;
     fGrade: TGrade;
     fRegulation: TRegulation;
-    fTensileStrengthRm: TPascals;
-    fYoungModulusE20: TPascals;
-    fYoungModulusE: TPascals;
-    fShearModulusG20: TPascals;
-    fShearModulusG: TPascals;
+    fTensileStrengthRm: TQuantity;
+    fYoungModulusE20: TQuantity;
+    fYoungModulusE: TQuantity;
+    fShearModulusG20: TQuantity;
+    fShearModulusG: TQuantity;
     fPoissonRatio: double;
-    fWireDiameter: TMeters;
-    fDensityRho: TKilogramsPerCubicMeter;
-    fTemperature: TKelvins;
-    fTemperatureMin: TKelvins;
-    fTemperatureMax: TKelvins;
+    fWireDiameter: TQuantity;
+    fDensityRho: TQuantity;
+    fTemperature: TQuantity;
+    fTemperatureMin: TQuantity;
+    fTemperatureMax: TQuantity;
     fTreatment: string;
-    fFatigueFactorA: TPascals;
+    fFatigueFactorA: TQuantity;
     fFatigueFactorB: double;
-    fTorsionalStressTauStar: TPascals;
-    fTorsionalStressTauUT: TPascals;
-    fTorsionalStressTauYield: TPascals;
-    fTorsionalStressTauOE7: TPascals;
-    fTorsionalStressTauOE6: TPascals;
-    fTorsionalStressTauOE5: TPascals;
-    fTorsionalStressTauOE3: TPascals;
-    fTorsionalStressTauUE7: TPascals;
-    fTorsionalStressTauUE6: TPascals;
-    fTorsionalStressTauUE5: TPascals;
+    fTorsionalStressTauStar: TQuantity;
+    fTorsionalStressTauUT: TQuantity;
+    fTorsionalStressTauYield: TQuantity;
+    fTorsionalStressTauOE7: TQuantity;
+    fTorsionalStressTauOE6: TQuantity;
+    fTorsionalStressTauOE5: TQuantity;
+    fTorsionalStressTauOE3: TQuantity;
+    fTorsionalStressTauUE7: TQuantity;
+    fTorsionalStressTauUE6: TQuantity;
+    fTorsionalStressTauUE5: TQuantity;
     fNumOfCyclesE7: double;
     fNumOfCyclesE6: double;
     fNumOfCyclesE5: double;
@@ -64,38 +64,38 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GetG(const aTemperature: TKelvins): TPascals;
-    function GetE(const aTemperature: TKelvins): TPascals;
-    procedure Load(const aName: string; const aWireDiameter: TMeters; const aTemperature: TKelvins; const aTreatment: string);
+    function GetG(const aTemperature: TQuantity): TQuantity;
+    function GetE(const aTemperature: TQuantity): TQuantity;
+    procedure Load(const aName: string; const aWireDiameter: TQuantity; const aTemperature: TQuantity; const aTreatment: string);
     procedure Clear;
   public
     property Name: string read FName;
     property Grade: TGrade read fGrade;
     property Regulation: TRegulation read fRegulation;
-    property Tempetature: TKelvins read fTemperature;
-    property TempetatureMin: TKelvins read fTemperatureMin;
-    property TempetatureMax: TKelvins read fTemperatureMax;
+    property Temperature: TQuantity read fTemperature;
+    property TemperatureMin: TQuantity read fTemperatureMin;
+    property TemperatureMax: TQuantity read fTemperatureMax;
     property Treatment: string read FTreatment;
-    property TensileStrengthRm: TPascals read fTensileStrengthRm;
-    property YoungModulusE20: TPascals read fYoungModulusE20;
-    property YoungModulusE: TPascals read fYoungModulusE;
-    property ShearModulusG20: TPascals read fShearModulusG20;
-    property ShearModulusG: TPascals read fShearModulusG;
-    property WireDiameter: TMeters read fWireDiameter;
+    property TensileStrengthRm: TQuantity read fTensileStrengthRm;
+    property YoungModulusE20: TQuantity read fYoungModulusE20;
+    property YoungModulusE: TQuantity read fYoungModulusE;
+    property ShearModulusG20: TQuantity read fShearModulusG20;
+    property ShearModulusG: TQuantity read fShearModulusG;
+    property WireDiameter: TQuantity read fWireDiameter;
     property PoissonRatio: double read fPoissonRatio;
-    property DensityRho: TKilogramsPerCubicMeter read fDensityRho;
-    property FatigueFactorA: TPascals read fFatigueFactorA;
+    property DensityRho: TQuantity read fDensityRho;
+    property FatigueFactorA: TQuantity read fFatigueFactorA;
     property FatigueFactorB: double read fFatigueFactorB;
-    property TorsionalStressTauStar: TPascals read fTorsionalStressTauStar;
-    property TorsionalStressTauUT: TPascals read fTorsionalStressTauUT;
-    property TorsionalStressTauYield: TPascals read fTorsionalStressTauYield;
-    property TorsionalStressTauOE7: TPascals read fTorsionalStressTauOE7;
-    property TorsionalStressTauOE6: TPascals read fTorsionalStressTauOE6;
-    property TorsionalStressTauOE5: TPascals read fTorsionalStressTauOE5;
-    property TorsionalStressTauOE3: TPascals read fTorsionalStressTauOE3;
-    property TorsionalStressTauUE7: TPascals read fTorsionalStressTauUE7;
-    property TorsionalStressTauUE6: TPascals read fTorsionalStressTauUE6;
-    property TorsionalStressTauUE5: TPascals read fTorsionalStressTauUE5;
+    property TorsionalStressTauStar: TQuantity read fTorsionalStressTauStar;
+    property TorsionalStressTauUT: TQuantity read fTorsionalStressTauUT;
+    property TorsionalStressTauYield: TQuantity read fTorsionalStressTauYield;
+    property TorsionalStressTauOE7: TQuantity read fTorsionalStressTauOE7;
+    property TorsionalStressTauOE6: TQuantity read fTorsionalStressTauOE6;
+    property TorsionalStressTauOE5: TQuantity read fTorsionalStressTauOE5;
+    property TorsionalStressTauOE3: TQuantity read fTorsionalStressTauOE3;
+    property TorsionalStressTauUE7: TQuantity read fTorsionalStressTauUE7;
+    property TorsionalStressTauUE6: TQuantity read fTorsionalStressTauUE6;
+    property TorsionalStressTauUE5: TQuantity read fTorsionalStressTauUE5;
     property NumOfCyclesE7: double read fNumOfCyclesE7;
     property NumOfCyclesE6: double read fNumOfCyclesE6;
     property NumOfCyclesE5: double read fNumOfCyclesE5;
@@ -110,9 +110,6 @@ var
 
 
 implementation
-
-uses
-  Math;
 
 const
   WIRESPECS_TABLE : array[0..21] of record Name: string; Reg: TRegulation; Grade: TGrade; Treatment: string; DMin,DMax, E20, G20, RHO, RM0, DRM, DR0, RMMAX, DT0, TO0, DTO0, TO1, DTO1, TU1, DTU1, CYCLES, TMIN, TMAX : double; end = (
@@ -167,7 +164,7 @@ begin
   Result := WIRESPECS_TABLE[Index].Name;
 end;
 
-function TMaterial.GetG(const aTemperature: TKelvins): TPascals;
+function TMaterial.GetG(const aTemperature: TQuantity): TQuantity;
 var
   Ratio: double;
 begin
@@ -181,19 +178,19 @@ begin
     EN12166  : Ratio := 0.40/1000;
   else ErrorMessage.Add('Unknow regulation');
   end;
-  Result := Result * (1 - Ratio*(aTemperature.ToDegreeCelsius.Value - 20));
+  Result := Result * (1 - Ratio*(degC.ToFloat(aTemperature) - 20));
 end;
 
-function TMaterial.GetE(const aTemperature: TKelvins): TPascals;
+function TMaterial.GetE(const aTemperature: TQuantity): TQuantity;
 begin
   Result := GetG(aTemperature) * (2*(1 + fPoissonRatio));
 end;
 
-procedure TMaterial.Load(const aName: string; const aWireDiameter: TMeters; const aTemperature: TKelvins; const aTreatment: string);
+procedure TMaterial.Load(const aName: string; const aWireDiameter: TQuantity; const aTemperature: TQuantity; const aTreatment: string);
 var
-  TO0, DTO0, TO1, DTO1, TU1, DTU1: TPascals;
-  RM0, DRM, RMMAX: TPascals;
-  DR0, DT0: TMeters;
+  TO0, DTO0, TO1, DTO1, TU1, DTU1: TQuantity;
+  RM0, DRM, RMMAX: TQuantity;
+  DR0, DT0: TQuantity;
   I: longint;
 begin
   Clear;
@@ -225,7 +222,7 @@ begin
     DRM                   := WIRESPECS_TABLE[I].DRM*MPa;
     DR0                   := WIRESPECS_TABLE[I].DR0*mm;
     RMMAX                 := WIRESPECS_TABLE[I].RMMAX*MPa;
-    fTensileStrengthRm    := RM0-DRM*Log10(fWireDiameter/DR0);
+    fTensileStrengthRm    := RM0-DRM*ADimRT.Log10(fWireDiameter/DR0);
 
     if fTensileStrengthRm > RMMAX then
     begin
@@ -242,10 +239,10 @@ begin
     DTU1                  := WIRESPECS_TABLE[I].DTU1*MPa;
 
     fTemperature          := aTemperature;
-    fTemperatureMin       := (WIRESPECS_TABLE[I].TMIN*degC).toKelvin;
-    fTemperatureMax       := (WIRESPECS_TABLE[I].TMAX*degC).toKelvin;
+    fTemperatureMin       := WIRESPECS_TABLE[I].TMIN*degC;
+    fTemperatureMax       := WIRESPECS_TABLE[I].TMAX*degC;
 
-    fPoissonRatio         := fYoungModulusE20/(2*fShearModulusG20)-1;
+    fPoissonRatio         := ScalarUnit.ToFloat(fYoungModulusE20/(2*fShearModulusG20)-1);
     fShearModulusG        := GetG(fTemperature);
     fYoungModulusE        := GetE(fTemperature);
 

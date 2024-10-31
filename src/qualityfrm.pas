@@ -74,7 +74,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim,
+  ADimRT,
   SpringTolerances,
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}

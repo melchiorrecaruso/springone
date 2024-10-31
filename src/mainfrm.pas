@@ -197,7 +197,7 @@ implementation
 {$R *.lfm}
 
 uses
-  AboutFrm, ADim, Compozer, DateUtils, DrawingFrm, TextFrm,
+  AboutFrm, ADimRT, Compozer, DateUtils, DrawingFrm, TextFrm,
 
   {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
@@ -592,11 +592,11 @@ begin
     Solve();
     Printer.BeginDoc;
     if ProductionDrawingMenuItem.Checked then
-      Scale := Min((Printer.PageHeight) / ScreenImageHeight,
-                   (Printer.PageWidth ) / ScreenImageHeight / 0.7071)
+      Scale := Math.Min((Printer.PageHeight) / ScreenImageHeight,
+                        (Printer.PageWidth ) / ScreenImageHeight / 0.7071)
     else
-      Scale := Min((Printer.PageHeight) / ScreenImageHeight,
-                   (Printer.PageWidth ) / ScreenImageWidth);
+      Scale := Math.Min((Printer.PageHeight) / ScreenImageHeight,
+                        (Printer.PageWidth ) / ScreenImageWidth);
 
     Page := CreatePage(PrinterFile, Scale);
     OffSetX := (Printer.PageWidth  - Page.Width ) div 2;
@@ -808,8 +808,8 @@ begin
   if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
   begin
     {$IFDEF MODULE1}
-    DrawingForm.SpringLength.MinValue := SpringSolver.LengthLc.Value([pMilli]);
-    DrawingForm.SpringLength.MaxValue := SpringSolver.LengthL0.Value([pMilli]);
+    DrawingForm.SpringLength.MinValue := MeterUnit.ToFloat(SpringSolver.LengthLc, [pMilli]);
+    DrawingForm.SpringLength.MaxValue := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
 
     Value := DrawingForm.SpringLength.Value;
     if DrawingForm.ShowModal = mrOk then
@@ -921,8 +921,8 @@ begin
   for i := 0 to DrawMenuItem.Count -1 do if DrawMenuItem.Items[i].Checked then Check := True;
   for i := 0 to DocsMenuItem.Count -1 do if DocsMenuItem.Items[i].Checked then Check := True;
 
-  ScreenImageWidth  := Max(ScreenImageWidth,  VirtualScreen.Width );
-  ScreenImageHeight := Max(ScreenImageHeight, VirtualScreen.Height);
+  ScreenImageWidth  := Math.Max(ScreenImageWidth,  VirtualScreen.Width );
+  ScreenImageHeight := Math.Max(ScreenImageHeight, VirtualScreen.Height);
 
   if Check then
   begin
@@ -1041,21 +1041,21 @@ begin
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
       SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
       SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
       SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
@@ -1084,21 +1084,21 @@ begin
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
       SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := SpringSolver.LengthL1.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
       SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
 
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := SpringSolver.LengthL2.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
       SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
 
@@ -1125,7 +1125,7 @@ begin
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
       SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
@@ -1156,7 +1156,7 @@ begin
       SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
       SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
       SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := SpringSolver.LengthL0.Value([pMilli]);
+      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
       SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
       SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
 
@@ -1217,9 +1217,9 @@ function TMainForm.CreateSpringDrawing(const aScreenScale: double; aSetting: TIn
 begin
   {$IFDEF MODULE1}
   Result            := TSpringDrawing.Create;
-  Result.d          := SpringSolver.WireDiameter.Value([pMilli]);
-  Result.Dm         := SpringSolver.Dm.Value([pMilli]);
-  Result.Lc         := SpringSolver.LengthLc.Value([pMilli]);
+  Result.d          := MeterUnit.ToFloat(SpringSolver.WireDiameter, [pMilli]);
+  Result.Dm         := MeterUnit.ToFloat(SpringSolver.Dm, [pMilli]);
+  Result.Lc         := MeterUnit.ToFloat(SpringSolver.LengthLc, [pMilli]);
   Result.Lx         := DrawingForm.SpringLength.Value;
   Result.Caption    := Format('L = %0.2f', [Result.Lx]);
   Result.n          := SpringSolver.ActiveColis;
@@ -1238,62 +1238,62 @@ begin
 //Solve();
   {$IFDEF MODULE1}
   Result := Tx;
-  Result := StringReplace(Result, '@0.00', Format('e1=%s ' + GetSymbol(SpringSolver.EccentricityE1),
-    [GetString(GetValue(SpringSolver.EccentricityE1))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.00', Format('e1=%s ' + GetLengthSymbol(SpringSolver.EccentricityE1),
+    [GetLengthString(SpringSolver.EccentricityE1)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.01', Format('e2=%s ' + GetSymbol(SpringSolver.EccentricityE2),
-    [GetString(GetValue(SpringSolver.EccentricityE2))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.01', Format('e2=%s ' + GetLengthSymbol(SpringSolver.EccentricityE2),
+    [GetLengthString(SpringSolver.EccentricityE2)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.02', Format('d=%s ' + GetSymbol(SpringSolver.WireDiameter),
-    [GetString(GetValue(SpringSolver.WireDiameter))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.02', Format('d=%s '  + GetLengthSymbol(SpringSolver.WireDiameter),
+    [GetLengthString(SpringSolver.WireDiameter)]),    [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.03', Format('Di=%s ' + GetSymbol(SpringSolver.Di),
-    [GetString(GetValue(SpringSolver.Di))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.03', Format('Di=%s ' + GetLengthSymbol(SpringSolver.Di),
+    [GetLengthString(SpringSolver.Di)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.04', Format('Dm=%s ' + GetSymbol(SpringSolver.Dm),
-    [GetString(GetValue(SpringSolver.Dm))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.04', Format('Dm=%s ' + GetLengthSymbol(SpringSolver.Dm),
+    [GetLengthString(SpringSolver.Dm)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.05', Format('De=%s ' + GetSymbol(SpringSolver.De),
-    [GetString(GetValue(SpringSolver.De))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.05', Format('De=%s ' + GetLengthSymbol(SpringSolver.De),
+    [GetLengthString(SpringSolver.De)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.06', Format('L0=%s ' + GetSymbol(SpringSolver.LengthL0),
-    [GetString(GetValue(SpringSolver.LengthL0))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.06', Format('L0=%s ' + GetLengthSymbol(SpringSolver.LengthL0),
+    [GetLengthString(SpringSolver.LengthL0)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.07', Format('L1=%s ' + GetSymbol(SpringSolver.LengthL1),
-    [GetString(GetValue(SpringSolver.LengthL1))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.07', Format('L1=%s ' + GetLengthSymbol(SpringSolver.LengthL1),
+    [GetLengthString(SpringSolver.LengthL1)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.08', Format('L2=%s ' + GetSymbol(SpringSolver.LengthL2),
-    [GetString(GetValue(SpringSolver.LengthL2))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.08', Format('L2=%s ' + GetLengthSymbol(SpringSolver.LengthL2),
+    [GetLengthString(SpringSolver.LengthL2)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.09', Format('Ln=%s ' + GetSymbol(SpringSolver.LengthLn),
-    [GetString(GetValue(SpringSolver.LengthLn))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.09', Format('Ln=%s ' + GetLengthSymbol(SpringSolver.LengthLn),
+    [GetLengthString(SpringSolver.LengthLn)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.10', Format('Lc=%s ' + GetSymbol(SpringSolver.LengthLc),
-    [GetString(GetValue(SpringSolver.LengthLc))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.10', Format('Lc=%s ' + GetLengthSymbol(SpringSolver.LengthLc),
+    [GetLengthString(SpringSolver.LengthLc)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.11', Format('F1=%s ' + GetSymbol(SpringSolver.LoadF1),
-    [GetString(GetValue(SpringSolver.LoadF1))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.11', Format('F1=%s ' + GetForceSymbol(SpringSolver.LoadF1),
+    [GetForceString(SpringSolver.LoadF1)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.13', Format('F2=%s ' + GetSymbol(SpringSolver.LoadF2),
-    [GetString(GetValue(SpringSolver.LoadF2))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.13', Format('F2=%s ' + GetForceSymbol(SpringSolver.LoadF2),
+    [GetForceString(SpringSolver.LoadF2)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.15', Format('Fn=%s ' + GetSymbol(SpringSolver.LoadFn),
-    [GetString(GetValue(SpringSolver.LoadFn))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.15', Format('Fn=%s ' + GetForceSymbol(SpringSolver.LoadFn),
+    [GetForceString(SpringSolver.LoadFn)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.17', Format('Fc=%s ' + GetSymbol(SpringSolver.LoadFc),
-    [GetString(GetValue(SpringSolver.LoadFc))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.17', Format('Fc=%s ' + GetForceSymbol(SpringSolver.LoadFc),
+    [GetForceString(SpringSolver.LoadFc)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s ' + GetSymbol(SpringSolver.TorsionalStressTauk1),
-    [GetString(GetValue(SpringSolver.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTauk1),
+    [GetPressureString(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s ' + GetSymbol(SpringSolver.TorsionalStressTauk1),
-    [GetString(GetValue(SpringSolver.TorsionalStressTauk1))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTauk1),
+    [GetPressureString(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.16', Format('Taukn=%s ' + GetSymbol(SpringSolver.TorsionalStressTaukn),
-    [GetString(GetValue(SpringSolver.TorsionalStressTaukn))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.16', Format('Taukn=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTaukn),
+    [GetPressureString(SpringSolver.TorsionalStressTaukn)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.18', Format('Tauc=%s ' + GetSymbol(SpringSolver.TorsionalStressTauc),
-    [GetString(GetValue(SpringSolver.TorsionalStressTauc ))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.18', Format('Tauc=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTauc),
+    [GetPressureString(SpringSolver.TorsionalStressTauc)]), [rfReplaceAll, rfIgnoreCase]);
 
   if SpringSolver.ClosedEnds and (SpringSolver.GroundEnds = True) then
   begin
@@ -1315,8 +1315,8 @@ begin
   Result := StringReplace(Result, '@1.1', Format('nt=%s',
     [GetString(SpringSolver.TotalCoils )]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@2.0', Format('R=%s ' + GetSymbol(SpringSolver.SpringRateR),
-    [GetString(GetValue(SpringSolver.SpringRateR))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@2.0', Format('R=%s ' + GetStiffnessSymbol(SpringSolver.SpringRateR),
+    [GetStiffnessString(SpringSolver.SpringRateR)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.DirectionCoils.ItemIndex of
     0: ;
@@ -1326,11 +1326,11 @@ begin
   Result := StringReplace(Result, '@3.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@3.1', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@4.0', Format('Dd=%s ' + GetSymbol(SpringSolver.DiMin),
-    [GetString(GetValue(SpringSolver.DiMin))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@4.0', Format('Dd=%s ' + GetLengthSymbol(SpringSolver.DiMin),
+    [GetLengthString(SpringSolver.DiMin)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@4.1', Format('Dh=%s ' + GetSymbol(SpringSolver.DeMax),
-    [GetString(GetValue(SpringSolver.DeMax))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@4.1', Format('Dh=%s ' + GetLengthSymbol(SpringSolver.DeMax),
+    [GetLengthString(SpringSolver.DeMax)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.BurringEnds.ItemIndex of
     0: Result := StringReplace(Result, '@5.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1341,12 +1341,12 @@ begin
   Result := StringReplace(Result, '@5.1', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@5.2', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@6.0', Format('fe=%s ' + GetSymbol(SpringSolver.NaturalFrequency),
-    [GetString(GetValue(SpringSolver.NaturalFrequency))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@6.0', Format('fe=%s ' + GetFrequencySymbol(SpringSolver.NaturalFrequency),
+    [GetFrequencyString(SpringSolver.NaturalFrequency)]), [rfReplaceAll, rfIgnoreCase]);
 
   Result := StringReplace(Result, '@7.0', Format('%s / %s',
-    [GetString(MAT.TempetatureMin),
-     GetString(MAT.TempetatureMax)]), [rfReplaceAll, rfIgnoreCase]);
+    [GetTemperatureString(MAT.TemperatureMin),
+     GetTemperatureString(MAT.TemperatureMax)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.WireSurface.ItemIndex of
     0: Result := StringReplace(Result, '@8.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1362,11 +1362,11 @@ begin
   Result := StringReplace(Result, '@9.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@10.0', MAT.Name, [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@10.1', Format('tauz=%s ' + GetSymbol(SpringSolver.AdmStaticTorsionalStressTauz),
-    [GetString(GetValue(SpringSolver.AdmStaticTorsionalStressTauz))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@10.1', Format('tauz=%s ' + GetPressureSymbol(SpringSolver.AdmStaticTorsionalStressTauz),
+    [GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz)]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@10.2', Format('G=%s ' + GetSymbol(MAT.ShearModulusG20),
-    [GetString(GetValue(MAT.ShearModulusG20))]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@10.2', Format('G=%s ' + GetPressureSymbol(MAT.ShearModulusG20),
+    [GetPressureString(MAT.ShearModulusG20)]), [rfReplaceAll, rfIgnoreCase]);
 
   case SpringTolerance.QualityGradeOnCoilDiameter of
     QualityGrade1: Result := StringReplace(Result, '@11.00', 'X', [rfReplaceAll, rfIgnoreCase]);

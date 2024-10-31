@@ -65,7 +65,7 @@ uses
    {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
    {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
 
-   ADim, BaseUtils, Setting;
+   ADimRT, BaseUtils, Setting;
 
 // TReportForm
 
@@ -90,13 +90,13 @@ begin
   S.Add(Format('',[]));
   S.Add(Format('   MAIN DIMENSIONS',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Wire diameter                      d         %s', [GetString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance)]));
+  S.Add(Format('   Wire diameter                      d         %s', [GetLengthString(SpringSolver.WireDiameter, SpringSolver.WireDiameterTolerance)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Inside diameter                    Di        %s', [GetString(SpringSolver.Di)]));
+  S.Add(Format('   Inside diameter                    Di        %s', [GetLengthString(SpringSolver.Di)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Mean coil diameter                 Dm        %s', [GetString(SpringSolver.Dm)]));
+  S.Add(Format('   Mean coil diameter                 Dm        %s', [GetLengthString(SpringSolver.Dm)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Outside diameter                   De        %s', [GetString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter)]));
+  S.Add(Format('   Outside diameter                   De        %s', [GetLengthString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Number of active coils             n         %0.2f', [SpringSolver.ActiveColis]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
@@ -112,82 +112,82 @@ begin
   S.Add(Format('',[]));
   S.Add(Format('   SPRING LENGTHS',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Free length                        L0        %s', [GetString(SpringSolver.LengthL0, SpringTolerance.ToleranceFreeBodyLength)]));
+  S.Add(Format('   Free length                        L0        %s', [GetLengthString(SpringSolver.LengthL0, SpringTolerance.ToleranceFreeBodyLength)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring length at load F1           L1        %s', [GetString(SpringSolver.LengthL1)]));
+  S.Add(Format('   Spring length at load F1           L1        %s', [GetLengthString(SpringSolver.LengthL1)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring length at load F2           L2        %s', [GetString(SpringSolver.LengthL2)]));
+  S.Add(Format('   Spring length at load F2           L2        %s', [GetLengthString(SpringSolver.LengthL2)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Usable spring length               Ln        %s', [GetString(SpringSolver.LengthLn)]));
+  S.Add(Format('   Usable spring length               Ln        %s', [GetLengthString(SpringSolver.LengthLn)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Solid length of spring             Lc        %s', [GetString(SpringSolver.LengthLc)]));
+  S.Add(Format('   Solid length of spring             Lc        %s', [GetLengthString(SpringSolver.LengthLc)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   S.Add(Format('   MATERIAL',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Description                                  %s', [MaterialForm.Material.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Modulus of elasticity              E         %s', [GetString(SpringSolver.YoungModulus)]));
+  S.Add(Format('   Modulus of elasticity              E         %s', [GetPressureString(SpringSolver.YoungModulus)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Shear modulus                      G         %s', [GetString(SpringSolver.ShearModulus)]));
+  S.Add(Format('   Shear modulus                      G         %s', [GetPressureString(SpringSolver.ShearModulus)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Density                            rho       %s', [GetString(SpringSolver.MaterialDensity)]));
+  S.Add(Format('   Density                            rho       %s', [GetDensityString(SpringSolver.MaterialDensity)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Tensile strength                   Rm        %s', [GetString(SpringSolver.TensileStrengthRm)]));
+  S.Add(Format('   Tensile strength                   Rm        %s', [GetPressureString(SpringSolver.TensileStrengthRm)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.shear stress                   tauz      %s', [GetString(SpringSolver.AdmStaticTorsionalStressTauz)]));
+  S.Add(Format('   Adm.shear stress                   tauz      %s', [GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Operating temperature              Temp      %s', [GetString(SpringSolver.Temperature)]));
+  S.Add(Format('   Operating temperature              Temp      %s', [GetTemperatureString(SpringSolver.Temperature)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Shear-modulus at working temp.     GTemp     %s', [GetString(SpringSolver.ShearModulus)]));
+  S.Add(Format('   Shear-modulus at working temp.     GTemp     %s', [GetPressureString(SpringSolver.ShearModulus)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   // PAG.2
   S.Add(Format('   SPRING TRAVELS',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Stroke                             sh        %s', [GetString(SpringSolver.StrokeSh)]));
+  S.Add(Format('   Stroke                             sh        %s', [GetLengthString(SpringSolver.StrokeSh)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring travel                      s1        %s', [GetString(SpringSolver.StrokeS1)]));
+  S.Add(Format('   Spring travel                      s1        %s', [GetLengthString(SpringSolver.StrokeS1)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring travel                      s2        %s', [GetString(SpringSolver.StrokeS2)]));
+  S.Add(Format('   Spring travel                      s2        %s', [GetLengthString(SpringSolver.StrokeS2)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Usable spring travel               sn        %s', [GetString(SpringSolver.StrokeSn)]));
+  S.Add(Format('   Usable spring travel               sn        %s', [GetLengthString(SpringSolver.StrokeSn)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring travel to Lc                sc        %s', [GetString(SpringSolver.StrokeSc)]));
+  S.Add(Format('   Spring travel to Lc                sc        %s', [GetLengthString(SpringSolver.StrokeSc)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Travel until buckling              sk        %s', [GetString(SpringSolver.DeflectionSk)]));
+  S.Add(Format('   Travel until buckling              sk        %s', [GetLengthString(SpringSolver.DeflectionSk)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   S.Add(Format('   SPRING LOAD',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring load at L1                  F1        %s', [GetString(SpringSolver.LoadF1, SpringTolerance.ToleranceOnLoad1)]));
+  S.Add(Format('   Spring load at L1                  F1        %s', [GetForceString(SpringSolver.LoadF1, SpringTolerance.ToleranceOnLoad1)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring load at L2                  F2        %s', [GetString(SpringSolver.LoadF2, SpringTolerance.ToleranceOnLoad2)]));
+  S.Add(Format('   Spring load at L2                  F2        %s', [GetForceString(SpringSolver.LoadF2, SpringTolerance.ToleranceOnLoad2)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring load at Ln                  Fn        %s', [GetString(SpringSolver.LoadFn)]));
+  S.Add(Format('   Spring load at Ln                  Fn        %s', [GetForceString(SpringSolver.LoadFn)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring load at Lc                  Fc        %s', [GetString(SpringSolver.LoadFc)]));
+  S.Add(Format('   Spring load at Lc                  Fc        %s', [GetForceString(SpringSolver.LoadFc)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   S.Add(Format('   TENSIONS',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Shear stress at F1                 tau 1     %s', [GetString(SpringSolver.TorsionalStressTau1)]));
+  S.Add(Format('   Shear stress at F1                 tau 1     %s', [GetPressureString(SpringSolver.TorsionalStressTau1)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Shear stress at F2                 tau 2     %s', [GetString(SpringSolver.TorsionalStressTau2)]));
+  S.Add(Format('   Shear stress at F2                 tau 2     %s', [GetPressureString(SpringSolver.TorsionalStressTau2)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Shear stress at Fn                 tau n     %s', [GetString(SpringSolver.TorsionalStressTaun)]));
+  S.Add(Format('   Shear stress at Fn                 tau n     %s', [GetPressureString(SpringSolver.TorsionalStressTaun)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Shear stress at Fc                 tau c     %s', [GetString(SpringSolver.TorsionalStressTauc)]));
+  S.Add(Format('   Shear stress at Fc                 tau c     %s', [GetPressureString(SpringSolver.TorsionalStressTauc)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Stress coefficient                 k         %0.2f', [SpringSolver.CorrectionFactorK]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Corrected shear stress at F1       tau k1    %s', [GetString(SpringSolver.TorsionalStressTauk1)]));
+  S.Add(Format('   Corrected shear stress at F1       tau k1    %s', [GetPressureString(SpringSolver.TorsionalStressTauk1)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Corrected shear stress at F2       tau k2    %s', [GetString(SpringSolver.TorsionalStressTauk2)]));
+  S.Add(Format('   Corrected shear stress at F2       tau k2    %s', [GetPressureString(SpringSolver.TorsionalStressTauk2)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Variation between loads            tau kh    %s', [GetString(SpringSolver.TorsionalStressTaukh)]));
+  S.Add(Format('   Variation between loads            tau kh    %s', [GetPressureString(SpringSolver.TorsionalStressTaukh)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm. shear stress                  tau z     %s', [GetString(SpringSolver.AdmStaticTorsionalStressTauz)]));
+  S.Add(Format('   Adm. shear stress                  tau z     %s', [GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   S.Add(Format('   QUALITY GRADE',[]));
@@ -204,7 +204,7 @@ begin
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Adm.deviation e2       :                     %s', [QualityForm.ToleranceEccentricitye2.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation d        :                   ± %s', [GetString(QualityForm.ToleranceWireDiameter.Value*mm)]));
+  S.Add(Format('   Adm.deviation d        :                   ± %s', [GetLengthString(QualityForm.ToleranceWireDiameter.Value * mm)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   // PAG.3
@@ -216,58 +216,58 @@ begin
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Seating application coefficient    nu        %0.2f', [SpringSolver.SeatingCoefficent]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Deviation of surface line          e1        %s', [GetString(SpringSolver.EccentricityE1)]));
+  S.Add(Format('   Deviation of surface line          e1        %s', [GetLengthString(SpringSolver.EccentricityE1)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Deviation of parallelism           e2        %s', [GetString(SpringSolver.EccentricityE2)]));
+  S.Add(Format('   Deviation of parallelism           e2        %s', [GetLengthString(SpringSolver.EccentricityE2)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring rate                        R         %s', [GetString(SpringSolver.SpringRateR)]));
+  S.Add(Format('   Spring rate                        R         %s', [GetStiffnessString(SpringSolver.SpringRateR)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Weight of the spring               m         %s', [GetString(SpringSolver.Mass)]));
+  S.Add(Format('   Weight of the spring               m         %s', [GetMassString(SpringSolver.Mass)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Natural frequency spring           fe        %s', [GetString(SpringSolver.NaturalFrequency)]));
+  S.Add(Format('   Natural frequency spring           fe        %s', [GetFrequencyString(SpringSolver.NaturalFrequency)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Increase in coil diameter at Lc    ΔDe       %s', [GetString(SpringSolver.DeltaDe)]));
+  S.Add(Format('   Increase in coil diameter at Lc    ΔDe       %s', [GetLengthString(SpringSolver.DeltaDe)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Mean coil diameter                 Dmc       %s', [GetString(SpringSolver.Dm + SpringSolver.DeltaDe)]));
+  S.Add(Format('   Mean coil diameter                 Dmc       %s', [GetLengthString(SpringSolver.Dm + SpringSolver.DeltaDe)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Minimum clearance of active coils  Sa        %s', [GetString(SpringSolver.SumOfMinimumGapsSa)]));
+  S.Add(Format('   Minimum clearance of active coils  Sa        %s', [GetLengthString(SpringSolver.SumOfMinimumGapsSa)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Actual clearance of active coils   sc-s2     %s', [GetString(SpringSolver.StrokeSc - SpringSolver.StrokeS2)]));
+  S.Add(Format('   Actual clearance of active coils   sc-s2     %s', [GetLengthString(SpringSolver.StrokeSc - SpringSolver.StrokeS2)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('   Coiling ratio                      w         %0.3f', [SpringSolver.SpringIndexW]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Pitch ratio                        tan α     %0.3f', [SpringSolver.PitchRatio]));
+  S.Add(Format('   Pitch ratio                        tan α     %0.3f', [ScalarUnit.Tofloat(SpringSolver.PitchRatio)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Pitch                              P         %s', [GetString(SpringSolver.Pitch)]));
+  S.Add(Format('   Pitch                              P         %s', [GetLengthString(SpringSolver.Pitch)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
 
-  if SpringSolver.Pitch.Value <> 0 then
-    S.Add(Format('   Pitch ratio                        Dm/P      %0.3f', [SpringSolver.Dm / SpringSolver.Pitch]))
+  if GreaterThanZero(SpringSolver.Pitch) then
+    S.Add(Format('   Pitch ratio                        Dm/P      %0.3f', [ScalarUnit.ToFloat(SpringSolver.Dm / SpringSolver.Pitch)]))
   else
     S.Add(Format('   Pitch ratio                        Dm/P      ---', []));
 
   S.Add(Format('   ----------------------------------------------------------------------',[]));
 
-  if SpringSolver.Dm.Value <> 0 then
-    S.Add(Format('   Lean grade                         lambda    %0.3f', [SpringSolver.LengthL0 / SpringSolver.Dm]))
+  if GreaterThanZero(SpringSolver.Dm) then
+    S.Add(Format('   Lean grade                         lambda    %0.3f', [ScalarUnit.ToFloat(SpringSolver.LengthL0 / SpringSolver.Dm)]))
   else
     S.Add(Format('   Lean grade                         lambda    ---', []));
 
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Spring energy between s1 and s2    W12       %s', [GetString(SpringSolver.SpringWorkW12)]));
+  S.Add(Format('   Spring energy between s1 and s2    W12       %s', [GetEnergyString(SpringSolver.SpringWorkW12)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Wire length                        L         %s', [GetString(SpringSolver.WireLength)]));
+  S.Add(Format('   Wire length                        L         %s', [GetLengthString(SpringSolver.WireLength)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
 
-  if SpringSolver.Dm.Value> 0 then
-    S.Add(Format('   Pressure                           R/D       %s', [GetString(SpringSolver.SpringRateR / SpringSolver.Dm)]))
+  if GreaterThanZero(SpringSolver.Dm) then
+    S.Add(Format('   Pressure                           R/D       %s', [GetPressureString(SpringSolver.SpringRateR / SpringSolver.Dm)]))
   else
     S.Add(Format('   Pressure                           R/D       ---', []));
 
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Max.diameter of bedding mandrel    DiMin     %s', [GetString(SpringSolver.DiMin)]));
+  S.Add(Format('   Max.diameter of bedding mandrel    DiMin     %s', [GetLengthString(SpringSolver.DiMin)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Minimum diameter of bore           DeMax     %s', [GetString(SpringSolver.DeMax)]));
+  S.Add(Format('   Minimum diameter of bore           DeMax     %s', [GetLengthString(SpringSolver.DeMax)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   S.Add(Format('   REMARKS, WARNINGS AND ERROR MESSAGES',[]));
