@@ -32,7 +32,7 @@
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Melchiorre Caruso" FileDescription="Helical Compression Spring Designer" ProductName="SpringONE"/>
     </VersionInfo>
-    <BuildModes Active="Release">
+    <BuildModes Active="Debug">
       <Item Name="Debug" Default="True"/>
       <Item Name="Release">
         <CompilerOptions>
@@ -109,7 +109,7 @@
         <Filename Value="springone.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SpringONE"/>
-        <TopLine Value="6"/>
+        <TopLine Value="4"/>
         <CursorPos X="17" Y="17"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -701,8 +701,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="AboutFrm"/>
-        <EditorIndex Value="21"/>
-        <TopLine Value="43"/>
+        <EditorIndex Value="20"/>
+        <TopLine Value="41"/>
         <CursorPos X="37" Y="78"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -795,7 +795,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="TextFrm"/>
         <EditorIndex Value="10"/>
-        <TopLine Value="70"/>
+        <TopLine Value="68"/>
         <CursorPos Y="82"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -986,7 +986,6 @@
         <Filename Value="src\compozer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Compozer"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="17"/>
         <TopLine Value="713"/>
         <CursorPos X="39" Y="742"/>
@@ -1182,7 +1181,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="LibLink"/>
         <EditorIndex Value="18"/>
-        <TopLine Value="17"/>
+        <TopLine Value="10"/>
         <CursorPos X="3" Y="34"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -1236,7 +1235,7 @@
         <Filename Value="libsrc\springmaterials.pas"/>
         <UnitName Value="SpringMaterials"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="199"/>
+        <TopLine Value="74"/>
         <CursorPos X="3" Y="26"/>
         <UsageCount Value="55"/>
         <Loaded Value="True"/>
@@ -1251,9 +1250,9 @@
       <Unit>
         <Filename Value="libsrc\springtolerances.pas"/>
         <UnitName Value="SpringTolerances"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="165"/>
-        <CursorPos X="45" Y="198"/>
+        <CursorPos X="91" Y="194"/>
         <UsageCount Value="60"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1540,7 +1539,7 @@
         <Filename Value="src\setting.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Setting"/>
-        <EditorIndex Value="23"/>
+        <EditorIndex Value="21"/>
         <CursorPos Y="28"/>
         <UsageCount Value="70"/>
         <Loaded Value="True"/>
@@ -1561,10 +1560,9 @@
       </Unit>
       <Unit>
         <Filename Value="defines.inc"/>
-        <EditorIndex Value="22"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="21"/>
         <UsageCount Value="18"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgragtkbitmap.pas"/>
@@ -1669,32 +1667,24 @@
         <Filename Value="..\adimRT\adimrt.pas"/>
         <UnitName Value="ADimRT"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="33"/>
-        <CursorPos X="16" Y="54"/>
+        <TopLine Value="517"/>
+        <CursorPos X="36" Y="531"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="libsrc\adimrt.pas"/>
         <UnitName Value="ADimRT"/>
-        <EditorIndex Value="20"/>
-        <CursorPos X="40" Y="3543"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="5829"/>
+        <CursorPos X="40" Y="3431"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit>
     </Units>
     <OtherDefines Count="1">
       <Define0 Value="MODULE1"/>
     </OtherDefines>
-    <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="651" Column="27" TopLine="619"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="676" Column="74" TopLine="649"/>
-      </Position>
+    <JumpHistory HistoryIndex="27">
       <Position>
         <Filename Value="src\compozer.pas"/>
         <Caret Line="653" TopLine="626"/>
@@ -1784,14 +1774,6 @@
         <Caret Line="29" Column="54"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\adimrt.pas"/>
-        <Caret Line="27" TopLine="22"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\adimrt.pas"/>
-        <Caret Line="3543" Column="40"/>
-      </Position>
-      <Position>
         <Filename Value="libsrc\springtolerances.pas"/>
         <Caret Line="198" Column="45" TopLine="165"/>
       </Position>
@@ -1807,6 +1789,14 @@
         <Filename Value="src\compozer.pas"/>
         <Caret Line="712" Column="39" TopLine="683"/>
       </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="742" Column="39" TopLine="713"/>
+      </Position>
+      <Position>
+        <Filename Value="src\aboutfrm.pas"/>
+        <Caret Line="78" Column="37" TopLine="41"/>
+      </Position>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -1817,8 +1807,8 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <Libraries Value="src;libsrc"/>
-      <OtherUnitFiles Value="src;libsrc"/>
+      <Libraries Value="src;libsrc;..\adimRT"/>
+      <OtherUnitFiles Value="src;libsrc;..\adimRT"/>
       <UnitOutputDirectory Value="build\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
