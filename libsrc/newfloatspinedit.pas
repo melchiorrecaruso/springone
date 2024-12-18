@@ -17,7 +17,7 @@ type
   public
     function ValueToStr(const AValue: double): string; override;
   published
-    property RemoveTrailingZeros : boolean read FRemoveTrailingZeros write SetRemoveTrailingZeros default True;
+    property RemoveTrailingZeros : boolean read FRemoveTrailingZeros write SetRemoveTrailingZeros nodefault;
   end;
 
   { TNewFloatSpinEdit }
@@ -88,7 +88,7 @@ procedure TCustomNewFloatSpinEdit.SetRemoveTrailingZeros(AValue: boolean);
 begin
   if FRemoveTrailingZeros = AValue then Exit;
   FRemoveTrailingZeros := AValue;
-  Invalidate;
+  EditingDone;
 end;
 
 function TCustomNewFloatSpinEdit.ValueToStr(const AValue: Double): string;
