@@ -1435,8 +1435,10 @@ begin
 
   // 7-Spring Drawings
   SpringDrawing := CreateSpringDrawing(AScreenScale);
+  {$IFDEF MODULE1}
   SpringDrawing.ClosedEnds := SpringSolver.ClosedEnds;
   SpringDrawing.GroundEnds := SpringSolver.GroundEnds;
+  {$ENDIF}
   Bit[6].SetSize(Bit[2].Width div 3, Bit[0].Height);
   Bit[7].SetSize(Bit[2].Width div 3, Bit[0].Height);
   Bit[8].SetSize(Bit[2].Width - Bit[6].Width - Bit[7].Width, Bit[0].Height);

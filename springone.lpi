@@ -115,7 +115,6 @@
         <Filename Value="springone.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SpringONE"/>
-        <TopLine Value="4"/>
         <CursorPos X="17" Y="17"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -707,8 +706,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="AboutFrm"/>
-        <EditorIndex Value="21"/>
-        <TopLine Value="41"/>
         <CursorPos X="37" Y="78"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -721,9 +718,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainFrm"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="172"/>
-        <CursorPos X="17" Y="200"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="1">
           <Item0 X="19" Y="1475" ID="8"/>
@@ -746,8 +742,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ReportFrm"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="40"/>
-        <CursorPos X="8" Y="68"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -773,9 +767,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ApplicationFrm1"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="42"/>
-        <CursorPos X="7" Y="70"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -879,9 +870,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="QualityFrm"/>
-        <EditorIndex Value="15"/>
-        <TopLine Value="49"/>
-        <CursorPos X="7" Y="77"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -1242,26 +1230,18 @@
       <Unit>
         <Filename Value="libsrc\springmaterials.pas"/>
         <UnitName Value="SpringMaterials"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="198"/>
-        <CursorPos X="42" Y="225"/>
         <UsageCount Value="55"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="libsrc\springsolvers.pas"/>
         <UnitName Value="SpringSolvers"/>
-        <EditorIndex Value="20"/>
-        <CursorPos X="34" Y="29"/>
         <UsageCount Value="62"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="libsrc\springtolerances.pas"/>
         <UnitName Value="SpringTolerances"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="166"/>
-        <CursorPos X="71" Y="196"/>
         <UsageCount Value="60"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1547,7 +1527,6 @@
         <Filename Value="src\setting.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Setting"/>
-        <EditorIndex Value="22"/>
         <CursorPos Y="28"/>
         <UsageCount Value="70"/>
         <Loaded Value="True"/>
@@ -1568,7 +1547,6 @@
       </Unit>
       <Unit>
         <Filename Value="defines.inc"/>
-        <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="21"/>
         <UsageCount Value="18"/>
       </Unit>
@@ -1672,34 +1650,6 @@
         <UsageCount Value="11"/>
       </Unit>
       <Unit>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <UnitName Value="ADimRT"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="517"/>
-        <CursorPos X="36" Y="531"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="libsrc\adimrt.pas"/>
-        <UnitName Value="ADimRT"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="5829"/>
-        <CursorPos X="40" Y="3431"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\adimRT\adim.pas"/>
-        <UnitName Value="ADim"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="10"/>
-        <CursorPos X="20" Y="52"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\adimRT\cl3.pas"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="19"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1709,24 +1659,6 @@
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="src\drawingfrm.pas"/>
-        <Caret Line="29" Column="54"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\springtolerances.pas"/>
-        <Caret Line="198" Column="45" TopLine="165"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="645" Column="39" TopLine="616"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="678" Column="39" TopLine="649"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="712" Column="39" TopLine="683"/>
       </Position>
       <Position>
         <Filename Value="src\compozer.pas"/>
@@ -1827,6 +1759,22 @@
       <Position>
         <Filename Value="src\compozer.pas"/>
         <Caret Line="712" Column="68" TopLine="684"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springmaterials.pas"/>
+        <Caret Line="177" Column="34" TopLine="158"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <Caret Line="375" Column="67" TopLine="348"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <Caret Line="373" Column="67" TopLine="348"/>
+      </Position>
+      <Position>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="599" Column="39" TopLine="582"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>
