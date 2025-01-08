@@ -25,7 +25,7 @@ unit BaseUtils;
 interface
 
 uses
-  ADimRT, Classes, SysUtils;
+  ADim, Classes, SysUtils;
 
 
 type

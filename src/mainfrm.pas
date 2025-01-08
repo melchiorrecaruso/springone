@@ -197,7 +197,7 @@ implementation
 {$R *.lfm}
 
 uses
-  AboutFrm, ADimRT, Compozer, DateUtils, DrawingFrm, TextFrm,
+  AboutFrm, ADim, Compozer, DateUtils, DrawingFrm, TextFrm,
 
   {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}

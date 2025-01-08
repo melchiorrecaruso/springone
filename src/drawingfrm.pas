@@ -67,7 +67,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADimRT, Setting;
+  ADim, Setting;
 
 // TDrawingForm
 

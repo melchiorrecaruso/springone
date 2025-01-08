@@ -23,7 +23,7 @@ unit SpringMaterials;
 interface
 
 uses
-  ADimRT, Classes, SysUtils, BaseUtils;
+  ADim, Classes, SysUtils, BaseUtils;
 
 type
   TMaterial = class
@@ -222,7 +222,7 @@ begin
     DRM                   := WIRESPECS_TABLE[I].DRM*MPa;
     DR0                   := WIRESPECS_TABLE[I].DR0*mm;
     RMMAX                 := WIRESPECS_TABLE[I].RMMAX*MPa;
-    fTensileStrengthRm    := RM0-DRM*ADimRT.Log10(fWireDiameter/DR0);
+    fTensileStrengthRm    := RM0-DRM*ADim.Log10(fWireDiameter/DR0);
 
     if fTensileStrengthRm > RMMAX then
     begin

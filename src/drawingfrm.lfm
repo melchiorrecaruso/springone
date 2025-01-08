@@ -9,7 +9,7 @@ object DrawingForm: TDrawingForm
   ClientWidth = 450
   Constraints.MinHeight = 201
   Constraints.MinWidth = 450
-  LCLVersion = '4.99.0.0'
+  LCLVersion = '4.0.0.2'
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize

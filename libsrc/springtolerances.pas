@@ -25,7 +25,7 @@ unit SpringTolerances;
 interface
 
 uses
-  BGRABitmapTypes, Classes, Math, SysUtils, BaseUtils, ADimRT;
+  BGRABitmapTypes, Classes, Math, SysUtils, BaseUtils, ADim;
 
 type
   TQualityGrade   = (QualityGrade1, QualityGrade2, QualityGrade3);
@@ -191,11 +191,11 @@ const
     (DmMin:160.0; DmMax:200.0; Q1W48:1.20; Q1W814:1.50; Q1W1420:1.70; Q2W48:2.10; Q2W814:2.90; Q2W1420:3.30; Q3W48:4.20; Q3W814:5.70; Q3W1420:6.60));
 
 const
-  MinWireDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cMeter; FValue: 0.07/1000 {$ELSE} 0.07/1000 {$ENDIF});
-  MaxWireDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cMeter; FValue:   16/1000 {$ELSE}   16/1000 {$ENDIF});
-  MinCoilDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cMeter; FValue: 0.63/1000 {$ELSE} 0.63/1000 {$ENDIF});
-  MaxCoilDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cMeter; FValue:  200/1000 {$ELSE}  200/1000 {$ENDIF});
-  MaxFreeLength   : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: cMeter; FValue:  630/1000 {$ELSE}  630/1000 {$ENDIF});
+  MinWireDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue: 0.07/1000 {$ELSE} 0.07/1000 {$ENDIF});
+  MaxWireDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue:   16/1000 {$ELSE}   16/1000 {$ENDIF});
+  MinCoilDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue: 0.63/1000 {$ELSE} 0.63/1000 {$ENDIF});
+  MaxCoilDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue:  200/1000 {$ELSE}  200/1000 {$ENDIF});
+  MaxFreeLength   : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue:  630/1000 {$ELSE}  630/1000 {$ENDIF});
   MinActiveCoils  =  2;
   MinSpringIndex  =  4;
   MaxSpringIndex  = 20;

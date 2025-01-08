@@ -26,7 +26,7 @@ interface
 
 uses
   BGRABitmapTypes, Classes, SpringMaterials, SpringTolerances,
-  Math, BaseUtils, SysUtils, ADimRT;
+  Math, BaseUtils, SysUtils, ADim;
 
 type
   TCompressionSpringSolver = class

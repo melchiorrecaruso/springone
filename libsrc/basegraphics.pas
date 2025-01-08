@@ -398,7 +398,7 @@ const
 
 implementation
 
-uses ADimRT, Math;
+uses ADim, Math;
 
 type
   TChartItem = class

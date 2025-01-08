@@ -7,7 +7,7 @@ object MaterialForm: TMaterialForm
   Caption = 'Material & Manufactoring'
   ClientHeight = 375
   ClientWidth = 516
-  LCLVersion = '4.99.0.0'
+  LCLVersion = '4.0.0.2'
   OnClose = FormClose
   OnCreate = FormCreate
   object Material: TComboBox

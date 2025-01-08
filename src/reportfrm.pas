@@ -65,7 +65,7 @@ uses
    {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
    {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
 
-   ADimRT, BaseUtils, Setting;
+   ADim, BaseUtils, Setting;
 
 // TReportForm
 

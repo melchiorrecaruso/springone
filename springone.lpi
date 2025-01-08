@@ -75,6 +75,9 @@
           </Other>
         </CompilerOptions>
       </Item>
+      <SharedMatrixOptions Count="1">
+        <Item1 ID="530613089769" Modes="Debug" Value="-dADIMDEBUG"/>
+      </SharedMatrixOptions>
     </BuildModes>
     <ManyBuildModesSelection Value="Debug,Release"/>
     <PublishOptions>
@@ -85,6 +88,9 @@
       <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages>
+      <Item>
+        <PackageName Value="adimpk"/>
+      </Item>
       <Item>
         <PackageName Value="bgracontrols"/>
       </Item>
@@ -701,7 +707,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="AboutFrm"/>
-        <EditorIndex Value="20"/>
+        <EditorIndex Value="21"/>
         <TopLine Value="41"/>
         <CursorPos X="37" Y="78"/>
         <UsageCount Value="200"/>
@@ -716,8 +722,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainFrm"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="582"/>
-        <CursorPos X="39" Y="599"/>
+        <TopLine Value="172"/>
+        <CursorPos X="17" Y="200"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="1">
           <Item0 X="19" Y="1475" ID="8"/>
@@ -740,8 +746,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ReportFrm"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="68"/>
-        <CursorPos X="42" Y="91"/>
+        <TopLine Value="40"/>
+        <CursorPos X="8" Y="68"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -767,9 +773,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ApplicationFrm1"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="67"/>
-        <CursorPos X="28" Y="86"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="42"/>
+        <CursorPos X="7" Y="70"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -781,8 +787,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="DrawingFrm"/>
-        <EditorIndex Value="9"/>
-        <CursorPos X="54" Y="29"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="42"/>
+        <CursorPos X="7" Y="70"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -794,7 +801,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="TextFrm"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="68"/>
         <CursorPos Y="82"/>
         <UsageCount Value="200"/>
@@ -830,9 +837,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GeometryFrm1"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="81"/>
-        <CursorPos X="28" Y="103"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="59"/>
+        <CursorPos X="7" Y="87"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -844,9 +851,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MaterialFrm"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="105"/>
-        <CursorPos X="9" Y="105"/>
+        <EditorIndex Value="13"/>
+        <TopLine Value="51"/>
+        <CursorPos X="8" Y="79"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -858,7 +865,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ProductionFrm"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="79"/>
         <CursorPos Y="92"/>
         <UsageCount Value="200"/>
@@ -872,9 +879,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="QualityFrm"/>
-        <EditorIndex Value="14"/>
-        <TopLine Value="43"/>
-        <CursorPos X="43" Y="56"/>
+        <EditorIndex Value="15"/>
+        <TopLine Value="49"/>
+        <CursorPos X="7" Y="77"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -930,7 +937,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="GeometryFrm3"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="16"/>
         <TopLine Value="86"/>
         <CursorPos X="42" Y="105"/>
         <UsageCount Value="200"/>
@@ -986,9 +993,10 @@
         <Filename Value="src\compozer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Compozer"/>
-        <EditorIndex Value="17"/>
-        <TopLine Value="713"/>
-        <CursorPos X="39" Y="742"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="18"/>
+        <TopLine Value="714"/>
+        <CursorPos X="68" Y="742"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1140,7 +1148,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ApplicationFrm3"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="17"/>
         <TopLine Value="51"/>
         <CursorPos X="41" Y="70"/>
         <UsageCount Value="200"/>
@@ -1180,7 +1188,7 @@
         <Filename Value="src\liblink.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="LibLink"/>
-        <EditorIndex Value="18"/>
+        <EditorIndex Value="19"/>
         <TopLine Value="10"/>
         <CursorPos X="3" Y="34"/>
         <UsageCount Value="200"/>
@@ -1235,24 +1243,25 @@
         <Filename Value="libsrc\springmaterials.pas"/>
         <UnitName Value="SpringMaterials"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="74"/>
-        <CursorPos X="3" Y="26"/>
+        <TopLine Value="198"/>
+        <CursorPos X="42" Y="225"/>
         <UsageCount Value="55"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="libsrc\springsolvers.pas"/>
         <UnitName Value="SpringSolvers"/>
-        <EditorIndex Value="19"/>
+        <EditorIndex Value="20"/>
+        <CursorPos X="34" Y="29"/>
         <UsageCount Value="62"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="libsrc\springtolerances.pas"/>
         <UnitName Value="SpringTolerances"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="6"/>
-        <CursorPos X="91" Y="194"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="166"/>
+        <CursorPos X="71" Y="196"/>
         <UsageCount Value="60"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1260,8 +1269,7 @@
         <Filename Value="libsrc\baseutils.pas"/>
         <UnitName Value="BaseUtils"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="80"/>
-        <CursorPos X="24" Y="81"/>
+        <CursorPos X="7" Y="28"/>
         <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1304,9 +1312,9 @@
       <Unit>
         <Filename Value="libsrc\basegraphics.pas"/>
         <UnitName Value="BaseGraphics"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="1927"/>
-        <CursorPos Y="1934"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="373"/>
+        <CursorPos X="10" Y="401"/>
         <UsageCount Value="73"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1539,7 +1547,7 @@
         <Filename Value="src\setting.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Setting"/>
-        <EditorIndex Value="21"/>
+        <EditorIndex Value="22"/>
         <CursorPos Y="28"/>
         <UsageCount Value="70"/>
         <Loaded Value="True"/>
@@ -1666,11 +1674,10 @@
       <Unit>
         <Filename Value="..\adimRT\adimrt.pas"/>
         <UnitName Value="ADimRT"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="517"/>
         <CursorPos X="36" Y="531"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="libsrc\adimrt.pas"/>
@@ -1680,95 +1687,27 @@
         <CursorPos X="40" Y="3431"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\adimRT\adim.pas"/>
+        <UnitName Value="ADim"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="10"/>
+        <CursorPos X="20" Y="52"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\adimRT\cl3.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="19"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <OtherDefines Count="1">
       <Define0 Value="MODULE1"/>
     </OtherDefines>
-    <JumpHistory HistoryIndex="27">
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="653" TopLine="626"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="647" Column="32" TopLine="618"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="678" Column="115" TopLine="649"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="712" Column="115" TopLine="683"/>
-      </Position>
-      <Position>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <Caret Line="54" Column="18" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="src\compozer.pas"/>
-        <Caret Line="645" Column="45" TopLine="616"/>
-      </Position>
-      <Position>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <Caret Line="80" Column="3" TopLine="51"/>
-      </Position>
-      <Position>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <Caret Line="28" TopLine="9"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\springtolerances.pas"/>
-        <Caret Line="194" Column="105" TopLine="165"/>
-      </Position>
-      <Position>
-        <Filename Value="src\drawingfrm.pas"/>
-        <Caret Line="29" Column="50"/>
-      </Position>
-      <Position>
-        <Filename Value="src\drawingfrm.pas"/>
-        <Caret Line="29" Column="50"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\springtolerances.pas"/>
-        <Caret Line="194" Column="105" TopLine="165"/>
-      </Position>
-      <Position>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <Caret Line="27" Column="12" TopLine="24"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\springtolerances.pas"/>
-        <Caret Line="168" Column="56" TopLine="159"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\springtolerances.pas"/>
-        <Caret Line="193" Column="44" TopLine="159"/>
-      </Position>
-      <Position>
-        <Filename Value="src\drawingfrm.pas"/>
-        <Caret Line="29" Column="50"/>
-      </Position>
-      <Position>
-        <Filename Value="libsrc\springtolerances.pas"/>
-        <Caret Line="193" Column="44" TopLine="159"/>
-      </Position>
-      <Position>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <Caret Line="53" Column="24" TopLine="33"/>
-      </Position>
-      <Position>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <Caret Line="55" Column="32" TopLine="33"/>
-      </Position>
-      <Position>
-        <Filename Value="src\drawingfrm.pas"/>
-        <Caret Line="29" Column="50"/>
-      </Position>
-      <Position>
-        <Filename Value="..\adimRT\adimrt.pas"/>
-        <Caret Line="54" Column="27" TopLine="33"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="src\drawingfrm.pas"/>
         <Caret Line="29" Column="54"/>
@@ -1796,6 +1735,98 @@
       <Position>
         <Filename Value="src\aboutfrm.pas"/>
         <Caret Line="78" Column="37" TopLine="41"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <Caret Line="194" Column="91"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <Caret Line="28" Column="60"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springmaterials.pas"/>
+        <Caret Line="26" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\baseutils.pas"/>
+        <Caret Line="28" Column="7"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springmaterials.pas"/>
+        <Caret Line="225" Column="42" TopLine="198"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springsolvers.pas"/>
+        <Caret Line="29" Column="34"/>
+      </Position>
+      <Position>
+        <Filename Value="src\drawingfrm.pas"/>
+        <Caret Line="70" Column="7" TopLine="42"/>
+      </Position>
+      <Position>
+        <Filename Value="src\geometryfrm1.pas"/>
+        <Caret Line="87" Column="7" TopLine="59"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\basegraphics.pas"/>
+        <Caret Line="401" Column="10" TopLine="373"/>
+      </Position>
+      <Position>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="200" Column="17" TopLine="172"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="29" Column="7"/>
+      </Position>
+      <Position>
+        <Filename Value="src\applicationfrm1.pas"/>
+        <Caret Line="70" Column="7" TopLine="42"/>
+      </Position>
+      <Position>
+        <Filename Value="src\materialfrm.pas"/>
+        <Caret Line="79" Column="8" TopLine="51"/>
+      </Position>
+      <Position>
+        <Filename Value="src\qualityfrm.pas"/>
+        <Caret Line="77" Column="7" TopLine="49"/>
+      </Position>
+      <Position>
+        <Filename Value="src\reportfrm.pas"/>
+        <Caret Line="68" Column="8" TopLine="40"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <Caret Line="194" Column="48" TopLine="166"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <Caret Line="193" Column="55" TopLine="166"/>
+      </Position>
+      <Position>
+        <Filename Value="..\adimRT\adim.pas"/>
+        <Caret Line="78" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="..\adimRT\adim.pas"/>
+        <Caret Line="52" Column="20" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="libsrc\springtolerances.pas"/>
+        <Caret Line="196" Column="71" TopLine="166"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="645" Column="60" TopLine="617"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="678" Column="60" TopLine="650"/>
+      </Position>
+      <Position>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="712" Column="68" TopLine="684"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>

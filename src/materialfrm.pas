@@ -76,7 +76,7 @@ implementation
 {$R *.lfm}
 
 uses
-  ADimRT,
+  ADim,
   {$IFDEF MODULE1} ApplicationFrm1, {$ENDIF}
   {$IFDEF MODULE3} ApplicationFrm3, {$ENDIF}
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
