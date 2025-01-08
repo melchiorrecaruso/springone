@@ -7,7 +7,7 @@ object GeometryForm1: TGeometryForm1
   Caption = 'Geometry & working length'
   ClientHeight = 516
   ClientWidth = 497
-  LCLVersion = '3.99.0.0'
+  LCLVersion = '4.0.0.2'
   OnClose = FormClose
   OnCreate = FormCreate
   object WireDiameterLabel: TLabel

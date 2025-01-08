@@ -8,7 +8,7 @@ object ApplicationForm1: TApplicationForm1
   ClientHeight = 281
   ClientWidth = 484
   ParentBiDiMode = False
-  LCLVersion = '3.99.0.0'
+  LCLVersion = '4.0.0.2'
   OnClose = FormClose
   OnCreate = FormCreate
   object OkBtn: TBitBtn
@@ -54,13 +54,13 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = TemperatureUnit
     AnchorSideRight.Side = asrBottom
-    Left = 150
-    Height = 23
-    Top = 108
-    Width = 322
+    Left = 182
+    Height = 31
+    Top = 142
+    Width = 290
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 9
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
       '2.0'
@@ -78,10 +78,10 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideRight.Control = SeatingCoefficent
     AnchorSideBottom.Control = SeatingCoefficent
     AnchorSideBottom.Side = asrBottom
-    Left = 43
-    Height = 23
-    Top = 108
-    Width = 97
+    Left = 53
+    Height = 31
+    Top = 142
+    Width = 119
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
@@ -111,10 +111,10 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideRight.Control = LoadType
     AnchorSideBottom.Control = LoadType
     AnchorSideBottom.Side = asrBottom
-    Left = 71
-    Height = 23
+    Left = 85
+    Height = 31
     Top = 12
-    Width = 69
+    Width = 87
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'type of stress'
@@ -126,14 +126,14 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 150
-    Height = 23
+    Left = 182
+    Height = 31
     Top = 12
-    Width = 322
+    Width = 290
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 12
     BorderSpacing.Right = 12
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'dynamic'
@@ -151,12 +151,12 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideBottom.Control = Temperature
     AnchorSideBottom.Side = asrBottom
     Left = 392
-    Height = 23
-    Top = 76
+    Height = 36
+    Top = 97
     Width = 80
     Anchors = [akTop, akRight, akBottom]
     BidiMode = bdRightToLeftReadingOnly
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'C°'
@@ -175,9 +175,9 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideBottom.Control = Temperature
     AnchorSideBottom.Side = asrBottom
     Left = 12
-    Height = 23
-    Top = 76
-    Width = 128
+    Height = 36
+    Top = 97
+    Width = 160
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akBottom]
     BorderSpacing.Left = 12
@@ -191,10 +191,10 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideTop.Control = CycleFrequency
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = TemperatureUnit
-    Left = 150
-    Height = 23
-    Top = 76
-    Width = 232
+    Left = 182
+    Height = 36
+    Top = 97
+    Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
@@ -213,12 +213,12 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideBottom.Control = CycleFrequency
     AnchorSideBottom.Side = asrBottom
     Left = 392
-    Height = 23
-    Top = 44
+    Height = 36
+    Top = 52
     Width = 80
     Anchors = [akTop, akRight, akBottom]
     BidiMode = bdRightToLeftReadingOnly
-    ItemHeight = 15
+    ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
       'Hz'
@@ -235,10 +235,10 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideTop.Control = LoadType
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = CycleFrequencyUnit
-    Left = 150
-    Height = 23
-    Top = 44
-    Width = 232
+    Left = 182
+    Height = 36
+    Top = 52
+    Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
@@ -254,10 +254,10 @@ object ApplicationForm1: TApplicationForm1
     AnchorSideRight.Control = CycleFrequency
     AnchorSideBottom.Control = CycleFrequency
     AnchorSideBottom.Side = asrBottom
-    Left = 25
-    Height = 23
-    Top = 44
-    Width = 115
+    Left = 28
+    Height = 36
+    Top = 52
+    Width = 144
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
     Caption = 'stress cycle frequency'

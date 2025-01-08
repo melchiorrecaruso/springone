@@ -118,10 +118,10 @@ end;
 procedure TDrawingForm.BtnClick(Sender: TObject);
 begin
   {$IFDEF MODULE1}
-  if Sender = L0Btn  then SpringLength.Value := SpringSolver.LengthL0.Value([pMilli]);
-  if Sender = L1Btn  then SpringLength.Value := SpringSolver.LengthL1.Value([pMilli]);
-  if Sender = L2Btn  then SpringLength.Value := SpringSolver.LengthL2.Value([pMilli]);
-  if Sender = LcBtn  then SpringLength.Value := SpringSolver.LengthLc.Value([pMilli]);
+  if Sender = L0Btn  then SpringLength.Value := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
+  if Sender = L1Btn  then SpringLength.Value := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
+  if Sender = L2Btn  then SpringLength.Value := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
+  if Sender = LcBtn  then SpringLength.Value := MeterUnit.ToFloat(SpringSolver.LengthLc, [pMilli]);
   {$ENDIF}
 end;
 

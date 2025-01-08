@@ -32,22 +32,22 @@ type
 
   TEN15800 = class
   private
-    fAD: TMeters;
-    fAF1: TNewtons;
-    fAF2: TNewtons;
-    fAL0: TMeters;
-    fFactorAlphaF: TNewtons;
-    fWireDiameter:  TMeters;
-    fCoilDiameterDm: TMeters;
-    fLoadF1:  TNewtons;
-    fLoadF2:  TNewtons;
-    fE1: TMeters;
-    fE2: TMeters;
+    fAD: TQuantity;
+    fAF1: TQuantity;
+    fAF2: TQuantity;
+    fAL0: TQuantity;
+    fFactorAlphaF: TQuantity;
+    fWireDiameter:  TQuantity;
+    fCoilDiameterDm: TQuantity;
+    fLoadF1:  TQuantity;
+    fLoadF2:  TQuantity;
+    fE1: TQuantity;
+    fE2: TQuantity;
     fFactorKF: double;
-    fLengthL0: TMeters;
+    fLengthL0: TQuantity;
     fActiveCoils: double;
     fSpringIndexW: double;
-    fSpringRateR: TNewtonsPerMeter;
+    fSpringRateR: TQuantity;
     fQualityGradeOnDm: TQualityGrade;
     fQualityGradeOnL0: TQualityGrade;
     fQualityGradeOnF1: TQualityGrade;
@@ -55,9 +55,9 @@ type
     fQualityGradeOnE1: TQualityGrade;
     fQualityGradeOnE2: TQualityGrade;
 
-    procedure SetWireDiameter(const AValue: TMeters);
-    procedure SetCoilDiameter(const AValue: TMeters);
-    procedure SetFreeBodyLength(const AValue: TMeters);
+    procedure SetWireDiameter(const AValue: TQuantity);
+    procedure SetCoilDiameter(const AValue: TQuantity);
+    procedure SetFreeBodyLength(const AValue: TQuantity);
     procedure SetNumActiveCoils(const AValue: double);
     procedure SetSpringIndex(const AValue: double);
   public
@@ -66,14 +66,14 @@ type
     procedure Solve;
     procedure Clear;
   public
-    property WireDiameter: TMeters read fWireDiameter write SetWireDiameter;
-    property CoilDiameter: TMeters read fCoilDiameterDm write SetCoilDiameter;
-    property Load1: TNewtons read fLoadF1 write fLoadF1;
-    property Load2: TNewtons read fLoadF2 write fLoadF2;
-    property FreeBodyLength: TMeters read fLengthL0 write SetFreeBodyLength;
+    property WireDiameter: TQuantity read fWireDiameter write SetWireDiameter;
+    property CoilDiameter: TQuantity read fCoilDiameterDm write SetCoilDiameter;
+    property Load1: TQuantity read fLoadF1 write fLoadF1;
+    property Load2: TQuantity read fLoadF2 write fLoadF2;
+    property FreeBodyLength: TQuantity read fLengthL0 write SetFreeBodyLength;
     property NumActiveCoils: double read fActiveCoils write SetNumActiveCoils;
     property SpringIndex: double read fSpringIndexW write fSpringIndexW;
-    property SpringRate: TNewtonsPerMeter read fSpringRateR write fSpringRateR;
+    property SpringRate: TQuantity read fSpringRateR write fSpringRateR;
 
     property QualityGradeOnCoilDiameter: TQualityGrade read fQualityGradeOnDm write fQualityGradeOnDm;
     property QualityGradeOnFreeBodyLength: TQualityGrade read fQualityGradeOnL0 write fQualityGradeOnL0;
@@ -82,30 +82,30 @@ type
     property QualityGradeOnPerpendicularity: TQualityGrade read fQualityGradeOnE1 write fQualityGradeOnE1;
     property QualityGradeOnParallelism: TQualityGrade read fQualityGradeOnE2 write fQualityGradeOnE2;
 
-    property ToleranceOnCoilDiameter: TMeters read fAD;
-    property ToleranceOnLoad1: TNewtons read fAF1;
-    property ToleranceOnLoad2: TNewtons read fAF2;
-    property ToleranceFreeBodyLength: TMeters read fAL0;
-    property ToleranceOnPerpendicularity: TMeters read fE1;
-    property ToleranceOnParallelism: TMeters read fE2;
+    property ToleranceOnCoilDiameter: TQuantity read fAD;
+    property ToleranceOnLoad1: TQuantity read fAF1;
+    property ToleranceOnLoad2: TQuantity read fAF2;
+    property ToleranceFreeBodyLength: TQuantity read fAL0;
+    property ToleranceOnPerpendicularity: TQuantity read fE1;
+    property ToleranceOnParallelism: TQuantity read fE2;
   end;
 
   TDIN2194 = class
   private
     fMaterialID: string;
-    fWireDiameter: TMeters;
-    fCoilDiameter: TMeters;
-    fFreeBodyLengthLk: TMeters;
+    fWireDiameter: TQuantity;
+    fCoilDiameter: TQuantity;
+    fFreeBodyLengthLk: TQuantity;
     fActiveCoils: double;
     fSpringIndex: double;
 
-    fLegLength1: TMeters;
-    fLegLength2: TMeters;
-    fLegLength3: TMeters;
+    fLegLength1: TQuantity;
+    fLegLength2: TQuantity;
+    fLegLength3: TQuantity;
 
-    fBendRadius1: TMeters;
-    fBendRadius2: TMeters;
-    fBendRadius3: TMeters;
+    fBendRadius1: TQuantity;
+    fBendRadius2: TQuantity;
+    fBendRadius3: TQuantity;
 
     fQualityGradeOnDm: TQualityGrade;
     fQualityGradeOnTorqueT1: TQualityGrade;
@@ -116,24 +116,24 @@ type
     fQualityGradeOnBendRadii: TQualityGrade;
     fQualityGradeOnBendAngles: TQualityGrade;
 
-    fToleranceOnCoilDiameter: TMeters;
-    fToleranceOnTorque1: TJoules;
-    fToleranceOnTorque2: TJoules;
-    fToleranceOnRelativeEndAngle: TRadians;
-    fToleranceOnFreeBodyLength: TMeters;
+    fToleranceOnCoilDiameter: TQuantity;
+    fToleranceOnTorque1: TQuantity;
+    fToleranceOnTorque2: TQuantity;
+    fToleranceOnRelativeEndAngle: TQuantity;
+    fToleranceOnFreeBodyLength: TQuantity;
 
-    fToleranceOnLegLength1: TMeters;
-    fToleranceOnLegLength2: TMeters;
-    fToleranceOnLegLength3: TMeters;
-    fToleranceOnBendRadius1: TMeters;
-    fToleranceOnBendRadius2: TMeters;
-    fToleranceOnBendRadius3: TMeters;
+    fToleranceOnLegLength1: TQuantity;
+    fToleranceOnLegLength2: TQuantity;
+    fToleranceOnLegLength3: TQuantity;
+    fToleranceOnBendRadius1: TQuantity;
+    fToleranceOnBendRadius2: TQuantity;
+    fToleranceOnBendRadius3: TQuantity;
 
-    fToleranceOnBendAngle1: TRadians;
-    fToleranceOnBendAngle2: TRadians;
-    fToleranceOnBendAngle3: TRadians;
+    fToleranceOnBendAngle1: TQuantity;
+    fToleranceOnBendAngle2: TQuantity;
+    fToleranceOnBendAngle3: TQuantity;
 
-    function LegLengthCoefficent(LegLength: TMeters): double;
+    function LegLengthCoefficent(LegLength: TQuantity): double;
     function QualityFactor(AQualityGrade: TQualityGrade): double;
   public
     constructor Create;
@@ -143,9 +143,9 @@ type
   public
     property MaterialID: string read fMaterialID write fMaterialID;
     property ActiveCoils: double read fActiveCoils write fActiveCoils;
-    property WireDiameter: TMeters read fWireDiameter write fWireDiameter;
-    property MeanCoilDiameter: TMeters read fCoilDiameter write fCoilDiameter;
-    property FreeBodyLengthLk: TMeters read fFreeBodyLengthLk;
+    property WireDiameter: TQuantity read fWireDiameter write fWireDiameter;
+    property MeanCoilDiameter: TQuantity read fCoilDiameter write fCoilDiameter;
+    property FreeBodyLengthLk: TQuantity read fFreeBodyLengthLk;
 
     property SpringIndex: double read fSpringIndex;
 
@@ -154,15 +154,15 @@ type
     property QualityGradeOnTorque2: TQualityGrade read fQualityGradeOnTorqueT2 write fQualityGradeOnTorqueT2;
     property QualityGradeOnRelativeEndAngle: TQualityGrade read fQualityGradeOnRelativeEndAngle write fQualityGradeOnRelativeEndAngle;
 
-    property ToleranceOnCoilDiameter: TMeters read fToleranceOnCoilDiameter;
-    property ToleranceFreeBodyLength: TMeters read fToleranceOnFreeBodyLength;
+    property ToleranceOnCoilDiameter: TQuantity read fToleranceOnCoilDiameter;
+    property ToleranceFreeBodyLength: TQuantity read fToleranceOnFreeBodyLength;
 
-    property ToleranceOnTorque1: TJoules read fToleranceOnTorque1;
-    property ToleranceOnTorque2: TJoules read fToleranceOnTorque2;
+    property ToleranceOnTorque1: TQuantity read fToleranceOnTorque1;
+    property ToleranceOnTorque2: TQuantity read fToleranceOnTorque2;
   end;
 
 
-  function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TMeters): TMeters;
+  function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TQuantity): TQuantity;
 
 
 implementation
@@ -191,11 +191,11 @@ const
     (DmMin:160.0; DmMax:200.0; Q1W48:1.20; Q1W814:1.50; Q1W1420:1.70; Q2W48:2.10; Q2W814:2.90; Q2W1420:3.30; Q3W48:4.20; Q3W814:5.70; Q3W1420:6.60));
 
 const
-  MinWireDiameter : TMeters = (FValue: 0.07/1000);
-  MaxWireDiameter : TMeters = (FValue:   16/1000);
-  MinCoilDiameter : TMeters = (FValue: 0.63/1000);
-  MaxCoilDiameter : TMeters = (FValue:  200/1000);
-  MaxFreeLength   : TMeters = (FValue:  630/1000);
+  MinWireDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue: 0.07/1000 {$ELSE} 0.07/1000 {$ENDIF});
+  MaxWireDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue:   16/1000 {$ELSE}   16/1000 {$ENDIF});
+  MinCoilDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue: 0.63/1000 {$ELSE} 0.63/1000 {$ENDIF});
+  MaxCoilDiameter : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue:  200/1000 {$ELSE}  200/1000 {$ENDIF});
+  MaxFreeLength   : TQuantity = ({$IFOPT D+} FUnitOfMeasurement: MeterId; FValue:  630/1000 {$ELSE}  630/1000 {$ENDIF});
   MinActiveCoils  =  2;
   MinSpringIndex  =  4;
   MaxSpringIndex  = 20;
@@ -271,34 +271,34 @@ begin
   fQualityGradeOnE2 := QualityGrade2;
 end;
 
-procedure TEN15800.SetWireDiameter(const AValue: TMeters);
+procedure TEN15800.SetWireDiameter(const AValue: TQuantity);
 begin
-  if AValue < MinWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter < %s.', [MinWireDiameter.ToString(5, 5, [pMilli])]));
-  if AValue > MaxWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter > %s.', [MaxWireDiameter.ToString(5, 5, [pMilli])]));
+  if AValue < MinWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter < %s.', [MeterUnit.ToString(MinWireDiameter, 5, 5, [pMilli])]));
+  if AValue > MaxWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter > %s.', [Meterunit.ToString(MaxWireDiameter, 5, 5, [pMilli])]));
 
-  fWireDiameter := specialize Max<TMeters>(specialize Min<TMeters>(AValue, MaxWireDiameter), MinWireDiameter);
+  fWireDiameter := Max(Min(AValue, MaxWireDiameter), MinWireDiameter);
 end;
 
-procedure TEN15800.SetCoilDiameter(const AValue: TMeters);
+procedure TEN15800.SetCoilDiameter(const AValue: TQuantity);
 begin
-  if AValue < MinCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter < %s.', [MinCoilDiameter.ToString(5, 5, [pMilli])]));
-  if AValue > MaxCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter > %s.', [MaxCoilDiameter.ToString(5, 5, [pMilli])]));
+  if AValue < MinCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter < %s.', [MeterUnit.ToString(MinCoilDiameter, 5, 5, [pMilli])]));
+  if AValue > MaxCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter > %s.', [MeterUnit.ToString(MaxCoilDiameter, 5, 5, [pMilli])]));
 
-  fCoilDiameterDm := specialize Max<TMeters>(specialize Min<TMeters>(AValue, MaxCoilDiameter), MinCoilDiameter);
+  fCoilDiameterDm := Max(Min(AValue, MaxCoilDiameter), MinCoilDiameter);
 end;
 
-procedure TEN15800.SetFreeBodyLength(const AValue: TMeters);
+procedure TEN15800.SetFreeBodyLength(const AValue: TQuantity);
 begin
-  if AValue > MaxFreeLength then WarningMessage.Add(Format('EN15800: Length of unloaded spring > %s.', [MaxFreeLength.ToString(5, 5, [pMilli])]));
+  if AValue > MaxFreeLength then WarningMessage.Add(Format('EN15800: Length of unloaded spring > %s.', [MeterUnit.ToString(MaxFreeLength, 5, 5, [pMilli])]));
 
-  fLengthL0 := specialize Min<TMeters>(AValue, MaxFreeLength);
+  fLengthL0 := Min(AValue, MaxFreeLength);
 end;
 
 procedure TEN15800.SetNumActiveCoils(const AValue: double);
 begin
   if AValue < MinActiveCoils then WarningMessage.Add(Format('EN15800: Number of active coils < %d.', [MinActiveCoils]));
 
-  fActiveCoils := Max(AValue, MinActiveCoils);
+  fActiveCoils := Math.Max(AValue, MinActiveCoils);
 end;
 
 procedure TEN15800.SetSpringIndex(const AValue: double);
@@ -306,7 +306,7 @@ begin
   if AValue < MinSpringIndex then WarningMessage.Add(Format('EN15800: Spring Index < %d.', [MinSpringIndex]));
   if AValue > MaxSpringIndex then WarningMessage.Add(Format('EN15800: Spring Index > %d.', [MaxSpringIndex]));
 
-  fSpringIndexW := Max(Min(AValue, MaxSpringIndex), MinSpringIndex);
+  fSpringIndexW := Math.Max(Math.Min(AValue, MaxSpringIndex), MinSpringIndex);
 end;
 
 procedure TEN15800.Solve;
@@ -364,7 +364,7 @@ begin
       end;
     end;
     // alphaF
-    fFactorAlphaF := 65.92*Power(1000*FWireDiameter.Value, 3.3)/Power(1000*FCoilDiameterDm.Value, 1.6)*
+    fFactorAlphaF := 65.92*Power(1000*MeterUnit.ToFloat(FWireDiameter), 3.3)/Power(1000*MeterUnit.ToFloat(FCoilDiameterDm), 1.6)*
       (-0.84*IntPower(fSpringIndexW/10, 3) + 3.781*IntPower(fSpringIndexW/10, 2) - 4.244*(fSpringIndexW/10) + 2.274)*N;
     // kF
     fFactorKF := 1/(3*Sqr(fActiveCoils))+8/(5*fActiveCoils)+0.803;
@@ -408,7 +408,7 @@ end;
 
 // TWireTolerance
 
-function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TMeters): TMeters;
+function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TQuantity): TQuantity;
 var
   I: longint;
 begin
@@ -454,7 +454,7 @@ var
 begin
   if fWireDiameter        <  (0.07*mm) then ErrorMessage.Add('Wire diameter d < 0.07mm.');
   if fWireDiameter        >  (17  *mm) then ErrorMessage.Add('Wire diameter d > 17 mm.');
-  if fCoilDiameter.Value  <= (0      ) then ErrorMessage.Add('Mean coil diameter unassigned.');
+  if fCoilDiameter        <= (0   *mm) then ErrorMessage.Add('Mean coil diameter unassigned.');
   if fCoilDiameter        >  (340 *mm) then ErrorMessage.Add('Mean coil diameter Dm > 340 mm.');
   if fActiveCoils         <  (2      ) then ErrorMessage.Add('Number of active coils n < 2.');
 
@@ -474,7 +474,7 @@ begin
   Check := ErrorMessage.Count = 0;
   if Check then
   begin
-    fSpringIndex := fWireDiameter/fCoilDiameter;
+    fSpringIndex := ScalarUnit.ToFloat(fWireDiameter/fCoilDiameter);
     if SpringIndex < 4  then ErrorMessage.Add('Spring index w < 4.');
     if SpringIndex > 20 then ErrorMessage.Add('Spring index w > 20.');
   end;
@@ -482,8 +482,8 @@ begin
   Check := ErrorMessage.Count = 0;
   if Check then
   begin
-    d  := fWireDiameter.Value([pMilli]);
-    Dm := fCoilDiameter.Value([pMilli]);
+    d  := MeterUnit.ToFloat(fWireDiameter, [pMilli]);
+    Dm := MeterUnit.ToFloat(fCoilDiameter, [pMilli]);
 
     // tolerance on coil diameter (unloaded spring)
     fToleranceOnCoilDiameter := (0.025 * Dm/Power(d, 0.17) * QualityFactor(fQualityGradeOnDm))*mm;
@@ -514,25 +514,25 @@ begin
 
     // tolerance on bend radii (unloaded spring)
 
-    fToleranceOnBendRadius1 := (0.6 + 0.2*fBendRadius1.Value([pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
-    fToleranceOnBendRadius2 := (0.6 + 0.2*fBendRadius2.Value([pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
-    fToleranceOnBendRadius3 := (0.6 + 0.2*fBendRadius3.Value([pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
+    fToleranceOnBendRadius1 := (0.6 + 0.2*MeterUnit.ToFloat(fBendRadius1, [pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
+    fToleranceOnBendRadius2 := (0.6 + 0.2*MeterUnit.ToFloat(fBendRadius2, [pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
+    fToleranceOnBendRadius3 := (0.6 + 0.2*MeterUnit.ToFloat(fBendRadius3, [pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
 
     // tolerance on angles of bends on leg
 
-    fToleranceOnBendAngle1 := 4*sqrt(fBendRadius1.Value([pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
-    fToleranceOnBendAngle2 := 4*sqrt(fBendRadius2.Value([pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
-    fToleranceOnBendAngle3 := 4*sqrt(fBendRadius3.Value([pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
+    fToleranceOnBendAngle1 := 4*sqrt(MeterUnit.ToFloat(fBendRadius1, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
+    fToleranceOnBendAngle2 := 4*sqrt(MeterUnit.ToFloat(fBendRadius2, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
+    fToleranceOnBendAngle3 := 4*sqrt(MeterUnit.ToFloat(fBendRadius3, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
   end;
 
   if fFreeBodyLengthLk > (630*mm) then ErrorMessage.Add('Free body length Lk > 630 mm.');
 end;
 
-function TDIN2194.LegLengthCoefficent(LegLength: TMeters): double;
+function TDIN2194.LegLengthCoefficent(LegLength: TQuantity): double;
 var
   LegLen: double;
 begin
-  LegLen := LegLength.Value([pMilli]);
+  LegLen := MeterUnit.ToFloat(LegLength, [pMilli]);
   if (LegLen >= 0.5) and (LegLen <=    6) then result := 0.3 else
   if (LegLen >    6) and (LegLen <=   30) then result := 0.8 else
   if (LegLen >   30) and (LegLen <=  120) then result := 1.3 else
