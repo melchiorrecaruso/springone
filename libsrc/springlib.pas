@@ -2,13 +2,14 @@
   This source is only used to compile and install the package.
  }
 
-unit NewSpin;
+unit SpringLib;
 
 {$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  NewFloatSpinEdit, LazarusPackageIntf;
+  BaseGraphics, BaseUtils, NewFloatSpinEdit, SpringMaterials, SpringSolvers, 
+  SpringTolerances, LazarusPackageIntf;
 
 implementation
 
@@ -18,5 +19,5 @@ begin
 end;
 
 initialization
-  RegisterPackage('NewSpin', @Register);
+  RegisterPackage('SpringLib', @Register);
 end.
