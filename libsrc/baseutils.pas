@@ -144,8 +144,8 @@ end;
 function GetForceSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := NewtonUnit.GetSymbol([]);
-    False: result := NewtonUnit.GetSymbol([pNone]);
+    True:  result := PoundForceUnit.GetSymbol([pkilo]);
+    False: result := NewtonUnit.GetSymbol([]);
   end;
 end;
 
