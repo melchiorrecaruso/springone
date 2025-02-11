@@ -1,14 +1,14 @@
 object ApplicationForm1: TApplicationForm1
-  Left = 206
+  Left = 925
   Height = 281
-  Top = 130
+  Top = 209
   Width = 484
   BorderIcons = [biSystemMenu]
   Caption = 'Analisys'
   ClientHeight = 281
   ClientWidth = 484
   ParentBiDiMode = False
-  LCLVersion = '4.0.0.2'
+  LCLVersion = '4.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   object OkBtn: TBitBtn

@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2025 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -51,7 +51,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure SpinEditChange(Sender: TObject);
   public
-    procedure Clear;
+    procedure ClearForm;
     procedure Load(IniFile: TIniFile);
     procedure Save(IniFile: TIniFile);
     procedure SaveToSolver;
@@ -67,28 +67,27 @@ implementation
 {$R *.lfm}
 
 uses
-  ADim, LibLink, SpringSolvers, MaterialFrm, Math, baseutils, Setting;
+  ADim, LibLink, SpringSolvers, BaseUtils, Setting;
 
 // TApplicationForm1
 
 procedure TApplicationForm1.FormCreate(Sender: TObject);
 begin
-  ApplicationForm1.Top    := ClientFile.ReadInteger('ApplicationForm1', 'Top',    ApplicationForm1.Top);
-  ApplicationForm1.Left   := ClientFile.ReadInteger('ApplicationForm1', 'Left',   ApplicationForm1.Left);
+  ApplicationForm1.Top    := ClientFile.ReadInteger('ApplicationForm1', 'Top', ApplicationForm1.Top);
+  ApplicationForm1.Left   := ClientFile.ReadInteger('ApplicationForm1', 'Left', ApplicationForm1.Left);
   ApplicationForm1.Height := ClientFile.ReadInteger('ApplicationForm1', 'Height', ApplicationForm1.Height);
-  ApplicationForm1.Width  := ClientFile.ReadInteger('ApplicationForm1', 'Width',  ApplicationForm1.Width);
-
-  Clear;
+  ApplicationForm1.Width  := ClientFile.ReadInteger('ApplicationForm1', 'Width', ApplicationForm1.Width);
+  ClearForm;
 end;
 
 procedure TApplicationForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   if Windowstate = wsNormal then
   begin
-    ClientFile.WriteInteger('ApplicationForm1', 'Top',    ApplicationForm1.Top);
-    ClientFile.WriteInteger('ApplicationForm1', 'Left',   ApplicationForm1.Left);
+    ClientFile.WriteInteger('ApplicationForm1', 'Top', ApplicationForm1.Top);
+    ClientFile.WriteInteger('ApplicationForm1', 'Left', ApplicationForm1.Left);
     ClientFile.WriteInteger('ApplicationForm1', 'Height', ApplicationForm1.Height);
-    ClientFile.WriteInteger('ApplicationForm1', 'Width',  ApplicationForm1.Width);
+    ClientFile.WriteInteger('ApplicationForm1', 'Width', ApplicationForm1.Width);
   end;
 end;
 
@@ -97,47 +96,48 @@ begin
   if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
 end;
 
-procedure TApplicationForm1.Clear;
+procedure TApplicationForm1.ClearForm;
 begin
-  LoadType         .ItemIndex := 0;
-  Temperature      .Value     := 20;
-  TemperatureUnit  .ItemIndex := 0;
+  LoadType.ItemIndex := 0;
+  Temperature.Value := 20;
+  TemperatureUnit.ItemIndex := 0;
   SeatingCoefficent.ItemIndex := 1;
 end;
 
 procedure TApplicationForm1.Load(IniFile: TIniFile);
 begin
-  LoadType         .ItemIndex := IniFile.ReadInteger('TApplicationForm1', 'LoadType',          0);
-  CycleFrequency   .Value     := IniFile.ReadFloat  ('TApplicationForm1', 'CycleFrequency',    1);
-  Temperature      .Value     := IniFile.ReadFloat  ('TApplicationForm1', 'Temperature',       0);
-  TemperatureUnit  .ItemIndex := IniFile.ReadInteger('TApplicationForm1', 'TemperatureUnit',   0);
+  LoadType.ItemIndex          := IniFile.ReadInteger('TApplicationForm1', 'LoadType', 0);
+  CycleFrequency.Value        := IniFile.ReadFloat  ('TApplicationForm1', 'CycleFrequency', 1);
+  Temperature.Value           := IniFile.ReadFloat  ('TApplicationForm1', 'Temperature', 0);
+  TemperatureUnit.ItemIndex   := IniFile.ReadInteger('TApplicationForm1', 'TemperatureUnit', 0);
   SeatingCoefficent.ItemIndex := IniFile.ReadInteger('TApplicationForm1', 'SeatingCoefficent', 0);
 end;
 
 procedure TApplicationForm1.Save(IniFile: TIniFile);
 begin
-  IniFile.WriteInteger('TApplicationForm1', 'LoadType',          LoadType         .ItemIndex);
-  IniFile.WriteFloat  ('TApplicationForm1', 'CycleFrequency',    CycleFrequency   .Value    );
-  IniFile.WriteFloat  ('TApplicationForm1', 'Temperature',       Temperature      .Value    );
-  IniFile.WriteInteger('TApplicationForm1', 'TemperatureUnit',   TemperatureUnit  .ItemIndex);
+  IniFile.WriteInteger('TApplicationForm1', 'LoadType', LoadType.ItemIndex);
+  IniFile.WriteFloat  ('TApplicationForm1', 'CycleFrequency', CycleFrequency.Value);
+  IniFile.WriteFloat  ('TApplicationForm1', 'Temperature', Temperature.Value);
+  IniFile.WriteInteger('TApplicationForm1', 'TemperatureUnit', TemperatureUnit.ItemIndex);
   IniFile.WriteInteger('TApplicationForm1', 'SeatingCoefficent', SeatingCoefficent.ItemIndex);
 end;
 
 procedure TApplicationForm1.SaveToSolver;
 begin
-  {$IFDEF MODULE1}
   case LoadType.ItemIndex of
-   0: SpringSolver.DynamicLoad := True;
-   1: SpringSolver.DynamicLoad := False;
+    0: SpringSolver.DynamicLoad := True;
+    1: SpringSolver.DynamicLoad := False;
+    else raise Exception.Create('ApplicationForm: Unknow load type selected.');
   end;
+  {$IFDEF MODULE1}
   SpringSolver.SeatingCoefficent := StrToFloat(SeatingCoefficent.Text);
-  SpringSolver.Temperature       := Temperature.Value * degC;
+  case TemperatureUnit.ItemIndex of
+    0: SpringSolver.Temperature := Temperature.Value * degC;
+    1: SpringSolver.Temperature := Temperature.Value * degF;
+  else raise Exception.Create('ApplicationForm: Unknow unit of measurement selected for temperature.');
+  end;
   {$ENDIF}
   {$IFDEF MODULE3}
-  case LoadType.ItemIndex of
-   0: SpringSolver.DynamicLoad := True;
-   1: SpringSolver.DynamicLoad := False;
-  end;
   {$ENDIF}
 end;
 
