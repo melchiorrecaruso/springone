@@ -81,7 +81,8 @@ const
   DefaultPrecision = 5;
 
   ApplicationName  = 'SpringONE' ;
-  ApplicationVer   = 'SpringONE 0.48';
+  ApplicationVer   = 'SpringONE 0.50';
+  ApplicationBuild = 'Build 20250212';
 
 var
   ErrorMessage:    TStringList;
@@ -144,7 +145,7 @@ end;
 function GetForceSymbol(const AQuantity: TQuantity): string;
 begin
   case UseImperialSystem of
-    True:  result := PoundForceUnit.GetSymbol([pkilo]);
+    True:  result := PoundForceUnit.GetSymbol([]);
     False: result := NewtonUnit.GetSymbol([]);
   end;
 end;
