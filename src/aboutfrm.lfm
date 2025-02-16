@@ -1,14 +1,14 @@
 object AboutForm: TAboutForm
-  Left = 748
+  Left = 231
   Height = 362
-  Top = 506
+  Top = 377
   Width = 402
   BorderIcons = [biSystemMenu]
   Caption = 'About ...'
   ClientHeight = 362
   ClientWidth = 402
   Color = clWhite
-  LCLVersion = '3.99.0.0'
+  LCLVersion = '4.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   object Image: TImage
@@ -204,7 +204,7 @@ object AboutForm: TAboutForm
     ParentFont = False
     WordWrap = True
   end
-  object AboutNameLabel: TLabel
+  object AboutVersionLabel: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Image
     AnchorSideTop.Side = asrBottom
@@ -224,7 +224,7 @@ object AboutForm: TAboutForm
   end
   object AboutDescriptionLabel: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = AboutVersionLabel
+    AnchorSideTop.Control = AboutBuildLabel
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -274,13 +274,13 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 10
-    Caption = 'Copyright (c) 2022-2024 Melchiorre Caruso'
+    Caption = 'Copyright (c) 2022-2025 Melchiorre Caruso'
     Layout = tlCenter
     ParentFont = False
   end
-  object AboutVersionLabel: TLabel
+  object AboutBuildLabel: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = AboutNameLabel
+    AnchorSideTop.Control = AboutVersionLabel
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
@@ -291,7 +291,7 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 6
-    Caption = 'Build 20240613'
+    Caption = 'Build 20250211'
     Layout = tlCenter
     ParentFont = False
   end
