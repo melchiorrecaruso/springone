@@ -969,11 +969,13 @@ begin
   end;
   {$ENDIF}
   {$IFDEF MODULE3}
-  Result[0, 5] := 'Lk [' + GetLengthSymbol(SpringSolver.Lk(0*rad)) + ']';
-  Result[1, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
-  Result[2, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha1)))]);
-  Result[3, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha2)))]);
-  Result[4, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
+  begin
+    Result[0, 5] := 'Lk [' + GetLengthSymbol(SpringSolver.Lk(0*rad)) + ']';
+    Result[1, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
+    Result[2, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha1)))]);
+    Result[3, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha2)))]);
+    Result[4, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
+  end;
   {$ENDIF}
 end;
 

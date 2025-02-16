@@ -926,7 +926,6 @@ begin
   fSigmaq1        := 0*Pa;
   fSigmaq2        := 0*Pa;
 
-
   fStressInCoilingDirection := True;
 end;
 
@@ -939,7 +938,7 @@ begin
   if LessThanOrEqualToZero(fDm) then ErrorMessage.Add('Coil diameter "Dm" unassigned.');
   if LessThanOrEqualToZero(fE)  then ErrorMessage.Add('Young''s modulus "E" unassigned.');
   if LessThanOrEqualToZero(fG)  then ErrorMessage.Add('Shear modulus "G" unassigned.');
-  if fn <= 0 then ErrorMessage.Add('Number of active coil "n" unassigned.');
+  if fn <= 0                    then ErrorMessage.Add('Number of active coil "n" unassigned.');
 
   if fColdCoiled then
     if (fd > (20*mm)) then ErrorMessage.Add('Wire diameter > 20.')
@@ -1083,8 +1082,9 @@ begin
 
 
 
-
     writeln('E    = ', PascalUnit.ToString(fE, 10, 0, [pMega]));
+    writeln('G    = ', PascalUnit.ToString(fG, 10, 0, [pMega]));
+
     writeln('d    = ', MeterUnit .ToString(fd,  4, 0, [pMilli]));
     writeln('Di   = ', MeterUnit .ToString(fDi, 4, 0, [pMilli]));
     writeln('Dm   = ', MeterUnit .ToString(fDm, 4, 0, [pMilli]));
@@ -1115,10 +1115,10 @@ begin
     writeln('RMR = ', NewtonMeterPerDegreeUnit.ToString(fRMR, 4, 0, [pNone, pMilli]));
 
     writeln;
-    writeln(PascalUnit.ToString(fSigmaq1, 4, 0, [pMega]));
-    writeln(PascalUnit.ToString(fSigmaq2, 4, 0, [pMega]));
+    writeln('sigma1 = ', PascalUnit.ToString(fSigmaq1, 4, 0, [pMega]));
+    writeln('sigma1 = ', PascalUnit.ToString(fSigmaq2, 4, 0, [pMega]));
     writeln;
-    writeln(PascalUnit.ToString(fSigmaz,  4, 0, [pMega]));
+    writeln('sigmaz = ', PascalUnit.ToString(fSigmaz,  4, 0, [pMega]));
   end;
 
 end;
