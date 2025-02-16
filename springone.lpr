@@ -21,7 +21,6 @@
 program SpringONE;
 
 {$mode objfpc}{$H+}
-{$i defines.inc}
 
 uses
   {$IFDEF UNIX}
