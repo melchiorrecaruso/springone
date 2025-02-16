@@ -52,6 +52,10 @@ function GetStiffnessSymbol(const AQuantity: TQuantity): string;
 function GetStiffnessValue (const AQuantity: TQuantity): double;
 function GetStiffnessString(const AQuantity: TQuantity): string;
 
+function GetTorqueSymbol(const AQuantity: TQuantity): string;
+function GetTorqueValue (const AQuantity: TQuantity): double;
+function GetTorqueString(const AQuantity: TQuantity): string;
+
 function GetMassSymbol(const AQuantity: TQuantity): string;
 function GetMassValue (const AQuantity: TQuantity): double;
 function GetMassString(const AQuantity: TQuantity): string;
@@ -229,6 +233,33 @@ begin
     case UseImperialSystem of
       True:  Result := PoundForcePerInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
       False: Result := NewtonPerMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pNone, pMilli]);
+    end
+  else
+    Result := '---';
+end;
+
+function GetTorqueSymbol(const AQuantity: TQuantity): string;
+begin
+  case UseImperialSystem of
+    True:  result := PoundForceInchUnit.GetSymbol([]);
+    False: result := NewtonMeterUnit.GetSymbol([pNone, pMilli]);
+  end;
+end;
+
+function GetTorqueValue (const AQuantity: TQuantity): double;
+begin
+  case UseImperialSystem of
+    True:  result := PoundForceInchUnit.ToFloat(AQuantity);
+    False: result := NewtonMeterUnit.ToFloat(AQuantity, [pNone, pMilli]);
+  end;
+end;
+
+function GetTorqueString(const AQuantity: TQuantity): string;
+begin
+  if not EqualToZero(AQuantity) then
+    case UseImperialSystem of
+      True:  Result := PoundForceInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: Result := NewtonMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pNone, pMilli]);
     end
   else
     Result := '---';
