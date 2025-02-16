@@ -52,12 +52,12 @@ BendInnerRadius2=2
 BendInnerRadius2Unit=0
 
 [TMaterialForm]
-Material=3
-YoungModulus=206000
+Material=0
+YoungModulus=200000
 YoungModulusUnit=0
 ShearModulus=81500
 ShearModulusUnit=0
-TensileStrength=2220
+TensileStrength=2080
 TensileStrengthUnit=0
 MaterialDensity=7850
 MaterialDensityUnit=0
@@ -83,7 +83,7 @@ L0=false
 nAndd=false
 nAndDeDi=false
 L0nAndd=false
-L0nAndDeDi=true
+L0nAndDeDi=false
 
 [TApplicationForm]
 LoadType=0
@@ -93,17 +93,17 @@ TemperatureUnit=0
 SeatingCoefficent=2
 
 [TGeometryForm3]
-WireDiameter=1
+WireDiameter=0.8
 WireDiameterUnit=0
 CoilDiameterIndex=0
-CoilDiameter=6
+CoilDiameter=6.4
 CoilDiameterUnit=0
-ActiveCoil=3.25
+ActiveCoil=4.3
 DistanceBetweenCoils=0.2
 DistanceBetweenCoilsUnit=0
-AngleAlpha1=50
+AngleAlpha1=30
 AngleAlpha1Unit=0
-AngleAlpha2=140
+AngleAlpha2=120
 AngleAlpha2Unit=0
 Leg1Length=14
 Leg1LengthUnit=0
