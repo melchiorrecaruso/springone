@@ -1,13 +1,13 @@
 object QualityForm: TQualityForm
-  Left = 212
+  Left = 177
   Height = 386
-  Top = 126
+  Top = 255
   Width = 523
   BorderIcons = [biSystemMenu]
   Caption = 'Quality grade'
   ClientHeight = 386
   ClientWidth = 523
-  LCLVersion = '4.0.0.2'
+  LCLVersion = '4.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   object ToleranceWireDiameterLabel: TLabel

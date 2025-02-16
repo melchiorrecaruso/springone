@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2025 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -26,7 +26,7 @@ unit DrawingFrm;
 interface
 
 uses
-  Buttons, Classes, ComCtrls, Controls, Dialogs, Springsolvers, ExtCtrls,
+  Buttons, Classes, ComCtrls, Controls, Dialogs, SpringSolvers, ExtCtrls,
   Forms, Graphics, IniFiles, LibLink, Spin, StdCtrls, SysUtils;
 
 type

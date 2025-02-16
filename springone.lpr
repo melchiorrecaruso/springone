@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2025 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -30,7 +30,11 @@ uses
   {$IFDEF HASAMIGA}
   athreads,
   {$ENDIF}
-  Interfaces, Forms, DrawingFrm, TextFrm, AboutFrm,
+  Interfaces,
+  Forms,
+  DrawingFrm,
+  TextFrm,
+  AboutFrm,
 
   {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}

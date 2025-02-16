@@ -6,7 +6,7 @@ object ReportForm: TReportForm
   Caption = 'Report'
   ClientHeight = 532
   ClientWidth = 650
-  LCLVersion = '4.0.0.2'
+  LCLVersion = '4.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   object Memo: TMemo
