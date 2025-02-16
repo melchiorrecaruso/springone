@@ -146,14 +146,14 @@ begin
   LengthLegBUnit          .ItemIndex := 0;
   TypeLegA                .ItemIndex := 0;
   TypeLegB                .ItemIndex := 0;
-  LengthArmLegA         .Value     := 0;
-  LengthArmLegAUnit     .ItemIndex := 0;
-  LengthArmLegB         .Value     := 0;
-  LengthArmLegBUnit     .ItemIndex := 0;
-  BendRadiusLegA        .Value     := 0;
-  BendRadiusLegAUnit    .ItemIndex := 0;
-  BendRadiusLegB        .Value     := 0;
-  BendRadiusLegBUnit    .ItemIndex := 0;
+  LengthArmLegA           .Value     := 0;
+  LengthArmLegAUnit       .ItemIndex := 0;
+  LengthArmLegB           .Value     := 0;
+  LengthArmLegBUnit       .ItemIndex := 0;
+  BendRadiusLegA          .Value     := 0;
+  BendRadiusLegAUnit      .ItemIndex := 0;
+  BendRadiusLegB          .Value     := 0;
+  BendRadiusLegBUnit      .ItemIndex := 0;
 
   TypeLegAChange(Self);
   TypeLegBChange(Self);
@@ -161,32 +161,32 @@ end;
 
 procedure TGeometryForm3.Load(IniFile: TIniFile);
 begin
-  WireDiameter            .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'WireDiameter',              0);
-  WireDiameterUnit        .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'WireDiameterUnit',          0);
-  CoilDiameterIndex       .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'CoilDiameterIndex',         0);
-  CoilDiameter            .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'CoilDiameter',              0);
-  CoilDiameterUnit        .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'CoilDiameterUnit',          0);
-  ActiveCoil              .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'ActiveCoil',                0);
-  DistanceBetweenCoils    .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'DistanceBetweenCoils',      0);
-  DistanceBetweenCoilsUnit.ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'DistanceBetweenCoilsUnit',  0);
-  AngleAlpha1             .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'AngleAlpha1',               0);
-  AngleAlpha1Unit         .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'AngleAlpha1Unit',           0);
-  AngleAlpha2             .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'AngleAlpha2',               0);
-  AngleAlpha2Unit         .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'AngleAlpha2Unit',           0);
-  LengthLegA              .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'Leg1Length',                0);
-  LengthLegAUnit          .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg1LengthUnit',            0);
-  LengthLegB              .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'Leg2Length',                0);
-  LengthLegBUnit          .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg2LengthUnit',            0);
-  TypeLegA                .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg1Type',                  0);
-  TypeLegB                .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg2Type',                  0);
-  LengthArmLegA           .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'LeverArmLength1',           0);
-  LengthArmLegAUnit       .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'LeverArmLength1Unit',       0);
-  LengthArmLegB           .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'LeverArmLength2',           0);
-  LengthArmLegBUnit       .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'LeverArmLength2Unit',       0);
-  BendRadiusLegA          .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'BendInnerRadius1',          0);
-  BendRadiusLegAUnit      .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'BendInnerRadius1Unit',      0);
-  BendRadiusLegB          .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'BendInnerRadius2',          0);
-  BendRadiusLegBUnit      .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'BendInnerRadius2Unit',      0);
+  WireDiameter            .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'WireDiameter',             0);
+  WireDiameterUnit        .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'WireDiameterUnit',         0);
+  CoilDiameterIndex       .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'CoilDiameterIndex',        0);
+  CoilDiameter            .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'CoilDiameter',             0);
+  CoilDiameterUnit        .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'CoilDiameterUnit',         0);
+  ActiveCoil              .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'ActiveCoil',               0);
+  DistanceBetweenCoils    .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'DistanceBetweenCoils',     0);
+  DistanceBetweenCoilsUnit.ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'DistanceBetweenCoilsUnit', 0);
+  AngleAlpha1             .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'AngleAlpha1',              0);
+  AngleAlpha1Unit         .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'AngleAlpha1Unit',          0);
+  AngleAlpha2             .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'AngleAlpha2',              0);
+  AngleAlpha2Unit         .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'AngleAlpha2Unit',          0);
+  LengthLegA              .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'Leg1Length',               0);
+  LengthLegAUnit          .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg1LengthUnit',           0);
+  LengthLegB              .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'Leg2Length',               0);
+  LengthLegBUnit          .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg2LengthUnit',           0);
+  TypeLegA                .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg1Type',                 0);
+  TypeLegB                .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'Leg2Type',                 0);
+  LengthArmLegA           .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'LeverArmLength1',          0);
+  LengthArmLegAUnit       .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'LeverArmLength1Unit',      0);
+  LengthArmLegB           .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'LeverArmLength2',          0);
+  LengthArmLegBUnit       .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'LeverArmLength2Unit',      0);
+  BendRadiusLegA          .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'BendInnerRadius1',         0);
+  BendRadiusLegAUnit      .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'BendInnerRadius1Unit',     0);
+  BendRadiusLegB          .Value     := IniFile.ReadFloat  ('TGeometryForm3', 'BendInnerRadius2',         0);
+  BendRadiusLegBUnit      .ItemIndex := IniFile.ReadInteger('TGeometryForm3', 'BendInnerRadius2Unit',     0);
 
   TypeLegAChange(Self);
   TypeLegBChange(Self);
@@ -226,12 +226,12 @@ procedure TGeometryForm3.SaveToSolver;
 begin
   case WireDiameterUnit.ItemIndex of
     0: SpringSolver.WireDiameter := WireDiameter.Value*mm;
-    1: SpringSolver.WireDiameter := WireDiameter.Value*25.4*mm;
+    1: SpringSolver.WireDiameter := WireDiameter.Value*inch;
   end;
 
   case CoilDiameterUnit.ItemIndex of
     0: SpringSolver.Dm := CoilDiameter.Value*mm;
-    1: SpringSolver.Dm := CoilDiameter.Value*25.4*mm;
+    1: SpringSolver.Dm := CoilDiameter.Value*inch;
   end;
 
   case CoilDiameterIndex.ItemIndex of
@@ -244,7 +244,7 @@ begin
 
   case DistanceBetweenCoilsUnit.ItemIndex of
     0: SpringSolver.CoilsGap := DistanceBetweenCoils.Value*mm;
-    1: SpringSolver.CoilsGap := DistanceBetweenCoils.Value*25.4*mm;
+    1: SpringSolver.CoilsGap := DistanceBetweenCoils.Value*inch;
   end;
 
   case AngleAlpha1Unit.ItemIndex of
@@ -260,12 +260,12 @@ begin
   // Leg-A
   case LengthLegAUnit.ItemIndex of
     0: SpringSolver.LengthLegA := LengthLegA.Value*mm;
-    1: SpringSolver.LengthLegA := LengthLegA.Value*25.4*mm;
+    1: SpringSolver.LengthLegA := LengthLegA.Value*inch;
   end;
 
   case LengthArmLegAUnit.ItemIndex of
     0: SpringSolver.LengthArmLegA := LengthArmLegA.Value*mm;
-    1: SpringSolver.LengthArmLegA := LengthArmLegA.Value*25.4*mm;
+    1: SpringSolver.LengthArmLegA := LengthArmLegA.Value*inch;
   end;
 
   SpringSolver.BentLegA  := TypeLegA.ItemIndex in [2, 3];
@@ -273,18 +273,18 @@ begin
   if SpringSolver.BentLegA then
     case BendRadiusLegAUnit.ItemIndex of
       0: SpringSolver.BendRadiusLegA := BendRadiusLegA.Value*mm;
-      1: SpringSolver.BendRadiusLegA := BendRadiusLegA.Value*25.4*mm;
+      1: SpringSolver.BendRadiusLegA := BendRadiusLegA.Value*inch;
     end;
 
   // Leg-B
   case LengthLegBUnit.ItemIndex of
     0: SpringSolver.LengthLegB := LengthLegB.Value*mm;
-    1: SpringSolver.LengthLegB := LengthLegB.Value*25.4*mm;
+    1: SpringSolver.LengthLegB := LengthLegB.Value*inch;
   end;
 
   case LengthArmLegBUnit.ItemIndex of
     0: SpringSolver.LengthArmLegB := LengthArmLegB.Value*mm;
-    1: SpringSolver.LengthArmLegB := LengthArmLegB.Value*25.4*mm;
+    1: SpringSolver.LengthArmLegB := LengthArmLegB.Value*inch;
   end;
 
   SpringSolver.BentLegB  := TypeLegB.ItemIndex in [2, 3];
@@ -292,13 +292,14 @@ begin
   if SpringSolver.BentLegB then
     case BendRadiusLegBUnit.ItemIndex of
       0: SpringSolver.BendRadiusLegB := BendRadiusLegB.Value*mm;
-      1: SpringSolver.BendRadiusLegB := BendRadiusLegB.Value*25.4*mm;
+      1: SpringSolver.BendRadiusLegB := BendRadiusLegB.Value*inch;
     end;
 end;
 
 procedure TGeometryForm3.SpinEditChange(Sender: TObject);
 begin
-  if TFloatSpinEdit(Sender).Value < 0 then TFloatSpinEdit(Sender).Value := 0;
+  if TFloatSpinEdit(Sender).Value < 0 then
+    TFloatSpinEdit(Sender).Value := 0;
 end;
 
 procedure TGeometryForm3.TypeLegAChange(Sender: TObject);
