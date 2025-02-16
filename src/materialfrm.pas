@@ -21,7 +21,6 @@
 unit MaterialFrm;
 
 {$mode ObjFPC}{$H+}
-{$i defines.inc}
 
 interface
 
@@ -166,7 +165,7 @@ begin
     {$ENDIF}
     {$IFDEF MODULE3}
     GeometryForm3.SaveToSolver;
-    if not SpringSolver.WireDiameter.IsZero then
+    if GreaterThanZero(SpringSolver.WireDiameter) then
     {$ENDIF}
     begin
       MAT.Load(Material.Text,

@@ -21,7 +21,6 @@
 unit MainFrm;
 
 {$mode ObjFPC}{$H+}
-{$i defines.inc}
 
 interface
 

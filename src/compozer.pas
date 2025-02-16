@@ -21,7 +21,6 @@
 unit Compozer;
 
 {$mode ObjFPC}{$H+}
-{$i defines.inc}
 
 interface
 
@@ -428,14 +427,14 @@ begin
 
   {$IFDEF MODULE3}
   // Drawing bisector line
-  if SpringSolver.AdmStaticBendingStressSigmaz.Value > 0 then
+  if GreaterThanZero(SpringSolver.AdmStaticBendingStressSigmaz) then
   begin
     LoadChart2(Result, 'GoodmanChart', 'BisectorLine');
     SetLength(Points, 2);
     Points[0].X := 0;
     Points[0].Y := 0;
-    Points[1].X := GetValue(SpringSolver.AdmStaticBendingStressSigmaz);
-    Points[1].Y := GetValue(SpringSolver.AdmStaticBendingStressSigmaz);
+    Points[1].X := GetPressureValue(SpringSolver.AdmStaticBendingStressSigmaz);
+    Points[1].Y := GetPressureValue(SpringSolver.AdmStaticBendingStressSigmaz);
     Result.AddPolyLine(Points, True, 'Bisector');
     Points := nil;
   end;
@@ -466,19 +465,19 @@ begin
 
   {$IFDEF MODULE3}
   // Drawing Sigmaq-Tolerances
-  if (SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1).Value > 0) and
-     (SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque2).Value > 0) then
+  if GreaterThanZero(SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1)) and
+     GreaterThanZero(SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque2)) then
   begin
     LoadChart2(Result, 'GoodmanChart', 'TaukTol');
     SetLength(Points, 4);
-    Points[0].X := GetValue(SpringSolver.BendingStressSigmaq1 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
-    Points[0].Y := GetValue(SpringSolver.BendingStressSigmaq1 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
-    Points[1].X := GetValue(SpringSolver.BendingStressSigmaq1 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
-    Points[1].Y := GetValue(SpringSolver.BendingStressSigmaq1 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
-    Points[2].X := GetValue(SpringSolver.BendingStressSigmaq1 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
-    Points[2].Y := GetValue(SpringSolver.BendingStressSigmaq2 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
-    Points[3].X := GetValue(SpringSolver.BendingStressSigmaq1 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
-    Points[3].Y := GetValue(SpringSolver.BendingStressSigmaq2 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[0].X := GetPressureValue(SpringSolver.BendingStressSigmaq1 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[0].Y := GetPressureValue(SpringSolver.BendingStressSigmaq1 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[1].X := GetPressureValue(SpringSolver.BendingStressSigmaq1 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[1].Y := GetPressureValue(SpringSolver.BendingStressSigmaq1 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[2].X := GetPressureValue(SpringSolver.BendingStressSigmaq1 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[2].Y := GetPressureValue(SpringSolver.BendingStressSigmaq2 + SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[3].X := GetPressureValue(SpringSolver.BendingStressSigmaq1 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
+    Points[3].Y := GetPressureValue(SpringSolver.BendingStressSigmaq2 - SpringSolver.GetSigmaq(SpringTolerance.ToleranceOnTorque1));
     Result.AddPolygon(Points, 'TaukTol');
     Result.AddLabel(Points[1].X, Points[1].Y, 6, 3, taLeftJustify, taAlignTop, 'sigmaq1');
     Result.AddLabel(Points[2].X, Points[2].Y, 6, 3, taLeftJustify, taAlignTop, 'sigmaq2');
@@ -504,15 +503,15 @@ begin
 
   {$IFDEF MODULE3}
   // Drawing Sigmaq1-Sigmaq2
-  if (SpringSolver.BendingStressSigmaq1.Value > 0) and
-     (SpringSolver.BendingStressSigmaq2.Value > 0) then
+  if GreaterThanZero(SpringSolver.BendingStressSigmaq1) and
+     GreaterThanZero(SpringSolver.BendingStressSigmaq2) then
   begin
     LoadChart2(Result, 'GoodmanChart', 'Tauk');
     SetLength(Points, 2);
-    Points[0].X := GetValue(SpringSolver.BendingStressSigmaq1);
-    Points[0].Y := GetValue(SpringSolver.BendingStressSigmaq1);
-    Points[1].X := GetValue(SpringSolver.BendingStressSigmaq1);
-    Points[1].Y := GetValue(SpringSolver.BendingStressSigmaq2);
+    Points[0].X := GetPressureValue(SpringSolver.BendingStressSigmaq1);
+    Points[0].Y := GetPressureValue(SpringSolver.BendingStressSigmaq1);
+    Points[1].X := GetPressureValue(SpringSolver.BendingStressSigmaq1);
+    Points[1].Y := GetPressureValue(SpringSolver.BendingStressSigmaq2);
     Result.AddPolyLine(Points, False, 'Sigmaq1-Sigmaq2');
     Points := nil;
   end;
@@ -858,7 +857,7 @@ begin
   Result.Zoom := AScreenScale;
   LoadTable(Result, 'CommonTable', 'Table');
   {$IFDEF MODULE1}
-  Result[0, 0] := 'L [' + GetLengthSymbol(SpringSolver.LengthL0) + ']';
+  Result[0, 0] := 'L [' + GetLengthSymbol(0*m) + ']';
   Result[1, 0] := Format('L0: %s', [GetString(GetLengthValue(SpringSolver.LengthL0))]);
   Result[2, 0] := Format('L1: %s', [GetString(GetLengthValue(SpringSolver.LengthL1))]);
   Result[3, 0] := Format('L2: %s', [GetString(GetLengthValue(SpringSolver.LengthL2))]);
@@ -866,11 +865,11 @@ begin
   Result[5, 0] := Format('Lc: %s', [GetString(GetLengthValue(SpringSolver.LengthLc))]);
   {$ENDIF}
   {$IFDEF MODULE3}
-  Result[0, 0] := 'angle [' + GetSymbol(0*deg) + ']';
-  Result[1, 0] := Format('α0: %s', [GetString(0*deg)]);
-  Result[2, 0] := Format('α1: %s', [GetString(SpringSolver.Alpha1)]);
-  Result[3, 0] := Format('α2: %s', [GetString(SpringSolver.Alpha2)]);
-  Result[4, 0] := Format('αn: %s', [GetString(0*deg)]);
+  Result[0, 0] := 'angle [' + GetAngleSymbol(0*deg) + ']';
+  Result[1, 0] := Format('α0: %s', [GetString(GetAngleValue(0*deg))]);
+  Result[2, 0] := Format('α1: %s', [GetString(GetAngleValue(SpringSolver.Alpha1))]);
+  Result[3, 0] := Format('α2: %s', [GetString(GetAngleValue(SpringSolver.Alpha2))]);
+  Result[4, 0] := Format('αn: %s', [GetString(GetAngleValue(0*deg))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -882,11 +881,11 @@ begin
   Result[5, 1] := Format('Fc: %s', [GetString(GetForceValue(SpringSolver.LoadFc))]);
   {$ENDIF}
   {$IFDEF MODULE3}
-  Result[0, 1] := 'torque [' + GetSymbol(SpringSolver.TorqueT1) + ']';
+  Result[0, 1] := 'torque [' + GetTorqueSymbol(SpringSolver.TorqueT1) + ']';
   Result[1, 1] := '';
-  Result[2, 1] := Format('T1: %s', [GetString(SpringSolver.TorqueT1)]);
-  Result[3, 1] := Format('T2: %s', [GetString(SpringSolver.TorqueT2)]);
-  Result[4, 1] := Format('Tn: %s', [GetString(SpringSolver.TorqueTn)]);
+  Result[2, 1] := Format('T1: %s', [GetString(GetTorqueValue(SpringSolver.TorqueT1))]);
+  Result[3, 1] := Format('T2: %s', [GetString(GetTorqueValue(SpringSolver.TorqueT2))]);
+  Result[4, 1] := Format('Tn: %s', [GetString(GetTorqueValue(SpringSolver.TorqueTn))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -898,11 +897,11 @@ begin
   Result[5, 2] := Format('tau k: %s', [GetString(GetPressureValue(SpringSolver.TorsionalStressTauc ))]);
   {$ENDIF}
   {$IFDEF MODULE3}
-  Result[0, 2] := 'σ [' + GetSymbol(SpringSolver.BendingStressSigmaq1) + ']';
+  Result[0, 2] := 'σ [' + GetPressureSymbol(SpringSolver.BendingStressSigmaq1) + ']';
   Result[1, 2] := '';
-  Result[2, 2] := Format('σ1: %s', [GetString(SpringSolver.BendingStressSigmaq1)]);
-  Result[3, 2] := Format('σ2: %s', [GetString(SpringSolver.BendingStressSigmaq2)]);
-  Result[4, 2] := Format('σn: %s', [GetString(SpringSolver.BendingStressSigman )]);
+  Result[2, 2] := Format('σ1: %s', [GetString(GetPressureValue(SpringSolver.BendingStressSigmaq1))]);
+  Result[3, 2] := Format('σ2: %s', [GetString(GetPressureValue(SpringSolver.BendingStressSigmaq2))]);
+  Result[4, 2] := Format('σn: %s', [GetString(GetPressureValue(SpringSolver.BendingStressSigman ))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -927,12 +926,12 @@ begin
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 3] := 'σ/σz';
-  if SpringSolver.AdmStaticBendingStressSigmaz.Value > 0 then
+  if GreaterThanZero(SpringSolver.AdmStaticBendingStressSigmaz) then
   begin
     Result[1, 3] := '';
-    Result[2, 3] := Format('%0.3f', [SpringSolver.BendingStressSigmaq1/SpringSolver.AdmStaticBendingStressSigmaz]);
-    Result[3, 3] := Format('%0.3f', [SpringSolver.BendingStressSigmaq2/SpringSolver.AdmStaticBendingStressSigmaz]);
-    Result[4, 3] := Format('%0.3f', [SpringSolver.BendingStressSigman /SpringSolver.AdmStaticBendingStressSigmaz]);
+    Result[2, 3] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.BendingStressSigmaq1/SpringSolver.AdmStaticBendingStressSigmaz)]);
+    Result[3, 3] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.BendingStressSigmaq2/SpringSolver.AdmStaticBendingStressSigmaz)]);
+    Result[4, 3] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.BendingStressSigman /SpringSolver.AdmStaticBendingStressSigmaz)]);
   end;
   {$ENDIF}
 
@@ -949,12 +948,12 @@ begin
   {$ENDIF}
   {$IFDEF MODULE3}
   Result[0, 4] := 'σ/Rm';
-  if SpringSolver.TensileStrengthRm.Value > 0 then
+  if GreaterThanZero(SpringSolver.TensileStrengthRm) then
   begin
     Result[1, 4] := '';
-    Result[2, 4] := Format('%0.3f', [SpringSolver.BendingStressSigmaq1/SpringSolver.TensileStrengthRm]);
-    Result[3, 4] := Format('%0.3f', [SpringSolver.BendingStressSigmaq1/SpringSolver.TensileStrengthRm]);
-    Result[4, 4] := Format('%0.3f', [SpringSolver.BendingStressSigman /SpringSolver.TensileStrengthRm]);
+    Result[2, 4] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.BendingStressSigmaq1/SpringSolver.TensileStrengthRm)]);
+    Result[3, 4] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.BendingStressSigmaq1/SpringSolver.TensileStrengthRm)]);
+    Result[4, 4] := Format('%0.3f', [ScalarUnit.ToFloat(SpringSolver.BendingStressSigman /SpringSolver.TensileStrengthRm)]);
   end;
   {$ENDIF}
 
@@ -970,11 +969,11 @@ begin
   end;
   {$ENDIF}
   {$IFDEF MODULE3}
-  Result[0, 5] := 'Lk [' + GetSymbol(SpringSolver.Lk(0*rad)) + ']';
-  Result[1, 5] := Format('%s', [GetString(GetValue(SpringSolver.Lk(0*rad)))]);
-  Result[2, 5] := Format('%s', [GetString(GetValue(SpringSolver.Lk(SpringSolver.Alpha1)))]);
-  Result[3, 5] := Format('%s', [GetString(GetValue(SpringSolver.Lk(SpringSolver.Alpha2)))]);
-  Result[4, 5] := Format('%s', [GetString(GetValue(0*rad))]);
+  Result[0, 5] := 'Lk [' + GetLengthSymbol(SpringSolver.Lk(0*rad)) + ']';
+  Result[1, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
+  Result[2, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha1)))]);
+  Result[3, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha2)))]);
+  Result[4, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
   {$ENDIF}
 end;
 

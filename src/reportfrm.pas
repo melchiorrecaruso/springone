@@ -21,7 +21,6 @@
 unit ReportFrm;
 
 {$mode ObjFPC}{$H+}
-{$i defines.inc}
 
 interface
 

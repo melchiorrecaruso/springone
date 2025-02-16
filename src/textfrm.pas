@@ -21,7 +21,6 @@
 unit TextFrm;
 
 {$mode ObjFPC}{$H+}
-{$i defines.inc}
 
 interface
 

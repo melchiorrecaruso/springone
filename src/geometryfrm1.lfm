@@ -1,13 +1,13 @@
 object GeometryForm1: TGeometryForm1
-  Left = 210
+  Left = 866
   Height = 516
-  Top = 123
+  Top = 306
   Width = 497
   BorderIcons = [biSystemMenu]
   Caption = 'Geometry & working length'
   ClientHeight = 516
   ClientWidth = 497
-  LCLVersion = '4.0.0.2'
+  LCLVersion = '4.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   object WireDiameterLabel: TLabel
@@ -48,12 +48,13 @@ object GeometryForm1: TGeometryForm1
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = WireDiameter
     AnchorSideBottom.Side = asrBottom
     Left = 405
-    Height = 31
+    Height = 36
     Top = 12
     Width = 80
-    Anchors = [akTop, akRight]
+    Anchors = [akTop, akRight, akBottom]
     BidiMode = bdRightToLeftReadingOnly
     BorderSpacing.Top = 12
     BorderSpacing.Right = 12
@@ -71,18 +72,17 @@ object GeometryForm1: TGeometryForm1
   end
   object CoilDiameterUnit: TComboBox
     AnchorSideLeft.Control = WireDiameterUnit
-    AnchorSideTop.Control = WireDiameterUnit
-    AnchorSideTop.Side = asrBottom
+    AnchorSideTop.Control = CoilDiameter
     AnchorSideRight.Control = WireDiameterUnit
     AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = CoilDiameter
     AnchorSideBottom.Side = asrBottom
     Left = 405
-    Height = 31
-    Top = 52
+    Height = 36
+    Top = 54
     Width = 80
-    Anchors = [akTop, akLeft, akRight]
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BidiMode = bdRightToLeftReadingOnly
-    BorderSpacing.Top = 9
     ItemHeight = 0
     ItemIndex = 0
     Items.Strings = (
@@ -98,17 +98,18 @@ object GeometryForm1: TGeometryForm1
   object CoilDiameter: TFloatSpinEdit
     AnchorSideLeft.Control = CoilDiameterIndex
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = CoilDiameterUnit
+    AnchorSideTop.Control = WireDiameter
+    AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = CoilDiameterUnit
-    AnchorSideBottom.Control = CoilDiameterUnit
     AnchorSideBottom.Side = asrBottom
     Left = 195
     Height = 36
-    Top = 52
+    Top = 54
     Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
+    BorderSpacing.Top = 6
     BorderSpacing.Right = 10
     Increment = 0.5
     TabOrder = 3
@@ -121,7 +122,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 12
     Height = 36
-    Top = 52
+    Top = 54
     Width = 173
     Anchors = [akTop, akLeft, akBottom]
     BorderSpacing.Left = 12
@@ -144,7 +145,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 39
     Height = 36
-    Top = 92
+    Top = 96
     Width = 146
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
@@ -162,11 +163,11 @@ object GeometryForm1: TGeometryForm1
     AnchorSideRight.Side = asrBottom
     Left = 195
     Height = 36
-    Top = 132
+    Top = 138
     Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 4
+    BorderSpacing.Top = 6
     Increment = 0.1
     TabOrder = 6
     OnChange = SpinEditChange
@@ -178,7 +179,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 23
     Height = 36
-    Top = 132
+    Top = 138
     Width = 162
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
@@ -195,7 +196,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 22
     Height = 36
-    Top = 177
+    Top = 181
     Width = 163
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
@@ -213,11 +214,11 @@ object GeometryForm1: TGeometryForm1
     AnchorSideRight.Side = asrBottom
     Left = 195
     Height = 36
-    Top = 177
+    Top = 181
     Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 9
+    BorderSpacing.Top = 7
     Increment = 0.1
     TabOrder = 7
     OnChange = SpinEditChange
@@ -230,7 +231,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideRight.Side = asrBottom
     Left = 195
     Height = 31
-    Top = 357
+    Top = 353
     Width = 290
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 9
@@ -253,7 +254,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 104
     Height = 31
-    Top = 357
+    Top = 353
     Width = 81
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
@@ -270,7 +271,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 18
     Height = 36
-    Top = 222
+    Top = 224
     Width = 167
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
@@ -289,11 +290,11 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 195
     Height = 36
-    Top = 222
+    Top = 224
     Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 9
+    BorderSpacing.Top = 7
     TabOrder = 8
     OnChange = SpinEditChange
   end
@@ -306,7 +307,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 405
     Height = 36
-    Top = 222
+    Top = 224
     Width = 80
     Anchors = [akTop, akLeft, akRight, akBottom]
     BidiMode = bdRightToLeftReadingOnly
@@ -324,17 +325,17 @@ object GeometryForm1: TGeometryForm1
   end
   object ActiveCoil: TFloatSpinEdit
     AnchorSideLeft.Control = CoilDiameter
-    AnchorSideTop.Control = CoilDiameterUnit
+    AnchorSideTop.Control = CoilDiameter
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = CoilDiameter
     AnchorSideRight.Side = asrBottom
     Left = 195
     Height = 36
-    Top = 92
+    Top = 96
     Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 9
+    BorderSpacing.Top = 6
     Increment = 0.1
     TabOrder = 5
     OnChange = SpinEditChange
@@ -399,7 +400,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 128
     Height = 36
-    Top = 267
+    Top = 266
     Width = 57
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
@@ -419,11 +420,11 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 195
     Height = 36
-    Top = 267
+    Top = 266
     Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 9
+    BorderSpacing.Top = 6
     TabOrder = 10
     OnChange = SpinEditChange
   end
@@ -435,10 +436,10 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Control = LengthL1
     AnchorSideBottom.Side = asrBottom
     Left = 405
-    Height = 31
-    Top = 267
+    Height = 36
+    Top = 266
     Width = 80
-    Anchors = [akTop, akLeft, akRight]
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BidiMode = bdRightToLeftReadingOnly
     ItemHeight = 0
     ItemIndex = 0
@@ -460,10 +461,10 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Control = LengthL2
     AnchorSideBottom.Side = asrBottom
     Left = 405
-    Height = 31
-    Top = 312
+    Height = 36
+    Top = 308
     Width = 80
-    Anchors = [akTop, akLeft, akRight]
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BidiMode = bdRightToLeftReadingOnly
     ItemHeight = 0
     ItemIndex = 0
@@ -486,11 +487,11 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 195
     Height = 36
-    Top = 312
+    Top = 308
     Width = 200
     Alignment = taRightJustify
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 9
+    BorderSpacing.Top = 6
     TabOrder = 12
     OnChange = SpinEditChange
   end
@@ -501,7 +502,7 @@ object GeometryForm1: TGeometryForm1
     AnchorSideBottom.Side = asrBottom
     Left = 126
     Height = 36
-    Top = 312
+    Top = 308
     Width = 59
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
