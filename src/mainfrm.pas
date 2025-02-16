@@ -1,6 +1,6 @@
 { EN13906-1 Helical Compression Spring Designer
 
-  Copyright (C) 2022-2024 Melchiorre Caruso <melchiorrecaruso@gmail.com>
+  Copyright (C) 2022-2025 Melchiorre Caruso <melchiorrecaruso@gmail.com>
 
   This source is free software; you can redistribute it and/or modify it under
   the terms of the GNU General Public License as published by the Free
@@ -33,13 +33,76 @@ uses
 
 type
 
+  { TPages }
+
+  TScreenPage = (
+    spDefault,
+    spQuick1,
+    spQuick2,
+    spQuick3,
+    spForceDisplacement,
+    spGoodman,
+    spBuckling,
+    spShearTemperature,
+    spYoungTemperature,
+    spForce1Temperature,
+    spForce2Temperature,
+    spSectionDrawing,
+    spProfileDrawing,
+    spSectionDrawingAtLength,
+    spProfileDrawingAtLength,
+    spMessages,
+    spProductionDrawing);
+
   { TMainForm }
 
   TMainForm = class(TForm)
+    HelpAbout: TAction;
+    HelpLicence: TAction;
+    HelpHomePage: TAction;
+    DocumentExportProductionDrawing: TAction;
+    DocumentExportReport: TAction;
+    DocumentProductionDrawing: TAction;
+    DocumentReport: TAction;
+    ViewMessages: TAction;
+    ViewSectionDrawingAtLength: TAction;
+    ViewProfileDrawingAtLength: TAction;
+    ViewProfileDrawing: TAction;
+    ViewSectionDrawing: TAction;
+    ViewForce2Temperature: TAction;
+    ViewForce1Temperature: TAction;
+    ViewYoungTemperature: TAction;
+    ViewShearTemperature: TAction;
+    ViewBuckling: TAction;
+    ViewGoodman: TAction;
+    ViewForceAndDisplacements: TAction;
+    ViewQuick3: TAction;
+    ViewQuick2: TAction;
+    ViewQuick1: TAction;
+    EditUseImperialSystem: TAction;
+    EditDesignMode: TAction;
+    EditRecalculationMode: TAction;
+    EditApplication: TAction;
+    EditProduction: TAction;
+    EditQualityGrade: TAction;
+    EditMaterial: TAction;
+    EditGeometry: TAction;
+    EditDrawingText: TAction;
+    EditWizard: TAction;
+    FileExit: TAction;
+    FilePrint: TAction;
+    FilePageSetup: TAction;
+    FileExport: TAction;
+    FileClose: TAction;
+    FileSaveAs: TAction;
+    FileSave: TAction;
+    FileOpen: TAction;
+    FileNew: TAction;
+    Actions: TActionList;
 
     CloseMenuItem: TMenuItem;
-    CustomProfileMenuItem: TMenuItem;
-    CustomSectionMenuItem: TMenuItem;
+    ProfileAtLenghtMenuItem: TMenuItem;
+    SectionAtLenghtMenuItem: TMenuItem;
 
     DrawingTextMenuItem: TMenuItem;
     DrawMenuItem: TMenuItem;
@@ -105,8 +168,8 @@ type
     OpenMenuItem: TMenuItem;
     NewMenuItem: TMenuItem;
     PrintMenuItem: TMenuItem;
-    MenuItem24: TMenuItem;
-    MenuItem25: TMenuItem;
+    LicenseMenuItem: TMenuItem;
+    HomepageMenuItem: TMenuItem;
     Quick3MenuItem: TMenuItem;
 
     SaveMenuItem: TMenuItem;
@@ -121,57 +184,109 @@ type
 
     VirtualScreen: TBGRAVirtualScreen;
 
-    procedure ExportMenuItemClick(Sender: TObject);
-    procedure ExportProductionMenuItemClick(Sender: TObject);
-    procedure ExportReportMenuItemClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+
+
+
+    procedure DocumentExportProductionDrawingExecute(Sender: TObject);
+    procedure DocumentExportReportExecute(Sender: TObject);
+    procedure DocumentProductionDrawingExecute(Sender: TObject);
+    procedure DocumentReportExecute(Sender: TObject);
+    procedure EditApplicationExecute(Sender: TObject);
+    procedure EditDesignModeExecute(Sender: TObject);
+    procedure EditDrawingTextExecute(Sender: TObject);
+    procedure EditGeometryExecute(Sender: TObject);
+    procedure EditMaterialExecute(Sender: TObject);
+    procedure EditProductionExecute(Sender: TObject);
+    procedure EditQualityGradeExecute(Sender: TObject);
+    procedure EditRecalculationModeExecute(Sender: TObject);
+    procedure EditUseImperialSystemExecute(Sender: TObject);
+
+
+
+
+    procedure EditWizardExecute(Sender: TObject);
+
+
+    procedure FileNewExecute(Sender: TObject);
+    procedure FileOpenExecute(Sender: TObject);
+    procedure FileSaveExecute(Sender: TObject);
+    procedure FileSaveAsExecute(Sender: TObject);
+    procedure FileCloseExecute(Sender: TObject);
+    procedure FileExportExecute(Sender: TObject);
+    procedure FilePageSetupExecute(Sender: TObject);
+    procedure FilePrintExecute(Sender: TObject);
+    procedure FileExitExecute(Sender: TObject);
+
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormPaint(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
 
-    procedure GeometryMenuItemClick(Sender: TObject);
 
-    procedure MaterialMenuItemClick(Sender: TObject);
-    procedure AboutMenuItemClick(Sender: TObject);
-    procedure PageSetupMenuItemClick(Sender: TObject);
 
-    procedure PrintMenuItemClick(Sender: TObject);
-    procedure ProductionMenuItemClick(Sender: TObject);
-    procedure QualityMenuItemClick(Sender: TObject);
 
-    procedure NewMenuItemClick(Sender: TObject);
-    procedure OpenMenuItemClick(Sender: TObject);
-    procedure SaveMenuItemClick(Sender: TObject);
-    procedure SaveAsMenuItemClick(Sender: TObject);
-    procedure CloseMenuItemClick(Sender: TObject);
 
-    procedure ExitMenuItemClick(Sender: TObject);
-    procedure ApplicationMenuItemClick(Sender: TObject);
-    procedure CustomSectionMenuItemClick(Sender: TObject);
-    procedure SolveExecute(Sender: TObject);
-    procedure UseImperialSystemMenuItemClick(Sender: TObject);
+    procedure HelpAboutExecute(Sender: TObject);
+
+    procedure HelpHomePageExecute(Sender: TObject);
+    procedure HelpLicenceExecute(Sender: TObject);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    procedure ViewBucklingExecute(Sender: TObject);
+    procedure ViewForce1TemperatureExecute(Sender: TObject);
+    procedure ViewForce2TemperatureExecute(Sender: TObject);
+    procedure ViewForceAndDisplacementsExecute(Sender: TObject);
+    procedure ViewGoodmanExecute(Sender: TObject);
+    procedure ViewMessagesExecute(Sender: TObject);
+    procedure ViewProfileDrawingAtLengthExecute(Sender: TObject);
+    procedure ViewProfileDrawingExecute(Sender: TObject);
+    procedure ViewQuick1Execute(Sender: TObject);
+    procedure ViewQuick2Execute(Sender: TObject);
+    procedure ViewQuick3Execute(Sender: TObject);
+    procedure ViewSectionDrawingAtLengthExecute(Sender: TObject);
+    procedure ViewSectionDrawingExecute(Sender: TObject);
+    procedure ViewShearTemperatureExecute(Sender: TObject);
+    procedure ViewYoungTemperatureExecute(Sender: TObject);
+
     procedure VirtualScreenDblClick(Sender: TObject);
     procedure VirtualScreenMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure VirtualScreenRedraw(Sender: TObject; Bitmap: TBGRABitmap);
-    procedure TextMenuItemClick(Sender: TObject);
-    procedure ViewMenuItemClick(Sender: TObject);
-    procedure ReportMenuItemClick(Sender: TObject);
+
+
+
     procedure VirtualScreenResize(Sender: TObject);
-    procedure WizardMenuItemClick(Sender: TObject);
+
   private
     MoveX, MoveY: longint;
     MouseIsDown: boolean;
     Px, Py: longint;
+    ScreenPage: TScreenPage;
     ScreenImage: TBGRABitmap;
     ScreenImageWidth: longint;
     ScreenImageHeight: longint;
     ScreenColor: TBGRAPixel;
     ScreenScale: double;
     SessionFileName: string;
-
+    procedure SetScreenPage(AScreenPage: TScreenPage);
     procedure SetSessionFileName(const AFileName: string);
   public
     function CreateSpringDrawing(const aScreenScale: double; aSetting: TIniFile): TSpringDrawing;
@@ -210,11 +325,6 @@ uses
 
 procedure TMainForm.Solve;
 begin
-  if WindowState <> wsMaximized then
-  begin
-  //WindowState := wsMaximized;
-  end;
-
   SpringTolerance.Clear;
   SpringSolver.Clear;
   {$IFDEF MODULE1}
@@ -224,9 +334,10 @@ begin
   QualityForm.SaveToSolver;       // QualityForm
   ApplicationForm1.SaveToSolver;  // ApplicationForm
   // Solve
+  if ScreenPage = spDefault then
+    ScreenPage := spQuick1;
   MainForm.FormPaint(nil);
   {$ENDIF}
-
   {$IFDEF MODULE3}
   GeometryForm3.SaveToSolver;     // GeometryForm3
   MaterialForm.SaveToSolver;      // MaterialForm
@@ -256,6 +367,7 @@ begin
 
   Clear;
   Selection.Visible := False;
+  ScreenPage        := spDefault;
   ScreenImage       := TBGRABitmap.Create;
   ScreenImageWidth  := ClientFile.ReadInteger('MainForm', 'Screen.Width',  800);
   ScreenImageHeight := ClientFile.ReadInteger('MainForm', 'Screen.Height', 600);
@@ -306,37 +418,56 @@ begin
   ClientFile.WriteInteger('MainForm', 'Screen.Height', ScreenImageHeight);
 end;
 
+procedure TMainForm.SetScreenPage(AScreenPage: TScreenPage);
+begin
+  if AScreenPage <> ScreenPage then
+    ScreenScale := 1.0;
+  ScreenPage  := AScreenPage;
+  // Update main menu
+  Quick1MenuItem.Checked := ScreenPage = spQuick1;
+  Quick2MenuItem.Checked := ScreenPage = spQuick2;
+  Quick3MenuItem.Checked := ScreenPage = spQuick3;
+  ForceMenuItem.Checked := ScreenPage = spForceDisplacement;
+  GoodmanMenuItem.Checked := ScreenPage = spGoodman;
+  BucklingMenuItem.Checked := ScreenPage = spBuckling;
+  ShearModulusMenuItem.Checked := ScreenPage = spShearTemperature;
+  YoungModulusMenuItem.Checked := ScreenPage = spYoungTemperature;
+  F1MenuItem.Checked := ScreenPage = spForce1Temperature;
+  F2MenuItem.Checked := ScreenPage = spForce2Temperature;
+  SectionMenuItem.Checked := ScreenPage = spSectionDrawing;
+  ProfileMenuItem.Checked := ScreenPage = spProfileDrawing;
+  SectionAtLenghtMenuItem.Checked := ScreenPage = spSectionDrawingAtLength;
+  ProfileAtLenghtMenuItem.Checked := ScreenPage = spProfileDrawingAtLength;
+  MessagesMenuItem.Checked := ScreenPage = spMessages;
+  ProductionDrawingMenuItem.Checked := ScreenPage = spProductionDrawing;
+  UseImperialSystemMenuItem.Checked := UseImperialSystem;
+end;
+
 procedure TMainForm.Clear;
-var
-  i: LongInt;
 begin
   ClearAll;
-  for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
-  for i := 0 to TempMenuItem.Count -1 do TempMenuItem.Items[i].Checked := False;
-  for i := 0 to DrawMenuItem.Count -1 do DrawMenuItem.Items[i].Checked := False;
-  for i := 0 to DocsMenuItem.Count -1 do DocsMenuItem.Items[i].Checked := False;
-
   MoveX := 0;
   MoveY := 0;
   MouseIsDown := False;
   ScreenScale := 1.0;
+  SetScreenPage(spDefault);
   SetSessionFileName('');
 end;
 
 procedure TMainForm.ClearAll;
 begin
-  if Assigned(TextForm         ) then TextForm         .Clear;
+  if Assigned(TextForm        ) then TextForm         .Clear;
   {$IFDEF MODULE1}
-  if Assigned(GeometryForm1    ) then GeometryForm1    .Clear;
-  if Assigned(ApplicationForm1 ) then ApplicationForm1 .Clear;
+  if Assigned(GeometryForm1   ) then GeometryForm1    .Clear;
+  if Assigned(ApplicationForm1) then ApplicationForm1 .ClearForm;
   {$ENDIF}
   {$IFDEF MODULE3}
-  if Assigned(GeometryForm3    ) then GeometryForm3    .Clear;
-  if Assigned(ApplicationForm3 ) then ApplicationForm3 .Clear;
+  if Assigned(GeometryForm3   ) then GeometryForm3    .Clear;
+  if Assigned(ApplicationForm3) then ApplicationForm3 .Clear;
   {$ENDIF}
-  if Assigned(MaterialForm     ) then MaterialForm     .Clear;
-  if Assigned(QualityForm      ) then QualityForm      .Clear;
-  if Assigned(ProductionForm   ) then ProductionForm   .Clear;
+  if Assigned(MaterialForm    ) then MaterialForm     .Clear;
+  if Assigned(QualityForm     ) then QualityForm      .Clear;
+  if Assigned(ProductionForm  ) then ProductionForm   .Clear;
 end;
 
 procedure TMainForm.LoadAll(SessionIniFile: TIniFile);
@@ -371,6 +502,15 @@ begin
   ProductionForm   .Save(SessionIniFile);
 end;
 
+procedure TMainForm.SetSessionFileName(const AFileName: string);
+begin
+  SessionFileName := AFileName;
+  if Length(SessionFileName) > 0 then
+    Caption := ExtractFileName(SessionFileName) + ' - ' + ApplicationVer
+  else
+    Caption := ApplicationVer;
+end;
+
 (*
 procedure TMainForm.Load(IniFile: TIniFile);
 begin
@@ -383,14 +523,13 @@ begin
 end;
 *)
 
-// Mouse Events
+// Virtual Screen Events
 
 procedure TMainForm.VirtualScreenDblClick(Sender: TObject);
 begin
   MoveX := 0;
   MoveY := 0;
   ScreenScale := 1.0;
-
   FormPaint(Sender);
 end;
 
@@ -459,8 +598,6 @@ begin
   end;
 end;
 
-// Virtual Screen Events
-
 procedure TMainForm.VirtualScreenRedraw(Sender: TObject; Bitmap: TBGRABitmap);
 begin
   Bitmap.PutImage(MoveX, MoveY, ScreenImage, dmSet);
@@ -472,24 +609,17 @@ begin
   MoveY := Math.Max(Math.Min(0, MoveY), VirtualScreen.Height - ScreenImage.Height);
 end;
 
-// Menu File
+// Actions routines
 
-procedure TMainForm.SetSessionFileName(const AFileName: string);
+procedure TMainForm.FileNewExecute(Sender: TObject);
 begin
-  SessionFileName := AFileName;
-  if Length(SessionFileName) > 0 then
-    Caption := ExtractFileName(SessionFileName) + ' - ' + ApplicationVer
-  else
-    Caption := ApplicationVer;
+  Clear;
+  begin
+    EditWizardExecute(Sender);
+  end;
 end;
 
-procedure TMainForm.NewMenuItemClick(Sender: TObject);
-begin
-  ClearAll;
-  WizardMenuItemClick(Sender);
-end;
-
-procedure TMainForm.OpenMenuItemClick(Sender: TObject);
+procedure TMainForm.FileOpenExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
 begin
@@ -498,26 +628,27 @@ begin
   {$IFDEF MODULE3} OpenDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|;'; {$ENDIF}
   if OpenDialog.Execute then
   begin
+    Clear;
     SetSessionFileName(OpenDialog.FileName);
-    SessionIniFile  := TIniFile.Create(SessionFileName,
+    SessionIniFile := TIniFile.Create(SessionFileName,
       [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
 
     LoadAll(SessionIniFile);
     SessionIniFile.Destroy;
     begin
-      ViewMenuItemClick(Quick1MenuItem);
+      ViewQuick1Execute(Sender);
     end;
   end;
   Solve();
 end;
 
-procedure TMainForm.SaveMenuItemClick(Sender: TObject);
+procedure TMainForm.FileSaveExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
 begin
   if SessionFileName = '' then
   begin
-    SaveAsMenuItemClick(Sender);
+    FileSaveAsExecute(Sender);
   end else
   begin
     SessionIniFile  := TIniFile.Create(SessionFileName,
@@ -528,7 +659,7 @@ begin
   end;
 end;
 
-procedure TMainForm.SaveAsMenuItemClick(Sender: TObject);
+procedure TMainForm.FileSaveAsExecute(Sender: TObject);
 begin
   {$IFDEF MODULE1} SaveDialog.Filter := 'SpringOne file (*.spring1)|*.spring1|All files (*.*)|*.*|;'; {$ENDIF}
   {$IFDEF MODULE3} SaveDialog.Filter := 'SpringThree file (*.spring3)|*.spring3|All files (*.*)|*.*|;'; {$ENDIF}
@@ -537,17 +668,17 @@ begin
   if SaveDialog.Execute then
   begin
     SetSessionFileName(SaveDialog.FileName);
-    SaveMenuItemClick(Sender);
+    FileSaveExecute(Sender);
   end;
 end;
 
-procedure TMainForm.CloseMenuItemClick(Sender: TObject);
+procedure TMainForm.FileCloseExecute(Sender: TObject);
 begin
   Clear;
   Solve();
 end;
 
-procedure TMainForm.ExportMenuItemClick(Sender: TObject);
+procedure TMainForm.FileExportExecute(Sender: TObject);
 var
   Page: TBGRABitmap;
 begin
@@ -566,7 +697,7 @@ begin
   end;
 end;
 
-procedure TMainForm.PageSetupMenuItemClick(Sender: TObject);
+procedure TMainForm.FilePageSetupExecute(Sender: TObject);
 begin
   if PageSetupDialog.Execute then
   begin
@@ -579,13 +710,12 @@ begin
   end;
 end;
 
-procedure TMainForm.PrintMenuItemClick(Sender: TObject);
+procedure TMainForm.FilePrintExecute(Sender: TObject);
 var
   OffSetX: LongInt;
   OffSetY: LongInt;
   Page: TBGRABitmap;
   Scale: double;
-  SVG: TBGRASvg;
 begin
   if PrintDialog.Execute then
   begin
@@ -607,14 +737,12 @@ begin
   end;
 end;
 
-procedure TMainForm.ExitMenuItemClick(Sender: TObject);
+procedure TMainForm.FileExitExecute(Sender: TObject);
 begin
   Close;
 end;
 
-// Menu Edit
-
-procedure TMainForm.WizardMenuItemClick(Sender: TObject);
+procedure TMainForm.EditWizardExecute(Sender: TObject);
 begin
   if (TextForm         .ShowModal = mrOk) and
      {$IFDEF MODULE1}
@@ -633,12 +761,12 @@ begin
      (ApplicationForm3 .ShowModal = mrOk) then
      {$ENDIF}
   begin
-    Quick1MenuItem.Checked := True;
+    SetScreenPage(spQuick1);
   end;
   Solve();
 end;
 
-procedure TMainForm.TextMenuItemClick(Sender: TObject);
+procedure TMainForm.EditDrawingTextExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
   SessionStream: TMemoryStream;
@@ -657,7 +785,7 @@ begin
   Solve();
 end;
 
-procedure TMainForm.GeometryMenuItemClick(Sender: TObject);
+procedure TMainForm.EditGeometryExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
   SessionStream: TMemoryStream;
@@ -693,7 +821,7 @@ begin
   {$ENDIF}
 end;
 
-procedure TMainForm.MaterialMenuItemClick(Sender: TObject);
+procedure TMainForm.EditMaterialExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
   SessionStream: TMemoryStream;
@@ -712,7 +840,7 @@ begin
   Solve();
 end;
 
-procedure TMainForm.QualityMenuItemClick(Sender: TObject);
+procedure TMainForm.EditQualityGradeExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
   SessionStream: TMemoryStream;
@@ -731,7 +859,7 @@ begin
   Solve();
 end;
 
-procedure TMainForm.ProductionMenuItemClick(Sender: TObject);
+procedure TMainForm.EditProductionExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
   SessionStream: TMemoryStream;
@@ -750,7 +878,7 @@ begin
   Solve();
 end;
 
-procedure TMainForm.ApplicationMenuItemClick(Sender: TObject);
+procedure TMainForm.EditApplicationExecute(Sender: TObject);
 var
   SessionIniFile: TIniFile;
   SessionStream: TMemoryStream;
@@ -778,96 +906,151 @@ begin
   Solve();
 end;
 
-// Memu View
-
-procedure TMainForm.ViewMenuItemClick(Sender: TObject);
-var
-  i: longint;
+procedure TMainForm.EditRecalculationModeExecute(Sender: TObject);
 begin
-  if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
-  begin
-    for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
-    for i := 0 to TempMenuItem.Count -1 do TempMenuItem.Items[i].Checked := False;
-    for i := 0 to DrawMenuItem.Count -1 do DrawMenuItem.Items[i].Checked := False;
-    for i := 0 to DocsMenuItem.Count -1 do DocsMenuItem.Items[i].Checked := False;
 
-    MoveX := 0;
-    MoveY := 0;
-    ScreenScale := 1;
-    if Assigned(Sender) then
-      TMenuItem(Sender).Checked := True;
-    FormPaint(Sender);
-  end;
 end;
 
-procedure TMainForm.CustomSectionMenuItemClick(Sender: TObject);
+procedure TMainForm.EditDesignModeExecute(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.EditUseImperialSystemExecute(Sender: TObject);
+begin
+  UseImperialSystem := not UseImperialSystem;
+  SetScreenPage(ScreenPage);
+  Solve();
+end;
+
+procedure TMainForm.ViewQuick1Execute(Sender: TObject);
+begin
+  SetScreenPage(spQuick1);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewQuick2Execute(Sender: TObject);
+begin
+  SetScreenPage(spQuick2);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewQuick3Execute(Sender: TObject);
+begin
+  SetScreenPage(spQuick3);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewForceAndDisplacementsExecute(Sender: TObject);
+begin
+  SetScreenPage(spForceDisplacement);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewGoodmanExecute(Sender: TObject);
+begin
+  SetScreenPage(spGoodman);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewBucklingExecute(Sender: TObject);
+begin
+  SetScreenPage(spBuckling);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewShearTemperatureExecute(Sender: TObject);
+begin
+  SetScreenPage(spShearTemperature);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewYoungTemperatureExecute(Sender: TObject);
+begin
+  SetScreenPage(spYoungTemperature);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewForce1TemperatureExecute(Sender: TObject);
+begin
+  SetScreenPage(spForce1Temperature);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewForce2TemperatureExecute(Sender: TObject);
+begin
+  SetScreenPage(spForce2Temperature);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewSectionDrawingExecute(Sender: TObject);
+begin
+  SetScreenPage(spSectionDrawing);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewProfileDrawingExecute(Sender: TObject);
+begin
+  SetScreenPage(spProfileDrawing);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.ViewSectionDrawingAtLengthExecute(Sender: TObject);
 var
-  i: longint;
   Value: double;
 begin
-  if (Sender <> TempMenuItem) and (Sender <> DrawMenuItem) then
+  {$IFDEF MODULE1}
+  DrawingForm.SpringLength.MinValue := GetLengthValue(SpringSolver.LengthLc);
+  DrawingForm.SpringLength.MaxValue := GetLengthValue(SpringSolver.LengthL0);
+
+  Value := DrawingForm.SpringLength.Value;
+  if DrawingForm.ShowModal = mrOk then
   begin
-    {$IFDEF MODULE1}
-    DrawingForm.SpringLength.MinValue := MeterUnit.ToFloat(SpringSolver.LengthLc, [pMilli]);
-    DrawingForm.SpringLength.MaxValue := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
-
-    Value := DrawingForm.SpringLength.Value;
-    if DrawingForm.ShowModal = mrOk then
-    begin
-      for i := 0 to ViewMenuItem.Count -1 do ViewMenuItem.Items[i].Checked := False;
-      for i := 0 to TempMenuItem.Count -1 do TempMenuItem.Items[i].Checked := False;
-      for i := 0 to DrawMenuItem.Count -1 do DrawMenuItem.Items[i].Checked := False;
-
-      if Assigned(Sender) then
-        TMenuItem(Sender).Checked := True;
-    end else
-      DrawingForm.SpringLength.Value := Value;
-
+    SetScreenPage(spSectionDrawingAtLength);
     FormPaint(Sender);
-    {$ENDIF}
-  end;
+  end else
+    DrawingForm.SpringLength.Value := Value;
+  {$ENDIF}
 end;
 
-procedure TMainForm.SolveExecute(Sender: TObject);
-begin
-  Solve();
-end;
-
-procedure TMainForm.UseImperialSystemMenuItemClick(Sender: TObject);
+procedure TMainForm.ViewProfileDrawingAtLengthExecute(Sender: TObject);
 var
-  I: longint;
-  Item: TMenuItem = nil;
+  Value: double;
 begin
-  UseImperialSystem                := not UseImperialSystem;
-  UseImperialSystemMenuItem.Checked :=     UseImperialSystem;
+  {$IFDEF MODULE1}
+  DrawingForm.SpringLength.MinValue := MeterUnit.ToFloat(SpringSolver.LengthLc, [pMilli]);
+  DrawingForm.SpringLength.MaxValue := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
 
-  for I := 0 to ViewMenuItem.Count -1 do
-      if ViewMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
-
-  for I := 0 to TempMenuItem.Count -1 do
-    if TempMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
-
-  for I := 0 to DrawMenuItem.Count -1 do
-    if DrawMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
-
-  for I := 0 to DocsMenuItem.Count -1 do
-    if DocsMenuItem.Items[I].Checked then Item := ViewMenuItem.Items[I];
-
-  if Assigned(Item) then
-    ViewMenuItemClick(Item);
+  Value := DrawingForm.SpringLength.Value;
+  if DrawingForm.ShowModal = mrOk then
+  begin
+    SetScreenPage(spProfileDrawingAtLength);
+    FormPaint(Sender);
+  end else
+    DrawingForm.SpringLength.Value := Value;
+  {$ENDIF}
 end;
 
-// Menu Documentation
+procedure TMainForm.ViewMessagesExecute(Sender: TObject);
+begin
+  SetScreenPage(spMessages);
+  FormPaint(Sender);
+end;
 
-procedure TMainForm.ReportMenuItemClick(Sender: TObject);
+procedure TMainForm.DocumentReportExecute(Sender: TObject);
 begin
   Solve();
-
   ReportForm.CreateReport;
   ReportForm.ShowModal;
 end;
 
-procedure TMainForm.ExportReportMenuItemClick(Sender: TObject);
+procedure TMainForm.DocumentProductionDrawingExecute(Sender: TObject);
+begin
+  SetScreenPage(spProductionDrawing);
+  FormPaint(Sender);
+end;
+
+procedure TMainForm.DocumentExportReportExecute(Sender: TObject);
 begin
   Solve();
   SaveDialog.Filter     := 'Text file (*.txt)|*.txt|All files (*.*)|*.*|;';
@@ -881,7 +1064,7 @@ begin
   SaveDialog.FileName := SessionFileName;
 end;
 
-procedure TMainForm.ExportProductionMenuItemClick(Sender: TObject);
+procedure TMainForm.DocumentExportProductionDrawingExecute(Sender: TObject);
 var
   SVG: TBGRASvg;
 begin
@@ -900,31 +1083,31 @@ begin
   SaveDialog.FileName := SessionFileName;
 end;
 
-// Menu Help
-
-procedure TMainForm.AboutMenuItemClick(Sender: TObject);
+procedure TMainForm.HelpHomePageExecute(Sender: TObject);
 begin
-  AboutForm.AboutNameLabel.Caption := ApplicationVer;
+  OpenURL('https://github.com/melchiorrecaruso/springone');
+end;
+
+procedure TMainForm.HelpLicenceExecute(Sender: TObject);
+begin
+  OpenURL('https://github.com/melchiorrecaruso/springone/blob/main/LICENSE');
+end;
+
+procedure TMainForm.HelpAboutExecute(Sender: TObject);
+begin
+  AboutForm.AboutVersionLabel.Caption := ApplicationVer;
+  AboutForm.AboutBuildLabel.Caption := ApplicationBuild;
   AboutForm.ShowModal;
 end;
 
 // FormPaint
 
 procedure TMainForm.FormPaint(Sender: TObject);
-var
-  i: longint;
-  Check: boolean;
 begin
-  Check := False;
-  for i := 0 to ViewMenuItem.Count -1 do if ViewMenuItem.Items[i].Checked then Check := True;
-  for i := 0 to TempMenuItem.Count -1 do if TempMenuItem.Items[i].Checked then Check := True;
-  for i := 0 to DrawMenuItem.Count -1 do if DrawMenuItem.Items[i].Checked then Check := True;
-  for i := 0 to DocsMenuItem.Count -1 do if DocsMenuItem.Items[i].Checked then Check := True;
-
   ScreenImageWidth  := Math.Max(ScreenImageWidth,  VirtualScreen.Width );
   ScreenImageHeight := Math.Max(ScreenImageHeight, VirtualScreen.Height);
 
-  if Check then
+  if ScreenPage <> spDefault then
   begin
     ScreenImage.SetSize(
       Trunc(ScreenImageWidth*ScreenScale),
@@ -949,262 +1132,233 @@ var
   SpringDrawing: TSpringDrawing;
   SVG: TBGRASvg;
 begin
-  ErrorMessage.Clear;
-  WarningMessage.Clear;
-
   Compozer := TCompozer.Create(aSetting);
 
+  ErrorMessage.Clear;
+  WarningMessage.Clear;
   SpringSolver.Solve(SpringTolerance);
   if SpringSolver.Check then
   begin
-    // Quick1
-    if Quick1MenuItem.Checked then
-    begin
-      Compozer.DrawQuick1(aScreen, aScreenScale);
-    end else
-    // Quick2
-    if Quick2MenuItem.Checked then
-    begin
-      Compozer.DrawQuick2(aScreen, aScreenScale);
-    end else
-    // Quick3
-    if Quick3MenuItem.Checked then
-    begin
-      Compozer.DrawQuick3(aScreen, aScreenScale);
-    end else
-    // Force & displacement chart
-    if ForceMenuItem.Checked then
-    begin
-      Chart := Compozer.CreateForceDisplacementChart(aScreenScale);
-      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-      Chart.Destroy;
-    end else
-    // Goodman chart
-    if GoodmanMenuItem .Checked then
-    begin
-      Chart := Compozer.CreateGoodmanChart(aScreenScale);
-      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-      Chart.Destroy;
-    end else
-    // Buckling chart
-    if BucklingMenuItem.Checked then
-    begin
-      Chart := Compozer.CreateBucklingChart(aScreenScale);
-      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-      Chart.Destroy;
-    end else
-    // Shear modulus chart
-    if ShearModulusMenuItem.Checked then
-    begin
-      Chart := Compozer.CreateShearModulusChart(aScreenScale);
-      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-      Chart.Destroy;
-    end else
-    // Young modulus chart
-    if YoungModulusMenuItem.Checked then
-    begin
-      Chart := Compozer.CreateYoungModulusChart(aScreenScale);
-      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-      Chart.Destroy;
-    end else
-    // F1-Load chart
-    if F1MenuItem.Checked then
-    begin
-      Chart := Compozer.CreateLoadF1Chart(aScreenScale);
-      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-      Chart.Destroy;
-    end else
-    // F2-Load chart
-    if F2MenuItem.Checked then
-    begin
-      Chart := Compozer.CreateLoadF2Chart(aScreenScale);
-      Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
-      Chart.Destroy;
-    end else
-    // Massages list
-    if MessagesMenuItem.Checked then
-    begin
-      Compozer.DrawMessageList(aScreen, aScreenScale);
-    end else
-    // Spring section drawing
-    if SectionMenuItem.Checked then
-    begin
-      SetLength(Bit, 3);
-      for i := Low(Bit) to High(Bit) do
-        Bit[i] := TBGRABitmap.Create;
-
-      Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
-      Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
-      Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
-      {$IFDEF MODULE1}
-      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
-      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
-      SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
-      SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-
-      Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
-      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
-      Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
-      SpringDrawing.Destroy;
-      {$ENDIF}
-
-      for i := Low(Bit) to High(Bit) do
-        Bit[i].Destroy;
-      Bit := nil;
-    end else
-    // Spring profile drawing
-    if ProfileMenuItem.Checked then
-    begin
-      SetLength(Bit, 3);
-      for i := Low(Bit) to High(Bit) do
-        Bit[i] := TBGRABitmap.Create;
-
-      Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
-      Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
-      Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
-      {$IFDEF MODULE1}
-      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
-      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
-      SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
-      SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
-
-      Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
-      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
-      Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
-      SpringDrawing.Destroy;
-      {$ENDIF}
-
-      for i := Low(Bit) to High(Bit) do
-        Bit[i].Destroy;
-      Bit := nil;
-    end else
-    // Custom section spring drawing
-    if CustomSectionMenuItem.Checked then
-    begin
-      SetLength(Bit, 2);
-      Bit[0] := TBGRABitmap.Create;
-      Bit[1] := TBGRABitmap.Create;
-      Bit[0].SetSize(aScreen.Width, aScreen.Height);
-      Bit[1].SetSize(aScreen.Width, aScreen.Height);
-      {$IFDEF MODULE1}
-      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
-      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
-      SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
-      SpringDrawing.Destroy;
-      {$ENDIF}
-      Bit[0].Destroy;
-      Bit[1].Destroy;
-      Bit := nil;
-    end else
-    // Custom profle spring drawing
-    if CustomProfileMenuItem.Checked then
-    begin
-      SetLength(Bit, 2);
-      Bit[0] := TBGRABitmap.Create;
-      Bit[1] := TBGRABitmap.Create;
-      Bit[0].SetSize(aScreen.Width, aScreen.Height);
-      Bit[1].SetSize(aScreen.Width, aScreen.Height);
-      {$IFDEF MODULE1}
-      SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := True;
-      SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
-      SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
-
-      SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
-      SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
-      SpringDrawing.AutoFit    := False;
-      SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
-      SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
-      SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
-
-      Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
-      SpringDrawing.Destroy;
-      {$ENDIF}
-      Bit[0].Destroy;
-      Bit[1].Destroy;
-      Bit := nil;
-    end else
-    // Production spring drawing
-    if ProductionDrawingMenuItem.Checked then
-    begin
-      SetLength(Bit, 1);
-      Bit[0] := TBGRABitmap.Create;
-      Bit[0].SetSize(aScreen.Width, aScreen.Height);
-      Bit[0].AlphaFill(255);
-
-      SVG := TBGRASVG.Create;
-      if ASetting = ClientFile then
+    case ScreenPage of
+      spQuick1: Compozer.DrawQuick1(aScreen, aScreenScale);
+      spQuick2: Compozer.DrawQuick2(aScreen, aScreenScale);
+      spQuick3: Compozer.DrawQuick3(aScreen, aScreenScale);
+      spForceDisplacement:
       begin
-        Bit[0].Fill(ScreenColor);
-        SVG.LoadFromResource('TEMPLATE');
-      end else
-      begin
-        Bit[0].Fill(clWhite);
-        SVG.LoadFromResource('TEMPLATEBLACK');
+        Chart := Compozer.CreateForceDisplacementChart(aScreenScale);
+        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Destroy;
       end;
-      SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, aSetting);
-      SVG.StretchDraw(Bit[0].Canvas2D, taLeftJustify, tlCenter, 0, 0, Bit[0].Width, Bit[0].Height, False);
-      SVG.Destroy;
+      spGoodman:
+      begin
+        Chart := Compozer.CreateGoodmanChart(aScreenScale);
+        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Destroy;
+      end;
+      spBuckling:
+      begin
+        Chart := Compozer.CreateBucklingChart(aScreenScale);
+        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Destroy;
+      end;
+      spShearTemperature:
+      begin
+        Chart := Compozer.CreateShearModulusChart(aScreenScale);
+        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Destroy;
+      end;
+      spYoungTemperature:
+      begin
+        Chart := Compozer.CreateYoungModulusChart(aScreenScale);
+        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Destroy;
+      end;
+      spForce1Temperature:
+      begin
+        Chart := Compozer.CreateLoadF1Chart(aScreenScale);
+        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Destroy;
+      end;
+      spForce2Temperature:
+      begin
+        Chart := Compozer.CreateLoadF2Chart(aScreenScale);
+        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Destroy;
+      end;
+      spMessages: Compozer.DrawMessageList(aScreen, aScreenScale);
+      spSectionDrawing:
+      begin
+        SetLength(Bit, 3);
+        for i := Low(Bit) to High(Bit) do
+          Bit[i] := TBGRABitmap.Create;
 
-      Bit[0].InvalidateBitmap;
-      Bit[0].Draw(aScreen.Canvas, 0, 0);
-      Bit[0].Destroy;
-      Bit := nil;
+        Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
+        Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
+        Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
+        {$IFDEF MODULE1}
+        SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := True;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
+        SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := False;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
+        SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := False;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
+        SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+
+        Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
+        Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
+        Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
+        SpringDrawing.Destroy;
+        {$ENDIF}
+
+        for i := Low(Bit) to High(Bit) do
+          Bit[i].Destroy;
+        Bit := nil;
+      end;
+      spProfileDrawing:
+      begin
+        SetLength(Bit, 3);
+        for i := Low(Bit) to High(Bit) do
+          Bit[i] := TBGRABitmap.Create;
+
+        Bit[0].SetSize(aScreen.Width div 3, aScreen.Height);
+        Bit[1].SetSize(aScreen.Width div 3, aScreen.Height);
+        Bit[2].SetSize(aScreen.Width div 3, aScreen.Height);
+        {$IFDEF MODULE1}
+        SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := True;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
+        SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := False;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
+        SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := False;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
+        SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+
+        Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
+        Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
+        Bit[2].Draw(aScreen.Canvas, Bit[2].Width * 2, 0, True);
+        SpringDrawing.Destroy;
+        {$ENDIF}
+
+        for i := Low(Bit) to High(Bit) do
+          Bit[i].Destroy;
+        Bit := nil;
+      end;
+      spSectionDrawingAtLength:
+      begin
+        SetLength(Bit, 2);
+        Bit[0] := TBGRABitmap.Create;
+        Bit[1] := TBGRABitmap.Create;
+        Bit[0].SetSize(aScreen.Width, aScreen.Height);
+        Bit[1].SetSize(aScreen.Width, aScreen.Height);
+        {$IFDEF MODULE1}
+        SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := True;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
+        SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := False;
+        SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
+        SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+        Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
+        SpringDrawing.Destroy;
+        {$ENDIF}
+        Bit[0].Destroy;
+        Bit[1].Destroy;
+        Bit := nil;
+      end;
+      spProfileDrawingAtLength:
+      begin
+        SetLength(Bit, 2);
+        Bit[0] := TBGRABitmap.Create;
+        Bit[1] := TBGRABitmap.Create;
+        Bit[0].SetSize(aScreen.Width, aScreen.Height);
+        Bit[1].SetSize(aScreen.Width, aScreen.Height);
+        {$IFDEF MODULE1}
+        SpringDrawing            := Compozer.CreateSpringDrawing(aScreenScale);
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := True;
+        SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
+        SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+
+        SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
+        SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
+        SpringDrawing.AutoFit    := False;
+        SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
+        SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
+        SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+
+        Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
+        SpringDrawing.Destroy;
+        {$ENDIF}
+        Bit[0].Destroy;
+        Bit[1].Destroy;
+        Bit := nil;
+      end;
+      spProductionDrawing:
+      begin
+        SetLength(Bit, 1);
+        Bit[0] := TBGRABitmap.Create;
+        Bit[0].SetSize(aScreen.Width, aScreen.Height);
+        Bit[0].AlphaFill(255);
+
+        SVG := TBGRASVG.Create;
+        if ASetting = ClientFile then
+        begin
+          Bit[0].Fill(ScreenColor);
+          SVG.LoadFromResource('TEMPLATE');
+        end else
+        begin
+          Bit[0].Fill(clWhite);
+          SVG.LoadFromResource('TEMPLATEBLACK');
+        end;
+        SVG.AsUTF8String := CreateProductionDrawing(SVG.AsUTF8String, aSetting);
+        SVG.StretchDraw(Bit[0].Canvas2D, taLeftJustify, tlCenter, 0, 0, Bit[0].Width, Bit[0].Height, False);
+        SVG.Destroy;
+
+        Bit[0].InvalidateBitmap;
+        Bit[0].Draw(aScreen.Canvas, 0, 0);
+        Bit[0].Destroy;
+        Bit := nil;
+      end;
     end;
-  end else
-  begin
-    Compozer.DrawMessageList(aScreen, aScreenScale);
   end;
+
   Compozer.Destroy;
 
   VirtualScreenResize(nil);
@@ -1234,66 +1388,31 @@ begin
 end;
 
 function TMainForm.CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
+var
+  Ls: TQuantity;
 begin
-//Solve();
   {$IFDEF MODULE1}
   Result := Tx;
-  Result := StringReplace(Result, '@0.00', Format('e1=%s ' + GetLengthSymbol(SpringSolver.EccentricityE1),
-    [GetLengthString(SpringSolver.EccentricityE1)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.00', Format('e1=%s', [GetLengthString(SpringSolver.EccentricityE1)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.01', Format('e2=%s', [GetLengthString(SpringSolver.EccentricityE2)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.02', Format('d=%s',  [GetLengthString(SpringSolver.WireDiameter  )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.03', Format('Di=%s', [GetLengthString(SpringSolver.Di            )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.04', Format('Dm=%s', [GetLengthString(SpringSolver.Dm            )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.05', Format('De=%s', [GetLengthString(SpringSolver.De            )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.06', Format('L0=%s', [GetLengthString(SpringSolver.LengthL0      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.07', Format('L1=%s', [GetLengthString(SpringSolver.LengthL1      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.08', Format('L2=%s', [GetLengthString(SpringSolver.LengthL2      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.09', Format('Ln=%s', [GetLengthString(SpringSolver.LengthLn      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.10', Format('Lc=%s', [GetLengthString(SpringSolver.LengthLc      )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.11', Format('F1=%s', [GetForceString(SpringSolver.LoadF1         )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.13', Format('F2=%s', [GetForceString(SpringSolver.LoadF2         )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.15', Format('Fn=%s', [GetForceString(SpringSolver.LoadFn         )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.17', Format('Fc=%s', [GetForceString(SpringSolver.LoadFc         )]), [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@0.01', Format('e2=%s ' + GetLengthSymbol(SpringSolver.EccentricityE2),
-    [GetLengthString(SpringSolver.EccentricityE2)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.02', Format('d=%s '  + GetLengthSymbol(SpringSolver.WireDiameter),
-    [GetLengthString(SpringSolver.WireDiameter)]),    [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.03', Format('Di=%s ' + GetLengthSymbol(SpringSolver.Di),
-    [GetLengthString(SpringSolver.Di)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.04', Format('Dm=%s ' + GetLengthSymbol(SpringSolver.Dm),
-    [GetLengthString(SpringSolver.Dm)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.05', Format('De=%s ' + GetLengthSymbol(SpringSolver.De),
-    [GetLengthString(SpringSolver.De)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.06', Format('L0=%s ' + GetLengthSymbol(SpringSolver.LengthL0),
-    [GetLengthString(SpringSolver.LengthL0)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.07', Format('L1=%s ' + GetLengthSymbol(SpringSolver.LengthL1),
-    [GetLengthString(SpringSolver.LengthL1)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.08', Format('L2=%s ' + GetLengthSymbol(SpringSolver.LengthL2),
-    [GetLengthString(SpringSolver.LengthL2)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.09', Format('Ln=%s ' + GetLengthSymbol(SpringSolver.LengthLn),
-    [GetLengthString(SpringSolver.LengthLn)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.10', Format('Lc=%s ' + GetLengthSymbol(SpringSolver.LengthLc),
-    [GetLengthString(SpringSolver.LengthLc)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.11', Format('F1=%s ' + GetForceSymbol(SpringSolver.LoadF1),
-    [GetForceString(SpringSolver.LoadF1)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.13', Format('F2=%s ' + GetForceSymbol(SpringSolver.LoadF2),
-    [GetForceString(SpringSolver.LoadF2)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.15', Format('Fn=%s ' + GetForceSymbol(SpringSolver.LoadFn),
-    [GetForceString(SpringSolver.LoadFn)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.17', Format('Fc=%s ' + GetForceSymbol(SpringSolver.LoadFc),
-    [GetForceString(SpringSolver.LoadFc)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTauk1),
-    [GetPressureString(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTauk1),
-    [GetPressureString(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.16', Format('Taukn=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTaukn),
-    [GetPressureString(SpringSolver.TorsionalStressTaukn)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@0.18', Format('Tauc=%s ' + GetPressureSymbol(SpringSolver.TorsionalStressTauc),
-    [GetPressureString(SpringSolver.TorsionalStressTauc)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.12', Format('Tauk1=%s', [GetPressureString(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.14', Format('Tauk2=%s', [GetPressureString(SpringSolver.TorsionalStressTauk1)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.16', Format('Taukn=%s', [GetPressureString(SpringSolver.TorsionalStressTaukn)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@0.18', Format('Tauc=%s',  [GetPressureString(SpringSolver.TorsionalStressTauc )]), [rfReplaceAll, rfIgnoreCase]);
 
   if SpringSolver.ClosedEnds and (SpringSolver.GroundEnds = True) then
   begin
@@ -1309,14 +1428,9 @@ begin
     Result := StringReplace(Result, '@0.22', ' ', [rfReplaceAll, rfIgnoreCase]);
   end;
 
-  Result := StringReplace(Result, '@1.0', Format('n=%s',
-    [GetString(SpringSolver.ActiveColis)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@1.1', Format('nt=%s',
-    [GetString(SpringSolver.TotalCoils )]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@2.0', Format('R=%s ' + GetStiffnessSymbol(SpringSolver.SpringRateR),
-    [GetStiffnessString(SpringSolver.SpringRateR)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@1.0', Format('n=%s',  [GetString(SpringSolver.ActiveColis         )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@1.1', Format('nt=%s', [GetString(SpringSolver.TotalCoils          )]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@2.0', Format('R=%s',  [GetStiffnessString(SpringSolver.SpringRateR)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.DirectionCoils.ItemIndex of
     0: ;
@@ -1326,11 +1440,8 @@ begin
   Result := StringReplace(Result, '@3.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@3.1', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@4.0', Format('Dd=%s ' + GetLengthSymbol(SpringSolver.DiMin),
-    [GetLengthString(SpringSolver.DiMin)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@4.1', Format('Dh=%s ' + GetLengthSymbol(SpringSolver.DeMax),
-    [GetLengthString(SpringSolver.DeMax)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@4.0', Format('Dd=%s', [GetLengthString(SpringSolver.DiMin)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@4.1', Format('Dh=%s', [GetLengthString(SpringSolver.DeMax)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.BurringEnds.ItemIndex of
     0: Result := StringReplace(Result, '@5.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1341,12 +1452,8 @@ begin
   Result := StringReplace(Result, '@5.1', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@5.2', ' ', [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@6.0', Format('fe=%s ' + GetFrequencySymbol(SpringSolver.NaturalFrequency),
-    [GetFrequencyString(SpringSolver.NaturalFrequency)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@7.0', Format('%s / %s',
-    [GetTemperatureString(MAT.TemperatureMin),
-     GetTemperatureString(MAT.TemperatureMax)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@6.0', Format('fe=%s', [GetFrequencyString(SpringSolver.NaturalFrequency)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@7.0', Format('%s / %s', [GetTemperatureString(MAT.TemperatureMin), GetTemperatureString(MAT.TemperatureMax)]), [rfReplaceAll, rfIgnoreCase]);
 
   case ProductionForm.WireSurface.ItemIndex of
     0: Result := StringReplace(Result, '@8.0', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1362,11 +1469,8 @@ begin
   Result := StringReplace(Result, '@9.0', ' ', [rfReplaceAll, rfIgnoreCase]);
   Result := StringReplace(Result, '@10.0', MAT.Name, [rfReplaceAll, rfIgnoreCase]);
 
-  Result := StringReplace(Result, '@10.1', Format('tauz=%s ' + GetPressureSymbol(SpringSolver.AdmStaticTorsionalStressTauz),
-    [GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz)]), [rfReplaceAll, rfIgnoreCase]);
-
-  Result := StringReplace(Result, '@10.2', Format('G=%s ' + GetPressureSymbol(MAT.ShearModulusG20),
-    [GetPressureString(MAT.ShearModulusG20)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@10.1', Format('tauz=%s', [GetPressureString(SpringSolver.AdmStaticTorsionalStressTauz)]), [rfReplaceAll, rfIgnoreCase]);
+  Result := StringReplace(Result, '@10.2', Format('G=%s', [GetPressureString(MAT.ShearModulusG20)]), [rfReplaceAll, rfIgnoreCase]);
 
   case SpringTolerance.QualityGradeOnCoilDiameter of
     QualityGrade1: Result := StringReplace(Result, '@11.00', 'X', [rfReplaceAll, rfIgnoreCase]);
@@ -1435,9 +1539,13 @@ begin
 
   if ProductionForm.LengthLs.Value > 0 then
   begin
-    Result := StringReplace(Result, '@13.0', Format('Ls=%s ' + ProductionForm.LengthLsUnit.Text,
-      [GetString(ProductionForm.LengthLs.Value)]), [rfReplaceAll, rfIgnoreCase]);
+    case ProductionForm.LengthLsUnit.ItemIndex of
+      0: Ls := ProductionForm.LengthLs.Value*mm;
+      1: Ls := ProductionForm.LengthLs.Value*inch;
+    else Ls := 0*m;
+    end;
 
+    Result := StringReplace(Result, '@13.0', Format('Ls=%s', [GetLengthString(Ls)]), [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@13.1', 'X', [rfReplaceAll, rfIgnoreCase]);
     Result := StringReplace(Result, '@13.2', ' ', [rfReplaceAll, rfIgnoreCase]);
   end else

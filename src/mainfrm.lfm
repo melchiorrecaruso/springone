@@ -1,14 +1,14 @@
 object MainForm: TMainForm
-  Left = 217
+  Left = 146
   Height = 501
-  Top = 126
+  Top = 388
   Width = 700
   Caption = 'Spring ONE'
   ClientHeight = 501
   ClientWidth = 700
   Color = clForm
   Menu = MainMenu
-  LCLVersion = '4.0.0.2'
+  LCLVersion = '4.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -67,7 +67,7 @@ object MainForm: TMainForm
       object NewMenuItem: TMenuItem
         Caption = 'New sheet'
         ShortCut = 16462
-        OnClick = NewMenuItemClick
+        OnClick = FileNewExecute
       end
       object Separator3: TMenuItem
         Caption = '-'
@@ -75,81 +75,81 @@ object MainForm: TMainForm
       object OpenMenuItem: TMenuItem
         Caption = '&Open ...'
         ShortCut = 16463
-        OnClick = OpenMenuItemClick
+        OnClick = FileOpenExecute
       end
       object SaveMenuItem: TMenuItem
         Caption = '&Save'
         ShortCut = 16467
-        OnClick = SaveMenuItemClick
+        OnClick = FileSaveExecute
       end
       object SaveAsMenuItem: TMenuItem
         Caption = '&Save as ...'
-        OnClick = SaveAsMenuItemClick
+        OnClick = FileSaveAsExecute
       end
       object CloseMenuItem: TMenuItem
         Caption = 'Close'
         ShortCut = 16451
-        OnClick = CloseMenuItemClick
+        OnClick = FileCloseExecute
       end
       object Separator2: TMenuItem
         Caption = '-'
       end
       object ExportMenuItem: TMenuItem
         Caption = 'Export image ...'
-        OnClick = ExportMenuItemClick
+        OnClick = FileExportExecute
       end
       object Separator9: TMenuItem
         Caption = '-'
       end
       object PageSetupMenuItem: TMenuItem
         Caption = 'Page setup ...'
-        OnClick = PageSetupMenuItemClick
+        OnClick = FilePageSetupExecute
       end
       object PrintMenuItem: TMenuItem
         Caption = 'Print ...'
         ShortCut = 16464
-        OnClick = PrintMenuItemClick
+        OnClick = FilePrintExecute
       end
       object Separator1: TMenuItem
         Caption = '-'
       end
       object ExitMenuItem: TMenuItem
         Caption = 'Exit'
-        OnClick = ExitMenuItemClick
+        OnClick = FileExitExecute
       end
     end
     object EditMenuItem: TMenuItem
       Caption = '&Edit'
       object WizardMenuItem: TMenuItem
         Caption = 'Wizard ...'
-        OnClick = WizardMenuItemClick
+        OnClick = EditWizardExecute
       end
       object Separator8: TMenuItem
         Caption = '-'
       end
       object DrawingTextMenuItem: TMenuItem
         Caption = 'Drawing Text'
-        OnClick = TextMenuItemClick
+        OnClick = EditDrawingTextExecute
       end
       object GeometryMenuItem: TMenuItem
         Caption = 'Geometry and working length'
-        OnClick = GeometryMenuItemClick
+        OnClick = EditGeometryExecute
       end
       object MaterialMenuItem: TMenuItem
         Caption = 'Material'
-        OnClick = MaterialMenuItemClick
+        OnClick = EditMaterialExecute
       end
       object QualityMenuItem: TMenuItem
         Caption = 'Quality grade'
-        OnClick = QualityMenuItemClick
+        OnClick = EditQualityGradeExecute
       end
       object ProductionMenuItem: TMenuItem
         Caption = 'Production'
-        OnClick = ProductionMenuItemClick
+        OnClick = EditProductionExecute
       end
       object ApplicationMenuItem: TMenuItem
         Caption = 'Application'
-        OnClick = ApplicationMenuItemClick
+        OnClick = EditApplicationExecute
       end
       object Separator6: TMenuItem
         Caption = '-'
@@ -168,135 +168,153 @@ object MainForm: TMainForm
       end
       object UseImperialSystemMenuItem: TMenuItem
         Caption = 'Use Imperial System'
-        OnClick = UseImperialSystemMenuItemClick
+        OnClick = EditUseImperialSystemExecute
       end
     end
     object ViewMenuItem: TMenuItem
       Caption = '&View'
       object Quick1MenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Quick 1'
         ShowAlwaysCheckable = True
-        OnClick = ViewMenuItemClick
+        OnClick = ViewQuick1Execute
       end
       object Quick2MenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Quick 2'
         ShowAlwaysCheckable = True
-        OnClick = ViewMenuItemClick
+        OnClick = ViewQuick2Execute
       end
       object Quick3MenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Quick 3'
         ShowAlwaysCheckable = True
-        OnClick = ViewMenuItemClick
+        OnClick = ViewQuick3Execute
       end
       object Separator5: TMenuItem
         Caption = '-'
       end
       object ForceMenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Force and displacement diagram'
         ShowAlwaysCheckable = True
-        OnClick = ViewMenuItemClick
+        OnClick = ViewForceAndDisplacementsExecute
       end
       object GoodmanMenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Goodman diagram'
         ShowAlwaysCheckable = True
-        OnClick = ViewMenuItemClick
+        OnClick = ViewGoodmanExecute
       end
       object BucklingMenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Buckling diagram'
         ShowAlwaysCheckable = True
-        OnClick = ViewMenuItemClick
+        OnClick = ViewBucklingExecute
       end
       object TempMenuItem: TMenuItem
         Caption = 'Temperature'
         object ShearModulusMenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'G-T diagram'
           ShowAlwaysCheckable = True
-          OnClick = ViewMenuItemClick
+          OnClick = ViewShearTemperatureExecute
         end
         object YoungModulusMenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'E-T diagram'
           ShowAlwaysCheckable = True
-          OnClick = ViewMenuItemClick
+          OnClick = ViewYoungTemperatureExecute
         end
         object F1MenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'F1-T diagram'
           ShowAlwaysCheckable = True
-          OnClick = ViewMenuItemClick
+          OnClick = ViewForce1TemperatureExecute
         end
         object F2MenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'F2-T diagram'
           ShowAlwaysCheckable = True
-          OnClick = ViewMenuItemClick
+          OnClick = ViewForce2TemperatureExecute
         end
       end
       object DrawMenuItem: TMenuItem
         Caption = 'Drawing'
         object SectionMenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'Section drawing'
           ShowAlwaysCheckable = True
-          OnClick = ViewMenuItemClick
+          OnClick = ViewSectionDrawingExecute
         end
         object ProfileMenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'Profile drawing'
           ShowAlwaysCheckable = True
-          OnClick = ViewMenuItemClick
+          OnClick = ViewProfileDrawingExecute
         end
         object Separator10: TMenuItem
           Caption = '-'
         end
-        object CustomSectionMenuItem: TMenuItem
+        object SectionAtLenghtMenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'Section drawing (L)'
           ShowAlwaysCheckable = True
-          OnClick = CustomSectionMenuItemClick
+          OnClick = ViewSectionDrawingAtLengthExecute
         end
-        object CustomProfileMenuItem: TMenuItem
+        object ProfileAtLenghtMenuItem: TMenuItem
+          AutoCheck = True
           Caption = 'Profile drawing (L)'
           ShowAlwaysCheckable = True
-          OnClick = CustomSectionMenuItemClick
+          OnClick = ViewProfileDrawingAtLengthExecute
         end
       end
       object MessagesMenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Messages'
-        OnClick = ViewMenuItemClick
+        OnClick = ViewMessagesExecute
       end
     end
     object DocsMenuItem: TMenuItem
       Caption = '&Documents'
       object ReportMenuItem: TMenuItem
         Caption = 'Report'
-        OnClick = ReportMenuItemClick
+        OnClick = DocumentReportExecute
       end
       object ProductionDrawingMenuItem: TMenuItem
+        AutoCheck = True
         Caption = 'Production drawing'
         ShowAlwaysCheckable = True
-        OnClick = ViewMenuItemClick
+        OnClick = DocumentProductionDrawingExecute
       end
       object Separator11: TMenuItem
         Caption = '-'
       end
       object ExportReportMenuItem: TMenuItem
         Caption = 'Export report ...'
-        OnClick = ExportReportMenuItemClick
+        OnClick = DocumentExportReportExecute
       end
       object ExportProductionMenuItem: TMenuItem
         Caption = 'Export production drawing ...'
-        OnClick = ExportProductionMenuItemClick
+        OnClick = DocumentExportProductionDrawingExecute
       end
     end
     object MenuItem9: TMenuItem
       Caption = '&Help'
-      object MenuItem25: TMenuItem
+      object HomepageMenuItem: TMenuItem
         Caption = 'Homepage'
+        OnClick = HelpHomePageExecute
       end
       object Separator4: TMenuItem
         Caption = '-'
       end
-      object MenuItem24: TMenuItem
+      object LicenseMenuItem: TMenuItem
         Caption = 'License'
+        OnClick = HelpLicenceExecute
       end
       object AboutMenuItem: TMenuItem
         Caption = 'About ...'
-        OnClick = AboutMenuItemClick
+        OnClick = HelpAboutExecute
       end
     end
   end
@@ -315,11 +333,221 @@ object MainForm: TMainForm
     Top = 96
   end
   object SavePictureDialog: TSavePictureDialog
-    Left = 321
+    Left = 336
     Top = 33
   end
   object PageSetupDialog: TPageSetupDialog
     Left = 241
     Top = 96
+  end
+  object Actions: TActionList
+    Left = 440
+    Top = 33
+    object FileNew: TAction
+      Category = 'File'
+      Caption = 'New sheet'
+      OnExecute = FileNewExecute
+    end
+    object FileOpen: TAction
+      Category = 'File'
+      Caption = 'Open'
+      OnExecute = FileOpenExecute
+    end
+    object FileSave: TAction
+      Category = 'File'
+      Caption = 'Save'
+      OnExecute = FileSaveExecute
+    end
+    object FileSaveAs: TAction
+      Category = 'File'
+      Caption = 'Save as ...'
+      OnExecute = FileSaveAsExecute
+    end
+    object FileClose: TAction
+      Category = 'File'
+      Caption = 'Close'
+      OnExecute = FileCloseExecute
+    end
+    object FileExport: TAction
+      Category = 'File'
+      Caption = 'Export ...'
+      OnExecute = FileExportExecute
+    end
+    object FilePageSetup: TAction
+      Category = 'File'
+      Caption = 'Page setup'
+      OnExecute = FilePageSetupExecute
+    end
+    object FilePrint: TAction
+      Category = 'File'
+      Caption = 'FilePrint'
+      OnExecute = FilePrintExecute
+    end
+    object FileExit: TAction
+      Category = 'File'
+      Caption = 'Exit'
+      OnExecute = FileExitExecute
+    end
+    object EditWizard: TAction
+      Category = 'Edit'
+      Caption = 'Wizard'
+      OnExecute = EditWizardExecute
+    end
+    object EditDrawingText: TAction
+      Category = 'Edit'
+      Caption = 'Drawing text'
+      OnExecute = EditDrawingTextExecute
+    end
+    object EditGeometry: TAction
+      Category = 'Edit'
+      Caption = 'Geometry and working length'
+      OnExecute = EditGeometryExecute
+    end
+    object EditMaterial: TAction
+      Category = 'Edit'
+      Caption = 'Material'
+      OnExecute = EditMaterialExecute
+    end
+    object EditQualityGrade: TAction
+      Category = 'Edit'
+      Caption = 'Quality grade'
+      OnExecute = EditQualityGradeExecute
+    end
+    object EditProduction: TAction
+      Category = 'Edit'
+      Caption = 'Production'
+      OnExecute = EditProductionExecute
+    end
+    object EditApplication: TAction
+      Category = 'Edit'
+      Caption = 'Application'
+      OnExecute = EditApplicationExecute
+    end
+    object EditRecalculationMode: TAction
+      Category = 'Edit'
+      Caption = 'Recalcupation mode'
+      OnExecute = EditRecalculationModeExecute
+    end
+    object EditDesignMode: TAction
+      Category = 'Edit'
+      Caption = 'Design mode'
+      OnExecute = EditDesignModeExecute
+    end
+    object EditUseImperialSystem: TAction
+      Category = 'Edit'
+      Caption = 'Use imperial system'
+      OnExecute = EditUseImperialSystemExecute
+    end
+    object ViewQuick1: TAction
+      Category = 'View'
+      Caption = 'Quick1'
+      OnExecute = ViewQuick1Execute
+    end
+    object ViewQuick2: TAction
+      Category = 'View'
+      Caption = 'Quick2'
+      OnExecute = ViewQuick2Execute
+    end
+    object ViewQuick3: TAction
+      Category = 'View'
+      Caption = 'Quick3'
+      OnExecute = ViewQuick3Execute
+    end
+    object ViewForceAndDisplacements: TAction
+      Category = 'View'
+      Caption = 'Force and displacements diagram'
+      OnExecute = ViewForceAndDisplacementsExecute
+    end
+    object ViewGoodman: TAction
+      Category = 'View'
+      Caption = 'Goodman diagram'
+      OnExecute = ViewGoodmanExecute
+    end
+    object ViewBuckling: TAction
+      Category = 'View'
+      Caption = 'Buckling diagram'
+      OnExecute = ViewBucklingExecute
+    end
+    object ViewShearTemperature: TAction
+      Category = 'View'
+      Caption = 'G-T diagram'
+      OnExecute = ViewShearTemperatureExecute
+    end
+    object ViewYoungTemperature: TAction
+      Category = 'View'
+      Caption = 'E-T diagram'
+      OnExecute = ViewYoungTemperatureExecute
+    end
+    object ViewForce1Temperature: TAction
+      Category = 'View'
+      Caption = 'F1-T diagram'
+      OnExecute = ViewForce1TemperatureExecute
+    end
+    object ViewForce2Temperature: TAction
+      Category = 'View'
+      Caption = 'F2-T diagram'
+      OnExecute = ViewForce2TemperatureExecute
+    end
+    object ViewSectionDrawing: TAction
+      Category = 'View'
+      Caption = 'Section drawing'
+      OnExecute = ViewSectionDrawingExecute
+    end
+    object ViewProfileDrawing: TAction
+      Category = 'View'
+      Caption = 'Profile drawing'
+      OnExecute = ViewProfileDrawingExecute
+    end
+    object ViewSectionDrawingAtLength: TAction
+      Category = 'View'
+      Caption = 'Section drawing at length'
+      OnExecute = ViewSectionDrawingAtLengthExecute
+    end
+    object ViewProfileDrawingAtLength: TAction
+      Category = 'View'
+      Caption = 'Profile drawing at length'
+      OnExecute = ViewProfileDrawingAtLengthExecute
+    end
+    object ViewMessages: TAction
+      Category = 'View'
+      Caption = 'Messages'
+      OnExecute = ViewMessagesExecute
+    end
+    object DocumentReport: TAction
+      Category = 'Document'
+      AutoCheck = True
+      Caption = 'Report'
+      OnExecute = DocumentReportExecute
+    end
+    object DocumentProductionDrawing: TAction
+      Category = 'Document'
+      Caption = 'Production drawing'
+      OnExecute = DocumentProductionDrawingExecute
+    end
+    object DocumentExportReport: TAction
+      Category = 'Document'
+      Caption = 'Export report'
+      OnExecute = DocumentExportReportExecute
+    end
+    object DocumentExportProductionDrawing: TAction
+      Category = 'Document'
+      Caption = 'Export production drawing'
+      OnExecute = DocumentExportProductionDrawingExecute
+    end
+    object HelpHomePage: TAction
+      Category = 'Help'
+      Caption = 'Homepage'
+      OnExecute = HelpHomePageExecute
+    end
+    object HelpLicence: TAction
+      Category = 'Help'
+      Caption = 'Licence'
+      OnExecute = HelpLicenceExecute
+    end
+    object HelpAbout: TAction
+      Category = 'Help'
+      Caption = 'About'
+      OnExecute = HelpAboutExecute
+    end
   end
 end
