@@ -309,6 +309,7 @@ type
     property TorqueT1: TQuantity read fTorqueT1;
     property TorqueT2: TQuantity read fTorqueT2;
     property TorqueTn: TQuantity read fTorqueTn;
+    property SpringRateRMR: TQuantity read fRMR;
 
     property TensileStrengthRm: TQuantity read fRm write fRm;
     property BendingStressSigma1: TQuantity read fSigma1;
