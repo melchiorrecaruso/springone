@@ -76,6 +76,10 @@ function GetAngleSymbol(const AQuantity: TQuantity): string;
 function GetAngleValue (const AQuantity: TQuantity): double;
 function GetAngleString(const AQuantity: TQuantity): string;
 
+function GetTorqueSymbol(const AQuantity: TQuantity): string;
+function GetTorqueValue (const AQuantity: TQuantity): double;
+function GetTorqueString(const AQuantity: TQuantity): string;
+
 function GetTemperatureSymbol(const AQuantity: TQuantity): string;
 function GetTemperatureValue (const AQuantity: TQuantity): double;
 function GetTemperatureString(const AQuantity: TQuantity): string;
@@ -378,6 +382,33 @@ end;
 function GetAngleString(const AQuantity: TQuantity): string;
 begin
   result := DegreeUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+end;
+
+function GetTorqueSymbol(const AQuantity: TQuantity): string;
+begin
+  case UseImperialSystem of
+    True:  result := PoundForceInchUnit.GetSymbol([]);
+    False: result := NewtonMeterUnit.GetSymbol([pNone, pMilli]);
+  end;
+end;
+
+function GetTorqueValue(const AQuantity: TQuantity): double;
+begin
+  case UseImperialSystem of
+    True:  result := PoundForceInchUnit.ToFloat(AQuantity);
+    False: result := NewtonMeterUnit.Tofloat(AQuantity, [pNone, pMilli]);
+  end;
+end;
+
+function GetTorqueString(const AQuantity: TQuantity): string;
+begin
+  if not EqualToZero(AQuantity) then
+    case UseImperialSystem of
+      True:  result := PoundForceInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := NewtonMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+    end
+  else
+    Result := '---';
 end;
 
 function GetTemperatureSymbol(const AQuantity: TQuantity): string;
