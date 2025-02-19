@@ -288,10 +288,6 @@ begin
   end;
   {$ENDIF}
 
-  {$IFDEF MODULE3}
-
-  {$ENDIF}
-
   {$IFDEF MODULE1}
   // Drawing Load-F1
   if GreaterThanZero(SpringSolver.LoadF1) then
@@ -308,7 +304,6 @@ begin
     Points := nil;
   end;
   {$ENDIF}
-
 
   {$IFDEF MODULE1}
   // Drawing Load F2
@@ -392,6 +387,100 @@ begin
   end;
   {$ENDIF}
 
+  {$IFDEF MODULE3}
+  Result.Title := 'Torque & Angular displacement Chart';
+  Result.XAxisLabel := 'α [' + GetAngleSymbol(SpringSolver.Alpha1) + ']';
+  Result.YAxisLabel := 'T [' + GetTorqueSymbol(SpringSolver.TorqueT1) + ']';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
+  // Drawing bisector line
+  if GreaterThanZero(SpringSolver.TorqueT1) then
+  begin
+    LoadChart2(Result, 'ForceDisplacementChart', 'BisectorLine');
+    SetLength(Points, 2);
+    Points[0].X := 0;
+    Points[0].Y := 0;
+    Points[1].X := GetAngleValue(SpringSolver.Alpha1);
+    Points[1].Y := GetTorqueValue(SpringSolver.TorqueT1);
+    Result.AddPolyLine(Points, True, 'Bisector');
+    Points := nil;
+  end;
+  {$ENDIF}
+
+  {$IFDEF MODULE3}
+  // Drawing Torque-T1
+  if GreaterThanZero(SpringSolver.TorqueT1) then
+  begin
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F1');
+    SetLength(Points, 3);
+    Points[0].X := 0;
+    Points[0].Y := GetTorqueValue(SpringSolver.TorqueT1);
+    Points[1].X := GetAngleValue(SpringSolver.Alpha1);
+    Points[1].Y := GetTorqueValue(SpringSolver.TorqueT1);
+    Points[2].X := GetAngleValue(SpringSolver.Alpha1);
+    Points[2].Y := 0;
+    Result.AddPolyLine(Points, False, 'T1');
+    Points := nil;
+  end;
+  {$ENDIF}
+
+  {$IFDEF MODULE3}
+  // Drawing Torque-T2
+  if GreaterThanZero(SpringSolver.TorqueT2) then
+  begin
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F2');
+    SetLength(Points, 3);
+    Points[0].X := 0;
+    Points[0].Y := GetTorqueValue(SpringSolver.TorqueT2);
+    Points[1].X := GetAngleValue(SpringSolver.Alpha2);
+    Points[1].Y := GetTorqueValue(SpringSolver.TorqueT2);
+    Points[2].X := GetAngleValue(SpringSolver.Alpha2);
+    Points[2].Y := 0;
+    Result.AddPolyLine(Points, False, 'T2');
+    Points := nil;
+  end;
+  {$ENDIF}
+
+  {$IFDEF MODULE3}
+  // Drawing Torque-Tn
+  if GreaterThanZero(SpringSolver.TorqueTn) then
+  begin
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fn');
+    SetLength(Points, 3);
+    Points[0].X := 0;
+    Points[0].Y := GetTorqueValue(SpringSolver.TorqueTn);
+    Points[1].X := GetAngleValue(SpringSolver.Alphan);
+    Points[1].Y := GetTorqueValue(SpringSolver.TorqueTn);
+    Points[2].X := GetAngleValue(SpringSolver.Alphan);
+    Points[2].Y := 0;
+    Result.AddPolyLine(Points, False, 'Tn');
+    Points := nil;
+  end;
+  {$ENDIF}
+
+  {$IFDEF MODULE3}
+  // Drawing label Torque-T1
+  if GreaterThanZero(SpringSolver.TorqueT1) then
+  begin
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F1');
+    Result.AddLabel(0, GetTorqueValue(SpringSolver.TorqueT1),
+      32, 0, taLeftJustify, taAlignBottom, 'T1');
+  end;
+  // Drawing label Torque-T2
+  if GreaterThanZero(SpringSolver.TorqueT2) then
+  begin
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-F2');
+    Result.AddLabel(0, GetTorqueValue(SpringSolver.TorqueT2),
+      64, 0, taLeftJustify, taAlignBottom, 'T2');
+  end;
+  // Drawing label Load-Fn
+  if GreaterThanZero(SpringSolver.TorqueTn) then
+  begin
+    LoadChart2(Result, 'ForceDisplacementChart', 'Load-Fn');
+    Result.AddLabel(0, GetTorqueValue(SpringSolver.TorqueTn),
+      96, 0, taLeftJustify, taAlignBottom, 'Tn');
+  end;
+  {$ENDIF}
 end;
 
 function TCompozer.CreateGoodmanChart(const AScreenScale: double): TChart;
@@ -881,11 +970,11 @@ begin
   Result[5, 1] := Format('Fc: %s', [GetString(GetForceValue(SpringSolver.LoadFc))]);
   {$ENDIF}
   {$IFDEF MODULE3}
-  Result[0, 1] := 'torque [' + GetTorqueSymbol(SpringSolver.TorqueT1) + ']';
+  Result[0, 1] := 'torque [' + GetangularStiffnessSymbol(SpringSolver.TorqueT1) + ']';
   Result[1, 1] := '';
-  Result[2, 1] := Format('T1: %s', [GetString(GetTorqueValue(SpringSolver.TorqueT1))]);
-  Result[3, 1] := Format('T2: %s', [GetString(GetTorqueValue(SpringSolver.TorqueT2))]);
-  Result[4, 1] := Format('Tn: %s', [GetString(GetTorqueValue(SpringSolver.TorqueTn))]);
+  Result[2, 1] := Format('T1: %s', [GetString(GetAngularStiffnessValue(SpringSolver.TorqueT1))]);
+  Result[3, 1] := Format('T2: %s', [GetString(GetAngularStiffnessValue(SpringSolver.TorqueT2))]);
+  Result[4, 1] := Format('Tn: %s', [GetString(GetAngularStiffnessValue(SpringSolver.TorqueTn))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -1001,11 +1090,11 @@ begin
 
   Result.Items[2, 0] := 'Dm';
   Result.Items[2, 1] := '=';
-  Result.Items[2, 2] := GetLengthString(SpringSolver.Dm);
+  Result.Items[2, 2] := GetLengthString(SpringSolver.Dm, SpringTolerance.ToleranceOnCoilDiameter);
 
   Result.Items[3, 0] := 'De';
   Result.Items[3, 1] := '=';
-  Result.Items[3, 2] := GetLengthString(SpringSolver.De, SpringTolerance.ToleranceOnCoilDiameter);
+  Result.Items[3, 2] := GetLengthString(SpringSolver.De);
 
   Result.Items[4, 0] := 'n';
   Result.Items[4, 1] := '=';
@@ -1067,6 +1156,43 @@ begin
   else
     Result.Items[17, 2] := ('static');
   {$ENDIF}
+
+  {$IFDEF MODULE3}
+
+  Result.Items[ 6, 0] := 'a';
+  Result.Items[ 6, 1] := '=';
+  Result.Items[ 6, 2] := GetLengthString(SpringSolver.CoilsGap);
+
+  Result.Items[ 7, 0] := 'RMR';
+  Result.Items[ 7, 1] := '=';
+  Result.Items[ 7, 2] := GetAngularStiffnessString(SpringSolver.SpringRateRMR);
+
+  Result.Items[ 8, 0] := 'Dm/d';
+  Result.Items[ 8, 1] := '=';
+  Result.Items[ 8, 2] := ScalarUnit.ToString(SpringSolver.Dm/Springsolver.WireDiameter);
+
+  Result.Items[ 9, 0] := 'q';
+  Result.Items[ 9, 1] := '=';
+  Result.Items[ 9, 2] := ScalarUnit.ToString(SpringSolver.CorrectionFactorQ, DefaultPrecision, DefaultDigits, []);
+
+  Result.Items[10, 0] := 'm';
+  Result.Items[10, 1] := '=';
+  Result.Items[10, 2] := GetMassString(SpringSolver.Mass);
+
+  Result.Items[11, 0] := 'L';
+  Result.Items[11, 1] := '=';
+  Result.Items[11, 2] := GetLengthString(SpringSolver.WireLength);
+
+  Result.Items[12, 0] := 'W12';
+  Result.Items[12, 1] := '=';
+  Result.Items[12, 2] := GetEnergyString(SpringSolver.SpringWorkW12);
+
+  Result.Items[13, 0] := 'W0n';
+  Result.Items[13, 1] := '=';
+  Result.Items[13, 2] := GetEnergyString(SpringSolver.SpringWorkW0n);
+  {$ENDIF}
+
+
 end;
 
 function TCompozer.CreateQuick1List2(const AScreenScale: double): TReportTable;
