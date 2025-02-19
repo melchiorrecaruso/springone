@@ -1,7 +1,7 @@
 object QualityForm: TQualityForm
-  Left = 177
+  Left = 271
   Height = 386
-  Top = 255
+  Top = 375
   Width = 523
   BorderIcons = [biSystemMenu]
   Caption = 'Quality grade'

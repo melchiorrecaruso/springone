@@ -199,6 +199,29 @@ begin
     2: SpringTolerance.QualityGradeOnParallelism := QualityGrade3;
   end;
   {$ENDIF}
+
+  {$IFDEF MODULE3}
+  case ToleranceCoilDiameter.ItemIndex of
+    0: SpringTolerance.QualityGradeOnCoilDiameter := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnCoilDiameter := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnCoilDiameter := QualityGrade3;
+  end;
+  case ToleranceLengthL0.ItemIndex of
+    0: SpringTolerance.QualityGradeOnRelativeEndAngle := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnRelativeEndAngle := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnRelativeEndAngle := QualityGrade3;
+  end;
+  case ToleranceLoadF1.ItemIndex of
+    0: SpringTolerance.QualityGradeOnTorque1 := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnTorque1 := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnTorque1 := QualityGrade3;
+  end;
+  case ToleranceLoadF2.ItemIndex of
+    0: SpringTolerance.QualityGradeOnTorque2 := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnTorque2 := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnTorque2 := QualityGrade3;
+  end;
+  {$ENDIF}
 end;
 
 end.
