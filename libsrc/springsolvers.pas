@@ -226,8 +226,9 @@ type
     fLengthArmLegA: TQuantity;
     fLengthArmLegB: TQuantity;
 
+    fMass: TQuantity;
     fn: double;
-    fq: TQuantity;
+    fq: double;
 
     fRho: TQuantity;
     fRm: TQuantity;
@@ -247,7 +248,11 @@ type
     fTorqueT2: TQuantity;
     fTorqueTn: TQuantity;
 
-    fw: TQuantity;
+    fw: double;
+    fWireLength: TQuantity;
+
+    fW0n,
+    fW12: TQuantity;
 
     function CalcRadialEndFlex(ArmLength: TQuantity): TQuantity;
     function CalcTangentialEndFlex(ArmLength: TQuantity): TQuantity;
@@ -291,17 +296,18 @@ type
     property FixedEndB: boolean read fFixedEndB write fFixedEndB;
 
 
-
-
     property LengthLegA: TQuantity read fLengthLegA write fLengthLegA;
     property LengthLegB: TQuantity read fLengthLegB write fLengthLegB;
 
     property LengthArmLegA: TQuantity read fLengthArmLegA write fLengthArmLegA;
     property LengthArmLegB: TQuantity read fLengthArmLegB write fLengthArmLegB;
 
+    property Mass: TQuantity read FMass;
     property MaterialDensity: TQuantity read fRho write fRho;
 
     property CoilsGap: TQuantity read fa write fa;
+    property CorrectionFactorQ: double read fq;
+
     property ShearModulus: TQuantity read fG write fG;
 
     property StressInCoilingDirection: boolean read fStressInCoilingDirection write fStressInCoilingDirection;
@@ -310,6 +316,8 @@ type
     property TorqueT2: TQuantity read fTorqueT2;
     property TorqueTn: TQuantity read fTorqueTn;
     property SpringRateRMR: TQuantity read fRMR;
+    property SpringWorkW0n: TQuantity read fW0n;
+    property SpringWorkW12: TQuantity read fW12;
 
     property TensileStrengthRm: TQuantity read fRm write fRm;
     property BendingStressSigma1: TQuantity read fSigma1;
@@ -322,6 +330,8 @@ type
     property YoungModulus: TQuantity read fE write fE;
     property WireDiameter: TQuantity read fd write fd;
     property WireDiameterTolerance: TQuantity read FdTolerance write FdTolerance;
+
+    property WireLength: TQuantity read fWireLength;
   end;
 
 implementation
@@ -952,7 +962,7 @@ begin
 
   if fCheck then
   begin
-    fw := fDm/fd;
+    fw := ScalarUnit.ToFloat(fDm/fd);
     if fColdCoiled then
     begin
       if (fw <  4) then ErrorMessage.Add('Spring index "w" < 4.');
@@ -987,8 +997,8 @@ begin
   PreCheck;
   if fCheck then
   begin
-    fDe  := fDm + fd;
-    fDi  := fDm - fd;
+    fDe := fDm + fd;
+    fDi := fDm - fd;
 
     // calculate q factor
     fq := 1;
@@ -1003,7 +1013,7 @@ begin
     if fBentLegA then
     begin
       if GreaterThanZero(fBendRadiusLegA) then
-        fq := Max(fq, (2*fBendRadiusLegA/fd + 1.07)/(2*fBendRadiusLegA/fd + 0.25))
+        fq := ScalarUnit.ToFloat(Max(fq, (2*fBendRadiusLegA/fd + 1.07)/(2*fBendRadiusLegA/fd + 0.25)))
       else
         ErrorMessage.Add('Bending radius leg "A" is zero.');
     end;
@@ -1012,7 +1022,7 @@ begin
     if fBentLegB then
     begin
       if GreaterThanZero(fBendRadiusLegB) then
-        fq := Max(fq, (2*fBendRadiusLegB/fd + 1.07)/(2*fBendRadiusLegB/fd + 0.25))
+        fq := ScalarUnit.ToFloat(Max(fq, (2*fBendRadiusLegB/fd + 1.07)/(2*fBendRadiusLegB/fd + 0.25)))
       else
         ErrorMessage.Add('Bending radius leg "B" is zero.');
     end;
@@ -1041,6 +1051,18 @@ begin
       end;
     end;
 
+    // Calcolo lunghezza sviluppo del filo della molla
+    if fCheck then
+    begin
+      fWireLength := fLengthLegA + pi * fDm * fn + fLengthLegB;
+    end;
+
+    // Calcolo massa della molla
+    if fCheck then
+    begin
+      fMass := FRho * ((pi/4*(Fd*Fd)) * FWireLength);
+    end;
+
     if fCheck then
     begin
       // calculate coil angle
@@ -1051,10 +1073,23 @@ begin
       fbeta1 := falpha1coil*(fcA + fcB);
       fbeta2 := falpha2coil*(fcA + fcB);
 
+      // calculate spring rate
+      fRMR := fE*QuarticPower(fd)/(64*fDm*fn);
+
       // calculate torques
-      fTorqueT1 := (fE*(QuarticPower(fd)/fDm)/(64*fn))*(falpha1coil/(1*rad));
-      fTorqueT2 := (fE*(QuarticPower(fd)/fDm)/(64*fn))*(falpha2coil/(1*rad));
-      fRMR      := fTorqueT1/falpha1coil;
+      fTorqueT1 := fRMR*falpha1coil;
+      fTorqueT2 := fRMR*falpha2coil;
+
+
+      fTorqueTn := (0.7*fRm)*(pi*CubicPower(fd))/32;
+      falphan   := 64*fDm*fn*fTorqueTn/fE/QuarticPower(fd);
+
+      // Calcolo lavoro molla W0n e W12
+      if fCheck then
+      begin
+        fW0n := (FTorqueTn / 2) * (FAlphan);
+        fW12 := (FTorqueT2 + FTorqueT1) / 2 * (FAlpha2 - FAlpha1);
+      end;
 
       // calculate reaction A
       if GreaterThanZero(fLengthArmLegA) then
@@ -1074,11 +1109,11 @@ begin
     if fCheck then
     begin
       // calculate stress
+      fSigmaz  := 0.7*fRm;
       fSigma1  := (32*fTorqueT1)/(pi*CubicPower(fd));
       fSigma2  := (32*fTorqueT2)/(pi*CubicPower(fd));
       fSigmaq1 := fq*fSigma1;
       fSigmaq2 := fq*fSigma2;
-      fSigmaz  := 0.7*fRm;
     end;
 
 
