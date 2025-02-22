@@ -190,6 +190,7 @@ type
 
     falpha1coil: TQuantity;
     falpha2coil: TQuantity;
+    falphancoil: TQuantity;
     fBendRadiusLegA: TQuantity;
     fBendRadiusLegB: TQuantity;
     fBentLegA: boolean;
@@ -197,6 +198,7 @@ type
 
     fbeta1: TQuantity;
     fbeta2: TQuantity;
+    fbetan: TQuantity;
 
     fcA, fcB: TQuantity;
     fCheck: boolean;
@@ -211,6 +213,7 @@ type
     fDm: TQuantity;
 
     fDynamicLoad: boolean;
+    fDynamicSafetyFactor: TQuantity;
 
     fE: TQuantity;
     fFixedEndA: boolean;
@@ -227,6 +230,8 @@ type
     fLengthArmLegB: TQuantity;
 
     fMass: TQuantity;
+    fNaturalFrequency: TQuantity;
+    fNumOfCycles: TQuantity;
     fn: double;
     fq: double;
 
@@ -234,15 +239,23 @@ type
     fRm: TQuantity;
     fRMR: TQuantity;
 
+    fStaticSafetyFactor: double;
     fStressInCoilingDirection: boolean;
 
     fSigma1: TQuantity;
     fSigma2: TQuantity;
     fSigman: TQuantity;
-    fSigmaz: TQuantity;
 
     fSigmaq1: TQuantity;
     fSigmaq2: TQuantity;
+    fSigmaqn: TQuantity;
+
+    fSigmaqh: TQuantity;
+
+
+    fSigmaz: TQuantity;
+    fSigmaoz: TQuantity;
+    fSigmahz: TQuantity;
 
     fTorqueT1: TQuantity;
     fTorqueT2: TQuantity;
@@ -264,7 +277,8 @@ type
     procedure Solve(ASpringTolerance: TDIN2194);
 
     function AlphaCoil(const Alpha: TQuantity): TQuantity;
-    function Lk(const alpha: TQuantity): TQuantity;
+    function Lk(const Alpha: TQuantity): TQuantity;
+    function InnerCoilDiameter(const Alpha: TQuantity): TQuantity;
 
 
     function GetSigma (const aTorque: TQuantity): TQuantity;
@@ -272,6 +286,8 @@ type
 
   public
     property ActiveColis: double read fn write fn;
+    property AdmDynamicBendingStressRangeSigmahz: TQuantity read fSigmahz;
+    property AdmDynamicBendingStressSigmaoz: TQuantity read fSigmaoz;
     property AdmStaticBendingStressSigmaz: TQuantity read fSigmaz;
 
     property Alpha1: TQuantity read fAlpha1 write fAlpha1;
@@ -291,6 +307,7 @@ type
     property Dm: TQuantity read fDm write fDm;
 
     property DynamicLoad: boolean read fDynamicLoad write fDynamicLoad;
+    property DynamicSafetyFactor: TQuantity read fDynamicSafetyFactor;
 
     property FixedEndA: boolean read fFixedEndA write fFixedEndA;
     property FixedEndB: boolean read fFixedEndB write fFixedEndB;
@@ -304,11 +321,13 @@ type
 
     property Mass: TQuantity read FMass;
     property MaterialDensity: TQuantity read fRho write fRho;
+    property NaturalFrequency: TQuantity read fNaturalFrequency;
 
     property CoilsGap: TQuantity read fa write fa;
     property CorrectionFactorQ: double read fq;
 
     property ShearModulus: TQuantity read fG write fG;
+    property StaticSafetyFactor: double read fStaticSafetyFactor;
 
     property StressInCoilingDirection: boolean read fStressInCoilingDirection write fStressInCoilingDirection;
 
@@ -326,6 +345,9 @@ type
 
     property BendingStressSigmaq1: TQuantity read fSigmaq1;
     property BendingStressSigmaq2: TQuantity read fSigmaq2;
+    property BendingStressSigmaqn: TQuantity read fSigmaqn;
+
+    property BendingStressSigmaqH: TQuantity read fSigmaqh;
 
     property YoungModulus: TQuantity read fE write fE;
     property WireDiameter: TQuantity read fd write fd;
@@ -774,10 +796,10 @@ begin
     if MAT.Name = '' then
       WarningMessage.Add('EN13906-1: Spring material data unavailable (dyn).');
 
-    if (MAT.TorsionalStressTauStar  > 0*Pa) and
-       (MAT.TorsionalStressTauYield > 0*Pa) and
-       (MAT.TorsionalStressTauOE7   > 0*Pa) and
-       (MAT.TorsionalStressTauUE7   > 0*Pa) then
+    if GreaterThanZero(MAT.TorsionalStressTauStar ) and
+       GreaterThanZero(MAT.TorsionalStressTauYield) and
+       GreaterThanZero(MAT.TorsionalStressTauOE7  ) and
+       GreaterThanZero(MAT.TorsionalStressTauUE7  ) then
     begin
       fTauoz := MAT.TorsionalStressTauYield;
       fTauhz := 0*Pa;
@@ -918,10 +940,17 @@ begin
 
   fbeta1          := 0*rad;
   fbeta2          := 0*rad;
+
   fFixedEndA      := False;
   fFixedEndB      := False;
   fClosedCoils    := True;
   fDynamicLoad    := False;
+  fDynamicSafetyFactor := 0;
+
+  fMass             := 0*kg;
+  fNaturalFrequency := 0;
+  fNumOfCycles      := 0;
+
   fTorqueT1       := 0*N*m;
   fTorqueT2       := 0*N*m;
   fTorqueTn       := 0*N*m;
@@ -949,7 +978,9 @@ begin
   if LessThanOrEqualToZero(fDm) then ErrorMessage.Add('Coil diameter "Dm" unassigned.');
   if LessThanOrEqualToZero(fE)  then ErrorMessage.Add('Young''s modulus "E" unassigned.');
   if LessThanOrEqualToZero(fG)  then ErrorMessage.Add('Shear modulus "G" unassigned.');
+  if LessThanZero(fa)           then ErrorMessage.Add('Wrong coil distance "a" value.');
   if fn <= 0                    then ErrorMessage.Add('Number of active coil "n" unassigned.');
+
 
   if fColdCoiled then
     if (fd > (20*mm)) then ErrorMessage.Add('Wire diameter > 20.')
@@ -974,9 +1005,6 @@ begin
     end;
     fCheck := ErrorMessage.Count = 0;
   end;
-
-  for i := 0 to ErrorMessage  .Count -1 do writeln(ErrorMessage  [i]);
-  for i := 0 to WarningMessage.Count -1 do writeln(WarningMessage[i]);
 end;
 
 function TTorsionSpringSolver.CalcRadialEndFlex(ArmLength: TQuantity): TQuantity;
@@ -990,10 +1018,10 @@ begin
 end;
 
 procedure TTorsionSpringSolver.Solve(ASpringTolerance: TDIN2194);
+var
+  mSigma: TQuantity;
+  Sigmah7, Sigmah6, Sigmah5: TQuantity;
 begin
-  writeln;
-  writeln('TTorsionSpringSolver');
-
   PreCheck;
   if fCheck then
   begin
@@ -1054,7 +1082,7 @@ begin
     // Calcolo lunghezza sviluppo del filo della molla
     if fCheck then
     begin
-      fWireLength := fLengthLegA + pi * fDm * fn + fLengthLegB;
+      fWireLength := fLengthLegA + pi*fDm*fn + fLengthLegB;
     end;
 
     // Calcolo massa della molla
@@ -1072,6 +1100,7 @@ begin
       // calculate legs bending angle
       fbeta1 := falpha1coil*(fcA + fcB);
       fbeta2 := falpha2coil*(fcA + fcB);
+      fbetan := falpha2coil*(fcA + fcB);
 
       // calculate spring rate
       fRMR := fE*QuarticPower(fd)/(64*fDm*fn);
@@ -1079,17 +1108,6 @@ begin
       // calculate torques
       fTorqueT1 := fRMR*falpha1coil;
       fTorqueT2 := fRMR*falpha2coil;
-
-
-      fTorqueTn := (0.7*fRm)*(pi*CubicPower(fd))/32;
-      falphan   := 64*fDm*fn*fTorqueTn/fE/QuarticPower(fd);
-
-      // Calcolo lavoro molla W0n e W12
-      if fCheck then
-      begin
-        fW0n := (FTorqueTn / 2) * (FAlphan);
-        fW12 := (FTorqueT2 + FTorqueT1) / 2 * (FAlpha2 - FAlpha1);
-      end;
 
       // calculate reaction A
       if GreaterThanZero(fLengthArmLegA) then
@@ -1106,57 +1124,108 @@ begin
       end;
     end;
 
+    // calculate stress 1 & 2
     if fCheck then
     begin
-      // calculate stress
       fSigmaz  := 0.7*fRm;
       fSigma1  := (32*fTorqueT1)/(pi*CubicPower(fd));
       fSigma2  := (32*fTorqueT2)/(pi*CubicPower(fd));
       fSigmaq1 := fq*fSigma1;
       fSigmaq2 := fq*fSigma2;
+      fSigmaqh := fSigmaq2 - fSigmaq1;
     end;
 
+    // calculate stress n
+    if Check then
+    begin
+      fSigmaqn    := fSigmaz;
+      fSigman     := fSigmaqn/fq;
+      falphancoil := (2*pi*fn*fSigman/fE)*(fDm/fd);
+      falphan     := falphancoil*(1 + fcA + fcB);
+      fTorqueTn   := fRMR*falphancoil;
+    end;
 
+    // Calcolo lavoro molla W0n e W12
+    if fCheck then
+    begin
+      fW12 := (FTorqueT2 + FTorqueT1) / 2 * (FAlpha2 - FAlpha1);
+      fW0n := (FTorqueTn / 2) * (FAlphan);
+    end;
 
-    writeln('E    = ', PascalUnit.ToString(fE, 10, 0, [pMega]));
-    writeln('G    = ', PascalUnit.ToString(fG, 10, 0, [pMega]));
+    // Calcolo frequenza naturale del primo ordine della molla
+    if fCheck then
+    begin
+      // La frequenza naturale del primo ordine della molla, avente entrambe le estremità vincolate ed
+      // eccitare periodicamente ad una estremità durante il funzionamento, è determinata mediante la
+      // seguente formula:
 
-    writeln('d    = ', MeterUnit .ToString(fd,  4, 0, [pMilli]));
-    writeln('Di   = ', MeterUnit .ToString(fDi, 4, 0, [pMilli]));
-    writeln('Dm   = ', MeterUnit .ToString(fDm, 4, 0, [pMilli]));
-    writeln('De   = ', MeterUnit .ToString(fDe, 4, 0, [pMilli]));
-    writeln('n    = ', fn:0:2);
-    writeln;
-    writeln('dmax = ', MeterUnit.ToString((fd + fdTolerance), 4, 0, [pMilli]));
-    writeln('w    = ', ScalarUnit.ToString(fw, 0, 4, []));
-    writeln;
-    writeln('q    = ', ScalarUnit.ToString(fq, 0, 4, []));
-    writeln;
-    writeln('Lk0  = ', MeterUnit.ToString(Lk(0*rad),       4, 0, [pMilli]));
-    writeln('Lk1  = ', MeterUnit.ToString(Lk(falpha1coil), 4, 0, [pMilli]));
-    writeln('Lk2  = ', MeterUnit.ToString(Lk(falpha2coil), 4, 0, [pMilli]));
-    writeln;
+      // fNaturalFrequency := 2/ ( (fn*FDm*FDm) / (2*pi*sqrt(2)*fd) / SquareRoot(FG/FRho) );
+    end;
 
-    writeln(DegreeUnit.ToString(falpha1coil, 4, 0, []));
-    writeln(DegreeUnit.ToString(fbeta1,      4, 0, []));
-    writeln(DegreeUnit.ToString(falpha1,     4, 0, []), ' = ', DegreeUnit.ToString((falpha1coil + fbeta1), 4, 0, []));
-    writeln;
-    writeln(DegreeUnit.ToString(falpha2coil, 4, 0, []));
-    writeln(DegreeUnit.ToString(fbeta2,      4, 0, []));
-    writeln(DegreeUnit.ToString(falpha2,     4, 0, []), ' = ', DegreeUnit.ToString((falpha2coil + fbeta2), 4, 0, []));
+    // Calcolo coefficente di sicurezza statico
+    if fCheck then
+    begin
+      fStaticSafetyFactor := ScalarUnit.ToFloat(fSigmaz / fSigmaq2);
 
-    writeln;
-    writeln('T1  = ', NewtonMeterUnit.ToString(fTorqueT1, 4, 0, [pNone, pMilli]));
-    writeln('T2  = ', NewtonMeterUnit.ToString(fTorqueT2, 4, 0, [pNone, pMilli]));
-    writeln('RMR = ', NewtonMeterPerDegreeUnit.ToString(fRMR, 4, 0, [pNone, pMilli]));
+      if fStaticSafetyFactor < 1 then
+        WarningMessage.Add('EN13906-1: Static safety factor < 1 !');
 
-    writeln;
-    writeln('sigma1 = ', PascalUnit.ToString(fSigmaq1, 4, 0, [pMega]));
-    writeln('sigma1 = ', PascalUnit.ToString(fSigmaq2, 4, 0, [pMega]));
-    writeln;
-    writeln('sigmaz = ', PascalUnit.ToString(fSigmaz,  4, 0, [pMega]));
+      fCheck := ErrorMessage.Count = 0;
+    end;
+
+    // Calcolo numero di cicli e coefficente di sicurezza a fatica
+    if fCheck then
+    begin
+      if MAT.Name = '' then
+        WarningMessage.Add('EN13906-1: Spring material data unavailable (dyn).');
+
+      if GreaterThanZero(MAT.BendingStressSigmaStar ) and
+         GreaterThanZero(MAT.BendingStressSigmaYield) and
+         GreaterThanZero(MAT.BendingStressSigmaOE7  ) and
+         GreaterThanZero(MAT.BendingStressSigmaUE7  ) then
+      begin
+        fSigmaoz := MAT.BendingStressSigmaYield;
+        fSigmahz := 0*Pa;
+
+        if fSigmaq1 >= MAT.BendingStressSigmaUE7 then
+          Sigmah7 := fSigmaoz - fSigmaq1
+        else
+          Sigmah7 := MAT.BendingStressSigmaOE7 + (MAT.BendingStressSigmaYield - MAT.BendingStressSigmaOE7) / MAT.BendingStressSigmaUE7 * fSigmaq1 - fSigmaq1;
+
+        if fSigmaq1 >= MAT.BendingStressSigmaUE6 then
+          Sigmah6 := fSigmaoz - fSigmaq1
+        else
+          Sigmah6 := MAT.BendingStressSigmaOE6 + (MAT.BendingStressSigmaYield - MAT.BendingStressSigmaOE6) / MAT.BendingStressSigmaUE6 * fSigmaq1 - fSigmaq1;
+
+        if fSigmaq1 >= MAT.BendingStressSigmaUE5 then
+          Sigmah5 := fSigmaoz - fSigmaq1
+        else
+          Sigmah5 := MAT.BendingStressSigmaOE5 + (MAT.BendingStressSigmaYield - MAT.BendingStressSigmaOE5) / MAT.BendingStressSigmaUE5 * fSigmaq1 - fSigmaq1;
+
+        if fSigmaqh <= Sigmah7 then
+        begin
+          fNumOfCycles := MAXFLOAT;
+        end else
+        begin
+          if fSigmaqh <= Sigmah6 then
+          begin
+            mSigma := (fSigmaqh - Sigmah7)/(Sigmah6 - Sigmah7);
+            fNumOfCycles := MAT.NumOfCyclesE7 - mSigma*(MAT.NumOfCyclesE7 - MAT.NumOfCyclesE6);
+          end else
+          begin
+            if fSigmaqh <= Sigmah5 then
+            begin
+              mSigma := (fSigmaqh - Sigmah6)/(Sigmah5 - Sigmah6);
+              fNumOfCycles := MAT.NumOfCyclesE6 - mSigma*(MAT.NumOfCyclesE6 - MAT.NumOfCyclesE5);
+            end;
+          end;
+        end;
+        fSigmahz := Sigmah7;
+
+        fDynamicSafetyFactor := Sigmah7 / fSigmaqh;
+      end;
+    end;
   end;
-
 end;
 
 function TTorsionSpringSolver.AlphaCoil(const Alpha: TQuantity): TQuantity;
@@ -1176,13 +1245,17 @@ begin
   if fCheck then
   begin
     fdMax  := fd + fdTolerance;
-    Result := fdMax*(fn + 1.5 + AlphaCoil(Alpha)/(2*pi*rad));
     if GreaterThanZero(fa) then
     begin
-      if Result < (fn*(fa + fdMax) + fdMax) then
-        Result := (fn*(fa + fdMax) + fdMax);
+      Result := fn*(fa + fdMax) + fdMax;
     end;
+    Result := Max(Result, fdMax*(fn + 1.0 + Alpha/2/pi));
   end;
+end;
+
+function TTorsionSpringSolver.InnerCoilDiameter(const Alpha: TQuantity): TQuantity;
+begin
+  result := fDm*fn/(fn + Alpha/2/pi) - fd;
 end;
 
 function TTorsionSpringSolver.GetSigma(const aTorque: TQuantity): TQuantity;
