@@ -1019,6 +1019,7 @@ end;
 
 procedure TTorsionSpringSolver.Solve(ASpringTolerance: TDIN2194);
 var
+  i: longint;
   mSigma: TQuantity;
   Sigmah7, Sigmah6, Sigmah5: TQuantity;
 begin
@@ -1124,6 +1125,26 @@ begin
       end;
     end;
 
+    // Calcolo tolleranze Dm, Lk, T1, T1
+    if fCheck then
+    begin
+      ASpringTolerance.WireDiameter     := fd;
+      ASpringTolerance.MeanCoilDiameter := fDm;
+      ASpringTolerance.ActiveCoils      := fn;
+      ASpringTolerance.LegLength1       := LengthLegA;
+      ASpringTolerance.LegLength2       := LengthLegB;
+
+      //ASpringTolerance.Torque1          := FLoadF1;
+      //ASpringTolerance.Torque2          := FLoadF2;
+      //ASpringTolerance.FreeBodyLength := FLengthL0;
+      //ASpringTolerance.NumActiveCoils := fn;
+      //ASpringTolerance.SpringIndex    := fw;
+      //ASpringTolerance.SpringRate     := fR;
+      ASpringTolerance.Solve;
+
+      fCheck := ErrorMessage.Count = 0;
+    end;
+
     // calculate stress 1 & 2
     if fCheck then
     begin
@@ -1226,6 +1247,8 @@ begin
       end;
     end;
   end;
+
+  for i := 0 to ErrorMessage.Count -1 do Writeln(ErrorMessage[i]);
 end;
 
 function TTorsionSpringSolver.AlphaCoil(const Alpha: TQuantity): TQuantity;
