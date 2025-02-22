@@ -452,11 +452,11 @@ var
   d, Dm, Kf, Ks: double;
   Check: boolean;
 begin
-  if fWireDiameter        <  (0.07*mm) then ErrorMessage.Add('Wire diameter d < 0.07mm.');
-  if fWireDiameter        >  (17  *mm) then ErrorMessage.Add('Wire diameter d > 17 mm.');
-  if fCoilDiameter        <= (0   *mm) then ErrorMessage.Add('Mean coil diameter unassigned.');
-  if fCoilDiameter        >  (340 *mm) then ErrorMessage.Add('Mean coil diameter Dm > 340 mm.');
-  if fActiveCoils         <  (2      ) then ErrorMessage.Add('Number of active coils n < 2.');
+  if fWireDiameter <  (0.07*mm) then ErrorMessage.Add('Wire diameter d < 0.07mm.');
+  if fWireDiameter >  (17  *mm) then ErrorMessage.Add('Wire diameter d > 17 mm.');
+  if fCoilDiameter <= (0   *mm) then ErrorMessage.Add('Mean coil diameter unassigned.');
+  if fCoilDiameter >  (340 *mm) then ErrorMessage.Add('Mean coil diameter Dm > 340 mm.');
+  if fActiveCoils  <  (2      ) then ErrorMessage.Add('Number of active coils n < 2.');
 
   // leg lengths
   if (fLegLength1 <  (0.5*mm)) then ErrorMessage.Add('Leg length1 is < 0.5 mm.');
