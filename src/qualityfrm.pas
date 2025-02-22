@@ -207,9 +207,9 @@ begin
     2: SpringTolerance.QualityGradeOnCoilDiameter := QualityGrade3;
   end;
   case ToleranceLengthL0.ItemIndex of
-    0: SpringTolerance.QualityGradeOnRelativeEndAngle := QualityGrade1;
-    1: SpringTolerance.QualityGradeOnRelativeEndAngle := QualityGrade2;
-    2: SpringTolerance.QualityGradeOnRelativeEndAngle := QualityGrade3;
+    0: SpringTolerance.QualityGradeOnFreeBodyLength := QualityGrade1;
+    1: SpringTolerance.QualityGradeOnFreeBodyLength := QualityGrade2;
+    2: SpringTolerance.QualityGradeOnFreeBodyLength := QualityGrade3;
   end;
   case ToleranceLoadF1.ItemIndex of
     0: SpringTolerance.QualityGradeOnTorque1 := QualityGrade1;
