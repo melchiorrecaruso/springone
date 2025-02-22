@@ -55,6 +55,18 @@ type
     fTorsionalStressTauUE7: TQuantity;
     fTorsionalStressTauUE6: TQuantity;
     fTorsionalStressTauUE5: TQuantity;
+
+    fBendingStressSigmaStar: TQuantity;
+    fBendingStressSigmaUT: TQuantity;
+    fBendingStressSigmaYield: TQuantity;
+    fBendingStressSigmaOE7: TQuantity;
+    fBendingStressSigmaOE6: TQuantity;
+    fBendingStressSigmaOE5: TQuantity;
+    fBendingStressSigmaOE3: TQuantity;
+    fBendingStressSigmaUE7: TQuantity;
+    fBendingStressSigmaUE6: TQuantity;
+    fBendingStressSigmaUE5: TQuantity;
+
     fNumOfCyclesE7: double;
     fNumOfCyclesE6: double;
     fNumOfCyclesE5: double;
@@ -96,6 +108,18 @@ type
     property TorsionalStressTauUE7: TQuantity read fTorsionalStressTauUE7;
     property TorsionalStressTauUE6: TQuantity read fTorsionalStressTauUE6;
     property TorsionalStressTauUE5: TQuantity read fTorsionalStressTauUE5;
+
+    property BendingStressSigmaStar: TQuantity read fBendingStressSigmaStar;
+    property BendingStressSigmaUT: TQuantity read fBendingStressSigmaUT;
+    property BendingStressSigmaYield: TQuantity read fBendingStressSigmaYield;
+    property BendingStressSigmaOE7: TQuantity read fBendingStressSigmaOE7;
+    property BendingStressSigmaOE6: TQuantity read fBendingStressSigmaOE6;
+    property BendingStressSigmaOE5: TQuantity read fBendingStressSigmaOE5;
+    property BendingStressSigmaOE3: TQuantity read fBendingStressSigmaOE3;
+    property BendingStressSigmaUE7: TQuantity read fBendingStressSigmaUE7;
+    property BendingStressSigmaUE6: TQuantity read fBendingStressSigmaUE6;
+    property BendingStressSigmaUE5: TQuantity read fBendingStressSigmaUE5;
+
     property NumOfCyclesE7: double read fNumOfCyclesE7;
     property NumOfCyclesE6: double read fNumOfCyclesE6;
     property NumOfCyclesE5: double read fNumOfCyclesE5;
@@ -228,14 +252,15 @@ begin
     begin
       fTensileStrengthRm := RMMAX;
     end;
-    fTorsionalStressTauUT := fTensileStrengthRm*0.577;
+    fTorsionalStressTauUT := fTensileStrengthRm*0.57735;
+    fBendingStressSigmaUT := fTensileStrengthRm*0.7;
 
-    DT0                   := WIRESPECS_TABLE[I].DT0*mm;
-    TO0                   := WIRESPECS_TABLE[I].TO0*MPa;
+    DT0                   := WIRESPECS_TABLE[I].DT0 *mm;
+    TO0                   := WIRESPECS_TABLE[I].TO0 *MPa;
     DTO0                  := WIRESPECS_TABLE[I].DTO0*MPa;
-    TO1                   := WIRESPECS_TABLE[I].TO1*MPa;
+    TO1                   := WIRESPECS_TABLE[I].TO1 *MPa;
     DTO1                  := WIRESPECS_TABLE[I].DTO1*MPa;
-    TU1                   := WIRESPECS_TABLE[I].TU1*MPa;
+    TU1                   := WIRESPECS_TABLE[I].TU1 *MPa;
     DTU1                  := WIRESPECS_TABLE[I].DTU1*MPa;
 
     fTemperature          := aTemperature;
@@ -256,6 +281,13 @@ begin
       fTorsionalStressTauOE3   := fTorsionalStressTauUT*0.95;
       fTorsionalStressTauStar  := fTorsionalStressTauOE7/(1 - ((fTorsionalStressTauYield - fTorsionalStressTauOE7)/fTorsionalStressTauUE7));
 
+      // Torsional -> Bending
+      fBendingStressSigmaYield := fTorsionalStressTauYield/0.57735*0.7;
+      fBendingStressSigmaOE7   := fTorsionalStressTauOE7  /0.57735*0.7;
+      fBendingStressSigmaUE7   := fTorsionalStressTauUE7  /0.57735*0.7;
+      fBendingStressSigmaOE3   := fTorsionalStressTauOE3  /0.57735*0.7;
+      fBendingStressSigmaStar  := fTorsionalStressTauStar /0.57735*0.7;
+
       fNumOfCyclesE6 := fNumOfCyclesE7/10;
       fNumOfCyclesE5 := fNumOfCyclesE7/100;
       fNumOfCyclesE3 := 1000;
@@ -274,6 +306,11 @@ begin
 
         fTorsionalStressTauUE5 := fTorsionalStressTauStar*((fTorsionalStressTauYield - fTorsionalStressTauOE5)/
                                                            (fTorsionalStressTauStar  - fTorsionalStressTauOE5));
+        // Torsional -> Bending
+        fBendingStressSigmaOE6 := fTorsionalStressTauOE6/0.57735*0.7;
+        fBendingStressSigmaOE5 := fTorsionalStressTauOE5/0.57735*0.7;
+        fBendingStressSigmaUE6 := fTorsionalStressTauUE6/0.57735*0.7;
+        fBendingStressSigmaUE5 := fTorsionalStressTauUE5/0.57735*0.7;
       end;
     end;
   end;
