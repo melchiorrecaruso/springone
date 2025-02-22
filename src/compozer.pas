@@ -494,12 +494,14 @@ begin
   else
     Result.Title := Format('Goodman Chart: %s', [MAT.Name]);
 
+
+
+  {$IFDEF MODULE1}
   Result.XAxisLabel := 'tauU [' + GetPressureSymbol(SpringSolver.TensileStrengthRm) + ']';
   Result.YAxisLabel := 'tauO [' + GetPressureSymbol(SpringSolver.TensileStrengthRm) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
 
-  {$IFDEF MODULE1}
   // Drawing bisector line
   if GreaterThanZero(SpringSolver.AdmStaticTorsionalStressTauz) then
   begin
@@ -515,6 +517,11 @@ begin
   {$ENDIF}
 
   {$IFDEF MODULE3}
+  Result.XAxisLabel := 'sigma U [' + GetPressureSymbol(SpringSolver.TensileStrengthRm) + ']';
+  Result.YAxisLabel := 'sigma O [' + GetPressureSymbol(SpringSolver.TensileStrengthRm) + ']';
+  Result.Scale := AScreenScale;
+  LoadChart1(Result, 'Custom');
+
   // Drawing bisector line
   if GreaterThanZero(SpringSolver.AdmStaticBendingStressSigmaz) then
   begin
@@ -606,6 +613,7 @@ begin
   end;
   {$ENDIF}
 
+  {$IFDEF MODULE1}
   // Drawing Goodmand curve
   if MAT.Name <> '' then
   begin
@@ -671,6 +679,75 @@ begin
       Points := nil;
     end;
   end;
+  {$ENDIF}
+
+  {$IFDEF MODULE3}
+  // Drawing Goodmand curve
+  if MAT.Name <> '' then
+  begin
+    if GreaterThanZero(MAT.BendingStressSigmaOE5  ) and
+       GreaterThanZero(MAT.BendingStressSigmaUE5  ) and
+       GreaterThanZero(MAT.BendingStressSigmaYield) and
+       GreaterThanZero(MAT.BendingStressSigmaUE6  ) then
+    begin
+      LoadChart2(Result, 'GoodmanChart', '1E5');
+      SetLength(Points, 3);
+      Points[0].X := 0;
+      Points[0].Y := GetPressureValue(MAT.BendingStressSigmaOE5);
+      Points[1].X := GetPressureValue(MAT.BendingStressSigmaUE5);
+      Points[1].Y := GetPressureValue(MAT.BendingStressSigmaYield);
+      Points[2].X := GetPressureValue(MAT.BendingStressSigmaUE6);
+      Points[2].Y := GetPressureValue(MAT.BendingStressSigmaYield);
+      Result.AddPolyLine(Points, False, '1E5 Cycles');
+      Result.AddLabel(
+        GetPressureValue(MAT.BendingStressSigmaUE5),
+        GetPressureValue(MAT.BendingStressSigmaYield),
+        0, 0, taLeftJustify, taAlignBottom, '1E5');
+      Points := nil;
+    end;
+
+    if GreaterThanZero(MAT.BendingStressSigmaOE6  ) and
+       GreaterThanZero(MAT.BendingStressSigmaUE6  ) and
+       GreaterThanZero(MAT.BendingStressSigmaYield) and
+       GreaterThanZero(MAT.BendingStressSigmaUE7  ) then
+    begin
+      LoadChart2(Result, 'GoodmanChart', '1E6');
+      SetLength(Points, 3);
+      Points[0].X := 0;
+      Points[0].Y := GetPressureValue(MAT.BendingStressSigmaOE6);
+      Points[1].X := GetPressureValue(MAT.BendingStressSigmaUE6);
+      Points[1].Y := GetPressureValue(MAT.BendingStressSigmaYield);
+      Points[2].X := GetPressureValue(MAT.BendingStressSigmaUE7);
+      Points[2].Y := GetPressureValue(MAT.BendingStressSigmaYield);
+      Result.AddPolyLine(Points, False, '1E6 Cycles');
+      Result.AddLabel(
+        GetPressureValue(MAT.BendingStressSigmaUE6),
+        GetPressureValue(MAT.BendingStressSigmaYield),
+        0, 0, taLeftJustify, taAlignBottom, '1E6');
+      Points := nil;
+    end;
+
+    if GreaterThanZero(MAT.BendingStressSigmaOE7  ) and
+       GreaterThanZero(MAT.BendingStressSigmaUE7  ) and
+       GreaterThanZero(MAT.BendingStressSigmaYield) then
+    begin
+      LoadChart2(Result, 'GoodmanChart', '1E7');
+      SetLength(Points, 3);
+      Points[0].X := 0;
+      Points[0].Y := GetPressureValue(MAT.BendingStressSigmaOE7);
+      Points[1].X := GetPressureValue(MAT.BendingStressSigmaUE7);
+      Points[1].Y := GetPressureValue(MAT.BendingStressSigmaYield);
+      Points[2].X := GetPressureValue(MAT.BendingStressSigmaYield);
+      Points[2].Y := GetPressureValue(MAT.BendingStressSigmaYield);
+      Result.AddPolyLine(Points, False, '1E7 Cycles');
+      Result.AddLabel(
+        GetPressureValue(MAT.BendingStressSigmaUE7),
+        GetPressureValue(MAT.BendingStressSigmaYield),
+        0, 0, taLeftJustify, taAlignBottom, '1E7 Cycles');
+      Points := nil;
+    end;
+  end;
+  {$ENDIF}
 end;
 
 function TCompozer.CreateBucklingChart(const AScreenScale: double): TChart;
@@ -958,7 +1035,7 @@ begin
   Result[1, 0] := Format('α0: %s', [GetString(GetAngleValue(0*deg))]);
   Result[2, 0] := Format('α1: %s', [GetString(GetAngleValue(SpringSolver.Alpha1))]);
   Result[3, 0] := Format('α2: %s', [GetString(GetAngleValue(SpringSolver.Alpha2))]);
-  Result[4, 0] := Format('αn: %s', [GetString(GetAngleValue(0*deg))]);
+  Result[4, 0] := Format('αn: %s', [GetString(GetAngleValue(SpringSolver.Alphan))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -990,7 +1067,7 @@ begin
   Result[1, 2] := '';
   Result[2, 2] := Format('σ1: %s', [GetString(GetPressureValue(SpringSolver.BendingStressSigmaq1))]);
   Result[3, 2] := Format('σ2: %s', [GetString(GetPressureValue(SpringSolver.BendingStressSigmaq2))]);
-  Result[4, 2] := Format('σn: %s', [GetString(GetPressureValue(SpringSolver.BendingStressSigman ))]);
+  Result[4, 2] := Format('σn: %s', [GetString(GetPressureValue(SpringSolver.BendingStressSigmaqn))]);
   {$ENDIF}
 
   {$IFDEF MODULE1}
@@ -1063,7 +1140,13 @@ begin
     Result[1, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
     Result[2, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha1)))]);
     Result[3, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alpha2)))]);
-    Result[4, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(0*rad)))]);
+    Result[4, 5] := Format('%s', [GetString(GetLengthValue(SpringSolver.Lk(SpringSolver.Alphan)))]);
+
+    Result[0, 6] := 'Di [' + GetLengthSymbol(SpringSolver.InnerCoilDiameter(0*rad)) + ']';
+    Result[1, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.InnerCoilDiameter(0*rad)))]);
+    Result[2, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.InnerCoilDiameter(SpringSolver.Alpha1)))]);
+    Result[3, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.InnerCoilDiameter(SpringSolver.Alpha2)))]);
+    Result[4, 6] := Format('%s', [GetString(GetLengthValue(SpringSolver.InnerCoilDiameter(SpringSolver.Alphan)))]);
   end;
   {$ENDIF}
 end;
@@ -1158,7 +1241,6 @@ begin
   {$ENDIF}
 
   {$IFDEF MODULE3}
-
   Result.Items[ 6, 0] := 'a';
   Result.Items[ 6, 1] := '=';
   Result.Items[ 6, 2] := GetLengthString(SpringSolver.CoilsGap);
@@ -1169,7 +1251,7 @@ begin
 
   Result.Items[ 8, 0] := 'Dm/d';
   Result.Items[ 8, 1] := '=';
-  Result.Items[ 8, 2] := ScalarUnit.ToString(SpringSolver.Dm/Springsolver.WireDiameter);
+  Result.Items[ 8, 2] := ScalarUnit.ToString(SpringSolver.Dm/Springsolver.WireDiameter, DefaultPrecision, DefaultDigits, []);
 
   Result.Items[ 9, 0] := 'q';
   Result.Items[ 9, 1] := '=';
@@ -1190,9 +1272,22 @@ begin
   Result.Items[13, 0] := 'W0n';
   Result.Items[13, 1] := '=';
   Result.Items[13, 2] := GetEnergyString(SpringSolver.SpringWorkW0n);
+
+  Result.Items[14, 0] := 'fe';
+  Result.Items[14, 1] := '=';
+  Result.Items[14, 2] := GetFrequencyString(SpringSolver.NaturalFrequency);
+
+
+
+
+
+  Result.Items[15, 0] := 'load';
+  Result.Items[15, 1] := '=';
+  if SpringSolver.DynamicLoad then
+    Result.Items[15, 2] := ('dynamic')
+  else
+    Result.Items[15, 2] := ('static');
   {$ENDIF}
-
-
 end;
 
 function TCompozer.CreateQuick1List2(const AScreenScale: double): TReportTable;
@@ -1288,6 +1383,62 @@ begin
       Result.Items[14+k, 2] := HourUnit.ToString(SpringSolver.NumOfCycles / SpringSolver.CycleFrequency, 5, 5, []);
     end;
   end;
+  {$ENDIF}
+
+  {$IFDEF MODULE3}
+  k := 2;
+  Result.Items[0+k, 0] := 'sigma q1';
+  Result.Items[0+k, 1] := '=';
+  Result.Items[0+k, 2] := GetPressureString(SpringSolver.BendingStressSigmaq1);
+
+  Result.Items[1+k, 0] := 'sigma q2';
+  Result.Items[1+k, 1] := '=';
+  Result.Items[1+k, 2] := GetPressureString(SpringSolver.BendingStressSigmaq2);
+
+  Result.Items[2+k, 0] := 'sigma qh';
+  Result.Items[2+k, 1] := '=';
+  Result.Items[2+k, 2] := GetPressureString(SpringSolver.BendingStressSigmaqh);
+
+  Result.Items[3+k, 0] := 'E';
+  Result.Items[3+k, 1] := '=';
+  Result.Items[3+k, 2] := GetPressureString(SpringSolver.YoungModulus);
+
+  Result.Items[4+k, 0] := 'G';
+  Result.Items[4+k, 1] := '=';
+  Result.Items[4+k, 2] := GetPressureString(SpringSolver.ShearModulus);
+
+  Result.Items[5+k, 0] := 'rho';
+  Result.Items[5+k, 1] := '=';
+  Result.Items[5+k, 2] := GetDensityString(SpringSolver.MaterialDensity);
+
+  Result.Items[6+k, 0] := 'Rm';
+  Result.Items[6+k, 1] := '=';
+  Result.Items[6+k, 2] := GetPressureString(SpringSolver.TensileStrengthRm);
+
+  Result.Items[7+k, 0] := 'sigma z';
+  Result.Items[7+k, 1] := '=';
+  Result.Items[7+k, 2] := GetPressureString(SpringSolver.AdmStaticBendingStressSigmaz);
+
+  Result.Items[8+k, 0] := 'ns';
+  Result.Items[8+k, 1] := '=';
+  Result.Items[8+k, 2] := Format('%0.2f', [SpringSolver.StaticSafetyFactor]);
+
+  if SpringSolver.DynamicLoad then
+  begin
+    Result.Items[9+k, 0] := 'sigma oz';
+    Result.Items[9+k, 1] := '=';
+    Result.Items[9+k, 2] := GetPressureString(SpringSolver.AdmDynamicBendingStressSigmaoz);
+
+    Result.Items[10+k, 0] := 'sigma hz';
+    Result.Items[10+k, 1] := '=';
+    Result.Items[10+k, 2] := GetPressureString(SpringSolver.AdmDynamicBendingStressRangeSigmahz);
+
+    Result.Items[11+k, 0] := 'nf';
+    Result.Items[11+k, 1] := '=';
+    Result.Items[11+k, 2] := Format('%02f', [ScalarUnit.ToFloat(SpringSolver.DynamicSafetyFactor)]);
+  end;
+
+
   {$ENDIF}
 end;
 
