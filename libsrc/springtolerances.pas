@@ -95,23 +95,20 @@ type
     fMaterialID: string;
     fWireDiameter: TQuantity;
     fCoilDiameter: TQuantity;
-    fFreeBodyLengthLk: TQuantity;
     fActiveCoils: double;
     fSpringIndex: double;
 
     fLegLength1: TQuantity;
     fLegLength2: TQuantity;
-    fLegLength3: TQuantity;
 
     fBendRadius1: TQuantity;
     fBendRadius2: TQuantity;
-    fBendRadius3: TQuantity;
 
     fQualityGradeOnDm: TQualityGrade;
     fQualityGradeOnTorqueT1: TQualityGrade;
     fQualityGradeOnTorqueT2: TQualityGrade;
     fQualityGradeOnRelativeEndAngle: TQualityGrade;
-    fQualityGradeOnLk0: TQualityGrade;
+    fQualityGradeOnFreeBodyLength: TQualityGrade;
     fQualityGradeOnLegLengths: TQualityGrade;
     fQualityGradeOnBendRadii: TQualityGrade;
     fQualityGradeOnBendAngles: TQualityGrade;
@@ -124,14 +121,11 @@ type
 
     fToleranceOnLegLength1: TQuantity;
     fToleranceOnLegLength2: TQuantity;
-    fToleranceOnLegLength3: TQuantity;
     fToleranceOnBendRadius1: TQuantity;
     fToleranceOnBendRadius2: TQuantity;
-    fToleranceOnBendRadius3: TQuantity;
 
     fToleranceOnBendAngle1: TQuantity;
     fToleranceOnBendAngle2: TQuantity;
-    fToleranceOnBendAngle3: TQuantity;
 
     function LegLengthCoefficent(LegLength: TQuantity): double;
     function QualityFactor(AQualityGrade: TQualityGrade): double;
@@ -145,17 +139,20 @@ type
     property ActiveCoils: double read fActiveCoils write fActiveCoils;
     property WireDiameter: TQuantity read fWireDiameter write fWireDiameter;
     property MeanCoilDiameter: TQuantity read fCoilDiameter write fCoilDiameter;
-    property FreeBodyLengthLk: TQuantity read fFreeBodyLengthLk;
+
+    property LegLength1: TQuantity read fLegLength1 write fLegLength1;
+    property LegLength2: TQuantity read fLegLength2 write fLegLength2;
 
     property SpringIndex: double read fSpringIndex;
 
     property QualityGradeOnCoilDiameter: TQualityGrade read fQualityGradeOnDm write fQualityGradeOnDm;
+    property QualityGradeOnFreeBodyLength: TQualityGrade read fQualityGradeOnFreeBodyLength write fQualityGradeOnFreeBodyLength;
     property QualityGradeOnTorque1: TQualityGrade read fQualityGradeOnTorqueT1 write fQualityGradeOnTorqueT1;
     property QualityGradeOnTorque2: TQualityGrade read fQualityGradeOnTorqueT2 write fQualityGradeOnTorqueT2;
     property QualityGradeOnRelativeEndAngle: TQualityGrade read fQualityGradeOnRelativeEndAngle write fQualityGradeOnRelativeEndAngle;
 
     property ToleranceOnCoilDiameter: TQuantity read fToleranceOnCoilDiameter;
-    property ToleranceFreeBodyLength: TQuantity read fToleranceOnFreeBodyLength;
+    property ToleranceOnFreeBodyLength: TQuantity read fToleranceOnFreeBodyLength;
 
     property ToleranceOnTorque1: TQuantity read fToleranceOnTorque1;
     property ToleranceOnTorque2: TQuantity read fToleranceOnTorque2;
@@ -238,6 +235,7 @@ const
 constructor TEN15800.Create;
 begin
   inherited Create;
+  Clear;
 end;
 
 destructor TEN15800.Destroy;
@@ -430,6 +428,7 @@ end;
 constructor TDIN2194.Create;
 begin
   inherited Create;
+  Clear;
 end;
 
 destructor TDIN2194.Destroy;
@@ -439,12 +438,37 @@ end;
 
 procedure TDIN2194.Clear;
 begin
+  fWireDiameter := 0*m;
+  fCoilDiameter := 0*m;
+  fActiveCoils  := 0;
+  fSpringIndex  := 0;
+
+  fLegLength1   := 0*m;
+  fLegLength2   := 0*m;
+
+  fBendRadius1  := 0*m;
+  fBendRadius2  := 0*m;
+
   fQualityGradeOnDm               := QualityGrade2;
   fQualityGradeOnTorqueT1         := QualityGrade2;
   fQualityGradeOnTorqueT2         := QualityGrade2;
   fQualityGradeOnRelativeEndAngle := QualityGrade2;
-  fQualityGradeOnLk0              := QualityGrade2;
+  fQualityGradeOnFreeBodyLength   := QualityGrade2;
   fQualityGradeOnLegLengths       := QualityGrade2;
+
+  fToleranceOnCoilDiameter     := 0*m;
+  fToleranceOnTorque1          := 0*N*m;
+  fToleranceOnTorque2          := 0*N*m;
+  fToleranceOnRelativeEndAngle := 0*deg;
+  fToleranceOnFreeBodyLength   := 0*m;
+
+  fToleranceOnLegLength1  := 0*m;
+  fToleranceOnLegLength2  := 0*m;
+  fToleranceOnBendRadius1 := 0*m;
+  fToleranceOnBendRadius2 := 0*m;
+
+  fToleranceOnBendAngle1  := 0*deg;
+  fToleranceOnBendAngle2  := 0*deg;
 end;
 
 procedure TDIN2194.Solve;
@@ -461,20 +485,14 @@ begin
   // leg lengths
   if (fLegLength1 <  (0.5*mm)) then ErrorMessage.Add('Leg length1 is < 0.5 mm.');
   if (fLegLength2 <  (0.5*mm)) then ErrorMessage.Add('Leg length2 is < 0.5 mm.');
-  if (fLegLength3 <  (0.5*mm)) then ErrorMessage.Add('Leg length3 is < 0.5 mm.');
 
-  if (fLegLength1 < (1000*mm)) then ErrorMessage.Add('Leg length1 is > 1000 mm.');
-  if (fLegLength2 < (1000*mm)) then ErrorMessage.Add('Leg length2 is > 1000 mm.');
-  if (fLegLength3 < (1000*mm)) then ErrorMessage.Add('Leg length3 is > 1000 mm.');
-
-  if (fLegLength1 < (1000*mm)) then ErrorMessage.Add('Leg length1 is > 1000 mm.');
-  if (fLegLength2 < (1000*mm)) then ErrorMessage.Add('Leg length2 is > 1000 mm.');
-  if (fLegLength3 < (1000*mm)) then ErrorMessage.Add('Leg length3 is > 1000 mm.');
+  if (fLegLength1 > (1000*mm)) then ErrorMessage.Add('Leg length1 is > 1000 mm.');
+  if (fLegLength2 > (1000*mm)) then ErrorMessage.Add('Leg length2 is > 1000 mm.');
 
   Check := ErrorMessage.Count = 0;
   if Check then
   begin
-    fSpringIndex := ScalarUnit.ToFloat(fWireDiameter/fCoilDiameter);
+    fSpringIndex := ScalarUnit.ToFloat(fCoilDiameter/fWireDiameter);
     if SpringIndex < 4  then ErrorMessage.Add('Spring index w < 4.');
     if SpringIndex > 20 then ErrorMessage.Add('Spring index w > 20.');
   end;
@@ -504,28 +522,25 @@ begin
     // tolerance on body length
     Kf := 0.803 + 8/(5*fActiveCoils) - 1/(3*Sqr(fActiveCoils));
 
-    fToleranceOnFreeBodyLength := 0.06*Power(d, 0.83)*(1 + 0.001*Power(fSpringIndex, 2.5))*fActiveCoils*kf*QualityFactor(fQualityGradeOnLk0)*mm;
+    fToleranceOnFreeBodyLength := 0.06*Power(d, 0.83)*(1 + 0.001*Power(fSpringIndex, 2.5))*fActiveCoils*kf*QualityFactor(fQualityGradeOnFreeBodyLength)*mm;
 
     // tolerance on leg lengths (unloaded spring)
 
     fToleranceOnLegLength1 := (0.2*d + QualityFactor(fQualityGradeOnLegLengths))*LegLengthCoefficent(fLegLength1)*mm;
     fToleranceOnLegLength2 := (0.2*d + QualityFactor(fQualityGradeOnLegLengths))*LegLengthCoefficent(fLegLength2)*mm;
-    fToleranceOnLegLength3 := (0.2*d + QualityFactor(fQualityGradeOnLegLengths))*LegLengthCoefficent(fLegLength3)*mm;
 
     // tolerance on bend radii (unloaded spring)
 
     fToleranceOnBendRadius1 := (0.6 + 0.2*MeterUnit.ToFloat(fBendRadius1, [pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
     fToleranceOnBendRadius2 := (0.6 + 0.2*MeterUnit.ToFloat(fBendRadius2, [pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
-    fToleranceOnBendRadius3 := (0.6 + 0.2*MeterUnit.ToFloat(fBendRadius3, [pMilli]))*QualityFactor(fQualityGradeOnBendRadii)*mm;
 
     // tolerance on angles of bends on leg
 
     fToleranceOnBendAngle1 := 4*sqrt(MeterUnit.ToFloat(fBendRadius1, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
     fToleranceOnBendAngle2 := 4*sqrt(MeterUnit.ToFloat(fBendRadius2, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
-    fToleranceOnBendAngle3 := 4*sqrt(MeterUnit.ToFloat(fBendRadius3, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
   end;
 
-  if fFreeBodyLengthLk > (630*mm) then ErrorMessage.Add('Free body length Lk > 630 mm.');
+  if fToleranceOnFreeBodyLength > (630*mm) then ErrorMessage.Add('Free body length Lk > 630 mm.');
 end;
 
 function TDIN2194.LegLengthCoefficent(LegLength: TQuantity): double;
@@ -537,7 +552,7 @@ begin
   if (LegLen >    6) and (LegLen <=   30) then result := 0.8 else
   if (LegLen >   30) and (LegLen <=  120) then result := 1.3 else
   if (LegLen >  120) and (LegLen <=  400) then result := 1.9 else
-  if (LegLen >  400) and (LegLen <= 1000) then result := 3.2 else Result := 0;
+  if (LegLen >  400) and (LegLen <= 1000) then result := 3.2 else result := 0;
 end;
 
 function TDIN2194.QualityFactor(AQualityGrade: TQualityGrade): double;
