@@ -371,7 +371,7 @@ end;
 
 function GetAngleSymbol(const AQuantity: TQuantity): string;
 begin
-  result := RadianUnit.GetSymbol([]);
+  result := DegreeUnit.GetSymbol([]);
 end;
 
 function GetAngleValue(const AQuantity: TQuantity): double;
