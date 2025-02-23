@@ -362,6 +362,7 @@ implementation
 
 constructor TCompressionSpringSolver.Create;
 begin
+  Clear;
   inherited Create;
 end;
 

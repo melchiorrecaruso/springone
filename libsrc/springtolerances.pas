@@ -234,8 +234,8 @@ const
 
 constructor TEN15800.Create;
 begin
-  inherited Create;
   Clear;
+  inherited Create;
 end;
 
 destructor TEN15800.Destroy;
@@ -427,8 +427,8 @@ end;
 
 constructor TDIN2194.Create;
 begin
-  inherited Create;
   Clear;
+  inherited Create;
 end;
 
 destructor TDIN2194.Destroy;
