@@ -21,7 +21,6 @@
 unit GeometryFrm1;
 
 {$mode ObjFPC}{$H+}
-{$i defines.inc}
 
 interface
 
