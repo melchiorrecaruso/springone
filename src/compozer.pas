@@ -756,7 +756,7 @@ begin
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Buckling diagram';
-  Result.XAxisLabel := 'nu*L0/D';
+  Result.XAxisLabel := 'nu∙L0/D';
   Result.YAxisLabel := 's/L0';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
@@ -814,7 +814,7 @@ begin
 
   {$IFDEF MODULE1}
   Result.Title := 'Load F1-Temperature Chart';
-  Result.XAxisLabel := 'T [C°]';
+  Result.XAxisLabel := Format('T [%s]', [GetTemperatureSymbol(0*K)]);
   Result.YAxisLabel := 'F1 [' + GetForceSymbol(SpringSolver.LoadF1) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
@@ -828,7 +828,7 @@ begin
     Points[0].y := GetForceValue(SpringSolver.GetF1(MAT.Temperature - DeltaTemp));
     Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
     Points[1].y := GetforceValue(SpringSolver.GetF1(MAT.Temperature + DeltaTemp));
-    Result.AddPolyLine(Points, True, 'F1(T°)');
+    Result.AddPolyLine(Points, True, 'F1(T)');
     Points := nil;
     Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetForceValue(SpringSolver.GetF1(MAT.Temperature)),
       5, 0, 10, taLeftJustify, taAlignBottom, GetTemperatureString(MAT.Temperature));
@@ -847,7 +847,7 @@ begin
 
   {$IFDEF MODULE1}
   Result.Title := 'Load F2-Temperature Chart';
-  Result.XAxisLabel := 'T [C°]';
+  Result.XAxisLabel := Format('T [%s]', [GetTemperatureSymbol(0*K)]);
   Result.YAxisLabel := 'F2 [' + GetForceSymbol(SpringSolver.LoadF2) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
@@ -861,7 +861,7 @@ begin
     Points[0].y := GetForceValue(SpringSolver.GetF2(MAT.Temperature - DeltaTemp));
     Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
     Points[1].y := GetForceValue(SpringSolver.GetF2(MAT.Temperature + DeltaTemp));
-    Result.AddPolyLine(Points, True, 'F2(T°)');
+    Result.AddPolyLine(Points, True, 'F2(T)');
     Points := nil;
     Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetForceValue(SpringSolver.GetF2(MAT.Temperature)),
       5, 0, 10, taLeftJustify, taAlignBottom, GetTemperatureString(MAT.Temperature));
@@ -879,7 +879,7 @@ begin
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Shear Modulus G-Temperature Chart';
-  Result.XAxisLabel := 'T [C°]';
+  Result.XAxisLabel := Format('T [%s]', [GetTemperatureSymbol(0*K)]);
   Result.YAxisLabel := 'G [' + GetPressureSymbol(SpringSolver.ShearModulus) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
@@ -893,7 +893,7 @@ begin
     Points[0].y := GetPressureValue(MAT.GetG(MAT.Temperature - DeltaTemp));
     Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
     Points[1].y := GetPressureValue(MAT.GetG(MAT.Temperature + DeltaTemp));
-    Result.AddPolyLine(Points, True, 'G(T°)');
+    Result.AddPolyLine(Points, True, 'G(T)');
     Points := nil;
     Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetPressureValue(MAT.GetG(MAT.Temperature)),
       5, 0, 10, taLeftJustify, taAlignBottom, GetTemperatureString(MAT.Temperature));
@@ -909,7 +909,7 @@ begin
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Young Modulus G-Temperature Chart';
-  Result.XAxisLabel := 'T [C°]';
+  Result.XAxisLabel := Format('T [%s]', [GetTemperatureSymbol(0*K)]);
   Result.YAxisLabel := 'E [' + GetPressureSymbol(SpringSolver.YoungModulus) + ']';
   Result.Scale := AScreenScale;
   LoadChart1(Result, 'Custom');
@@ -923,7 +923,7 @@ begin
     Points[0].y := GetPressureValue(MAT.GetE(MAT.Temperature - DeltaTemp));
     Points[1].x := GetTemperatureValue(MAT.Temperature + DeltaTemp);
     Points[1].y := GetPressureValue(MAT.GetE(MAT.Temperature + DeltaTemp));
-    Result.AddPolyLine(Points, True, 'E(T°)');
+    Result.AddPolyLine(Points, True, 'E(T)');
     Points := nil;
 
     Result.AddDotLabel(GetTemperatureValue(MAT.Temperature), GetPressureValue(MAT.GetE(MAT.Temperature)),
@@ -1964,7 +1964,7 @@ begin
   QuickXList.Items[Row, 6] := GetPressureString(SpringSolver.ShearModulus);
 
   Inc(Row);
-  QuickXList.Items[Row, 4] := Format('G(%s°)', [GetTemperatureString(MAT.Temperature)]);
+  QuickXList.Items[Row, 4] := Format('G(%s)', [GetTemperatureString(MAT.Temperature)]);
   QuickXList.Items[Row, 5] := '=';
   QuickXList.Items[Row, 6] := GetPressureString(MAT.GetG(MAT.Temperature));
 
