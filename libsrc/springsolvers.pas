@@ -1134,13 +1134,8 @@ begin
       ASpringTolerance.ActiveCoils      := fn;
       ASpringTolerance.LegLength1       := LengthLegA;
       ASpringTolerance.LegLength2       := LengthLegB;
-
-      //ASpringTolerance.Torque1          := FLoadF1;
-      //ASpringTolerance.Torque2          := FLoadF2;
-      //ASpringTolerance.FreeBodyLength := FLengthL0;
-      //ASpringTolerance.NumActiveCoils := fn;
-      //ASpringTolerance.SpringIndex    := fw;
-      //ASpringTolerance.SpringRate     := fR;
+      ASpringTolerance.BendRadius1      := BendRadiusLegA;
+      ASpringTolerance.BendRadius2      := BendRadiusLegB;
       ASpringTolerance.Solve;
 
       fCheck := ErrorMessage.Count = 0;
