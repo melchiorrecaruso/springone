@@ -963,7 +963,12 @@ function TCompozer.CreateQualityTable(const AScreenScale: double): TReportTable;
 begin
   Result := TReportTable.Create;
   Result.ColumnCount := 5;
+  {$IFDEF MODULE1}
   Result.RowCount := 7;
+  {$ENDIF}
+  {$IFDEF MODULE3}
+  Result.RowCount := 9;
+  {$ENDIF}
   Result.Zoom := AScreenScale;
   LoadTable(Result, 'CommonTable', 'Table');
 
@@ -1015,40 +1020,51 @@ begin
   Result[2, 0] := 'Lk';
   Result[3, 0] := 'T1';
   Result[4, 0] := 'T2';
-  Result[5, 0] := 'e1';
-  Result[6, 0] := 'e2';
+  Result[5, 0] := 'α0';
+  Result[6, 0] := 'l1, l2';
+  Result[7, 0] := 'r1, r2';
+  Result[8, 0] := 'φ1, φ2';
 
   Result[0, 1] := '1';
   Result[1, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade1);
   Result[2, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade1);
   Result[3, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnTorque1 = QualityGrade1);
   Result[4, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnTorque2 = QualityGrade1);
-  //Result[5, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade1);
-  //Result[6, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade1);
+  Result[5, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnRelativeEndAngle = QualityGrade1);
+  Result[6, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLegLengths = QualityGrade1);
+  Result[7, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnBendRadii = QualityGrade1);
+  Result[8, 1] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnAnglesOfBendOnLegs = QualityGrade1);
 
   Result[0, 2] := '2';
   Result[1, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade2);
   Result[2, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade2);
   Result[3, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnTorque1 = QualityGrade2);
   Result[4, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnTorque2 = QualityGrade2);
-  //Result[5, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade2);
-  //Result[6, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade2);
+  Result[5, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnRelativeEndAngle = QualityGrade2);
+  Result[6, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLegLengths = QualityGrade2);
+  Result[7, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnBendRadii = QualityGrade2);
+  Result[8, 2] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnAnglesOfBendOnLegs = QualityGrade2);
 
   Result[0, 3] := '3';
   Result[1, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnCoilDiameter = QualityGrade3);
   Result[2, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnFreeBodyLength = QualityGrade3);
   Result[3, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnTorque1 = QualityGrade3);
   Result[4, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnTorque2 = QualityGrade3);
-  //Result[5, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnPerpendicularity = QualityGrade3);
-  //Result[6, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnParallelism = QualityGrade3);
+  Result[5, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnRelativeEndAngle = QualityGrade3);
+  Result[6, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnLegLengths = QualityGrade3);
+  Result[7, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnBendRadii = QualityGrade3);
+  Result[8, 3] := BoolToText('x', ' ', SpringTolerance.QualityGradeOnAnglesOfBendOnLegs = QualityGrade3);
 
   Result[0, 4] := 'Tol.';
   Result[1, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceOnCoilDiameter));
   Result[2, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceOnFreeBodyLength));
   Result[3, 4] := '± ' + GetString(GetTorqueValue(SpringTolerance.ToleranceOnTorque1));
   Result[4, 4] := '± ' + GetString(GetTorqueValue(SpringTolerance.ToleranceOnTorque2));
-  //Result[5, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceOnPerpendicularity));
-  //Result[6, 4] := '± ' + GetString(GetLengthValue(SpringTolerance.ToleranceOnParallelism));
+  Result[5, 4] := '± ' + GetString(GetAngleValue (SpringTolerance.ToleranceOnRelativeEndAngle));
+  Result[6, 4] := '± ' + GetString(GetLengthValue(Max(SpringTolerance.ToleranceOnLegLength1, SpringTolerance.ToleranceOnLegLength2)));
+  Result[7, 4] := '± ' + GetString(GetLengthValue(Max(SpringTolerance.ToleranceOnBendRadius1, SpringTolerance.ToleranceOnBendRadius2)));
+  Result[8, 4] := '± ' + GetString(GetAngleValue (Max(SpringTolerance.ToleranceOnBendAngle1, SpringTolerance.ToleranceOnBendAngle2)));
+
   {$ENDIF}
 end;
 
