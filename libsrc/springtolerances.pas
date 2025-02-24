@@ -513,8 +513,8 @@ begin
     if Pos('EN10270-3', fMaterialID) > 0 then Ks := 90;
     if Pos('EN12166',   fMaterialID) > 0 then Ks := 54;
 
-    fToleranceOnTorque1 := (1.3*Ks* Power(d, 3)/(Power(fActiveCoils, 0.24)*Sqrt(fSpringIndex)))*QualityFactor(fQualityGradeOnTorqueT1)*J;
-    fToleranceOnTorque2 := (1.3*Ks* Power(d, 3)/(Power(fActiveCoils, 0.24)*Sqrt(fSpringIndex)))*QualityFactor(fQualityGradeOnTorqueT2)*J;
+    fToleranceOnTorque1 := (1.3*Ks* Power(d, 3)/(Power(fActiveCoils, 0.24)*Sqrt(fSpringIndex)))*QualityFactor(fQualityGradeOnTorqueT1)*N*mm;
+    fToleranceOnTorque2 := (1.3*Ks* Power(d, 3)/(Power(fActiveCoils, 0.24)*Sqrt(fSpringIndex)))*QualityFactor(fQualityGradeOnTorqueT2)*N*mm;
 
     // tolerance on relative end angle (unloaded spring)
     fToleranceOnRelativeEndAngle := 2.4*Power(fActiveCoils, 0.76)*Sqrt(fSpringIndex)*QualityFactor(fQualityGradeOnRelativeEndAngle)*deg;
