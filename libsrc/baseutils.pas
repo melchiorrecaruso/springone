@@ -405,7 +405,7 @@ begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
       True:  result := PoundForceInchUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
-      False: result := NewtonMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
+      False: result := NewtonMeterUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, [pNone, pMilli]);
     end
   else
     Result := '---';
