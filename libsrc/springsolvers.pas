@@ -1248,8 +1248,6 @@ begin
       end;
     end;
   end;
-
-  for i := 0 to ErrorMessage.Count -1 do Writeln(ErrorMessage[i]);
 end;
 
 function TTorsionSpringSolver.AlphaCoil(const Alpha: TQuantity): TQuantity;
