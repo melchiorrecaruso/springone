@@ -111,7 +111,7 @@ type
     fQualityGradeOnFreeBodyLength: TQualityGrade;
     fQualityGradeOnLegLengths: TQualityGrade;
     fQualityGradeOnBendRadii: TQualityGrade;
-    fQualityGradeOnBendAngles: TQualityGrade;
+    fQualityGradeOnAnglesOfBendOnLegs: TQualityGrade;
 
     fToleranceOnCoilDiameter: TQuantity;
     fToleranceOnTorque1: TQuantity;
@@ -140,22 +140,36 @@ type
     property WireDiameter: TQuantity read fWireDiameter write fWireDiameter;
     property MeanCoilDiameter: TQuantity read fCoilDiameter write fCoilDiameter;
 
+
+    property BendRadius1: TQuantity read fBendRadius1 write fBendRadius1;
+    property BendRadius2: TQuantity read fBendRadius2 write fBendRadius2;
+
     property LegLength1: TQuantity read fLegLength1 write fLegLength1;
     property LegLength2: TQuantity read fLegLength2 write fLegLength2;
 
     property SpringIndex: double read fSpringIndex;
 
     property QualityGradeOnCoilDiameter: TQualityGrade read fQualityGradeOnDm write fQualityGradeOnDm;
-    property QualityGradeOnFreeBodyLength: TQualityGrade read fQualityGradeOnFreeBodyLength write fQualityGradeOnFreeBodyLength;
     property QualityGradeOnTorque1: TQualityGrade read fQualityGradeOnTorqueT1 write fQualityGradeOnTorqueT1;
     property QualityGradeOnTorque2: TQualityGrade read fQualityGradeOnTorqueT2 write fQualityGradeOnTorqueT2;
     property QualityGradeOnRelativeEndAngle: TQualityGrade read fQualityGradeOnRelativeEndAngle write fQualityGradeOnRelativeEndAngle;
+    property QualityGradeOnFreeBodyLength: TQualityGrade read fQualityGradeOnFreeBodyLength write fQualityGradeOnFreeBodyLength;
+    property QualityGradeOnLegLengths: TQualityGrade read fQualityGradeOnLegLengths write fQualityGradeOnLegLengths;
+    property QualityGradeOnBendRadii: TQualityGrade read fQualityGradeOnBendRadii write fQualityGradeOnBendRadii;
+    property QualityGradeOnAnglesOfBendOnLegs: TQualityGrade read fQualityGradeOnAnglesOfBendOnLegs write fQualityGradeOnAnglesOfBendOnLegs;
 
     property ToleranceOnCoilDiameter: TQuantity read fToleranceOnCoilDiameter;
     property ToleranceOnFreeBodyLength: TQuantity read fToleranceOnFreeBodyLength;
-
     property ToleranceOnTorque1: TQuantity read fToleranceOnTorque1;
     property ToleranceOnTorque2: TQuantity read fToleranceOnTorque2;
+    property ToleranceOnRelativeEndAngle: TQuantity read fToleranceOnRelativeEndAngle;
+
+    property ToleranceOnLegLength1: TQuantity read fToleranceOnLegLength1;
+    property ToleranceOnLegLength2: TQuantity read fToleranceOnLegLength2;
+    property ToleranceOnBendRadius1: TQuantity read fToleranceOnBendRadius1;
+    property ToleranceOnBendRadius2: TQuantity read fToleranceOnBendRadius2;
+    property ToleranceOnBendAngle1: TQuantity read fToleranceOnBendAngle1;
+    property ToleranceOnBendAngle2: TQuantity read fToleranceOnBendAngle2;
   end;
 
 
@@ -438,23 +452,24 @@ end;
 
 procedure TDIN2194.Clear;
 begin
-  fWireDiameter := 0*m;
-  fCoilDiameter := 0*m;
   fActiveCoils  := 0;
+  fCoilDiameter := 0*m;
   fSpringIndex  := 0;
-
-  fLegLength1   := 0*m;
-  fLegLength2   := 0*m;
+  fWireDiameter := 0*m;
 
   fBendRadius1  := 0*m;
   fBendRadius2  := 0*m;
+  fLegLength1   := 0*m;
+  fLegLength2   := 0*m;
 
-  fQualityGradeOnDm               := QualityGrade2;
-  fQualityGradeOnTorqueT1         := QualityGrade2;
-  fQualityGradeOnTorqueT2         := QualityGrade2;
-  fQualityGradeOnRelativeEndAngle := QualityGrade2;
-  fQualityGradeOnFreeBodyLength   := QualityGrade2;
-  fQualityGradeOnLegLengths       := QualityGrade2;
+  fQualityGradeOnDm                 := QualityGrade2;
+  fQualityGradeOnTorqueT1           := QualityGrade2;
+  fQualityGradeOnTorqueT2           := QualityGrade2;
+  fQualityGradeOnRelativeEndAngle   := QualityGrade2;
+  fQualityGradeOnFreeBodyLength     := QualityGrade2;
+  fQualityGradeOnLegLengths         := QualityGrade2;
+  fQualityGradeOnBendRadii          := QualityGrade2;
+  fQualityGradeOnAnglesOfBendOnLegs := QualityGrade2;
 
   fToleranceOnCoilDiameter     := 0*m;
   fToleranceOnTorque1          := 0*N*m;
@@ -536,8 +551,8 @@ begin
 
     // tolerance on angles of bends on leg
 
-    fToleranceOnBendAngle1 := 4*sqrt(MeterUnit.ToFloat(fBendRadius1, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
-    fToleranceOnBendAngle2 := 4*sqrt(MeterUnit.ToFloat(fBendRadius2, [pMilli])/d)*QualityFactor(fQualityGradeOnBendAngles)*deg;
+    fToleranceOnBendAngle1 := 4*sqrt(MeterUnit.ToFloat(fBendRadius1, [pMilli])/d)*QualityFactor(fQualityGradeOnAnglesOfBendOnLegs)*deg;
+    fToleranceOnBendAngle2 := 4*sqrt(MeterUnit.ToFloat(fBendRadius2, [pMilli])/d)*QualityFactor(fQualityGradeOnAnglesOfBendOnLegs)*deg;
   end;
 
   if fToleranceOnFreeBodyLength > (630*mm) then ErrorMessage.Add('Free body length Lk > 630 mm.');
