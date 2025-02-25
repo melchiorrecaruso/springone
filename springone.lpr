@@ -35,10 +35,10 @@ uses
   TextFrm,
   AboutFrm,
 
-  {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
-  {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
+  {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, QualityFrm1, {$ENDIF}
+  {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, QualityFrm3, {$ENDIF}
 
-  MainFrm, MaterialFrm, ProductionFrm, QualityFrm, ReportFrm, Compozer,
+  MainFrm, MaterialFrm, ProductionFrm, ReportFrm, Compozer,
   LazControls, SysUtils, BaseUtils, LibLink, Setting;
 
 {$R *.res}
@@ -58,7 +58,8 @@ begin
   {$IFDEF MODULE3} Application.CreateForm(TGeometryForm3, GeometryForm3); {$ENDIF}
   Application.CreateForm(TMaterialForm, MaterialForm);
   Application.CreateForm(TProductionForm, ProductionForm);
-  Application.CreateForm(TQualityForm, QualityForm);
+  {$IFDEF MODULE1} Application.CreateForm(TQualityForm1, QualityForm1); {$ENDIF}
+  {$IFDEF MODULE3} Application.CreateForm(TQualityForm3, QualityForm3); {$ENDIF}
   Application.CreateForm(TReportForm, ReportForm);
   Application.CreateForm(TTextForm, TextForm);
   Application.Run;

@@ -80,11 +80,12 @@ uses
   {$IFDEF MODULE3} ApplicationFrm3, {$ENDIF}
   {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
   {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
+  {$IFDEF MODULE1} QualityFrm1, {$ENDIF}
+  {$IFDEF MODULE3} QualityFrm3, {$ENDIF}
   SpringTolerances,
   SpringMaterials,
   SpringSolvers,
   ProductionFrm,
-  QualityFrm,
   MainFrm,
   Setting,
   BaseUtils;
@@ -141,10 +142,18 @@ begin
   TensileStrengthUnit.Enabled := YoungModulus.Enabled;
   MaterialDensityUnit.Enabled := YoungModulus.Enabled;
 
-  if Assigned(QualityForm) then
+  {$IFDEF MODULE1}
+  if Assigned(QualityForm1) then
   begin
-    QualityForm.ToleranceWireDiameter.Enabled := YoungModulus.Enabled;
+    QualityForm1.ToleranceWireDiameter.Enabled := YoungModulus.Enabled;
   end;
+  {$ENDIF}
+  {$IFDEF MODULE3}
+  if Assigned(QualityForm3) then
+  begin
+    QualityForm3.ToleranceOnWireDiameter.Enabled := YoungModulus.Enabled;
+  end;
+  {$ENDIF}
 
   MAT.Clear;
   if Material.Text <> '' then
@@ -191,14 +200,20 @@ begin
         MaterialDensity.Value := KilogramPerCubicMeterUnit.ToFloat(MAT.DensityRho);
 
         SpringSolver.WireDiameterTolerance := WireTolerance(MAT.Regulation, MAT.WireDiameter);
-
-        if Assigned(QualityForm) then
-        begin
-          case QualityForm.ToleranceWireDiameterUnit.ItemIndex of
-            0: QualityForm.ToleranceWireDiameter.Value := MeterUnit.ToFloat(SpringSolver.WireDiameterTolerance, [pMilli]);
-            1: QualityForm.ToleranceWireDiameter.Value := InchUnit.ToFloat(SpringSolver.WireDiameterTolerance);
+        {$IFDEF MODULE1}
+        if Assigned(QualityForm1) then
+          case QualityForm1.ToleranceWireDiameterUnit.ItemIndex of
+            0: QualityForm1.ToleranceWireDiameter.Value := MeterUnit.ToFloat(SpringSolver.WireDiameterTolerance, [pMilli]);
+            1: QualityForm1.ToleranceWireDiameter.Value := InchUnit.ToFloat(SpringSolver.WireDiameterTolerance);
           end;
-        end;
+        {$ENDIF}
+        {$IFDEF MODULE3}
+        if Assigned(QualityForm3) then
+          case QualityForm3.ToleranceOnWireDiameterUnit.ItemIndex of
+            0: QualityForm3.ToleranceOnWireDiameter.Value := MeterUnit.ToFloat(SpringSolver.WireDiameterTolerance, [pMilli]);
+            1: QualityForm3.ToleranceOnWireDiameter.Value := InchUnit.ToFloat(SpringSolver.WireDiameterTolerance);
+          end;
+        {$ENDIF}
       end;
     end;
 

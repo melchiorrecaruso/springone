@@ -1,10 +1,10 @@
 object MainForm: TMainForm
-  Left = 146
-  Height = 501
-  Top = 388
+  Left = 174
+  Height = 555
+  Top = 151
   Width = 700
   Caption = 'Spring ONE'
-  ClientHeight = 501
+  ClientHeight = 555
   ClientWidth = 700
   Color = clForm
   Menu = MainMenu
@@ -14,14 +14,14 @@ object MainForm: TMainForm
   OnDestroy = FormDestroy
   object VirtualScreen: TBGRAVirtualScreen
     Left = 0
-    Height = 501
+    Height = 555
     Top = 0
     Width = 700
     OnRedraw = VirtualScreenRedraw
     Align = alClient
     Alignment = taCenter
     Anchors = []
-    ClientHeight = 501
+    ClientHeight = 555
     ClientWidth = 700
     Color = clNone
     ParentColor = False

@@ -57,10 +57,12 @@ implementation
 {$R *.lfm}
 
 uses
-   ApplicationFrm1, TextFrm, MaterialFrm, QualityFrm,
+   ApplicationFrm1, TextFrm, MaterialFrm,
 
    {$IFDEF MODULE1} GeometryFrm1, {$ENDIF}
    {$IFDEF MODULE3} GeometryFrm3, {$ENDIF}
+   {$IFDEF MODULE1} QualityFrm1,  {$ENDIF}
+   {$IFDEF MODULE3} QualityFrm3,  {$ENDIF}
 
    ADim, BaseUtils, Setting;
 

@@ -313,11 +313,11 @@ implementation
 uses
   AboutFrm, ADim, Compozer, DateUtils, DrawingFrm, TextFrm,
 
-  {$IFDEF MODULE1} GeometryFrm1, ApplicationFrm1, {$ENDIF}
-  {$IFDEF MODULE3} GeometryFrm3, ApplicationFrm3, {$ENDIF}
+  {$IFDEF MODULE1} QualityFrm1, GeometryFrm1, ApplicationFrm1, {$ENDIF}
+  {$IFDEF MODULE3} QualityFrm3, GeometryFrm3, ApplicationFrm3, {$ENDIF}
 
   LCLIntf, LCLType, LibLink, MaterialFrm, Printers, ProductionFrm,
-  QualityFrm, ReportFrm, Setting, baseutils;
+  ReportFrm, Setting, baseutils;
 
 
 { Solve routine }
@@ -330,7 +330,7 @@ begin
   GeometryForm1.SaveToSolver;     // GeometryForm1
   MaterialForm.SaveToSolver;      // MaterialForm
   ProductionForm.SaveToSolver;    // ProductionForm
-  QualityForm.SaveToSolver;       // QualityForm
+  QualityForm1.SaveToSolver;      // QualityForm
   ApplicationForm1.SaveToSolver;  // ApplicationForm
   // Solve
   if ScreenPage = spDefault then
@@ -341,7 +341,7 @@ begin
   GeometryForm3.SaveToSolver;     // GeometryForm3
   MaterialForm.SaveToSolver;      // MaterialForm
   ProductionForm.SaveToSolver;    // ProductionForm
-  QualityForm.SaveToSolver;       // QualityForm
+  QualityForm3.SaveToSolver;      // QualityForm
   ApplicationForm3.SaveToSolver;  // ApplicationForm
   // Solve
   MainForm.FormPaint(nil);
@@ -457,15 +457,16 @@ procedure TMainForm.ClearAll;
 begin
   if Assigned(TextForm        ) then TextForm         .Clear;
   {$IFDEF MODULE1}
+  if Assigned(QualityForm1    ) then QualityForm1     .Clear;
   if Assigned(GeometryForm1   ) then GeometryForm1    .Clear;
   if Assigned(ApplicationForm1) then ApplicationForm1 .ClearForm;
   {$ENDIF}
   {$IFDEF MODULE3}
+  if Assigned(QualityForm3    ) then QualityForm3     .Clear;
   if Assigned(GeometryForm3   ) then GeometryForm3    .Clear;
   if Assigned(ApplicationForm3) then ApplicationForm3 .Clear;
   {$ENDIF}
   if Assigned(MaterialForm    ) then MaterialForm     .Clear;
-  if Assigned(QualityForm     ) then QualityForm      .Clear;
   if Assigned(ProductionForm  ) then ProductionForm   .Clear;
 end;
 
@@ -473,15 +474,17 @@ procedure TMainForm.LoadAll(SessionIniFile: TIniFile);
 begin
   TextForm         .Load(SessionIniFile);
   {$IFDEF MODULE1}
+  QualityForm1     .Load(SessionIniFile);
   GeometryForm1    .Load(SessionIniFile);
   ApplicationForm1 .Load(SessionIniFile);
   {$ENDIF}
   {$IFDEF MODULE3}
+  QualityForm3     .Load(SessionIniFile);
   GeometryForm3    .Load(SessionIniFile);
   ApplicationForm3 .Load(SessionIniFile);
   {$ENDIF}
   MaterialForm     .Load(SessionIniFile);
-  QualityForm      .Load(SessionIniFile);
+
   ProductionForm   .Load(SessionIniFile);
 end;
 
@@ -489,15 +492,16 @@ procedure TMainForm.SaveAll(SessionIniFile: TIniFile);
 begin
   TextForm         .Save(SessionIniFile);
   {$IFDEF MODULE1}
+  QualityForm1     .Save(SessionIniFile);
   GeometryForm1    .Save(SessionIniFile);
   ApplicationForm1 .Save(SessionIniFile);
   {$ENDIF}
   {$IFDEF MODULE3}
+  QualityForm3     .Save(SessionIniFile);
   GeometryForm3    .Save(SessionIniFile);
   ApplicationForm3 .Save(SessionIniFile);
   {$ENDIF}
   MaterialForm     .Save(SessionIniFile);
-  QualityForm      .Save(SessionIniFile);
   ProductionForm   .Save(SessionIniFile);
 end;
 
@@ -746,12 +750,13 @@ begin
   if (TextForm         .ShowModal = mrOk) and
      {$IFDEF MODULE1}
      (GeometryForm1    .ShowModal = mrOk) and
+     (QualityForm1     .ShowModal = mrOk) and
      {$ENDIF}
      {$IFDEF MODULE3}
      (GeometryForm3    .ShowModal = mrOk) and
+     (QualityForm3     .ShowModal = mrOk) and
      {$ENDIF}
      (MaterialForm     .ShowModal = mrOk) and
-     (QualityForm      .ShowModal = mrOk) and
      (ProductionForm   .ShowModal = mrOk) and
      {$IFDEF MODULE1}
      (ApplicationForm1 .ShowModal = mrOk) then
@@ -848,11 +853,20 @@ begin
   SessionIniFile := TIniFile.Create(SessionStream,
     [ifoStripInvalid, ifoFormatSettingsActive, ifoWriteStringBoolean]);
 
-  QualityForm.Save(SessionIniFile);
-  if QualityForm.ShowModal <> mrOk then
+  {$IFDEF MODULE1}
+  QualityForm1.Save(SessionIniFile);
+  if QualityForm1.ShowModal <> mrOk then
   begin
-    QualityForm.Load(SessionIniFile);
+    QualityForm1.Load(SessionIniFile);
   end;
+   {$ENDIF}
+  {$IFDEF MODULE3}
+  QualityForm3.Save(SessionIniFile);
+  if QualityForm3.ShowModal <> mrOk then
+  begin
+    QualityForm3.Load(SessionIniFile);
+  end;
+  {$ENDIF}
   SessionIniFile.Destroy;
   SessionStream.Destroy;
   Solve();
