@@ -1,19 +1,19 @@
-object QualityForm: TQualityForm
-  Left = 271
-  Height = 386
-  Top = 375
+object QualityForm3: TQualityForm3
+  Left = 859
+  Height = 439
+  Top = 435
   Width = 523
   BorderIcons = [biSystemMenu]
   Caption = 'Quality grade'
-  ClientHeight = 386
+  ClientHeight = 439
   ClientWidth = 523
   LCLVersion = '4.99.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
-  object ToleranceWireDiameterLabel: TLabel
+  object ToleranceOnWireDiameterLB: TLabel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = ToleranceWireDiameter
-    AnchorSideBottom.Control = ToleranceWireDiameter
+    AnchorSideTop.Control = ToleranceOnWireDiameter
+    AnchorSideBottom.Control = ToleranceOnWireDiameter
     AnchorSideBottom.Side = asrBottom
     Left = 12
     Height = 31
@@ -27,12 +27,12 @@ object QualityForm: TQualityForm
     Layout = tlCenter
     ParentColor = False
   end
-  object ToleranceWireDiameter: TFloatSpinEdit
-    AnchorSideLeft.Control = ToleranceWireDiameterLabel
+  object ToleranceOnWireDiameter: TFloatSpinEdit
+    AnchorSideLeft.Control = ToleranceOnWireDiameterLB
     AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = ToleranceWireDiameterUnit
-    AnchorSideRight.Control = ToleranceWireDiameterUnit
-    AnchorSideBottom.Control = ToleranceWireDiameterUnit
+    AnchorSideTop.Control = ToleranceOnWireDiameterUnit
+    AnchorSideRight.Control = ToleranceOnWireDiameterUnit
+    AnchorSideBottom.Control = ToleranceOnWireDiameterUnit
     AnchorSideBottom.Side = asrBottom
     Left = 151
     Height = 31
@@ -47,7 +47,7 @@ object QualityForm: TQualityForm
     TabOrder = 0
     OnChange = SpinEditChange
   end
-  object ToleranceWireDiameterUnit: TComboBox
+  object ToleranceOnWireDiameterUnit: TComboBox
     AnchorSideLeft.Side = asrBottom
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
@@ -73,11 +73,11 @@ object QualityForm: TQualityForm
     TabOrder = 1
     Text = 'mm'
   end
-  object ToleranceCoilDiameter: TComboBox
-    AnchorSideLeft.Control = ToleranceWireDiameter
-    AnchorSideTop.Control = ToleranceWireDiameterUnit
+  object GradeOnCoilDiameter: TComboBox
+    AnchorSideLeft.Control = ToleranceOnWireDiameter
+    AnchorSideTop.Control = ToleranceOnWireDiameterUnit
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = ToleranceWireDiameterUnit
+    AnchorSideRight.Control = ToleranceOnWireDiameterUnit
     AnchorSideRight.Side = asrBottom
     Left = 151
     Height = 31
@@ -88,18 +88,18 @@ object QualityForm: TQualityForm
     ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
-      'EN 15800 GRADE-1'
-      'EN 15800 GRADE-2'
-      'EN 15800 GRADE-3'
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
     )
     Style = csDropDownList
     TabOrder = 2
-    Text = 'EN 15800 GRADE-2'
+    Text = 'DIN 2194 GRADE-2'
   end
-  object ToleranceCoilDiameterLabel: TLabel
-    AnchorSideTop.Control = ToleranceCoilDiameter
-    AnchorSideRight.Control = ToleranceCoilDiameter
-    AnchorSideBottom.Control = ToleranceCoilDiameter
+  object GradeOnCoilDiameterLB: TLabel
+    AnchorSideTop.Control = GradeOnCoilDiameter
+    AnchorSideRight.Control = GradeOnCoilDiameter
+    AnchorSideBottom.Control = GradeOnCoilDiameter
     AnchorSideBottom.Side = asrBottom
     Left = 7
     Height = 31
@@ -112,27 +112,27 @@ object QualityForm: TQualityForm
     Layout = tlCenter
     ParentColor = False
   end
-  object ToleranceLengthL0Label: TLabel
-    AnchorSideTop.Control = ToleranceLengthL0
-    AnchorSideRight.Control = ToleranceLengthL0
-    AnchorSideBottom.Control = ToleranceLengthL0
+  object GradeOnLengthLkLB: TLabel
+    AnchorSideTop.Control = GradeOnLengthLk
+    AnchorSideRight.Control = GradeOnLengthLk
+    AnchorSideBottom.Control = GradeOnLengthLk
     AnchorSideBottom.Side = asrBottom
-    Left = 60
+    Left = 62
     Height = 31
     Top = 86
-    Width = 81
+    Width = 79
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'tolerance L0'
+    Caption = 'tolerance Lk'
     Layout = tlCenter
     ParentColor = False
   end
-  object ToleranceLengthL0: TComboBox
-    AnchorSideLeft.Control = ToleranceCoilDiameter
-    AnchorSideTop.Control = ToleranceCoilDiameter
+  object GradeOnLengthLk: TComboBox
+    AnchorSideLeft.Control = GradeOnCoilDiameter
+    AnchorSideTop.Control = GradeOnCoilDiameter
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = ToleranceCoilDiameter
+    AnchorSideRight.Control = GradeOnCoilDiameter
     AnchorSideRight.Side = asrBottom
     Left = 151
     Height = 31
@@ -143,19 +143,19 @@ object QualityForm: TQualityForm
     ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
-      'EN 15800 GRADE-1'
-      'EN 15800 GRADE-2'
-      'EN 15800 GRADE-3'
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
     )
     Style = csDropDownList
     TabOrder = 3
-    Text = 'EN 15800 GRADE-2'
+    Text = 'DIN 2194 GRADE-2'
   end
-  object ToleranceLoadF1: TComboBox
-    AnchorSideLeft.Control = ToleranceLengthL0
-    AnchorSideTop.Control = ToleranceLengthL0
+  object GradeOnTorqueT1: TComboBox
+    AnchorSideLeft.Control = GradeOnLengthLk
+    AnchorSideTop.Control = GradeOnLengthLk
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = ToleranceLengthL0
+    AnchorSideRight.Control = GradeOnLengthLk
     AnchorSideRight.Side = asrBottom
     Left = 151
     Height = 31
@@ -166,18 +166,18 @@ object QualityForm: TQualityForm
     ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
-      'EN 15800 GRADE-1'
-      'EN 15800 GRADE-2'
-      'EN 15800 GRADE-3'
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
     )
     Style = csDropDownList
     TabOrder = 4
-    Text = 'EN 15800 GRADE-2'
+    Text = 'DIN 2194 GRADE-2'
   end
-  object ToleranceLoadF1Label: TLabel
-    AnchorSideTop.Control = ToleranceLoadF1
-    AnchorSideRight.Control = ToleranceLoadF1
-    AnchorSideBottom.Control = ToleranceLoadF1
+  object GradeOnTorqueT1LB: TLabel
+    AnchorSideTop.Control = GradeOnTorqueT1
+    AnchorSideRight.Control = GradeOnTorqueT1
+    AnchorSideBottom.Control = GradeOnTorqueT1
     AnchorSideBottom.Side = asrBottom
     Left = 62
     Height = 31
@@ -186,14 +186,14 @@ object QualityForm: TQualityForm
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'tolerance F1'
+    Caption = 'tolerance T1'
     Layout = tlCenter
     ParentColor = False
   end
-  object ToleranceLoadF2Label: TLabel
-    AnchorSideTop.Control = ToleranceLoadF2
-    AnchorSideRight.Control = ToleranceLoadF2
-    AnchorSideBottom.Control = ToleranceLoadF2
+  object GradeOnTorqueT2LB: TLabel
+    AnchorSideTop.Control = GradeOnTorqueT2
+    AnchorSideRight.Control = GradeOnTorqueT2
+    AnchorSideBottom.Control = GradeOnTorqueT2
     AnchorSideBottom.Side = asrBottom
     Left = 60
     Height = 31
@@ -202,15 +202,15 @@ object QualityForm: TQualityForm
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'tolerance F2'
+    Caption = 'tolerance T2'
     Layout = tlCenter
     ParentColor = False
   end
-  object ToleranceLoadF2: TComboBox
-    AnchorSideLeft.Control = ToleranceLoadF1
-    AnchorSideTop.Control = ToleranceLoadF1
+  object GradeOnTorqueT2: TComboBox
+    AnchorSideLeft.Control = GradeOnTorqueT1
+    AnchorSideTop.Control = GradeOnTorqueT1
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = ToleranceLoadF1
+    AnchorSideRight.Control = GradeOnTorqueT1
     AnchorSideRight.Side = asrBottom
     Left = 151
     Height = 31
@@ -221,19 +221,19 @@ object QualityForm: TQualityForm
     ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
-      'EN 15800 GRADE-1'
-      'EN 15800 GRADE-2'
-      'EN 15800 GRADE-3'
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
     )
     Style = csDropDownList
     TabOrder = 5
-    Text = 'EN 15800 GRADE-2'
+    Text = 'DIN 2194 GRADE-2'
   end
-  object ToleranceEccentricitye1: TComboBox
-    AnchorSideLeft.Control = ToleranceLoadF2
-    AnchorSideTop.Control = ToleranceLoadF2
+  object GradeOnRelativeEndAgle: TComboBox
+    AnchorSideLeft.Control = GradeOnTorqueT2
+    AnchorSideTop.Control = GradeOnTorqueT2
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = ToleranceLoadF2
+    AnchorSideRight.Control = GradeOnTorqueT2
     AnchorSideRight.Side = asrBottom
     Left = 151
     Height = 31
@@ -244,51 +244,51 @@ object QualityForm: TQualityForm
     ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
-      'EN 15800 GRADE-1'
-      'EN 15800 GRADE-2'
-      'EN 15800 GRADE-3'
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
     )
     Style = csDropDownList
     TabOrder = 6
-    Text = 'EN 15800 GRADE-2'
+    Text = 'DIN 2194 GRADE-2'
   end
-  object ToleranceEccentricitye1Label: TLabel
-    AnchorSideTop.Control = ToleranceEccentricitye1
-    AnchorSideRight.Control = ToleranceEccentricitye1
-    AnchorSideBottom.Control = ToleranceEccentricitye1
+  object GradeOnRelativeEndAgleLB: TLabel
+    AnchorSideTop.Control = GradeOnRelativeEndAgle
+    AnchorSideRight.Control = GradeOnRelativeEndAgle
+    AnchorSideBottom.Control = GradeOnRelativeEndAgle
     AnchorSideBottom.Side = asrBottom
-    Left = 62
+    Left = 58
     Height = 31
     Top = 197
-    Width = 79
+    Width = 83
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'tolerance e1'
+    Caption = 'tolerance α0'
     Layout = tlCenter
     ParentColor = False
   end
-  object ToleranceEccentricitye2Label: TLabel
-    AnchorSideTop.Control = ToleranceEccentricitye2
-    AnchorSideRight.Control = ToleranceEccentricitye2
-    AnchorSideBottom.Control = ToleranceEccentricitye2
+  object GradeOnLegLengthsLB: TLabel
+    AnchorSideTop.Control = GradeOnLegLengths
+    AnchorSideRight.Control = GradeOnLegLengths
+    AnchorSideBottom.Control = GradeOnLegLengths
     AnchorSideBottom.Side = asrBottom
-    Left = 60
+    Left = 47
     Height = 31
     Top = 234
-    Width = 81
+    Width = 94
     Alignment = taRightJustify
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
-    Caption = 'tolerance e2'
+    Caption = 'tolerance l1, l2'
     Layout = tlCenter
     ParentColor = False
   end
-  object ToleranceEccentricitye2: TComboBox
-    AnchorSideLeft.Control = ToleranceEccentricitye1
-    AnchorSideTop.Control = ToleranceEccentricitye1
+  object GradeOnLegLengths: TComboBox
+    AnchorSideLeft.Control = GradeOnRelativeEndAgle
+    AnchorSideTop.Control = GradeOnRelativeEndAgle
     AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = ToleranceEccentricitye1
+    AnchorSideRight.Control = GradeOnRelativeEndAgle
     AnchorSideRight.Side = asrBottom
     Left = 151
     Height = 31
@@ -299,13 +299,13 @@ object QualityForm: TQualityForm
     ItemHeight = 0
     ItemIndex = 1
     Items.Strings = (
-      'EN 15800 GRADE-1'
-      'EN 15800 GRADE-2'
-      'EN 15800 GRADE-3'
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
     )
     Style = csDropDownList
     TabOrder = 7
-    Text = 'EN 15800 GRADE-2'
+    Text = 'DIN 2194 GRADE-2'
   end
   object OkBtn: TBitBtn
     AnchorSideRight.Control = Owner
@@ -314,7 +314,7 @@ object QualityForm: TQualityForm
     AnchorSideBottom.Side = asrBottom
     Left = 411
     Height = 36
-    Top = 338
+    Top = 391
     Width = 100
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 12
@@ -332,7 +332,7 @@ object QualityForm: TQualityForm
     AnchorSideBottom.Side = asrBottom
     Left = 301
     Height = 36
-    Top = 338
+    Top = 391
     Width = 100
     Anchors = [akTop, akRight, akBottom]
     BorderSpacing.Right = 10
@@ -349,7 +349,7 @@ object QualityForm: TQualityForm
     AnchorSideBottom.Control = OkBtn
     Left = 6
     Height = 2
-    Top = 324
+    Top = 377
     Width = 511
     Anchors = [akLeft, akRight, akBottom]
     BorderSpacing.Left = 6
@@ -358,5 +358,83 @@ object QualityForm: TQualityForm
     BorderSpacing.Bottom = 12
     Constraints.MaxHeight = 2
     Constraints.MinHeight = 2
+  end
+  object GradeOnBendRadiiLB: TLabel
+    AnchorSideTop.Control = GradeOnBendRadii
+    AnchorSideRight.Control = GradeOnBendRadii
+    AnchorSideBottom.Control = GradeOnBendRadii
+    AnchorSideBottom.Side = asrBottom
+    Left = 43
+    Height = 31
+    Top = 271
+    Width = 98
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance r1, r2'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object GradeOnBendRadii: TComboBox
+    AnchorSideLeft.Control = GradeOnRelativeEndAgle
+    AnchorSideTop.Control = GradeOnLegLengths
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = GradeOnRelativeEndAgle
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 271
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 10
+    Text = 'DIN 2194 GRADE-2'
+  end
+  object GradeOnAnglesOfBendsLegs: TComboBox
+    AnchorSideLeft.Control = GradeOnRelativeEndAgle
+    AnchorSideTop.Control = GradeOnBendRadii
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = GradeOnRelativeEndAgle
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 308
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'DIN 2194 GRADE-1'
+      'DIN 2194 GRADE-2'
+      'DIN 2194 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 11
+    Text = 'DIN 2194 GRADE-2'
+  end
+  object GradeOnAnglesOfBendsLegsLB: TLabel
+    AnchorSideTop.Control = GradeOnAnglesOfBendsLegs
+    AnchorSideRight.Control = GradeOnAnglesOfBendsLegs
+    AnchorSideBottom.Control = GradeOnAnglesOfBendsLegs
+    AnchorSideBottom.Side = asrBottom
+    Left = 35
+    Height = 31
+    Top = 308
+    Width = 106
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance φ1, φ2'
+    Layout = tlCenter
+    ParentColor = False
   end
 end

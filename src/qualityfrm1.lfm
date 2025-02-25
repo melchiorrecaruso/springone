@@ -1,0 +1,362 @@
+object QualityForm1: TQualityForm1
+  Left = 650
+  Height = 386
+  Top = 359
+  Width = 523
+  BorderIcons = [biSystemMenu]
+  Caption = 'Quality grade'
+  ClientHeight = 386
+  ClientWidth = 523
+  LCLVersion = '4.99.0.0'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  object ToleranceOnWireDiameterLabel: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = ToleranceOnWireDiameter
+    AnchorSideBottom.Control = ToleranceOnWireDiameter
+    AnchorSideBottom.Side = asrBottom
+    Left = 12
+    Height = 31
+    Top = 12
+    Width = 129
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akBottom]
+    BorderSpacing.Left = 12
+    BorderSpacing.Right = 10
+    Caption = '           tolerance d +/-'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object ToleranceOnWireDiameter: TFloatSpinEdit
+    AnchorSideLeft.Control = ToleranceOnWireDiameterLabel
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = ToleranceOnWireDiameterUnit
+    AnchorSideRight.Control = ToleranceOnWireDiameterUnit
+    AnchorSideBottom.Control = ToleranceOnWireDiameterUnit
+    AnchorSideBottom.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 12
+    Width = 270
+    Alignment = taRightJustify
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Left = 10
+    BorderSpacing.Right = 10
+    DecimalPlaces = 3
+    Increment = 0.001
+    TabOrder = 0
+    OnChange = SpinEditChange
+  end
+  object ToleranceOnWireDiameterUnit: TComboBox
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 431
+    Height = 31
+    Top = 12
+    Width = 80
+    Anchors = [akTop, akRight]
+    BidiMode = bdRightToLeftReadingOnly
+    BorderSpacing.Top = 12
+    BorderSpacing.Right = 12
+    ItemHeight = 0
+    ItemIndex = 0
+    Items.Strings = (
+      'mm'
+      'in'
+    )
+    ParentBidiMode = False
+    ReadOnly = True
+    Style = csDropDownList
+    TabOrder = 1
+    Text = 'mm'
+  end
+  object GradeOnCoilDiameter: TComboBox
+    AnchorSideLeft.Control = ToleranceOnWireDiameter
+    AnchorSideTop.Control = ToleranceOnWireDiameterUnit
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = ToleranceOnWireDiameterUnit
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 49
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'EN 15800 GRADE-1'
+      'EN 15800 GRADE-2'
+      'EN 15800 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 2
+    Text = 'EN 15800 GRADE-2'
+  end
+  object GradeOnCoilDiameterLB: TLabel
+    AnchorSideTop.Control = GradeOnCoilDiameter
+    AnchorSideRight.Control = GradeOnCoilDiameter
+    AnchorSideBottom.Control = GradeOnCoilDiameter
+    AnchorSideBottom.Side = asrBottom
+    Left = 7
+    Height = 31
+    Top = 49
+    Width = 134
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance Di, Dm, De'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object GradeOnLengthL0LB: TLabel
+    AnchorSideTop.Control = GradeOnLengthL0
+    AnchorSideRight.Control = GradeOnLengthL0
+    AnchorSideBottom.Control = GradeOnLengthL0
+    AnchorSideBottom.Side = asrBottom
+    Left = 60
+    Height = 31
+    Top = 86
+    Width = 81
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance L0'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object GradeOnLengthL0: TComboBox
+    AnchorSideLeft.Control = GradeOnCoilDiameter
+    AnchorSideTop.Control = GradeOnCoilDiameter
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = GradeOnCoilDiameter
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 86
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'EN 15800 GRADE-1'
+      'EN 15800 GRADE-2'
+      'EN 15800 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 3
+    Text = 'EN 15800 GRADE-2'
+  end
+  object GradeOnLoadF1: TComboBox
+    AnchorSideLeft.Control = GradeOnLengthL0
+    AnchorSideTop.Control = GradeOnLengthL0
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = GradeOnLengthL0
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 123
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'EN 15800 GRADE-1'
+      'EN 15800 GRADE-2'
+      'EN 15800 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 4
+    Text = 'EN 15800 GRADE-2'
+  end
+  object GradeOnLoadF1LB: TLabel
+    AnchorSideTop.Control = GradeOnLoadF1
+    AnchorSideRight.Control = GradeOnLoadF1
+    AnchorSideBottom.Control = GradeOnLoadF1
+    AnchorSideBottom.Side = asrBottom
+    Left = 62
+    Height = 31
+    Top = 123
+    Width = 79
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance F1'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object GradeOnLoadF2LB: TLabel
+    AnchorSideTop.Control = GradeOnLoadF2
+    AnchorSideRight.Control = GradeOnLoadF2
+    AnchorSideBottom.Control = GradeOnLoadF2
+    AnchorSideBottom.Side = asrBottom
+    Left = 60
+    Height = 31
+    Top = 160
+    Width = 81
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance F2'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object GradeOnLoadF2: TComboBox
+    AnchorSideLeft.Control = GradeOnLoadF1
+    AnchorSideTop.Control = GradeOnLoadF1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = GradeOnLoadF1
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 160
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'EN 15800 GRADE-1'
+      'EN 15800 GRADE-2'
+      'EN 15800 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 5
+    Text = 'EN 15800 GRADE-2'
+  end
+  object GradeOnEccentricitye1: TComboBox
+    AnchorSideLeft.Control = GradeOnLoadF2
+    AnchorSideTop.Control = GradeOnLoadF2
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = GradeOnLoadF2
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 197
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'EN 15800 GRADE-1'
+      'EN 15800 GRADE-2'
+      'EN 15800 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 6
+    Text = 'EN 15800 GRADE-2'
+  end
+  object GradeOnEccentricitye1LB: TLabel
+    AnchorSideTop.Control = GradeOnEccentricitye1
+    AnchorSideRight.Control = GradeOnEccentricitye1
+    AnchorSideBottom.Control = GradeOnEccentricitye1
+    AnchorSideBottom.Side = asrBottom
+    Left = 62
+    Height = 31
+    Top = 197
+    Width = 79
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance e1'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object GradeOnEccentricitye2LB: TLabel
+    AnchorSideTop.Control = GradeOnEccentricitye2
+    AnchorSideRight.Control = GradeOnEccentricitye2
+    AnchorSideBottom.Control = GradeOnEccentricitye2
+    AnchorSideBottom.Side = asrBottom
+    Left = 60
+    Height = 31
+    Top = 234
+    Width = 81
+    Alignment = taRightJustify
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Caption = 'tolerance e2'
+    Layout = tlCenter
+    ParentColor = False
+  end
+  object GradeOnEccentricitye2: TComboBox
+    AnchorSideLeft.Control = GradeOnEccentricitye1
+    AnchorSideTop.Control = GradeOnEccentricitye1
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = GradeOnEccentricitye1
+    AnchorSideRight.Side = asrBottom
+    Left = 151
+    Height = 31
+    Top = 234
+    Width = 360
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 6
+    ItemHeight = 0
+    ItemIndex = 1
+    Items.Strings = (
+      'EN 15800 GRADE-1'
+      'EN 15800 GRADE-2'
+      'EN 15800 GRADE-3'
+    )
+    Style = csDropDownList
+    TabOrder = 7
+    Text = 'EN 15800 GRADE-2'
+  end
+  object OkBtn: TBitBtn
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 411
+    Height = 36
+    Top = 338
+    Width = 100
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 12
+    BorderSpacing.Bottom = 12
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 8
+  end
+  object CancelBtn: TBitBtn
+    AnchorSideTop.Control = OkBtn
+    AnchorSideRight.Control = OkBtn
+    AnchorSideBottom.Control = OkBtn
+    AnchorSideBottom.Side = asrBottom
+    Left = 301
+    Height = 36
+    Top = 338
+    Width = 100
+    Anchors = [akTop, akRight, akBottom]
+    BorderSpacing.Right = 10
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 9
+  end
+  object Bevel1: TBevel
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = OkBtn
+    Left = 6
+    Height = 2
+    Top = 324
+    Width = 511
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 9
+    BorderSpacing.Right = 6
+    BorderSpacing.Bottom = 12
+    Constraints.MaxHeight = 2
+    Constraints.MinHeight = 2
+  end
+end
