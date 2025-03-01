@@ -402,6 +402,7 @@ begin
   FLengthLc            := 0*m;
   FLengthLn            := 0*m;
   fMass                := 0*kg;
+
   fn                   := 0;
   fNaturalFrequency    := 0*Hz;
   fnu                  := 0;
@@ -1020,9 +1021,10 @@ end;
 
 procedure TTorsionSpringSolver.Solve(ASpringTolerance: TDIN2194);
 var
-  i: longint;
   mSigma: TQuantity;
   Sigmah7, Sigmah6, Sigmah5: TQuantity;
+  MassCoil, MassLegA, MassLegB: TQuantity;
+  Js: TQuantity;
 begin
   PreCheck;
   if fCheck then
@@ -1085,6 +1087,12 @@ begin
     if fCheck then
     begin
       fWireLength := fLengthLegA + pi*fDm*fn + fLengthLegB;
+
+      if fBentLegA then
+        fWireLength := fWireLength - fDm / 2;
+
+      if fBentLegB then
+        fWireLength := fWireLength - fDm / 2;
     end;
 
     // Calcolo massa della molla
@@ -1175,8 +1183,30 @@ begin
       // La frequenza naturale del primo ordine della molla, avente entrambe le estremità vincolate ed
       // eccitare periodicamente ad una estremità durante il funzionamento, è determinata mediante la
       // seguente formula:
+      MassCoil := FRho * (pi/4*fd*fd) * (pi*fDm*fn);
 
-      // fNaturalFrequency := 2/ ( (fn*FDm*FDm) / (2*pi*sqrt(2)*fd) / SquareRoot(FG/FRho) );
+      if fBentLegA then
+        MassLegA := FRho * (pi/4*fd*fd) * (fLengthLegA - fDm/2)
+      else
+        MassLegA := FRho * (pi/4*fd*fd) * (fLengthLegA);
+
+      if fBentLegB then
+        MassLegB := FRho * (pi/4*fd*fd) * (fLengthLegB - fDm/2)
+      else
+        MassLegB := FRho * (pi/4*fd*fd) * (fLengthLegB);
+
+      Js := MassCoil*SquarePower(fDm/2);
+      if fBentLegA then
+        Js := Js + MassLegA*(SquarePower(fLengthLegA-fDm/2)/12 + SquarePower(fLengthLegA/2+fDm/4))
+      else
+        Js := Js + MassLegA*(SquarePower(fLengthLegA)/3 + SquarePower(fDm/2));
+
+      if fBentLegB then
+        Js := Js + MassLegB*(SquarePower(fLengthLegB-fDm/2)/12 + SquarePower(fLengthLegB/2+fDm/4))
+      else
+        Js := Js + MassLegB*(SquarePower(fLengthLegB)/3 + SquarePower(fDm/2));
+
+      fNaturalFrequency := (1/2/pi) * SquareRoot(fRMR / Js);
     end;
 
     // Calcolo coefficente di sicurezza statico
