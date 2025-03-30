@@ -145,7 +145,7 @@ begin
   {$IFDEF MODULE1}
   if Assigned(QualityForm1) then
   begin
-    QualityForm1.ToleranceWireDiameter.Enabled := YoungModulus.Enabled;
+    QualityForm1.ToleranceOnWireDiameter.Enabled := YoungModulus.Enabled;
   end;
   {$ENDIF}
   {$IFDEF MODULE3}
@@ -202,9 +202,9 @@ begin
         SpringSolver.WireDiameterTolerance := WireTolerance(MAT.Regulation, MAT.WireDiameter);
         {$IFDEF MODULE1}
         if Assigned(QualityForm1) then
-          case QualityForm1.ToleranceWireDiameterUnit.ItemIndex of
-            0: QualityForm1.ToleranceWireDiameter.Value := MeterUnit.ToFloat(SpringSolver.WireDiameterTolerance, [pMilli]);
-            1: QualityForm1.ToleranceWireDiameter.Value := InchUnit.ToFloat(SpringSolver.WireDiameterTolerance);
+          case QualityForm1.ToleranceOnWireDiameterUnit.ItemIndex of
+            0: QualityForm1.ToleranceOnWireDiameter.Value := MeterUnit.ToFloat(SpringSolver.WireDiameterTolerance, [pMilli]);
+            1: QualityForm1.ToleranceOnWireDiameter.Value := InchUnit.ToFloat(SpringSolver.WireDiameterTolerance);
           end;
         {$ENDIF}
         {$IFDEF MODULE3}

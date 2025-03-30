@@ -191,19 +191,19 @@ begin
   S.Add(Format('',[]));
   S.Add(Format('   QUALITY GRADE',[]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation De,Di,Dm :                     %s', [QualityForm.ToleranceCoilDiameter.Text]));
+  S.Add(Format('   Adm.deviation De,Di,Dm :                     %s', [QualityForm1.GradeOnCoilDiameter.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation L0       :                     %s', [QualityForm.ToleranceLengthL0.Text]));
+  S.Add(Format('   Adm.deviation L0       :                     %s', [QualityForm1.GradeOnLengthL0.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation F1       :                     %s', [QualityForm.ToleranceLoadF1.Text]));
+  S.Add(Format('   Adm.deviation F1       :                     %s', [QualityForm1.GradeOnLoadF1.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation F2       :                     %s', [QualityForm.ToleranceLoadF2.Text]));
+  S.Add(Format('   Adm.deviation F2       :                     %s', [QualityForm1.GradeOnLoadF2.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation e1       :                     %s', [QualityForm.ToleranceEccentricitye1.Text]));
+  S.Add(Format('   Adm.deviation e1       :                     %s', [QualityForm1.GradeOnEccentricitye1.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation e2       :                     %s', [QualityForm.ToleranceEccentricitye2.Text]));
+  S.Add(Format('   Adm.deviation e2       :                     %s', [QualityForm1.GradeOnEccentricitye2.Text]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
-  S.Add(Format('   Adm.deviation d        :                   ± %s', [GetLengthString(QualityForm.ToleranceWireDiameter.Value * mm)]));
+  S.Add(Format('   Adm.deviation d        :                   ± %s', [GetLengthString(QualityForm1.ToleranceOnWireDiameter.Value * mm)]));
   S.Add(Format('   ----------------------------------------------------------------------',[]));
   S.Add(Format('',[]));
   // PAG.3
