@@ -46,6 +46,7 @@ type
     FTitleFontStyle: TFontStyles;
 
     FXAxisLabel: string;
+    FXAxisLabelPos: boolean;
     FXAxisFontName: string;
     FXAxisFontColor: TBGRAPixel;
     FXAxisFontHeight: single;
@@ -58,6 +59,7 @@ type
     FXGridLineWidth: single;
 
     FYAxisLabel: string;
+    FYAxisLabelPos: boolean;
     FYAxisFontName: string;
     FYAxisFontColor: TBGRAPixel;
     FYAxisFontHeight: single;
@@ -94,9 +96,13 @@ type
     FItems: TList;
 
     FWidth, FHeight: longint;
-    FShowOrigin: boolean;
     FSpacer: longint;
     FScale: single;
+
+    FAdjustXMin: boolean;
+    FAdjustXMax: boolean;
+    FAdjustYMin: boolean;
+    FAdjustYMax: boolean;
 
     FIsNeededUpdateSize: boolean;
     FIsNeededCalcXDeltaF: boolean;
@@ -147,6 +153,7 @@ type
     property TitleFontStyle: TFontStyles read FTitleFontStyle write FTitleFontStyle;
 
     property XAxisLabel: string read FXAxisLabel write FXAxisLabel;
+    property XAxisLabelPos: boolean read FXAxisLabelPos write FXAxisLabelPos;
     property XAxisFontName: string read FXAxisFontName write FXAxisFontName;
     property XAxisFontHeight: single read FXAxisFontHeight write FXAxisFontHeight;
     property XAxisFontColor: TBGRAPixel read FXAxisFontColor write FXAxisFontColor;
@@ -159,6 +166,7 @@ type
     property XGridLineWidth: single read FXGridLineWidth write FXGridLineWidth;
 
     property YAxisLabel: string read FYAxisLabel write FYAxisLabel;
+    property YAxisLabelPos: boolean read FYAxisLabelPos write FYAxisLabelPos;
     property YAxisFontName: string read FYAxisFontName write FYAxisFontName;
     property YAxisFontHeight: single read FYAxisFontHeight write FYAxisFontHeight;
     property YAxisFontColor: TBGRAPixel read FYAxisFontColor write FYAxisFontColor;
@@ -200,9 +208,13 @@ type
     property XCount: longint read FXCount write SetXCount;
     property YCount: longint read FYCount write SetYCount;
 
-    property ShowOrigin: boolean read FShowOrigin write FShowOrigin;
     property Spacer: longint read FSpacer write FSpacer;
     property Scale: single read FScale write FScale;
+
+    property AdjustXMin: boolean read FAdjustXMin write FAdjustXMin;
+    property AdjustXMax: boolean read FAdjustXMax write FAdjustXMax;
+    property AdjustYMin: boolean read FAdjustYMin write FAdjustYMin;
+    property AdjustYMax: boolean read FAdjustYMax write FAdjustYMax;
   end;
 
   TReportTable = class
@@ -601,6 +613,7 @@ begin
   FTitleFontStyle := [fsBold];
 
   FXAxisLabel := 'X Axis';
+  FXAxisLabelPos := False;
   FXAxisFontName := 'default';
   FXAxisFontColor.FromColor(clBlack);
   FXAxisFontHeight := 14;
@@ -613,6 +626,7 @@ begin
   FXGridLineWidth := 0.5;
 
   FYAxisLabel := 'Y';
+  FYAxisLabelPos := False;
   FYAxisFontName := 'default';
   FYAxisFontColor.FromColor(clBlack);
   FYAxisFontHeight := 14;
@@ -661,13 +675,17 @@ begin
   FWidth   := 0;
   FHeight  := 0;
 
+  FAdjustXMin := True;
+  FAdjustXMax := True;
+  FAdjustYMin := True;
+  FAdjustYMax := True;
+
   FIsNeededUpdateSize  := True;
   FIsNeededCalcXDeltaF := True;
   FIsNeededCalcYDeltaF := True;
   FIsNeededCalcXCount  := True;
   FIsNeededCalcYCount  := True;
 
-  FShowOrigin := False;
   FSpacer := DefaultSpacer;
   FScale  := 1.0;
 
@@ -789,10 +807,10 @@ begin
   begin
     if FIsNeededUpdateSize then
     begin
-      FXMinF := + MaxSingle;
-      FXMaxF := - MaxSingle;
-      FYMinF := + MaxSingle;
-      FYMaxF := - MaxSingle;
+      if AdjustXMin then FXMinF := + MaxSingle;
+      if AdjustXMax then FXMaxF := - MaxSingle;
+      if AdjustYMin then FYMinF := + MaxSingle;
+      if AdjustYMax then FYMaxF := - MaxSingle;
 
       for i := 0 to FItems.Count -1 do
       begin
@@ -801,22 +819,16 @@ begin
         begin
           for j := 0 to High(TChartPolyLineItem(Item).FPoints) do
           begin
-            FXMinF := Min(FXMinF, TChartPolyLineItem(Item).FPoints[j].x);
-            FXMaxF := Max(FXMaxF, TChartPolyLineItem(Item).FPoints[j].x);
-            FYMinF := Min(FYMinF, TChartPolyLineItem(Item).FPoints[j].y);
-            FYMaxF := Max(FYMaxF, TChartPolyLineItem(Item).FPoints[j].y);
+            if AdjustXMin then FXMinF := Min(FXMinF, TChartPolyLineItem(Item).FPoints[j].x);
+            if AdjustXMax then FXMaxF := Max(FXMaxF, TChartPolyLineItem(Item).FPoints[j].x);
+            if AdjustYMin then FYMinF := Min(FYMinF, TChartPolyLineItem(Item).FPoints[j].y);
+            if AdjustYMax then FYMaxF := Max(FYMaxF, TChartPolyLineItem(Item).FPoints[j].y);
           end;
         end;
       end;
       FXMinF := GetMin(FXMinF);
       FYMinF := GetMin(FYMinF);
     end;
-  end;
-
-  if FShowOrigin then
-  begin
-    FXMinF := Min(FXMinF, 0);
-    FYMinF := Min(FYMinF, 0);
   end;
 end;
 
@@ -847,7 +859,12 @@ begin
     DrawText(X, FYMin + YShift, GetString(FXMinF + FXDeltaF * I), FXAxisFontColor, taCenter, taAlignTop);
   end;
   DrawLine(FXMax, FYMin, FXMax, FYMax, FYGridLineColor, FYGridLineWidth * FScale);
-  DrawText(FXMax, FYMin + YShift, FXAxisLabel, FXAxisFontColor, taCenter, taAlignTop);
+
+  if not FXAxisLabelPos then
+    DrawText(FXMax, FYMin + YShift, FXAxisLabel, FXAxisFontColor, taCenter, taAlignTop)
+  else
+    DrawText(FXMax, FYMin + YShift, GetString(FXMinF + FXDeltaF * FXCount), FXAxisFontColor, taCenter, taAlignTop);
+
   // Draw X secondary axis and Y labels
   FBit.FontAntialias := True;
   FBit.FontQuality   := FCurrentFontQuality;
@@ -865,7 +882,12 @@ begin
     DrawText(FXMin + XShift, Y, GetString(FYMinF + FYDeltaF * I), FYAxisFontColor, taRightJustify, taVerticalCenter);
   end;
   DrawLine(FXMin, FYMax, FXMax, FYMax, FXGridLineColor, FXGridLineWidth * FScale);
-  DrawText(FXMin + XShift, FYMax, FYAxisLabel, FYAxisFontColor, taRightJustify, taVerticalCenter);
+
+  if not FYAxisLabelPos then
+    DrawText(FXMin + XShift, FYMax, FYAxisLabel, FYAxisFontColor, taRightJustify, taVerticalCenter)
+  else
+    DrawText(FXMin + XShift, FYMax, GetString(FYMinF + FYDeltaF * FYCount), FYAxisFontColor, taRightJustify, taVerticalCenter);
+
   // Draw Chart Title
   FBit.FontAntialias := True;
   FBit.FontQuality   := FCurrentFontQuality;
@@ -1264,24 +1286,28 @@ end;
 procedure TChart.SetXMaxF(Value: single);
 begin
   FIsNeededUpdateSize := True;
+  FAdjustXMax := False;
   FXMaxF := Value;
 end;
 
 procedure TChart.SetXMinF(Value: single);
 begin
   FIsNeededUpdateSize := True;
+  FAdjustXMin := False;
   FXMinF := Value;
 end;
 
 procedure TChart.SetYMaxF(Value: single);
 begin
   FIsNeededUpdateSize := True;
+  FAdjustYMax := False;
   FYMaxF := Value;
 end;
 
 procedure TChart.SetYMinF(Value: single);
 begin
   FIsNeededUpdateSize := True;
+  FAdjustYMin := False;
   FYMinF := Value;
 end;
 
