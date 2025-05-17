@@ -500,6 +500,9 @@ begin
   Result := 0;
   while True do
   begin
+    Result := 0.01 * k; if (Result * Count) >= (Range) then Break;
+    Result := 0.02 * k; if (Result * Count) >= (Range) then Break;
+    Result := 0.05 * k; if (Result * Count) >= (Range) then Break;
     Result := 0.10 * k; if (Result * Count) >= (Range) then Break;
     Result := 0.15 * k; if (Result * Count) >= (Range) then Break;
     Result := 0.20 * k; if (Result * Count) >= (Range) then Break;
@@ -867,10 +870,9 @@ begin
           if AdjustYMin then FYMinF := Min(FYMinF, TChartPixelItem(Item).FY);
           if AdjustYMax then FYMaxF := Max(FYMaxF, TChartPixelItem(Item).FY);
         end;
-
       end;
-      FXMinF := GetMin(FXMinF);
-      FYMinF := GetMin(FYMinF);
+      if AdjustXMin then FXMinF := GetMin(FXMinF);
+      if AdjustXMin then FYMinF := GetMin(FYMinF);
     end;
   end;
 end;
@@ -936,12 +938,7 @@ begin
   FBit.FontStyle     := FXAxisFontStyle;
   FBit.FontHeight    := Trunc(FXAxisFontHeight * FScale);
 
-  result := FBit.TextSize(GetString(-MaxFloat));
-
-  ts := FBit.TextSize(FXAxisLabel);
-
-  result.Height := Max(result.Height, ts.Height);
-  result.Width  := Max(result.Width, ts.Width);
+  result := FBit.TextSize(FXAxisLabel);
 
   if FIsNeededCalcXCount then
     FXCount := (FXMax - FXMin) div (result.Width);
@@ -966,12 +963,7 @@ begin
   FBit.FontStyle     := FYAxisFontStyle;
   FBit.FontHeight    := Trunc(FYAxisFontHeight * FScale);
 
-  result := FBit.TextSize(GetString(-MaxFloat));
-
-  ts := FBit.TextSize(FYAxisLabel);
-
-  result.Height := Max(result.Height, ts.Height);
-  result.Width  := Max(result.Width, ts.Width);
+  result := FBit.TextSize(FYAxisLabel);
 
   if FIsNeededCalcYCount then
     FYCount := (FYMax - FYMin) div (result.Height);
@@ -1054,12 +1046,15 @@ end;
 
 procedure TChart.DrawLine(x0, y0, x1, y1: single; aPenColor: TBGRAPixel; aPenWidth: single);
 begin
-  FBit.DrawLineAntialias(
-    XToCanvas(x0),
-    YToCanvas(y0),
-    XToCanvas(x1),
-    YToCanvas(y1),
-    aPenColor, aPenWidth);
+  if not SameValue(aPenWidth , 0) then
+  begin
+    FBit.DrawLineAntialias(
+      XToCanvas(x0),
+      YToCanvas(y0),
+      XToCanvas(x1),
+      YToCanvas(y1),
+      aPenColor, aPenWidth);
+  end;
 end;
 
 procedure TChart.DrawText(X, Y: single; const AText: string; ATextColor: TBGRAPixel;
@@ -1333,9 +1328,13 @@ begin
   maxYLabelWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
   maxYLabelHeight := TxtSize.Height + Trunc(FSpacer * FScale);
 
-  TxtSize        := GetTitleSize;
-  maxTitleWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
-  maxTitleHeight := TxtSize.Height + Trunc(FSpacer * FScale);
+  maxTitleHeight := Trunc(FSpacer * FScale);
+  if fTitle <> '' then
+  begin
+    TxtSize        := GetTitleSize;
+    maxTitleWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
+    maxTitleHeight := TxtSize.Height + Trunc(FSpacer * FScale);
+  end;
 
   FXMin := maxYLabelWidth;
   FYMin := maxXLabelHeight;
