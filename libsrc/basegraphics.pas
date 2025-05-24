@@ -148,7 +148,7 @@ type
     procedure AddDotLabel(aX, aY, aRadius: single; aShiftX, aShiftY: longint;
           aAlign: TAlignment; aVertAlign: TVerticalAlignment; const aCaption: string);
 
-    procedure Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
+    procedure Draw(ABitmap: TBGRAbitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
     procedure Clear;
   public
     property Title: string read FTitle write FTitle;
@@ -544,6 +544,8 @@ end;
 
 destructor TChartItem.Destroy;
 begin
+  FCaption := '';
+  FFontName := '';
   inherited Destroy;
 end;
 
@@ -624,8 +626,8 @@ end;
 destructor TChart.Destroy;
 begin
   Clear;
-  FItems.Destroy;
-  FBit.Destroy;
+  FItems.Free;
+  FBit.Free;
 end;
 
 procedure TChart.Clear;
@@ -939,16 +941,21 @@ begin
   FBit.FontHeight    := Trunc(FXAxisFontHeight * FScale);
 
   result := FBit.TextSize(FXAxisLabel);
+  try
+    if FIsNeededCalcXCount then
+    begin
+      FXCount := (FXMax - FXMin) div (result.Width);
+    end;
 
-  if FIsNeededCalcXCount then
-    FXCount := (FXMax - FXMin) div (result.Width);
+    for I := 0 to FXCount -1 do
+    begin
+      ts := FBit.TextSize(GetString(FXMinF + FXDeltaF * I));
 
-  for I := 0 to FXCount -1 do
-  begin
-    ts := FBit.TextSize(GetString(FXMinF + FXDeltaF * I));
-
-    result.Height := Max(result.Height, ts.Height);
-    result.Width  := Max(result.Width, ts.Width);
+      result.Height := Max(result.Height, ts.Height);
+      result.Width  := Max(result.Width, ts.Width);
+    end;
+  except
+    writeln('exception raised.21');
   end;
 end;
 
@@ -1301,10 +1308,8 @@ begin
   end;
 end;
 
-procedure TChart.Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
+procedure TChart.Draw(ABitmap: TBGRAbitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
 var
-  i, j: longint;
-  Item: TChartItem;
   maxXLabelWidth:  longint = 0;
   maxYLabelWidth:  longint = 0;
   maxXLabelHeight: longint = 0;
@@ -1313,73 +1318,129 @@ var
   maxTitleHeight:  longint = 0;
   TxtSize: TSize;
 begin
-  FWidth  := AWidth;
-  FHeight := AHeight;
-  FBit.SetSize(AWidth, AHeight);
-  FBit.Fill(FBackgroundColor);
 
-  UpdateSize;
-
-  TxtSize         := GetMaxXTextSize;
-  maxXLabelWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
-  maxXLabelHeight := TxtSize.Height + Trunc(FSpacer * FScale);
-
-  TxtSize         := GetMaxYTextSize;
-  maxYLabelWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
-  maxYLabelHeight := TxtSize.Height + Trunc(FSpacer * FScale);
-
-  maxTitleHeight := Trunc(FSpacer * FScale);
-  if fTitle <> '' then
-  begin
-    TxtSize        := GetTitleSize;
-    maxTitleWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
-    maxTitleHeight := TxtSize.Height + Trunc(FSpacer * FScale);
+  try
+    FWidth  := AWidth;
+    FHeight := AHeight;
+    FBit.SetSize(AWidth, AHeight);
+    FBit.Fill(FBackgroundColor);
+  except
+    writeln('exception raised.0');
   end;
 
-  FXMin := maxYLabelWidth;
-  FYMin := maxXLabelHeight;
-  FXMax := FWidth  - Max(maxXLabelWidth div 2, GetLegendSize.Width);
-  FYMax := FHeight - maxTitleHeight;
+  try
+    UpdateSize;
+  except
+    writeln('exception raised.1');
+  end;
 
-  if (FXMax > FXMin) and (FYMax > FYMin) then
-  begin
-    if FIsNeededCalcXCount then FXCount := (FXMax - FXMin) div (maxXLabelWidth);
-    if FIsNeededCalcYCount then FYCount := (FYMax - FYMin) div (maxYLabelHeight);
+  try
+    TxtSize         := GetMaxXTextSize;
+    maxXLabelWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
+    maxXLabelHeight := TxtSize.Height + Trunc(FSpacer * FScale);
+  except
+    writeln('exception raised.2.1');
+  end;
 
-    if (FXCount > 0) and (FYCount > 0) then
+  try
+    TxtSize         := GetMaxYTextSize;
+    maxYLabelWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
+    maxYLabelHeight := TxtSize.Height + Trunc(FSpacer * FScale);
+  except
+    writeln('exception raised.2.2');
+  end;
+
+  try
+    maxTitleHeight := Trunc(FSpacer * FScale);
+    if fTitle <> '' then
     begin
-      if FIsNeededCalcXDeltaF then FXDeltaF := GetDelta(FXCount, FXMaxF - FXMinF);
-      if FIsNeededCalcYDeltaF then FYDeltaF := GetDelta(FYCount, FYMaxF - FYMinF);
+      TxtSize        := GetTitleSize;
+      maxTitleWidth  := TxtSize.Width  + Trunc(FSpacer * FScale);
+      maxTitleHeight := TxtSize.Height + Trunc(FSpacer * FScale);
+    end;
+  except
+    writeln('exception raised.2.3');
+  end;
 
-      if (FXDeltaF > 0) and (FYDeltaF > 0) then
+  try
+    FXMin := maxYLabelWidth;
+    FYMin := maxXLabelHeight;
+    FXMax := FWidth  - Max(maxXLabelWidth div 2, GetLegendSize.Width);
+    FYMax := FHeight - maxTitleHeight;
+  except
+    writeln('exception raised.3');
+  end;
+
+  try
+    if (FXMax > FXMin) and (FYMax > FYMin) then
+    begin
+      if FIsNeededCalcXCount then FXCount := (FXMax - FXMin) div (maxXLabelWidth);
+      if FIsNeededCalcYCount then FYCount := (FYMax - FYMin) div (maxYLabelHeight);
+
+      if (FXCount > 0) and (FYCount > 0) then
       begin
-        while (FXMinF + ((FXCount -1) * FXDeltaF) > FXMaxF) do Dec(FXCount);
-        while (FYMinF + ((FYCount -1) * FYDeltaF) > FYMaxF) do Dec(FYCount);
+        if FIsNeededCalcXDeltaF then FXDeltaF := GetDelta(FXCount, FXMaxF - FXMinF);
+        if FIsNeededCalcYDeltaF then FYDeltaF := GetDelta(FYCount, FYMaxF - FYMinF);
 
-        FXMaxF   :=  FXMinF + FXDeltaF * FXCount;
-        FYMaxF   :=  FYMinF + FYDeltaF * FYCount;
-        FXScaleF := (FXMax - FXMin) / (FXMaxF - FXMinF);
-        FYScaleF := (FYMax - FYMin) / (FYMaxF - FYMinF);
+        if (FXDeltaF > 0) and (FYDeltaF > 0) then
+        begin
+          while (FXMinF + ((FXCount -1) * FXDeltaF) > FXMaxF) do Dec(FXCount);
+          while (FYMinF + ((FYCount -1) * FYDeltaF) > FYMaxF) do Dec(FYCount);
 
-        DrawGrid;
-        DrawItems;
-        DrawLegend;
+          FXMaxF   :=  FXMinF + FXDeltaF * FXCount;
+          FYMaxF   :=  FYMinF + FYDeltaF * FYCount;
+          FXScaleF := (FXMax - FXMin) / (FXMaxF - FXMinF);
+          FYScaleF := (FYMax - FYMin) / (FYMaxF - FYMinF);
+
+          try
+            DrawGrid;
+          except
+            writeln('exception raised.4');
+          end;
+
+          try
+            DrawItems;
+          except
+            writeln('exception raised.5');
+          end;
+
+          try
+            DrawLegend;
+          except
+            writeln('exception raised.5');
+          end;
+
+        end;
       end;
     end;
+
+  except
+    writeln('exception raised.6');
   end;
 
-  FBit.JoinStyle := pjsRound;
-  FBit.LineCap   := pecRound;
-  FBit.PenStyle  := FXAxisLineStyle;
-  DrawLine(FXMin, FYMin, FXMax, FYmin, FXAxisLineColor, FXAxisLineWidth * FScale);
+  try
+    FBit.JoinStyle := pjsRound;
+    FBit.LineCap   := pecRound;
+    FBit.PenStyle  := FXAxisLineStyle;
+    DrawLine(FXMin, FYMin, FXMax, FYmin, FXAxisLineColor, FXAxisLineWidth * FScale);
+  except
+    writeln('exception raised.7');
+  end;
 
-  FBit.JoinStyle := pjsRound;
-  FBit.LineCap   := pecRound;
-  FBit.PenStyle  := FYAxisLineStyle;
-  DrawLine(FXMin, FYMin, FXMin, FYMax, FYAxisLineColor, FYAxisLineWidth * FScale);
+  try
+    FBit.JoinStyle := pjsRound;
+    FBit.LineCap   := pecRound;
+    FBit.PenStyle  := FYAxisLineStyle;
+    DrawLine(FXMin, FYMin, FXMin, FYMax, FYAxisLineColor, FYAxisLineWidth * FScale);
+  except
+    writeln('exception raised.8');
+  end;
 
-  FBit.InvalidateBitmap;
-  FBit.Draw(aCanvas, 0, 0, AOpaque);
+  try
+    ABitmap.PutImage(0,0, FBit, dmSet);
+  except
+    writeln('exception raised.9');
+  end;
 end;
 
 procedure TChart.SetXMaxF(Value: single);
