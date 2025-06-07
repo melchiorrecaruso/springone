@@ -203,6 +203,12 @@ type
     function PyFromAreaFToArea(const AY: single): single;
 
     procedure CalculateDataArea;
+
+    function GetXMinF: single;
+    function GetXMaxF: single;
+    function GetYMinF: single;
+    function GetYMaxF: single;
+
     procedure SetXMaxF(Value: single);
     procedure SetXMinF(Value: single);
     procedure SetYMaxF(Value: single);
@@ -242,8 +248,6 @@ type
     procedure DrawDotLabel(AItem: TChartDotLabelItem);
     procedure DrawLabel(AItem: TChartLabelItem);
 
-
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -260,6 +264,8 @@ type
 
     procedure Draw(ABitmap: TBitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
     procedure Clear;
+
+    function GetDrawingRect: TRect;
   public
     property Title: string read FTitle write FTitle;
     property TitleFontName: string read FTitleFontName write FTitleFontName;
@@ -312,10 +318,10 @@ type
     property TextureHeight: longint read FCurrentTextureHeight write FCurrentTextureHeight;
     property TexturePenWidth: single read FCurrentTexturePenWidth write FCurrentTexturePenWidth;
 
-    property XMaxF: single write SetXMaxF;
-    property XMinF: single write SetXMinF;
-    property YMaxF: single write SetYMaxF;
-    property YMinF: single write SetYMinF;
+    property XMaxF: single read GetXMaxF write SetXMaxF;
+    property XMinF: single read GetXMinF write SetXMinF;
+    property YMaxF: single read GetYMaxF write SetYMaxF;
+    property YMinF: single read GetYMinF write SetYMinF;
     property XDeltaF: single write SetXDeltaF;
     property YDeltaF: single write SetYDeltaF;
     property XCount: longint read FXAxisLabelCount write SetXCount;
@@ -619,7 +625,7 @@ end;
 
 destructor TChartItem.Destroy;
 begin
-  FCaption := '';
+  FCaption  := '';
   FFontName := '';
   inherited Destroy;
 end;
@@ -952,6 +958,14 @@ begin
   result.Height := FBit.Canvas.GetTextHeight(AText);
 end;
 
+function TChart.GetDrawingRect: TRect;
+begin
+  result.Left   :=           FDrawingArea.Left   + 1;
+  result.Right  :=           FDrawingArea.Right  - 1;
+  result.Top    := FHeight - FDrawingArea.Top    + 1;
+  result.Bottom := FHeight - FDrawingArea.Bottom - 1;
+end;
+
 function TChart.GetTitleSize: TSize;
 begin
   if FTitle = '' then
@@ -1191,7 +1205,6 @@ begin
   // XToCanvas(x1),
   // YToCanvas(y1),
   // APenColor, APenWidth);
-
 
   FBit.Canvas.Pen.Color := APenColor;
   FBit.Canvas.Pen.Width := Trunc(APenWidth);
@@ -1606,6 +1619,26 @@ begin
     FYAxisLineWidth * FScale);
 
   ABitmap.Canvas.Draw(0, 0, FBit);
+end;
+
+function TChart.GetXMinF: single;
+begin
+  result := FDataArea.Left;
+end;
+
+function TChart.GetXMaxF: single;
+begin
+  result := FDataArea.Right;
+end;
+
+function TChart.GetYMinF: single;
+begin
+  result := FDataArea.Bottom;
+end;
+
+function TChart.GetYMaxF: single;
+begin
+  result := FDataArea.Top;
 end;
 
 procedure TChart.SetXMaxF(Value: single);
