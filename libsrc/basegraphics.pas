@@ -262,7 +262,7 @@ type
 
     procedure AddDotLabel(aX, aY, aRadius: single; aShiftX, aShiftY: longint; aAlign: TAlignment; aVertAlign: TVerticalAlignment; const aCaption: string);
 
-    procedure Draw(ABitmap: TBitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
+    procedure Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
     procedure Clear;
 
     function GetDrawingRect: TRect;
@@ -1545,7 +1545,7 @@ begin
   end;
 end;
 
-procedure TChart.Draw(ABitmap: TBitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
+procedure TChart.Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
 var
   Size1, Size2, Size3: TSize;
 begin
@@ -1618,7 +1618,7 @@ begin
     FYAxisLineColor,
     FYAxisLineWidth * FScale);
 
-  ABitmap.Canvas.Draw(0, 0, FBit);
+  ACanvas.Draw(0, 0, FBit);
 end;
 
 function TChart.GetXMinF: single;
