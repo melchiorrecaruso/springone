@@ -222,6 +222,7 @@ type
     procedure SetCurrentFontQuality(AValue: TFontQuality);
     procedure SetCurrentFontName(AValue: string);
     procedure SetCurrentFontStyle(AValue: TFontStyles);
+    procedure SetCurrentFontColor(AValue: TColor);
     procedure SetCurrentFontHeight(AValue: longint);
     procedure SetCurrentJoinStyle(AValue: TPenJoinStyle);
     procedure SetCurrentLineCap(AValue: TPenEndCap);
@@ -237,7 +238,7 @@ type
     function XToCanvas(X: single): single;
     function YToCanvas(Y: single): single;
     procedure DrawLine(x0, y0, x1, y1: single; aPenColor: TColor; aPenWidth: single);
-    procedure DrawText(X, Y: single; const aText: string; aTextColor: TColor; aAlign: TAlignment; aVertAlign: TVerticalAlignment);
+    procedure DrawText(X, Y: single; const aText: string; aAlign: TAlignment; aVertAlign: TVerticalAlignment);
 
     procedure DrawGrid;
     procedure DrawLegend;
@@ -727,7 +728,7 @@ begin
   FXAxisLabel := 'X Axis';
   FXAxisFontName := 'default';
   FXAxisFontColor := clBlack;
-  FXAxisFontHeight := 14;
+  FXAxisFontHeight := 0;
   FXAxisFontStyle := [fsBold];
   FXAxisLineColor := clBlack;
   FXAxisLineStyle := psSolid;
@@ -739,7 +740,7 @@ begin
   FYAxisLabel := 'Y';
   FYAxisFontName := 'default';
   FYAxisFontColor := clBlack;
-  FYAxisFontHeight := 14;
+  FYAxisFontHeight := 0;
   FYAxisFontStyle := [fsBold];
   FYAxisLineColor := clBlack;
   FYAxisLineStyle := psSolid;
@@ -752,7 +753,7 @@ begin
   FLegendEnabled := True;
 
   FCurrentFontName := 'default';
-  FCurrentFontHeight := 14;
+  FCurrentFontHeight := 0;
   FCurrentFontColor := clRed;
   FCurrentFontStyle := [fsBold];
   FCurrentPenColor := clRed;
@@ -1104,6 +1105,12 @@ begin
     FBit.Canvas.Font.Style := AValue;
 end;
 
+procedure TChart.SetCurrentFontColor(AValue: TColor);
+begin
+  if FBit.Canvas.Font.Color <> AValue then
+    FBit.Canvas.Font.Color := AValue;
+end;
+
 procedure TChart.SetCurrentFontHeight(AValue: longint);
 begin
   if FBit.Canvas.Font.Height <> AValue then
@@ -1143,6 +1150,7 @@ begin
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FXAxisFontName);
   SetCurrentFontStyle(FXAxisFontStyle);
+  SetCurrentFontColor(FXAxisFontColor);
   SetCurrentFontHeight(Trunc(FXAxisFontHeight * FScale));
   SetCurrentJoinStyle(pjsRound);
   SetCurrentLineCap(pecRound);
@@ -1152,20 +1160,21 @@ begin
   begin
     X := FDrawingArea.Left + XSpacing * I;
     DrawLine(X, FDrawingArea.Bottom, X, FDrawingArea.Top, FYGridLineColor, FYGridLineWidth * FScale);
-    DrawText(X, FDrawingArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * I), FXAxisFontColor, taCenter, taAlignTop);
+    DrawText(X, FDrawingArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * I), taCenter, taAlignTop);
   end;
   DrawLine(FDrawingArea.Right, FDrawingArea.Bottom, FDrawingArea.Right, FDrawingArea.Top, FYGridLineColor, FYGridLineWidth * FScale);
 
   if FXAxisLabel <> '' then
-    DrawText(FDrawingArea.Right, FDrawingArea.Bottom + YShift, FXAxisLabel, FXAxisFontColor, taCenter, taAlignTop)
+    DrawText(FDrawingArea.Right, FDrawingArea.Bottom + YShift, FXAxisLabel, taCenter, taAlignTop)
   else
-    DrawText(FDrawingArea.Right, FDataArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * FXAxisLabelCount), FXAxisFontColor, taCenter, taAlignTop);
+    DrawText(FDrawingArea.Right, FDataArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * FXAxisLabelCount), taCenter, taAlignTop);
 
   // Draw X secondary axis and Y labels
   SetCurrentFontAntialias(amDontCare);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FYAxisFontName);
   SetCurrentFontStyle(FYAxisFontStyle);
+  SetCurrentFontColor(FYAxisFontColor);
   SetCurrentFontHeight(Trunc(FYAxisFontHeight * FScale));
   SetCurrentJoinStyle(pjsRound);
   SetCurrentLineCap(pecRound);
@@ -1175,24 +1184,25 @@ begin
   begin
     Y := FDrawingArea.Bottom + YSpacing * I;
     DrawLine(FDrawingArea.Left, Y, FDrawingArea.Right, Y, FXGridLineColor, FXGridLineWidth * FScale);
-    DrawText(FDrawingArea.Left + XShift, Y, GetString(FDataArea.Bottom + FYIncrementF * I), FYAxisFontColor, taRightJustify, taVerticalCenter);
+    DrawText(FDrawingArea.Left + XShift, Y, GetString(FDataArea.Bottom + FYIncrementF * I), taRightJustify, taVerticalCenter);
   end;
   DrawLine(FDrawingArea.Left, FDrawingArea.Top, FDrawingArea.Right, FDrawingArea.Top, FXGridLineColor, FXGridLineWidth * FScale);
 
   if FYAxisLabel <> '' then
-    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, FYAxisLabel, FYAxisFontColor, taRightJustify, taVerticalCenter)
+    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, FYAxisLabel, taRightJustify, taVerticalCenter)
   else
-    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, GetString(FDataArea.Bottom + FYIncrementF * FYAxisLabelCount), FYAxisFontColor, taRightJustify, taVerticalCenter);
+    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, GetString(FDataArea.Bottom + FYIncrementF * FYAxisLabelCount), taRightJustify, taVerticalCenter);
 
   // Draw Chart Title
   SetCurrentFontAntialias(amDontCare);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FTitleFontName);
   SetCurrentFontStyle(FTitleFontStyle);
+  SetCurrentFontColor(FTitleFontColor);
   SetCurrentFontHeight(Trunc(FTitleFontHeight * FScale));
 
   YShift := (FSpacer * FScale) * 0.5;
-  DrawText((FDrawingArea.Left + FDrawingArea.Right) * 0.5, FDrawingArea.Top + YShift, FTitle, FTitleFontColor, taCenter, taAlignBottom);
+  DrawText((FDrawingArea.Left + FDrawingArea.Right) * 0.5, FDrawingArea.Top + YShift, FTitle, taCenter, taAlignBottom);
 end;
 
 procedure TChart.DrawLine(x0, y0, x1, y1: single; APenColor: TColor; APenWidth: single);
@@ -1217,8 +1227,7 @@ begin
     Trunc(YToCanvas(y1)));
 end;
 
-procedure TChart.DrawText(X, Y: single; const AText: string; ATextColor: TColor;
-  AAlign: TAlignment; AVertAlign: TVerticalAlignment);
+procedure TChart.DrawText(X, Y: single; const AText: string; AAlign: TAlignment; AVertAlign: TVerticalAlignment);
 var
   ShiftX, ShiftY: double;
   TxtSize: TSize;
@@ -1245,7 +1254,6 @@ begin
   //  taLeftJustify);
 
   FBit.Canvas.Brush.Color := FBackgroundColor;
-  FBit.Canvas.Font.Color := ATextColor;
   FBit.Canvas.TextOut(
     Trunc(XToCanvas(X + ShiftX)),
     Trunc(YToCanvas(Y + ShiftY)),
@@ -1289,6 +1297,7 @@ begin
         SetCurrentFontName(Item.FFontName);
         SetCurrentFontHeight(Trunc(Item.FFontHeight * FScale));
         SetCurrentFontStyle(Item.FFontStyle);
+        SetcurrentFontcolor(Item.FFontColor);
 
         TxtSize := GetTextSize(Item.FCaption);
 
@@ -1296,7 +1305,6 @@ begin
           X + (FSpacer * FScale * 1.5) + FLegendLineLength * FScale,
           Y,
           Item.FCaption,
-          Item.FFontColor,
           taLeftJustify,
           taVerticalCenter);
 
@@ -1487,12 +1495,12 @@ begin
   SetCurrentFontName(AItem.FFontName);
   SetCurrentFontHeight(Trunc(AItem.FFontHeight * FScale));
   SetCurrentFontStyle(AItem.FFontStyle);
+  SetcurrentFontColor(AItem.FFontColor);
 
   DrawText(
     PxFromAreaFToArea(AItem.FX) + AItem.FShiftX * FScale,
     PyFromAreaFToArea(AItem.FY) + AItem.FShiftY * FScale,
     AItem.FCaption,
-    AItem.FFontColor,
     AItem.FAlign,
     AItem.FVertAlign);
 end;
@@ -1504,12 +1512,12 @@ begin
   SetCurrentFontName(AItem.FFontName);
   SetCurrentFontHeight(Trunc(AItem.FFontHeight * FScale));
   SetCurrentFontStyle(AItem.FFontStyle);
+  SetCurrentFontColor(AItem.FFontColor);
 
   DrawText(
     PxFromAreaFToArea(AItem.FX) + AItem.FShiftX * FScale,
     PyFromAreaFToArea(AItem.FY) + AItem.FShiftY * FScale,
     AItem.FCaption,
-    AItem.FFontColor,
     AItem.FAlign,
     AItem.FVertAlign);
 end;
