@@ -50,7 +50,7 @@ type
     FCaption: string;
     FFontName: string;
     FFontHeight: single;
-    FFontColor: TColor;
+    FFontColor: TBGRAPixel;
     FFontStyle: TFontStyles;
   public
     constructor Create;
@@ -61,7 +61,7 @@ type
   private
     FX: single;
     FY: single;
-    FPenColor: TColor;
+    FPenColor: TBGRAPixel;
   public
     constructor Create;
     destructor Destroy; override;
@@ -83,7 +83,7 @@ type
   TChartPolyLineItem = class(TChartItem)
   private
     FExtend: boolean;
-    FPenColor: TColor;
+    FPenColor: TBGRAPixel;
     FPenStyle: TPenStyle;
     FPenWidth: single;
     FPoints: ArrayOfTPointF;
@@ -94,8 +94,8 @@ type
 
   TChartPolygonItem = class(TChartPolyLineItem)
   private
-    FTextureColor: TColor;
-    FTextureBackgroundColor: TColor;
+    FTextureColor: TBGRAPixel;
+    FTextureBackgroundColor: TBGRAPixel;
     FTextureWidth: longint;
     FTextureHeight: longint;
     FTexturePenWidth: single;
@@ -107,11 +107,11 @@ type
   TChartDotLabelItem = class(TChartLabelItem)
   private
     FRadius: single;
-    FPenColor: TColor;
+    FPenColor: TBGRAPixel;
     FPenStyle: TPenStyle;
     FPenWidth: single;
-    FTextureColor: TColor;
-    FTextureBackgroundColor: TColor;
+    FTextureColor: TBGRAPixel;
+    FTextureBackgroundColor: TBGRAPixel;
     FTextureWidth: longint;
     FTextureHeight: longint;
     FTexturePenWidth: single;
@@ -122,53 +122,53 @@ type
 
   TChart = class
   private
-    FBit: TBitmap;
-    FBackgroundColor: TColor;
-    FColor: TColor;
+    FBit: TBGRABitmap;
+    FBackgroundColor: TBGRAPixel;
+    FColor: TBGRAPixel;
 
     FLegendLineLength: longint;
     FLegendEnabled: boolean;
 
     FTitle: string;
     FTitleFontName: string;
-    FTitleFontColor: TColor;
+    FTitleFontColor: TBGRAPixel;
     FTitleFontHeight: single;
     FTitleFontStyle: TFontStyles;
 
     FXAxisLabel: string;
     FXAxisFontName: string;
-    FXAxisFontColor: TColor;
+    FXAxisFontColor: TBGRAPixel;
     FXAxisFontHeight: single;
     FXAxisFontStyle: TFontStyles;
-    FXAxisLineColor: TColor;
+    FXAxisLineColor: TBGRAPixel;
     FXAxisLineStyle: TPenStyle;
     FXAxisLineWidth: single;
-    FXGridLineColor: TColor;
+    FXGridLineColor: TBGRAPixel;
     FXGridLineStyle: TPenStyle;
     FXGridLineWidth: single;
 
     FYAxisLabel: string;
     FYAxisFontName: string;
-    FYAxisFontColor: TColor;
+    FYAxisFontColor: TBGRAPixel;
     FYAxisFontHeight: single;
     FYAxisFontStyle: TFontStyles;
-    FYAxisLineColor: TColor;
+    FYAxisLineColor: TBGRAPixel;
     FYAxisLineStyle: TPenStyle;
     FYAxisLineWidth: single;
-    FYGridLineColor: TColor;
+    FYGridLineColor: TBGRAPixel;
     FYGridLineStyle: TPenStyle;
     FYGridLineWidth: single;
 
     FCurrentFontName: string;
     FCurrentFontHeight: single;
-    FCurrentFontColor: TColor;
+    FCurrentFontColor: TBGRAPixel;
     FCurrentFontStyle: TFontStyles;
-    FCurrentFontQuality: TFontQuality;
-    FCurrentPenColor: TColor;
+    FCurrentFontQuality: TBGRAFontQuality;
+    FCurrentPenColor: TBGRAPixel;
     FCurrentPenStyle: TPenStyle;
     FCurrentPenWidth: single;
-    FCurrentTextureColor: TColor;
-    FCurrentTextureBackgroundColor: TColor;
+    FCurrentTextureColor: TBGRAPixel;
+    FCurrentTextureBackgroundColor: TBGRAPixel;
     FCurrentTextureWidth: longint;
     FCurrentTextureHeight: longint;
     FCurrentTexturePenWidth: single;
@@ -218,11 +218,11 @@ type
     procedure SetXCount(Value: longint);
     procedure SetYCount(Value: longint);
 
-    procedure SetCurrentFontAntialias(AValue: TAntialiasingMode);
-    procedure SetCurrentFontQuality(AValue: TFontQuality);
+    procedure SetCurrentFontAntialias(AValue: boolean);
+    procedure SetCurrentFontQuality(AValue: TBGRAFontQuality);
     procedure SetCurrentFontName(AValue: string);
     procedure SetCurrentFontStyle(AValue: TFontStyles);
-    procedure SetCurrentFontColor(AValue: TColor);
+    procedure SetCurrentFontColor(AValue: TBGRAPixel);
     procedure SetCurrentFontHeight(AValue: longint);
     procedure SetCurrentJoinStyle(AValue: TPenJoinStyle);
     procedure SetCurrentLineCap(AValue: TPenEndCap);
@@ -237,8 +237,8 @@ type
 
     function XToCanvas(X: single): single;
     function YToCanvas(Y: single): single;
-    procedure DrawLine(x0, y0, x1, y1: single; aPenColor: TColor; aPenWidth: single);
-    procedure DrawText(X, Y: single; const aText: string; aAlign: TAlignment; aVertAlign: TVerticalAlignment);
+    procedure DrawLine(x0, y0, x1, y1: single; aPenColor: TBGRAPixel; aPenWidth: single);
+    procedure DrawText(X, Y: single; const aText: string; const aTextColor: TBGRAPixel; aAlign: TAlignment; aVertAlign: TVerticalAlignment);
 
     procedure DrawGrid;
     procedure DrawLegend;
@@ -258,7 +258,7 @@ type
 
     procedure AddLabel(aX, aY: single; aShiftX, aShiftY: longint; aAlign: TAlignment; aVertAlign: TVerticalAlignment; const aCaption: string);
 
-    procedure AddPixel(aX, aY: single; acolor: TColor);
+    procedure AddPixel(aX, aY: single; acolor: TBGRAPixel);
 
 
     procedure AddDotLabel(aX, aY, aRadius: single; aShiftX, aShiftY: longint; aAlign: TAlignment; aVertAlign: TVerticalAlignment; const aCaption: string);
@@ -271,50 +271,50 @@ type
     property Title: string read FTitle write FTitle;
     property TitleFontName: string read FTitleFontName write FTitleFontName;
     property TitleFontHeight: single read FTitleFontHeight write FTitleFontHeight;
-    property TitleFontColor: TColor read FTitleFontColor write FTitleFontColor;
+    property TitleFontColor: TBGRAPixel read FTitleFontColor write FTitleFontColor;
     property TitleFontStyle: TFontStyles read FTitleFontStyle write FTitleFontStyle;
 
     property XAxisLabel: string read FXAxisLabel write FXAxisLabel;
     property XAxisFontName: string read FXAxisFontName write FXAxisFontName;
     property XAxisFontHeight: single read FXAxisFontHeight write FXAxisFontHeight;
-    property XAxisFontColor: TColor read FXAxisFontColor write FXAxisFontColor;
+    property XAxisFontColor: TBGRAPixel read FXAxisFontColor write FXAxisFontColor;
     property XAxisFontStyle: TFontStyles read FXAxisFontStyle write FXAxisFontStyle;
-    property XAxisLineColor: TColor read FXAxisLineColor write FXAxisLineColor;
+    property XAxisLineColor: TBGRAPixel read FXAxisLineColor write FXAxisLineColor;
     property XAxisLineStyle: TPenStyle read FXAxisLineStyle write FXAxisLineStyle;
     property XAxisLineWidth: single read FXAxisLineWidth write FXAxisLineWidth;
-    property XGridLineColor: TColor read FXGridLineColor write FXGridLineColor;
+    property XGridLineColor: TBGRAPixel read FXGridLineColor write FXGridLineColor;
     property XGridLineStyle: TPenStyle read FXGridLineStyle write FXGridLineStyle;
     property XGridLineWidth: single read FXGridLineWidth write FXGridLineWidth;
 
     property YAxisLabel: string read FYAxisLabel write FYAxisLabel;
     property YAxisFontName: string read FYAxisFontName write FYAxisFontName;
     property YAxisFontHeight: single read FYAxisFontHeight write FYAxisFontHeight;
-    property YAxisFontColor: TColor read FYAxisFontColor write FYAxisFontColor;
+    property YAxisFontColor: TBGRAPixel read FYAxisFontColor write FYAxisFontColor;
     property YAxisFontStyle: TFontStyles read FYAxisFontStyle write FYAxisFontStyle;
-    property YAxisLineColor: TColor read FYAxisLineColor write FYAxisLineColor;
+    property YAxisLineColor: TBGRAPixel read FYAxisLineColor write FYAxisLineColor;
     property YAxisLineStyle: TPenStyle read FYAxisLineStyle write FYAxisLineStyle;
     property YAxisLineWidth: single read FYAxisLineWidth write FYAxisLineWidth;
-    property YGridLineColor: TColor read FYGridLineColor write FYGridLineColor;
+    property YGridLineColor: TBGRAPixel read FYGridLineColor write FYGridLineColor;
     property YGridLineStyle: TPenStyle read FYGridLineStyle write FYGridLineStyle;
     property YGridLineWidth: single read FYGridLineWidth write FYGridLineWidth;
 
-    property BackgroundColor: TColor read FBackgroundColor write FBackgroundColor;
-    property Color: TColor read FColor write FColor;
+    property BackgroundColor: TBGRAPixel read FBackgroundColor write FBackgroundColor;
+    property Color: TBGRAPixel read FColor write FColor;
 
     property LegendLineLength: longint read FLegendLineLength write FLegendLineLength;
     property LegendEnabled: boolean read FLegendEnabled write FLegendEnabled;
 
     property FontName: string read FCurrentFontName write FCurrentFontName;
     property FontHeight: single read FCurrentFontHeight write FCurrentFontHeight;
-    property FontColor: TColor read FCurrentFontColor write FCurrentFontColor;
+    property FontColor: TBGRAPixel read FCurrentFontColor write FCurrentFontColor;
     property FontStyle: TFontStyles read FCurrentFontStyle write FCurrentFontStyle;
 
-    property PenColor: TColor read FCurrentPenColor write FCurrentPenColor;
+    property PenColor: TBGRAPixel read FCurrentPenColor write FCurrentPenColor;
     property PenStyle: TPenStyle read FCurrentPenStyle write FCurrentPenStyle;
     property PenWidth: single read FCurrentPenWidth write FCurrentPenWidth;
 
-    property TextureColor: TColor read FCurrentTextureColor write FCurrentTextureColor;
-    property TextureBackgroundColor: TColor read FCurrentTextureBackgroundColor write FCurrentTextureBackgroundColor;
+    property TextureColor: TBGRAPixel read FCurrentTextureColor write FCurrentTextureColor;
+    property TextureBackgroundColor: TBGRAPixel read FCurrentTextureBackgroundColor write FCurrentTextureBackgroundColor;
     property TextureWidth: longint read FCurrentTextureWidth write FCurrentTextureWidth;
     property TextureHeight: longint read FCurrentTextureHeight write FCurrentTextureHeight;
     property TexturePenWidth: single read FCurrentTexturePenWidth write FCurrentTexturePenWidth;
@@ -342,13 +342,13 @@ type
     FBit: TBGRABitmap;
     FFontName: string;
     FFontHeight: single;
-    FFontColor: TColor;
+    FFontColor: TBGRAPixel;
     FFontStyle: TFontStyles;
     FFontQuality: TBGRAFontQuality;
 
     FBorderWidth: longint;
-    FBackgroundColor: TColor;
-    FPenColor: TColor;
+    FBackgroundColor: TBGRAPixel;
+    FPenColor: TBGRAPixel;
     FPenStyle: TPenStyle;
     FPenWidth: single;
 
@@ -398,13 +398,13 @@ type
     property Items[Row, Column: longint]: string read GetItem write SetItem; default;
 
     property BorderWidth: longint read FBorderWidth write FBorderWidth;
-    property BackgroundColor: TColor read FBackgroundColor write FBackgroundColor;
+    property BackgroundColor: TBGRAPixel read FBackgroundColor write FBackgroundColor;
 
     property FontName: string read FFontName write SetFontName;
     property FontHeight: single read FFontHeight write SetFontHeight;
-    property FontColor: TColor read FFontColor write FFontColor;
+    property FontColor: TBGRAPixel read FFontColor write FFontColor;
     property FontStyle: TFontStyles read FFontStyle write SetFontStyle;
-    property PenColor: TColor read FPenColor write FPenColor;
+    property PenColor: TBGRAPixel read FPenColor write FPenColor;
     property PenStyle: TPenStyle read FPenStyle write FPenStyle;
     property PenWidth: single read FPenWidth write FPenWidth;
 
@@ -443,21 +443,21 @@ type
 
     FBit: TBGRABitmap;
     FBitCharSize: TSize;
-    FBackgroundColor: TColor;
+    FBackgroundColor: TBGRAPixel;
     FFontName: string;
     FFontHeight: single;
-    FFontColor: TColor;
+    FFontColor: TBGRAPixel;
     FFontStyle: TFontStyles;
 
-    FCenterLineColor: TColor;
+    FCenterLineColor: TBGRAPixel;
     FCenterLineStyle: TPenStyle;
     FCenterLineWidth: single;
 
-    FPenColor: TColor;
+    FPenColor: TBGRAPixel;
     FPenStyle: TPenStyle;
     FPenWidth: single;
-    FTextureColor: TColor;
-    FTextureBackgroundColor: TColor;
+    FTextureColor: TBGRAPixel;
+    FTextureBackgroundColor: TBGRAPixel;
     FTextureWidth: longint;
     FTextureHeight: longint;
     FTexturePenWidth: single;
@@ -496,24 +496,24 @@ type
 
     property FontName: string read FFontName write FFontName;
     property FontHeight: single read FFontHeight write FFontHeight;
-    property FontColor: TColor read FFontColor write FFontColor;
+    property FontColor: TBGRAPixel read FFontColor write FFontColor;
     property FontStyle: TFontStyles read FFontStyle write FFontStyle;
 
-    property CenterLineColor: TColor read FCenterLineColor write FCenterLineColor;
+    property CenterLineColor: TBGRAPixel read FCenterLineColor write FCenterLineColor;
     property CenterLineStyle: TPenStyle read FCenterLineStyle write FCenterLineStyle;
     property CenterLineWidth: single read FCenterLineWidth write FCenterLineWidth;
 
-    property PenColor: TColor read FPenColor write FPenColor;
+    property PenColor: TBGRAPixel read FPenColor write FPenColor;
     property PenStyle: TPenStyle read FPenStyle write FPenStyle;
     property PenWidth: single read FPenWidth write FPenWidth;
 
-    property TextureColor: TColor read FTextureColor write FTextureColor;
-    property TextureBackgroundColor: TColor read FTextureBackgroundColor write FTextureBackgroundColor;
+    property TextureColor: TBGRAPixel read FTextureColor write FTextureColor;
+    property TextureBackgroundColor: TBGRAPixel read FTextureBackgroundColor write FTextureBackgroundColor;
     property TextureWidth: longint read FTextureWidth write FTextureWidth;
     property TextureHeight: longint read FTextureHeight write FTextureHeight;
     property TexturePenWidth: single read FTexturePenWidth write FTexturePenWidth;
 
-    property BackgroundColor: TColor read FBackgroundColor write FBackgroundColor;
+    property BackgroundColor: TBGRAPixel read FBackgroundColor write FBackgroundColor;
 
     property Spacer: longint read FSpacer write FSpacer;
     property Height: longint read FHeight write FHeight;
@@ -700,7 +700,7 @@ end;
 constructor TChart.Create;
 begin
   inherited Create;
-  FBit := TBitmap.Create;
+  FBit := TBGRABitmap.Create;
   FItems := TList.Create;
   Clear;
 end;
@@ -758,7 +758,7 @@ begin
   FCurrentFontStyle := [fsBold];
   FCurrentPenColor := clRed;
   FCurrentPenStyle := psSolid;
-  FCurrentFontQuality := fqDefault;
+  FCurrentFontQuality := fqSystemClearType;
 
   FCurrentPenWidth := 1.0;
   FCurrentTextureColor := clRed;
@@ -869,7 +869,7 @@ begin
   FItems.Add(Item);
 end;
 
-procedure TChart.AddPixel(AX, AY: single; AColor: TColor);
+procedure TChart.AddPixel(AX, AY: single; AColor: TBGRAPixel);
 var
   Item: TChartPixelItem;
 begin
@@ -955,8 +955,9 @@ end;
 
 function TChart.GetTextSize(const AText: string): TSize;
 begin
-  result.Width  := FBit.Canvas.GetTextWidth (AText);
-  result.Height := FBit.Canvas.GetTextHeight(AText);
+  result := FBit.TextSize(AText);
+  //result.Width  := FBit.Canvas.GetTextWidth (AText);
+  //result.Height := FBit.Canvas.GetTextHeight(AText);
 end;
 
 function TChart.GetDrawingRect: TRect;
@@ -972,7 +973,7 @@ begin
   if FTitle = '' then
     Exit(TSize.Create(0, 0));
 
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FTitleFontName);
   SetCurrentFontStyle(FTitleFontStyle);
@@ -998,7 +999,7 @@ begin
     begin
       if Item.FCaption <> '' then
       begin
-        SetCurrentFontAntialias(amDontCare);
+        SetCurrentFontAntialias(False);
         SetCurrentFontQuality(FCurrentFontQuality);
         SetCurrentFontName(Item.FFontName);
         SetCurrentFontStyle(Item.FFontStyle);
@@ -1028,7 +1029,7 @@ var
   I: longint;
   Size: TSize;
 begin
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FXAxisFontName);
   SetCurrentFontStyle(FXAxisFontStyle);
@@ -1057,7 +1058,7 @@ var
   I: longint;
   Size: TSize;
 begin
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FYAxisFontName);
   SetCurrentFontStyle(FYAxisFontStyle);
@@ -1081,58 +1082,68 @@ begin
   end;
 end;
 
-procedure TChart.SetCurrentFontAntialias(AValue: TAntialiasingMode);
+procedure TChart.SetCurrentFontAntialias(AValue: boolean);
 begin
-  if FBit.Canvas.AntialiasingMode <> AValue then
-    FBit.Canvas.AntialiasingMode := AValue;
+  if FBit.FontAntialias <> AValue then
+    FBit.FontAntialias := AValue;
+  //if FBit.Canvas.AntialiasingMode <> AValue then
+  //  FBit.Canvas.AntialiasingMode := AValue;
 end;
 
-procedure TChart.SetCurrentFontQuality(AValue: TFontQuality);
+procedure TChart.SetCurrentFontQuality(AValue: TBGRAFontQuality);
 begin
-  if FBit.Canvas.Font.Quality <> AValue then
-    FBit.Canvas.Font.Quality := AValue;
+  if FBit.FontQuality <> AValue then
+    FBit.FontQuality := AValue;
+  //if FBit.Canvas.Font.Quality <> AValue then
+  //  FBit.Canvas.Font.Quality := AValue;
 end;
 
 procedure TChart.SetCurrentFontName(AValue: string);
 begin
-  if FBit.Canvas.Font.Name <> AValue then
-    FBit.Canvas.Font.Name := AValue;
+  if FBit.FontName <> AValue then
+    FBit.FontName := AValue;
+  //if FBit.Canvas.Font.Name <> AValue then
+  //  FBit.Canvas.Font.Name := AValue;
 end;
 
 procedure TChart.SetCurrentFontStyle(AValue: TFontStyles);
 begin
-  if FBit.Canvas.Font.Style <> AValue then
-    FBit.Canvas.Font.Style := AValue;
+  if FBit.FontStyle <> AValue then
+    FBit.FontStyle := AValue;
+  //if FBit.Canvas.Font.Style <> AValue then
+  //  FBit.Canvas.Font.Style := AValue;
 end;
 
-procedure TChart.SetCurrentFontColor(AValue: TColor);
+procedure TChart.SetCurrentFontColor(AValue: TBGRAPixel);
 begin
-  if FBit.Canvas.Font.Color <> AValue then
-    FBit.Canvas.Font.Color := AValue;
+  //if FBit.Canvas.Font.Color <> AValue then
+  //  FBit.Canvas.Font.Color := AValue;
 end;
 
 procedure TChart.SetCurrentFontHeight(AValue: longint);
 begin
-  if FBit.Canvas.Font.Height <> AValue then
-    FBit.Canvas.Font.Height := AValue;
+  if FBit.FontHeight <> AValue then
+    FBit.FontHeight := AValue;
+  //if FBit.Canvas.Font.Height <> AValue then
+  //  FBit.Canvas.Font.Height := AValue;
 end;
 
 procedure TChart.SetCurrentJoinStyle(AValue: TPenJoinStyle);
 begin
-  //if FBit.JoinStyle <> AValue then
-  //  FBit.JoinStyle := AValue;
+  if FBit.JoinStyle <> AValue then
+    FBit.JoinStyle := AValue;
 end;
 
 procedure TChart.SetCurrentLineCap(AValue: TPenEndCap);
 begin
-  //if FBit.LineCap <> AValue then
-  //  FBit.LineCap := AValue;
+  if FBit.LineCap <> AValue then
+    FBit.LineCap := AValue;
 end;
 
 procedure TChart.SetCurrentPenStyle(AValue: TPenStyle);
 begin
-  //if FBit.PenStyle <> AValue then
-  //  FBit.PenStyle := AValue;
+  if FBit.PenStyle <> AValue then
+    FBit.PenStyle := AValue;
 end;
 
 procedure TChart.DrawGrid;
@@ -1146,7 +1157,7 @@ begin
   XSpacing :=  (FDrawingArea.Right - FDrawingArea.Left  ) / FXAxisLabelCount;
   YSpacing :=  (FDrawingArea.Top   - FDrawingArea.Bottom) / FYAxisLabelCount;
   // Draw Y secondary axis and X labels
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FXAxisFontName);
   SetCurrentFontStyle(FXAxisFontStyle);
@@ -1160,17 +1171,17 @@ begin
   begin
     X := FDrawingArea.Left + XSpacing * I;
     DrawLine(X, FDrawingArea.Bottom, X, FDrawingArea.Top, FYGridLineColor, FYGridLineWidth * FScale);
-    DrawText(X, FDrawingArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * I), taCenter, taAlignTop);
+    DrawText(X, FDrawingArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * I), FXAxisFontColor, taCenter, taAlignTop);
   end;
   DrawLine(FDrawingArea.Right, FDrawingArea.Bottom, FDrawingArea.Right, FDrawingArea.Top, FYGridLineColor, FYGridLineWidth * FScale);
 
   if FXAxisLabel <> '' then
-    DrawText(FDrawingArea.Right, FDrawingArea.Bottom + YShift, FXAxisLabel, taCenter, taAlignTop)
+    DrawText(FDrawingArea.Right, FDrawingArea.Bottom + YShift, FXAxisLabel, FXAxisFontColor, taCenter, taAlignTop)
   else
-    DrawText(FDrawingArea.Right, FDataArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * FXAxisLabelCount), taCenter, taAlignTop);
+    DrawText(FDrawingArea.Right, FDataArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * FXAxisLabelCount), FXAxisFontColor, taCenter, taAlignTop);
 
   // Draw X secondary axis and Y labels
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FYAxisFontName);
   SetCurrentFontStyle(FYAxisFontStyle);
@@ -1184,17 +1195,17 @@ begin
   begin
     Y := FDrawingArea.Bottom + YSpacing * I;
     DrawLine(FDrawingArea.Left, Y, FDrawingArea.Right, Y, FXGridLineColor, FXGridLineWidth * FScale);
-    DrawText(FDrawingArea.Left + XShift, Y, GetString(FDataArea.Bottom + FYIncrementF * I), taRightJustify, taVerticalCenter);
+    DrawText(FDrawingArea.Left + XShift, Y, GetString(FDataArea.Bottom + FYIncrementF * I), FYAxisFontColor, taRightJustify, taVerticalCenter);
   end;
   DrawLine(FDrawingArea.Left, FDrawingArea.Top, FDrawingArea.Right, FDrawingArea.Top, FXGridLineColor, FXGridLineWidth * FScale);
 
   if FYAxisLabel <> '' then
-    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, FYAxisLabel, taRightJustify, taVerticalCenter)
+    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, FYAxisLabel, FYAxisFontColor, taRightJustify, taVerticalCenter)
   else
-    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, GetString(FDataArea.Bottom + FYIncrementF * FYAxisLabelCount), taRightJustify, taVerticalCenter);
+    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, GetString(FDataArea.Bottom + FYIncrementF * FYAxisLabelCount), FYAxisFontColor, taRightJustify, taVerticalCenter);
 
   // Draw Chart Title
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(FTitleFontName);
   SetCurrentFontStyle(FTitleFontStyle);
@@ -1202,32 +1213,22 @@ begin
   SetCurrentFontHeight(Trunc(FTitleFontHeight * FScale));
 
   YShift := (FSpacer * FScale) * 0.5;
-  DrawText((FDrawingArea.Left + FDrawingArea.Right) * 0.5, FDrawingArea.Top + YShift, FTitle, taCenter, taAlignBottom);
+  DrawText((FDrawingArea.Left + FDrawingArea.Right) * 0.5, FDrawingArea.Top + YShift, FTitle, FTitleFontColor, taCenter, taAlignBottom);
 end;
 
-procedure TChart.DrawLine(x0, y0, x1, y1: single; APenColor: TColor; APenWidth: single);
+procedure TChart.DrawLine(x0, y0, x1, y1: single; APenColor: TBGRAPixel; APenWidth: single);
 begin
   if SameValue(APenWidth, 0) then Exit;
 
-  //FBit.DrawLineAntialias(
-  // XToCanvas(x0),
-  // YToCanvas(y0),
-  // XToCanvas(x1),
-  // YToCanvas(y1),
-  // APenColor, APenWidth);
-
-  FBit.Canvas.Pen.Color := APenColor;
-  FBit.Canvas.Pen.Width := Trunc(APenWidth);
-  FBit.Canvas.MoveTo(
-    Trunc(XToCanvas(x0)),
-    Trunc(YToCanvas(y0)));
-
-  FBit.Canvas.LineTo(
-    Trunc(XToCanvas(x1)),
-    Trunc(YToCanvas(y1)));
+  FBit.DrawLineAntialias(
+    XToCanvas(x0),
+    YToCanvas(y0),
+    XToCanvas(x1),
+    YToCanvas(y1),
+    APenColor, APenWidth);
 end;
 
-procedure TChart.DrawText(X, Y: single; const AText: string; AAlign: TAlignment; AVertAlign: TVerticalAlignment);
+procedure TChart.DrawText(X, Y: single; const AText: string; const ATextColor: TBGRAPixel; AAlign: TAlignment; AVertAlign: TVerticalAlignment);
 var
   ShiftX, ShiftY: double;
   TxtSize: TSize;
@@ -1246,18 +1247,12 @@ begin
     taVerticalCenter: ShiftY := + TxtSize.Height / 2;
   end;
 
-  //FBit.TextOut(
-  //  XToCanvas(X + ShiftX),
-  //  YToCanvas(Y + ShiftY),
-  //  AText,
-  //  ATextColor,
-  //  taLeftJustify);
-
-  FBit.Canvas.Brush.Color := FBackgroundColor;
-  FBit.Canvas.TextOut(
-    Trunc(XToCanvas(X + ShiftX)),
-    Trunc(YToCanvas(Y + ShiftY)),
-    AText)
+  FBit.TextOut(
+    XToCanvas(X + ShiftX),
+    YToCanvas(Y + ShiftY),
+    AText,
+    ATextColor,
+    taLeftJustify);
 end;
 
 procedure TChart.DrawLegend;
@@ -1292,7 +1287,7 @@ begin
           TChartPolyLineItem(Item).FPenColor,
           TChartPolyLineItem(Item).FPenWidth * FScale);
 
-        SetCurrentFontAntialias(amDontCare);
+        SetCurrentFontAntialias(False);
         SetCurrentFontQuality(FCurrentFontQuality);
         SetCurrentFontName(Item.FFontName);
         SetCurrentFontHeight(Trunc(Item.FFontHeight * FScale));
@@ -1305,6 +1300,7 @@ begin
           X + (FSpacer * FScale * 1.5) + FLegendLineLength * FScale,
           Y,
           Item.FCaption,
+          Item.FFontColor,
           taLeftJustify,
           taVerticalCenter);
 
@@ -1347,19 +1343,15 @@ end;
 
 procedure TChart.DrawPixel(AItem: TChartPixelItem);
 begin
-  //FBit.SetPixel(
-  //  Trunc(XToCanvas(PxFromAreaFToArea(AItem.FX))),
-  //  Trunc(YToCanvas(PyFromAreaFToArea(AItem.FY))), AItem.FPenColor);
-
-  FBit.Canvas.Pixels[
+  FBit.SetPixel(
     Trunc(XToCanvas(PxFromAreaFToArea(AItem.FX))),
-    Trunc(YToCanvas(PyFromAreaFToArea(AItem.FY)))] := AItem.FPenColor;
+    Trunc(YToCanvas(PyFromAreaFToArea(AItem.FY))), AItem.FPenColor);
 end;
 
 procedure TChart.DrawPolygon(AItem: TChartPolygonItem);
 var
   i: longint;
-  T: array of TPoint = nil;
+  T: array of TPointF = nil;
   Tex: TBGRABitmap;
 begin
   SetCurrentJoinStyle(pjsRound);
@@ -1369,11 +1361,10 @@ begin
   SetLength(T, Length(AItem.FPoints));
   for i := Low(AItem.FPoints) to High(AItem.FPoints) do
   begin
-    T[i].X := Trunc(XToCanvas(PxFromAreaFToArea(AItem.FPoints[i].X)));
-    T[i].Y := Trunc(YToCanvas(PyFromAreaFToArea(AItem.FPoints[i].Y)));
+    T[i].X := XToCanvas(PxFromAreaFToArea(AItem.FPoints[i].X));
+    T[i].Y := YToCanvas(PyFromAreaFToArea(AItem.FPoints[i].Y));
   end;
 
-  (*
   Tex := FBit.CreateBrushTexture(
            bsFDiagonal,
            AItem.FTextureColor,
@@ -1385,12 +1376,7 @@ begin
   FBit.FillPolyAntialias(T, Tex);
   FBit.DrawPolygonAntialias(T, AItem.FPenColor, AItem.FPenWidth * FScale, BGRA(255, 255, 255, 0));
   Tex.Free;
-  *)
 
-  FBit.Canvas.Brush.Color := AItem.FTextureColor;
-  FBit.Canvas.Pen.Color   := AItem.FPenColor;
-  FBit.Canvas.Pen.Width   := Trunc(AItem.FPenWidth * FScale);
-  FBit.Canvas.Polygon(T);
   T := nil;
 end;
 
@@ -1455,15 +1441,8 @@ begin
     T[i].X := XToCanvas(PxFromAreaFToArea(T[i].X));
     T[i].Y := YToCanvas(PyFromAreaFToArea(T[i].Y));
   end;
-  //FBit.DrawPolyLineAntialias(T, AItem.FPenColor, AItem.FPenWidth * FScale, BGRA(255, 255, 255, 0));
 
-  FBit.Canvas.Pen.Color := AItem.FPenColor;
-  FBit.Canvas.Pen.Width := Trunc(AItem.FPenWidth * FScale);
-  FBit.Canvas.MoveTo(Trunc(T[0].X), Trunc(T[0].Y));
-  for i := 1 to High(AItem.FPoints) do
-  begin
-    FBit.Canvas.LineTo(Trunc(T[i].X), Trunc(T[i].Y));
-  end;
+  FBit.DrawPolyLineAntialias(T, AItem.FPenColor, AItem.FPenWidth * FScale, BGRA(255, 255, 255, 0));
   T := nil;
 end;
 
@@ -1473,24 +1452,16 @@ begin
   SetCurrentLineCap(pecRound);
   SetCurrentPenStyle(AItem.FPenStyle);
 
-  //FBit.EllipseAntialias(
-  //  XToCanvas(PxFromAreaFToArea(AItem.FX)),
-  //  YToCanvas(PyFromAreaFToArea(AItem.FY)),
-  //  AItem.FRadius*FScale,
-  //  AItem.FRadius*FScale,
-  //  AItem.FPenColor,
-  //  AItem.FPenWidth,
-  //  AItem.FPenColor);
+  FBit.EllipseAntialias(
+    XToCanvas(PxFromAreaFToArea(AItem.FX)),
+    YToCanvas(PyFromAreaFToArea(AItem.FY)),
+    AItem.FRadius*FScale,
+    AItem.FRadius*FScale,
+    AItem.FPenColor,
+    AItem.FPenWidth,
+    AItem.FPenColor);
 
-  FBit.Canvas.Pen.Color := AItem.FPenColor;
-  FBit.Canvas.Pen.Width := Trunc(AItem.FPenWidth*FScale);
-  FBit.Canvas.EllipseC(
-    Trunc(XToCanvas(PxFromAreaFToArea(AItem.FX))),
-    Trunc(YToCanvas(PyFromAreaFToArea(AItem.FY))),
-    Trunc(AItem.FRadius*FScale),
-    Trunc(AItem.FRadius*FScale));
-
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(AItem.FFontName);
   SetCurrentFontHeight(Trunc(AItem.FFontHeight * FScale));
@@ -1501,13 +1472,14 @@ begin
     PxFromAreaFToArea(AItem.FX) + AItem.FShiftX * FScale,
     PyFromAreaFToArea(AItem.FY) + AItem.FShiftY * FScale,
     AItem.FCaption,
+    AItem.FFontColor,
     AItem.FAlign,
     AItem.FVertAlign);
 end;
 
 procedure TChart.DrawLabel(AItem: TChartLabelItem);
 begin
-  SetCurrentFontAntialias(amDontCare);
+  SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
   SetCurrentFontName(AItem.FFontName);
   SetCurrentFontHeight(Trunc(AItem.FFontHeight * FScale));
@@ -1518,6 +1490,7 @@ begin
     PxFromAreaFToArea(AItem.FX) + AItem.FShiftX * FScale,
     PyFromAreaFToArea(AItem.FY) + AItem.FShiftY * FScale,
     AItem.FCaption,
+    AItem.FFontColor,
     AItem.FAlign,
     AItem.FVertAlign);
 end;
@@ -1560,8 +1533,9 @@ begin
   FWidth  := AWidth;
   FHeight := AHeight;
   FBit.SetSize(FWidth, FHeight);
-  FBit.Canvas.Brush.Color := FBackgroundColor;
-  FBit.Canvas.FillRect(0, 0, FWidth, FHeight);
+  Fbit.Fill(FBackgroundColor);
+  //FBit.Canvas.Brush.Color := FBackgroundColor;
+  //FBit.Canvas.FillRect(0, 0, FWidth, FHeight);
 
   CalculateDataArea;
 
@@ -1626,7 +1600,7 @@ begin
     FYAxisLineColor,
     FYAxisLineWidth * FScale);
 
-  ACanvas.Draw(0, 0, FBit);
+  FBit.Draw(ACanvas, 0, 0, true);
 end;
 
 function TChart.GetXMinF: single;
@@ -1713,7 +1687,7 @@ begin
   FFontHeight  := 13;
   FFontColor   := BGRA(0, 0, 0, 255);
   FFontStyle   := [fsBold];
-  FFontQuality := fqSystem; //fqSystemClearType,
+  FFontQuality := fqSystemClearType;
 
   FIsNeededUpdateSize := True;
   FWidth  := 0;
@@ -2226,10 +2200,10 @@ begin
         FBackgroundColor);
 
       FBit.DrawLineAntialias(
-        Trunc(XToCanvas(x0)),
-        Trunc(YToCanvas(y0)),
-        Trunc(XToCanvas(x1)),
-        Trunc(YToCanvas(y1)),
+        XToCanvas(x0),
+        YToCanvas(y0),
+        XToCanvas(x1),
+        YToCanvas(y1),
         FPenColor, FPenWidth * Min(2, FScale), False);
     end;
 
@@ -2251,10 +2225,10 @@ begin
         FBackgroundColor);
 
       FBit.DrawLineAntialias(
-        Trunc(XToCanvas(x0)),
-        Trunc(YToCanvas(y0)),
-        Trunc(XToCanvas(x1)),
-        Trunc(YToCanvas(y1)),
+        XToCanvas(x0),
+        YToCanvas(y0),
+        XToCanvas(x1),
+        YToCanvas(y1),
         FPenColor, FPenWidth * Min(2, FScale), False);
     end;
     // Draw center line
