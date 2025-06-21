@@ -770,7 +770,8 @@ begin
   Result.YMaxF := 1.0;
   Result.YDeltaF := 0.1;
   Result.YCount  := 10;
-  Result.ShowOrigin := True;
+  Result.XMinF := 0;
+  Result.YMinF := 0;
   Result.AddPolyLine(Points, False, 'Buckling-Curve');
   Points := nil;
 
