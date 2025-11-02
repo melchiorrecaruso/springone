@@ -136,6 +136,7 @@ type
     FTitleFontStyle: TFontStyles;
 
     FXAxisLabel: string;
+    FXAxisLabelLen: longint;
     FXAxisFontName: string;
     FXAxisFontColor: TBGRAPixel;
     FXAxisFontHeight: single;
@@ -148,6 +149,7 @@ type
     FXGridLineWidth: single;
 
     FYAxisLabel: string;
+    FYAxisLabelLen: longint;
     FYAxisFontName: string;
     FYAxisFontColor: TBGRAPixel;
     FYAxisFontHeight: single;
@@ -274,7 +276,9 @@ type
     property TitleFontColor: TBGRAPixel read FTitleFontColor write FTitleFontColor;
     property TitleFontStyle: TFontStyles read FTitleFontStyle write FTitleFontStyle;
 
+
     property XAxisLabel: string read FXAxisLabel write FXAxisLabel;
+    property XAxisLabelLen: longint read FXAxisLabelLen write FXAxisLabelLen;
     property XAxisFontName: string read FXAxisFontName write FXAxisFontName;
     property XAxisFontHeight: single read FXAxisFontHeight write FXAxisFontHeight;
     property XAxisFontColor: TBGRAPixel read FXAxisFontColor write FXAxisFontColor;
@@ -287,6 +291,7 @@ type
     property XGridLineWidth: single read FXGridLineWidth write FXGridLineWidth;
 
     property YAxisLabel: string read FYAxisLabel write FYAxisLabel;
+    property YAxisLabelLen: longint read FYAxisLabelLen write FYAxisLabelLen;
     property YAxisFontName: string read FYAxisFontName write FYAxisFontName;
     property YAxisFontHeight: single read FYAxisFontHeight write FYAxisFontHeight;
     property YAxisFontColor: TBGRAPixel read FYAxisFontColor write FYAxisFontColor;
@@ -722,10 +727,11 @@ begin
   FTitle := 'Chart';
   FTitleFontName := 'default';
   FTitleFontColor := clBlack;
-  FTitleFontHeight := 20;
+  FTitleFontHeight := 0;
   FTitleFontStyle := [fsBold];
 
   FXAxisLabel := 'X Axis';
+  FXAxisLabelLen := 0;
   FXAxisFontName := 'default';
   FXAxisFontColor := clBlack;
   FXAxisFontHeight := 0;
@@ -738,6 +744,7 @@ begin
   FXGridLineWidth := 0.5;
 
   FYAxisLabel := 'Y';
+  FYAxisLabelLen := 0;
   FYAxisFontName := 'default';
   FYAxisFontColor := clBlack;
   FYAxisFontHeight := 0;
@@ -1051,6 +1058,9 @@ begin
     Result.Height := Max(Result.Height, Size.Height);
     Result.Width  := Max(Result.Width,  Size.Width);
   end;
+
+  if FXAxisLabelLen > 0 then
+    Result.Width := Max(FXAxisLabelLen, Result.Width);
 end;
 
 function TChart.GetYAxisLabelSize: TSize;
@@ -1080,6 +1090,9 @@ begin
     Result.Height := Max(Result.Height, Size.Height);
     Result.Width  := Max(Result.Width,  Size.Width);
   end;
+
+  if FYAxisLabelLen > 0 then
+    Result.Width := Max(FYAxisLabelLen, Result.Width);
 end;
 
 procedure TChart.SetCurrentFontAntialias(AValue: boolean);
