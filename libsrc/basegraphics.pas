@@ -270,12 +270,14 @@ type
 
     function GetDrawingRect: TRect;
   public
+    function GetXAxisLabelSize(const ALabel: string): TSize;
+    function GetYAxisLabelSize(const ALabel: string): TSize;
+
     property Title: string read FTitle write FTitle;
     property TitleFontName: string read FTitleFontName write FTitleFontName;
     property TitleFontHeight: single read FTitleFontHeight write FTitleFontHeight;
     property TitleFontColor: TBGRAPixel read FTitleFontColor write FTitleFontColor;
     property TitleFontStyle: TFontStyles read FTitleFontStyle write FTitleFontStyle;
-
 
     property XAxisLabel: string read FXAxisLabel write FXAxisLabel;
     property XAxisLabelLen: longint read FXAxisLabelLen write FXAxisLabelLen;
@@ -1063,6 +1065,17 @@ begin
     Result.Width := Max(FXAxisLabelLen, Result.Width);
 end;
 
+function TChart.GetXAxisLabelSize(const ALabel: string): TSize;
+begin
+  SetCurrentFontAntialias(False);
+  SetCurrentFontQuality(FCurrentFontQuality);
+  SetCurrentFontName(FXAxisFontName);
+  SetCurrentFontStyle(FXAxisFontStyle);
+  SetCurrentFontHeight(Trunc(FXAxisFontHeight * FScale));
+
+  Result := GetTextSize(ALabel);
+end;
+
 function TChart.GetYAxisLabelSize: TSize;
 var
   I: longint;
@@ -1093,6 +1106,17 @@ begin
 
   if FYAxisLabelLen > 0 then
     Result.Width := Max(FYAxisLabelLen, Result.Width);
+end;
+
+function TChart.GetYAxisLabelSize(const ALabel: string): TSize;
+begin
+  SetCurrentFontAntialias(False);
+  SetCurrentFontQuality(FCurrentFontQuality);
+  SetCurrentFontName(FYAxisFontName);
+  SetCurrentFontStyle(FYAxisFontStyle);
+  SetCurrentFontHeight(Trunc(FYAxisFontHeight * FScale));
+
+  Result := GetTextSize(ALabel);
 end;
 
 procedure TChart.SetCurrentFontAntialias(AValue: boolean);
