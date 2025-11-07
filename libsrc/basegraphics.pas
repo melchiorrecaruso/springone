@@ -265,7 +265,7 @@ type
 
     procedure AddDotLabel(aX, aY, aRadius: single; aShiftX, aShiftY: longint; aAlign: TAlignment; aVertAlign: TVerticalAlignment; const aCaption: string);
 
-    procedure Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
+    procedure Draw(ABitmap: TBGRABitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
     procedure Clear;
 
     function GetDrawingRect: TRect;
@@ -397,7 +397,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
+    procedure Draw(ABitmap: TBGRABitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
   public
     property Autosize: boolean read FAutosize write FAutosize;
     property RowCount: longint read FRowCount write SetRowCount;
@@ -481,11 +481,11 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure DrawInSection(aCanvas: TCanvas);
-    procedure DrawInSection(aCanvas: TCanvas; aWidth, aHeight: longint);
+    procedure DrawInSection(ABitmap: TBGRABitmap);
+    procedure DrawInSection(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
 
-    procedure DrawInProfile(aCanvas: TCanvas);
-    procedure DrawInProfile(aCanvas: TCanvas; aWidth, aHeight: longint);
+    procedure DrawInProfile(ABitmap: TBGRABitmap);
+    procedure DrawInProfile(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
   public
     property d: double read Fd write Fd;
     property Dm: double read FDm write FDm;
@@ -530,7 +530,7 @@ type
   end;
 
 
-procedure DrawLogo(aCanvas: TCanvas; aWidth, aHeight: longint);
+procedure DrawLogo(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
 
 const
   DefaultSpacer = 16;
@@ -965,8 +965,6 @@ end;
 function TChart.GetTextSize(const AText: string): TSize;
 begin
   result := FBit.TextSize(AText);
-  //result.Width  := FBit.Canvas.GetTextWidth (AText);
-  //result.Height := FBit.Canvas.GetTextHeight(AText);
 end;
 
 function TChart.GetDrawingRect: TRect;
@@ -1123,46 +1121,35 @@ procedure TChart.SetCurrentFontAntialias(AValue: boolean);
 begin
   if FBit.FontAntialias <> AValue then
     FBit.FontAntialias := AValue;
-  //if FBit.Canvas.AntialiasingMode <> AValue then
-  //  FBit.Canvas.AntialiasingMode := AValue;
 end;
 
 procedure TChart.SetCurrentFontQuality(AValue: TBGRAFontQuality);
 begin
   if FBit.FontQuality <> AValue then
     FBit.FontQuality := AValue;
-  //if FBit.Canvas.Font.Quality <> AValue then
-  //  FBit.Canvas.Font.Quality := AValue;
 end;
 
 procedure TChart.SetCurrentFontName(AValue: string);
 begin
   if FBit.FontName <> AValue then
     FBit.FontName := AValue;
-  //if FBit.Canvas.Font.Name <> AValue then
-  //  FBit.Canvas.Font.Name := AValue;
 end;
 
 procedure TChart.SetCurrentFontStyle(AValue: TFontStyles);
 begin
   if FBit.FontStyle <> AValue then
     FBit.FontStyle := AValue;
-  //if FBit.Canvas.Font.Style <> AValue then
-  //  FBit.Canvas.Font.Style := AValue;
 end;
 
 procedure TChart.SetCurrentFontColor(AValue: TBGRAPixel);
 begin
-  //if FBit.Canvas.Font.Color <> AValue then
-  //  FBit.Canvas.Font.Color := AValue;
+  // nothing to do
 end;
 
 procedure TChart.SetCurrentFontHeight(AValue: longint);
 begin
   if FBit.FontHeight <> AValue then
     FBit.FontHeight := AValue;
-  //if FBit.Canvas.Font.Height <> AValue then
-  //  FBit.Canvas.Font.Height := AValue;
 end;
 
 procedure TChart.SetCurrentJoinStyle(AValue: TPenJoinStyle);
@@ -1563,16 +1550,14 @@ begin
   end;
 end;
 
-procedure TChart.Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean = True);
+procedure TChart.Draw(ABitmap: TBGRABitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
 var
   Size1, Size2, Size3: TSize;
 begin
   FWidth  := AWidth;
   FHeight := AHeight;
   FBit.SetSize(FWidth, FHeight);
-  Fbit.Fill(FBackgroundColor);
-  //FBit.Canvas.Brush.Color := FBackgroundColor;
-  //FBit.Canvas.FillRect(0, 0, FWidth, FHeight);
+  FBit.Fill(FBackgroundColor);
 
   CalculateDataArea;
 
@@ -1637,7 +1622,7 @@ begin
     FYAxisLineColor,
     FYAxisLineWidth * FScale);
 
-  FBit.Draw(ACanvas, 0, 0, true);
+  ABitmap.PutImage(0, 0, FBit, dmSet);
 end;
 
 function TChart.GetXMinF: single;
@@ -1917,7 +1902,7 @@ begin
   result := FHeight;
 end;
 
-procedure TReportTable.Draw(ACanvas: TCanvas; AWidth, AHeight: longint; AOpaque: boolean);
+procedure TReportTable.Draw(ABitmap: TBGRABitmap; AWidth, AHeight: longint; AOpaque: boolean);
 var
   i: longint;
   j: longint;
@@ -2015,8 +2000,8 @@ begin
   y := nil;
 
   // Draw
-  fBit.InvalidateBitmap;
-  fBit.Draw(ACanvas, 0, 0, AOpaque);
+  FBit.InvalidateBitmap;
+  ABitmap.PutImage(0, 0, FBit, dmSet);
 end;
 
 // TSpringDrawing
@@ -2094,18 +2079,18 @@ begin
   if FScale <= 0  then Result := False;
 end;
 
-procedure TSpringDrawing.DrawInSection(aCanvas: TCanvas; aWidth, aHeight: longint);
+procedure TSpringDrawing.DrawInSection(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
 begin
   FWidth  := aWidth;
   FHeight := aHeight;
-  DrawInSection(aCanvas);
+  DrawInSection(ABitmap);
 end;
 
-procedure TSpringDrawing.DrawInProfile(aCanvas: TCanvas; aWidth, aHeight: longint);
+procedure TSpringDrawing.DrawInProfile(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
 begin
   FWidth  := aWidth;
   FHeight := aHeight;
-  DrawInProfile(aCanvas);
+  DrawInProfile(ABitmap);
 end;
 
 function TSpringDrawing.XToCanvas(X: single): single;
@@ -2118,7 +2103,7 @@ begin
   Result := FHeight - Y;
 end;
 
-procedure TSpringDrawing.DrawInSection(aCanvas: TCanvas);
+procedure TSpringDrawing.DrawInSection(ABitmap: TBGRABitmap);
 var
   CenterPosition: double;
   x0, x1: double;
@@ -2287,11 +2272,11 @@ begin
   end;
 
   FBit.InvalidateBitmap;
-  FBit.Draw(aCanvas, 0, 0, True);
+  ABitmap.PutImage(0, 0, FBit, dmSet);
   FBit.Destroy;
 end;
 
-procedure TSpringDrawing.DrawInProfile(aCanvas: TCanvas);
+procedure TSpringDrawing.DrawInProfile(ABitmap: TBGRABitmap);
 var
   CenterPosition: double;
   x0, x1: double;
@@ -2509,13 +2494,13 @@ begin
   end;
 
   FBit.InvalidateBitmap;
-  FBit.Draw(aCanvas, 0, 0, True);
+  ABitmap.PutImage(0, 0, FBit, dmSet);
   FBit.Destroy;
 end;
 
 // DrawLogo
 
-procedure DrawLogo(aCanvas: TCanvas; aWidth, aHeight: longint);
+procedure DrawLogo(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
 var
   Bit: TBGRABitmap;
   x, y: longint;
@@ -2541,7 +2526,7 @@ begin
   end;
 
   Bit.InvalidateBitmap;
-  Bit.Draw(aCanvas, 0, 0);
+  ABitmap.PutImage(0, 0, Bit, dmSet);
   Bit.Destroy;
 end;
 
