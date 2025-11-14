@@ -255,15 +255,15 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure AddPolyLine(const aPoints: ArrayOfTPointF; aExtend: boolean; const aCaption: string);
-    procedure AddPolygon(const aPoints: ArrayOfTPointF; const aCaption: string);
+    procedure AddPolyLine(const APoints: ArrayOfTPointF; AExtend: boolean; const ACaption: string);
+    procedure AddPolygon(const APoints: ArrayOfTPointF; const ACaption: string);
 
-    procedure AddLabel(aX, aY: single; aShiftX, aShiftY: longint; aAlign: TAlignment; aVertAlign: TVerticalAlignment; const aCaption: string);
+    procedure AddLabel(AX, AY: single; AShiftX, AShiftY: longint; AAlign: TAlignment; AVertAlign: TVerticalAlignment; const ACaption: string);
 
-    procedure AddPixel(aX, aY: single; acolor: TBGRAPixel);
+    procedure AddPixel(AX, AY: single; AColor: TBGRAPixel);
 
 
-    procedure AddDotLabel(aX, aY, aRadius: single; aShiftX, aShiftY: longint; aAlign: TAlignment; aVertAlign: TVerticalAlignment; const aCaption: string);
+    procedure AddDotLabel(AX, AY, ARadius: single; AShiftX, AShiftY: longint; AAlign: TAlignment; AVertAlign: TVerticalAlignment; const ACaption: string);
 
     procedure Draw(ABitmap: TBGRABitmap; AWidth, AHeight: longint; AOpaque: boolean = True);
     procedure Clear;
@@ -810,7 +810,7 @@ begin
 end;
 
 procedure TChart.AddPolyLine(const APoints: ArrayOfTPointF;
-  aExtend: boolean; const ACaption: string);
+  AExtend: boolean; const ACaption: string);
 var
   I: longint;
   Item: TChartPolyLineItem;
@@ -828,11 +828,11 @@ begin
   Item.FPenColor   := FCurrentPenColor;
   Item.FPenStyle   := FCurrentPenStyle;
   Item.FPenWidth   := FCurrentPenWidth;
-  Item.FExtend     := aExtend;
+  Item.FExtend     := AExtend;
   FItems.Add(Item);
 end;
 
-procedure TChart.AddPolygon(const aPoints: ArrayOfTPointF; const ACaption: string);
+procedure TChart.AddPolygon(const APoints: ArrayOfTPointF; const ACaption: string);
 var
   I: longint;
   Item: TChartPolygonItem;
