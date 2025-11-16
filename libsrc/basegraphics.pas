@@ -782,8 +782,8 @@ begin
 
   FXIncrementF := 0;
   FYIncrementF := 0;
-  FXScaleF := 0;
-  FYScaleF := 0;
+  FXScaleF := 1;
+  FYScaleF := 1;
   FXAxisLabelCount  := 1;
   FYAxisLabelCount  := 1;
 
@@ -1400,8 +1400,6 @@ begin
   FBit.FillPolyAntialias(T, Tex);
   FBit.DrawPolygonAntialias(T, AItem.FPenColor, AItem.FPenWidth * FScale, BGRA(255, 255, 255, 0));
   Tex.Free;
-
-  T := nil;
 end;
 
 procedure TChart.DrawPolyLine(AItem: TChartPolyLineItem);
@@ -1588,8 +1586,8 @@ begin
         while (FDataArea.Left   + ((FXAxisLabelCount -1) * FXIncrementF) > FDataArea.Right) do Dec(FXAxisLabelCount);
         while (FDataArea.Bottom + ((FYAxisLabelCount -1) * FYIncrementF) > FDataArea.Top  ) do Dec(FYAxisLabelCount);
 
-        FDataArea.Right :=  FDataArea.Left   + FXIncrementF * FXAxisLabelCount;
-        FDataArea.Top   :=  FDataArea.Bottom + FYIncrementF * FYAxisLabelCount;
+        FDataArea.Right := FDataArea.Left   + FXIncrementF * FXAxisLabelCount;
+        FDataArea.Top   := FDataArea.Bottom + FYIncrementF * FYAxisLabelCount;
         FXScaleF := (FDrawingArea.Right - FDrawingArea.Left  ) / (FDataArea.Right - FDataArea.Left);
         FYScaleF := (FDrawingArea.Top   - FDrawingArea.Bottom) / (FDataArea.Top   - FDataArea.Bottom);
 
