@@ -1718,28 +1718,28 @@ begin
   // 0-Quick-1 List
   Quick1List := CreateQuick1List1(aScreenScale);
   Bit[0].SetSize(Quick1List.Width, Quick1List.Height);
-  Quick1List.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+  Quick1List.Draw(Bit[0], Bit[0].Width, Bit[0].Height);
   Quick1List.Destroy;
 
   // 1-Quick-2 List
   Quick1List := CreateQuick1List2(aScreenScale);
   Quick1List.Autosize := False;
   Bit[1].SetSize(Quick1List.Width, aScreen.Height - Bit[0].Height);
-  Quick1List.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+  Quick1List.Draw(Bit[1], Bit[1].Width, Bit[1].Height);
   Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[1].Width, Bit[0].Height, False);
   Quick1List.Destroy;
 
   // 2-Force & Displacement Chart
   ForceDiagram := CreateForceDisplacementChart(aScreenScale);
   Bit[2].SetSize((aScreen.Width - Bit[1].Width) div 2, aScreen.Height - Bit[0].Height);
-  ForceDiagram.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+  ForceDiagram.Draw(Bit[2], Bit[2].Width, Bit[2].Height);
   Bit[2].Draw(aScreen.Canvas, 0, aScreen.Height - Bit[2].Height, True);
   ForceDiagram.Destroy;
 
   // 3-Goodman Chart
   GoodmanDiagram := CreateGoodmanChart(aScreenScale);
   Bit[3].SetSize(aScreen.Width - Bit[2].Width - Bit[1].Width, Bit[2].Height);
-  GoodmanDiagram.Draw(Bit[3].Canvas, Bit[3].Width, Bit[3].Height);
+  GoodmanDiagram.Draw(Bit[3], Bit[3].Width, Bit[3].Height);
   Bit[3].Draw(aScreen.Canvas, Bit[2].Width, aScreen.Height - Bit[3].Height, True);
   GoodmanDiagram.Destroy;
 
@@ -1747,7 +1747,7 @@ begin
   Quick1Table := CreateQuick1Table(aScreenScale);
   Quick1Table.Autosize := False;
   Bit[4].SetSize(Bit[1].Width + Bit[3].Width - Bit[0].Width, Quick1Table.Height);
-  Quick1Table.Draw(Bit[4].Canvas, Bit[4].Width, Bit[4].Height);
+  Quick1Table.Draw(Bit[4], Bit[4].Width, Bit[4].Height);
   Bit[4].Draw(aScreen.Canvas, aScreen.Width - Bit[4].Width, 0, True);
   Quick1Table.Destroy;
 
@@ -1755,7 +1755,7 @@ begin
   QualityTable := CreateQualityTable(aScreenScale);
   QualityTable.Autosize := False;
   Bit[5].SetSize(QualityTable.Width, Bit[0].Height - Bit[4].Height);
-  QualityTable.Draw(Bit[5].Canvas, Bit[5].Width, Bit[5].Height);
+  QualityTable.Draw(Bit[5], Bit[5].Width, Bit[5].Height);
   Bit[5].Draw(aScreen.Canvas, aScreen.Width - Bit[4].Width, Bit[4].Height, True);
   QualityTable.Destroy;
 
@@ -1763,7 +1763,7 @@ begin
   MessageList := CreateMessageList(aScreenScale);
   MessageList.Autosize := False;
   Bit[6].SetSize(Bit[4].Width - Bit[5].Width, Bit[5].Height);
-  MessageList.Draw(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
+  MessageList.Draw(Bit[6], Bit[6].Width, Bit[6].Height);
   Bit[6].Draw(aScreen.Canvas, aScreen.Width - Bit[6].Width, Bit[4].Height, True);
   MessageList.Destroy;
 
@@ -1781,17 +1781,17 @@ begin
   SpringDrawing.AutoFit := True;
   SpringDrawing.Lx := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
   SpringDrawing.Caption := Format('L0 = %s', [GetString(SpringDrawing.Lx)]);
-  SpringDrawing.DrawInProfile(Bit[6].Canvas, Bit[6].Width, Bit[6].Height);
+  SpringDrawing.DrawInProfile(Bit[6], Bit[6].Width, Bit[6].Height);
 
   SpringDrawing.AutoFit := False;
   SpringDrawing.Lx := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
   SpringDrawing.Caption := Format('L1 = %s', [GetString(SpringDrawing.Lx)]);
-  SpringDrawing.DrawInProfile(Bit[7].Canvas, Bit[7].Width, Bit[7].Height);
+  SpringDrawing.DrawInProfile(Bit[7], Bit[7].Width, Bit[7].Height);
 
   SpringDrawing.AutoFit := False;
   SpringDrawing.Lx := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
   SpringDrawing.Caption := Format('L2 = %s', [GetString(SpringDrawing.Lx)]);
-  SpringDrawing.DrawInProfile(Bit[8].Canvas, Bit[8].Width, Bit[8].Height);
+  SpringDrawing.DrawInProfile(Bit[8], Bit[8].Width, Bit[8].Height);
 
   Bit[6].Draw(aScreen.Canvas, 0, 0, True);
   Bit[7].Draw(aScreen.Canvas, Bit[6].Width, 0, True);
@@ -2077,7 +2077,7 @@ begin
 
   // 0-List
   Bit[0].SetSize(QuickXList.Width, QuickXList.Height);
-  QuickXList.Draw(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+  QuickXList.Draw(Bit[0], Bit[0].Width, Bit[0].Height);
   Bit[0].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, 0, True);
   QuickXList.Destroy;
 
@@ -2085,7 +2085,7 @@ begin
   MessageList := CreateMessageList(aScreenScale);
   MessageList.Autosize := False;
   Bit[1].SetSize(Bit[0].Width, aScreen.Height - Bit[0].Height);
-  MessageList.Draw(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+  MessageList.Draw(Bit[1], Bit[1].Width, Bit[1].Height);
   Bit[1].Draw(aScreen.Canvas, aScreen.Width - Bit[0].Width, Bit[0].Height, True);
   MessageList.Destroy;
 
@@ -2096,7 +2096,7 @@ begin
     CustomChart := CreateForceDisplacementChart(aScreenScale);
 
   Bit[2].SetSize(aScreen.Width - Bit[0].Width, aScreen.Height);
-  CustomChart.Draw(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+  CustomChart.Draw(Bit[2], Bit[2].Width, Bit[2].Height);
   Bit[2].Draw(aScreen.Canvas, 0, 0, True);
   CustomChart.Destroy;
   {$ENDIF}
@@ -2121,7 +2121,7 @@ var
   Table: TReportTable;
 begin
   Table := CreateMessageList(aScreenScale);
-  Table.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+  Table.Draw(aScreen, aScreen.Width, aScreen.Height);
   Table.Destroy;
 end;
 

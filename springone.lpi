@@ -787,8 +787,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainFrm"/>
-        <TopLine Value="829"/>
-        <CursorPos X="11" Y="869"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="1310"/>
+        <CursorPos X="43" Y="1337"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="1">
           <Item0 X="19" Y="1596" ID="8"/>
@@ -1045,8 +1046,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Compozer"/>
         <EditorIndex Value="14"/>
-        <TopLine Value="743"/>
-        <CursorPos X="8" Y="774"/>
+        <TopLine Value="2073"/>
+        <CursorPos X="21" Y="2124"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1360,9 +1361,8 @@
       <Unit>
         <Filename Value="libsrc\basegraphics.pas"/>
         <UnitName Value="BaseGraphics"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="2186"/>
+        <TopLine Value="2187"/>
         <CursorPos X="29" Y="2212"/>
         <UsageCount Value="82"/>
         <Loaded Value="True"/>
@@ -1794,124 +1794,124 @@
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1362" Column="39" TopLine="1332"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1721" Column="25" TopLine="1693"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
-        <Caret Line="138" Column="14" TopLine="108"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1728" Column="25" TopLine="1700"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1362" Column="46" TopLine="1332"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1735" Column="27" TopLine="1708"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="1361" Column="45" TopLine="1331"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1742" Column="29" TopLine="1715"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2176" Column="140" TopLine="2158"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1750" Column="26" TopLine="1723"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
-        <Caret Line="373" Column="15" TopLine="343"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1758" Column="27" TopLine="1731"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2188" Column="21" TopLine="2158"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1766" Column="26" TopLine="1739"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="446" Column="5" TopLine="415"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1784" Column="37" TopLine="1757"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2188" Column="25" TopLine="2158"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1789" Column="37" TopLine="1762"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2186" Column="51" TopLine="2158"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="1794" Column="37" TopLine="1767"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2175" Column="64" TopLine="2158"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="2080" Column="25" TopLine="2053"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="446" Column="5" TopLine="415"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="2088" Column="26" TopLine="2061"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2188" Column="25" TopLine="2158"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="2099" Column="26" TopLine="2072"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
-        <Caret Line="373" Column="15" TopLine="343"/>
+        <Filename Value="src\compozer.pas"/>
+        <Caret Line="2124" Column="21" TopLine="2073"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2184" Column="9" TopLine="2158"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="395" Column="16" TopLine="368"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
-        <Caret Line="373" Column="15" TopLine="343"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1162" Column="27" TopLine="1135"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2184" Column="31" TopLine="2158"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1168" Column="27" TopLine="1139"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2185" Column="28" TopLine="2155"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1174" Column="27" TopLine="1147"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2213" Column="25" TopLine="2183"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1180" Column="27" TopLine="1153"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
-        <Caret Line="373" Column="15" TopLine="343"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1186" Column="27" TopLine="1159"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2213" Column="25" TopLine="2183"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1192" Column="27" TopLine="1165"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
-        <Caret Line="373" Column="15" TopLine="343"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1198" Column="27" TopLine="1171"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgracustombitmap.inc"/>
-        <Caret Line="468" Column="16" TopLine="440"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1218" Column="43" TopLine="1191"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgracustombitmap.inc"/>
-        <Caret Line="467" Column="16" TopLine="440"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1225" Column="43" TopLine="1198"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgracustombitmap.inc"/>
-        <Caret Line="466" Column="16" TopLine="440"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1232" Column="43" TopLine="1205"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgracustombitmap.inc"/>
-        <Caret Line="465" Column="16" TopLine="440"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1260" Column="43" TopLine="1233"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\unibitmapgeneric.inc"/>
-        <Caret Line="98" Column="15" TopLine="71"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1267" Column="43" TopLine="1240"/>
       </Position>
       <Position>
-        <Filename Value="..\..\..\.lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\unibitmapgeneric.inc"/>
-        <Caret Line="7" Column="35"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1274" Column="43" TopLine="1247"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2213" Column="37" TopLine="2183"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1307" Column="43" TopLine="1273"/>
       </Position>
       <Position>
-        <Filename Value="libsrc\basegraphics.pas"/>
-        <Caret Line="2201" Column="82" TopLine="2183"/>
+        <Filename Value="src\mainfrm.pas"/>
+        <Caret Line="1330" Column="43" TopLine="1303"/>
       </Position>
     </JumpHistory>
   </ProjectOptions>

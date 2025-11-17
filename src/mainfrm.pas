@@ -392,7 +392,7 @@ begin
   {$ifopt D+}
   Logo := TBGRABitmap.Create;
   Logo.SetSize(ScreenImageWidth, ScreenImageHeight);
-  DrawLogo(Logo.Canvas, Logo.Width, Logo.Height);
+  DrawLogo(Logo, Logo.Width, Logo.Height);
   Logo.SaveToFile(ExtractFilePath(ParamStr(0)) + 'background.png');
   Logo.Destroy;
   {$endif}
@@ -1159,43 +1159,43 @@ begin
       spForceDisplacement:
       begin
         Chart := Compozer.CreateForceDisplacementChart(aScreenScale);
-        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Draw(aScreen, aScreen.Width, aScreen.Height);
         Chart.Destroy;
       end;
       spGoodman:
       begin
         Chart := Compozer.CreateGoodmanChart(aScreenScale);
-        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Draw(aScreen, aScreen.Width, aScreen.Height);
         Chart.Destroy;
       end;
       spBuckling:
       begin
         Chart := Compozer.CreateBucklingChart(aScreenScale);
-        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Draw(aScreen, aScreen.Width, aScreen.Height);
         Chart.Destroy;
       end;
       spShearTemperature:
       begin
         Chart := Compozer.CreateShearModulusChart(aScreenScale);
-        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Draw(aScreen, aScreen.Width, aScreen.Height);
         Chart.Destroy;
       end;
       spYoungTemperature:
       begin
         Chart := Compozer.CreateYoungModulusChart(aScreenScale);
-        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Draw(aScreen, aScreen.Width, aScreen.Height);
         Chart.Destroy;
       end;
       spForce1Temperature:
       begin
         Chart := Compozer.CreateLoadF1Chart(aScreenScale);
-        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Draw(aScreen, aScreen.Width, aScreen.Height);
         Chart.Destroy;
       end;
       spForce2Temperature:
       begin
         Chart := Compozer.CreateLoadF2Chart(aScreenScale);
-        Chart.Draw(aScreen.Canvas, aScreen.Width, aScreen.Height);
+        Chart.Draw(aScreen, aScreen.Width, aScreen.Height);
         Chart.Destroy;
       end;
       spMessages: Compozer.DrawMessageList(aScreen, aScreenScale);
@@ -1215,21 +1215,21 @@ begin
         SpringDrawing.AutoFit    := True;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
         SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+        SpringDrawing.DrawInSection(Bit[0], Bit[0].Width, Bit[0].Height);
 
         SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
         SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
         SpringDrawing.AutoFit    := False;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
         SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+        SpringDrawing.DrawInSection(Bit[1], Bit[1].Width, Bit[1].Height);
 
         SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
         SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
         SpringDrawing.AutoFit    := False;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
         SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInSection(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+        SpringDrawing.DrawInSection(Bit[2], Bit[2].Width, Bit[2].Height);
 
         Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
         Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
@@ -1257,21 +1257,21 @@ begin
         SpringDrawing.AutoFit    := True;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
         SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+        SpringDrawing.DrawInProfile(Bit[0], Bit[0].Width, Bit[0].Height);
 
         SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
         SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
         SpringDrawing.AutoFit    := False;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL1, [pMilli]);
         SpringDrawing.Caption    := Format('L1 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+        SpringDrawing.DrawInProfile(Bit[1], Bit[1].Width, Bit[1].Height);
 
         SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
         SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
         SpringDrawing.AutoFit    := False;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL2, [pMilli]);
         SpringDrawing.Caption    := Format('L2 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInProfile(Bit[2].Canvas, Bit[2].Width, Bit[2].Height);
+        SpringDrawing.DrawInProfile(Bit[2], Bit[2].Width, Bit[2].Height);
 
         Bit[0].Draw(aScreen.Canvas, Bit[0].Width * 0, 0, True);
         Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 1, 0, True);
@@ -1297,14 +1297,14 @@ begin
         SpringDrawing.AutoFit    := True;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
         SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInSection(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+        SpringDrawing.DrawInSection(Bit[0], Bit[0].Width, Bit[0].Height);
 
         SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
         SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
         SpringDrawing.AutoFit    := False;
         SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
         SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInSection(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+        SpringDrawing.DrawInSection(Bit[1], Bit[1].Width, Bit[1].Height);
 
         Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
         SpringDrawing.Destroy;
@@ -1327,14 +1327,14 @@ begin
         SpringDrawing.AutoFit    := True;
         SpringDrawing.Lx         := MeterUnit.ToFloat(SpringSolver.LengthL0, [pMilli]);
         SpringDrawing.Caption    := Format('L0 = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInProfile(Bit[0].Canvas, Bit[0].Width, Bit[0].Height);
+        SpringDrawing.DrawInProfile(Bit[0], Bit[0].Width, Bit[0].Height);
 
         SpringDrawing.ClockWise  := ProductionForm.DirectionCoils.ItemIndex = 2;
         SpringDrawing.GroundEnds := GeometryForm1.EndCoilType.ItemIndex = 1;
         SpringDrawing.AutoFit    := False;
         SpringDrawing.Lx         := DrawingForm.SpringLength.Value;
         SpringDrawing.Caption    := Format('L = %0.2f', [SpringDrawing.Lx]);
-        SpringDrawing.DrawInProfile(Bit[1].Canvas, Bit[1].Width, Bit[1].Height);
+        SpringDrawing.DrawInProfile(Bit[1], Bit[1].Width, Bit[1].Height);
 
         Bit[1].Draw(aScreen.Canvas, Bit[1].Width * 0, 0, True);
         SpringDrawing.Destroy;
