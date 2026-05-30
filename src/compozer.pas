@@ -806,7 +806,7 @@ end;
 
 function TCompozer.CreateLoadF1Chart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
+  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -839,7 +839,7 @@ end;
 
 function TCompozer.CreateLoadF2Chart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
+  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -873,7 +873,7 @@ end;
 
 function TCompozer.CreateShearModulusChart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
+  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
@@ -903,7 +903,7 @@ end;
 
 function TCompozer.CreateYoungModulusChart(const AScreenScale: double): TChart;
 const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
+  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
   Points: ArrayOfTPointF = nil;
 begin
