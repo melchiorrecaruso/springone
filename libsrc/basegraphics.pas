@@ -28,7 +28,7 @@ interface
 
 uses
   BGRABitmap, BGRABitmapTypes, BGRATextFX, BGRACanvas2D,
-  Classes, DateUtils, Graphics, SysUtils, BaseUtils;
+  Classes, DateUtils, IntegerList, Graphics, SysUtils, BaseUtils;
 
 type
   TDrawingArea = record
@@ -183,7 +183,6 @@ type
     FXIncrementF, FYIncrementF: single;
     FXScaleF, FYScaleF: single;
 
-
     FItems: TList;
 
     FWidth, FHeight: longint;
@@ -261,7 +260,6 @@ type
     procedure AddLabel(AX, AY: single; AShiftX, AShiftY: longint; AAlign: TAlignment; AVertAlign: TVerticalAlignment; const ACaption: string);
 
     procedure AddPixel(AX, AY: single; AColor: TBGRAPixel);
-
 
     procedure AddDotLabel(AX, AY, ARadius: single; AShiftX, AShiftY: longint; AAlign: TAlignment; AVertAlign: TVerticalAlignment; const ACaption: string);
 
@@ -775,7 +773,6 @@ begin
   FCurrentTextureWidth    := 8;
   FCurrentTextureHeight   := 8;
   FCurrentTexturePenWidth := 1.0;
-
 
   FDrawingArea.Clear;
   FDataArea.Clear;
