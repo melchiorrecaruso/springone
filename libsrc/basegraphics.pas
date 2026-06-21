@@ -28,7 +28,7 @@ interface
 
 uses
   BGRABitmap, BGRABitmapTypes, BGRATextFX, BGRACanvas2D,
-  Classes, DateUtils, IntegerList, Graphics, SysUtils, BaseUtils;
+  Classes, DateUtils, Graphics, SysUtils, BaseUtils;
 
 type
   TDrawingArea = record
@@ -136,7 +136,7 @@ type
     FTitleFontStyle: TFontStyles;
 
     FXAxisLabel: string;
-    FXAxisLabelLen: longint;
+    FXAxisLabelColor: TBGRAPixel;
     FXAxisFontName: string;
     FXAxisFontColor: TBGRAPixel;
     FXAxisFontHeight: single;
@@ -149,7 +149,8 @@ type
     FXGridLineWidth: single;
 
     FYAxisLabel: string;
-    FYAxisLabelLen: longint;
+    FYAxisLabelLength: longint;
+    FYAxisLabelColor: TBGRAPixel;
     FYAxisFontName: string;
     FYAxisFontColor: TBGRAPixel;
     FYAxisFontHeight: single;
@@ -278,7 +279,7 @@ type
     property TitleFontStyle: TFontStyles read FTitleFontStyle write FTitleFontStyle;
 
     property XAxisLabel: string read FXAxisLabel write FXAxisLabel;
-    property XAxisLabelLen: longint read FXAxisLabelLen write FXAxisLabelLen;
+    property XAxisLabelColor: TBGRAPixel read FXAxisLabelColor write FXAxisLabelColor;
     property XAxisFontName: string read FXAxisFontName write FXAxisFontName;
     property XAxisFontHeight: single read FXAxisFontHeight write FXAxisFontHeight;
     property XAxisFontColor: TBGRAPixel read FXAxisFontColor write FXAxisFontColor;
@@ -291,7 +292,8 @@ type
     property XGridLineWidth: single read FXGridLineWidth write FXGridLineWidth;
 
     property YAxisLabel: string read FYAxisLabel write FYAxisLabel;
-    property YAxisLabelLen: longint read FYAxisLabelLen write FYAxisLabelLen;
+    property YAxisLabelLength: longint read FYAxisLabelLength write FYAxisLabelLength;
+    property YAxisLabelColor: TBGRAPixel read FYAxisLabelColor write FYAxisLabelColor;
     property YAxisFontName: string read FYAxisFontName write FYAxisFontName;
     property YAxisFontHeight: single read FYAxisFontHeight write FYAxisFontHeight;
     property YAxisFontColor: TBGRAPixel read FYAxisFontColor write FYAxisFontColor;
@@ -731,7 +733,8 @@ begin
   FTitleFontStyle := [fsBold];
 
   FXAxisLabel := 'X Axis';
-  FXAxisLabelLen := 0;
+
+  FXAxisLabelColor := clGray;
   FXAxisFontName := 'default';
   FXAxisFontColor := clBlack;
   FXAxisFontHeight := 0;
@@ -744,7 +747,8 @@ begin
   FXGridLineWidth := 0.5;
 
   FYAxisLabel := 'Y';
-  FYAxisLabelLen := 0;
+  FYAxisLabelLength := 0;
+  FYAxisLabelColor := clGray;
   FYAxisFontName := 'default';
   FYAxisFontColor := clBlack;
   FYAxisFontHeight := 0;
@@ -954,7 +958,7 @@ begin
         end;
       end;
       if AdjustXMin then FDataArea.Left   := GetMin(FDataArea.Left);
-      if AdjustXMin then FDataArea.Bottom := GetMin(FDataArea.Bottom);
+      if AdjustYMin then FDataArea.Bottom := GetMin(FDataArea.Bottom);
     end;
   end;
 end;
@@ -1042,22 +1046,16 @@ begin
   Result := GetTextSize(FXAxisLabel);
   if FIsNeededCalcXLabelCount then
   begin
-    if Result.Width > 0 then
-      FXAxisLabelCount := (FDrawingArea.Right - FDrawingArea.Left) div (Result.Width)
-    else
-      FXAxisLabelCount := 2;
+    FXAxisLabelCount := FWidth div Max(Result.Width, 2);
   end;
 
-  for I := 0 to FXAxisLabelCount -1 do
-  begin
-    Size := GetTextSize(GetString(FDataArea.Left + FXIncrementF * I));
+  Size := GetTextSize(GetString(FDataArea.Left));
+  Result.Height := Max(Result.Height, Size.Height);
+  Result.Width  := Max(Result.Width,  Size.Width);
 
-    Result.Height := Max(Result.Height, Size.Height);
-    Result.Width  := Max(Result.Width,  Size.Width);
-  end;
-
-  if FXAxisLabelLen > 0 then
-    Result.Width := Max(FXAxisLabelLen, Result.Width);
+  Size := GetTextSize(GetString(FDataArea.Right));
+  Result.Height := Max(Result.Height, Size.Height);
+  Result.Width  := Max(Result.Width,  Size.Width);
 end;
 
 function TChart.GetXAxisLabelSize(const ALabel: string): TSize;
@@ -1073,7 +1071,6 @@ end;
 
 function TChart.GetYAxisLabelSize: TSize;
 var
-  I: longint;
   Size: TSize;
 begin
   SetCurrentFontAntialias(False);
@@ -1085,22 +1082,18 @@ begin
   Result := GetTextSize(FYAxisLabel);
   if FIsNeededCalcYLabelCount then
   begin
-    if Result.Height > 0 then
-      FYAxisLabelCount := (FDrawingArea.Top - FDrawingArea.Bottom) div (Result.Height)
-    else
-      FYAxisLabelCount := 2;
+    FYAxisLabelCount := FHeight div Max(Result.Height, 2);
   end;
 
-  for I := 0 to FYAxisLabelCount -1 do
-  begin
-    Size := GetTextSize(GetString(FDataArea.Bottom + FYIncrementF * I));
+  Size := GetTextSize(GetString(FDataArea.Bottom));
+  Result.Height := Max(Result.Height, Size.Height);
+  Result.Width  := Max(Result.Width,  Size.Width);
 
-    Result.Height := Max(Result.Height, Size.Height);
-    Result.Width  := Max(Result.Width,  Size.Width);
-  end;
+  Size := GetTextSize(GetString(FDataArea.Top));
+  Result.Height := Max(Result.Height, Size.Height);
+  Result.Width  := Max(Result.Width,  Size.Width);
 
-  if FYAxisLabelLen > 0 then
-    Result.Width := Max(FYAxisLabelLen, Result.Width);
+  Result.Width := Max(FYAxisLabelLength, Result.Width);
 end;
 
 function TChart.GetYAxisLabelSize(const ALabel: string): TSize;
@@ -1177,6 +1170,7 @@ begin
   YShift   := -(FSpacer * FScale) * 0.5;
   XSpacing :=  (FDrawingArea.Right - FDrawingArea.Left  ) / FXAxisLabelCount;
   YSpacing :=  (FDrawingArea.Top   - FDrawingArea.Bottom) / FYAxisLabelCount;
+
   // Draw Y secondary axis and X labels
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
@@ -1188,18 +1182,18 @@ begin
   SetCurrentLineCap(pecRound);
   SetCurrentPenStyle(FYGridLineStyle);
 
-  for I := 0 to FXAxisLabelCount - 1 do
+  for I := 0 to FXAxisLabelCount do
   begin
     X := FDrawingArea.Left + XSpacing * I;
     DrawLine(X, FDrawingArea.Bottom, X, FDrawingArea.Top, FYGridLineColor, FYGridLineWidth * FScale);
     DrawText(X, FDrawingArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * I), FXAxisFontColor, taCenter, taAlignTop);
   end;
-  DrawLine(FDrawingArea.Right, FDrawingArea.Bottom, FDrawingArea.Right, FDrawingArea.Top, FYGridLineColor, FYGridLineWidth * FScale);
 
   if FXAxisLabel <> '' then
-    DrawText(FDrawingArea.Right, FDrawingArea.Bottom + YShift, FXAxisLabel, FXAxisFontColor, taCenter, taAlignTop)
-  else
-    DrawText(FDrawingArea.Right, FDataArea.Bottom + YShift, GetString(FDataArea.Left + FXIncrementF * FXAxisLabelCount), FXAxisFontColor, taCenter, taAlignTop);
+  begin
+    DrawText(FDrawingArea.Right, FDrawingArea.Bottom + YShift - GetTextSize(FXAxisLabel).Height,
+      FXAxisLabel, FXAxisLabelColor, taCenter, taAlignTop)
+  end;
 
   // Draw X secondary axis and Y labels
   SetCurrentFontAntialias(False);
@@ -1212,18 +1206,18 @@ begin
   SetCurrentLineCap(pecRound);
   SetCurrentPenStyle(FXGridLineStyle);
 
-  for I := 0 to FYAxisLabelCount - 1 do
+  for I := 0 to FYAxisLabelCount do
   begin
     Y := FDrawingArea.Bottom + YSpacing * I;
     DrawLine(FDrawingArea.Left, Y, FDrawingArea.Right, Y, FXGridLineColor, FXGridLineWidth * FScale);
     DrawText(FDrawingArea.Left + XShift, Y, GetString(FDataArea.Bottom + FYIncrementF * I), FYAxisFontColor, taRightJustify, taVerticalCenter);
   end;
-  DrawLine(FDrawingArea.Left, FDrawingArea.Top, FDrawingArea.Right, FDrawingArea.Top, FXGridLineColor, FXGridLineWidth * FScale);
 
   if FYAxisLabel <> '' then
-    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, FYAxisLabel, FYAxisFontColor, taRightJustify, taVerticalCenter)
-  else
-    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top, GetString(FDataArea.Bottom + FYIncrementF * FYAxisLabelCount), FYAxisFontColor, taRightJustify, taVerticalCenter);
+  begin
+    DrawText(FDrawingArea.Left + XShift, FDrawingArea.Top + GetTextSize(FYAxisLabel).Height,
+      FYAxisLabel, FYAxisLabelColor, taRightJustify, taVerticalCenter);
+  end;
 
   // Draw Chart Title
   SetCurrentFontAntialias(False);
@@ -1561,7 +1555,7 @@ begin
   Size3 := GetTitleSize;
 
   FDrawingArea.Top    := FHeight - Size3.Height      - Trunc(FSpacer * FScale);
-  FDrawingArea.Bottom :=           Size1.Height      + Trunc(FSpacer * FScale);
+  FDrawingArea.Bottom :=           Size1.Height *  2 + Trunc(FSpacer * FScale);
   FDrawingArea.Left   :=           Size2.Width       + Trunc(FSpacer * FScale);
   FDrawingArea.Right  := FWidth  - Size1.Width div 2 - Trunc(FSpacer * FScale);
 
