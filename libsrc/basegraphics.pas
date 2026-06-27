@@ -27,8 +27,9 @@ unit BaseGraphics;
 interface
 
 uses
-  BGRABitmap, BGRABitmapTypes, BGRATextFX, BGRACanvas2D,
-  Classes, DateUtils, Graphics, SysUtils, BaseUtils;
+  BGRABitmap, BGRABitmapTypes, BGRAFreeType, BGRATextFX, BGRACanvas2D,
+  Classes, DateUtils, Graphics, SysUtils, BaseUtils, EasyLazFreeType,
+  LazFreeTypeFontCollection;
 
 type
   TDrawingArea = record
@@ -130,14 +131,12 @@ type
     FLegendEnabled: boolean;
 
     FTitle: string;
-    FTitleFontName: string;
     FTitleFontColor: TBGRAPixel;
     FTitleFontHeight: single;
     FTitleFontStyle: TFontStyles;
 
     FXAxisLabel: string;
     FXAxisLabelColor: TBGRAPixel;
-    FXAxisFontName: string;
     FXAxisFontColor: TBGRAPixel;
     FXAxisFontHeight: single;
     FXAxisFontStyle: TFontStyles;
@@ -151,7 +150,6 @@ type
     FYAxisLabel: string;
     FYAxisLabelLength: longint;
     FYAxisLabelColor: TBGRAPixel;
-    FYAxisFontName: string;
     FYAxisFontColor: TBGRAPixel;
     FYAxisFontHeight: single;
     FYAxisFontStyle: TFontStyles;
@@ -162,7 +160,6 @@ type
     FYGridLineStyle: TPenStyle;
     FYGridLineWidth: single;
 
-    FCurrentFontName: string;
     FCurrentFontHeight: single;
     FCurrentFontColor: TBGRAPixel;
     FCurrentFontStyle: TFontStyles;
@@ -273,14 +270,12 @@ type
     function GetYAxisLabelSize(const ALabel: string): TSize;
 
     property Title: string read FTitle write FTitle;
-    property TitleFontName: string read FTitleFontName write FTitleFontName;
     property TitleFontHeight: single read FTitleFontHeight write FTitleFontHeight;
     property TitleFontColor: TBGRAPixel read FTitleFontColor write FTitleFontColor;
     property TitleFontStyle: TFontStyles read FTitleFontStyle write FTitleFontStyle;
 
     property XAxisLabel: string read FXAxisLabel write FXAxisLabel;
     property XAxisLabelColor: TBGRAPixel read FXAxisLabelColor write FXAxisLabelColor;
-    property XAxisFontName: string read FXAxisFontName write FXAxisFontName;
     property XAxisFontHeight: single read FXAxisFontHeight write FXAxisFontHeight;
     property XAxisFontColor: TBGRAPixel read FXAxisFontColor write FXAxisFontColor;
     property XAxisFontStyle: TFontStyles read FXAxisFontStyle write FXAxisFontStyle;
@@ -294,7 +289,6 @@ type
     property YAxisLabel: string read FYAxisLabel write FYAxisLabel;
     property YAxisLabelLength: longint read FYAxisLabelLength write FYAxisLabelLength;
     property YAxisLabelColor: TBGRAPixel read FYAxisLabelColor write FYAxisLabelColor;
-    property YAxisFontName: string read FYAxisFontName write FYAxisFontName;
     property YAxisFontHeight: single read FYAxisFontHeight write FYAxisFontHeight;
     property YAxisFontColor: TBGRAPixel read FYAxisFontColor write FYAxisFontColor;
     property YAxisFontStyle: TFontStyles read FYAxisFontStyle write FYAxisFontStyle;
@@ -311,7 +305,6 @@ type
     property LegendLineLength: longint read FLegendLineLength write FLegendLineLength;
     property LegendEnabled: boolean read FLegendEnabled write FLegendEnabled;
 
-    property FontName: string read FCurrentFontName write FCurrentFontName;
     property FontHeight: single read FCurrentFontHeight write FCurrentFontHeight;
     property FontColor: TBGRAPixel read FCurrentFontColor write FCurrentFontColor;
     property FontStyle: TFontStyles read FCurrentFontStyle write FCurrentFontStyle;
@@ -530,14 +523,26 @@ type
   end;
 
 
+procedure InitFont(const AFontName, AFontFileName: string);
 procedure DrawLogo(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
 
 const
   DefaultSpacer = 16;
 
+var
+  DefaultFontName: string = 'DejaVu Sans';
+
 implementation
 
 uses ADim, Math;
+
+procedure InitFont(const AFontName, AFontFileName: string);
+begin
+  FontCollection.AddFile(AFontFileName);
+  DefaultFontName := AFontName;
+end;
+
+// Initialize
 
 // Common routines
 
@@ -708,6 +713,7 @@ constructor TChart.Create;
 begin
   inherited Create;
   FBit := TBGRABitmap.Create;
+  FBit.FontRenderer := TBGRAFreeTypeFontRenderer.Create;
   FItems := TList.Create;
   Clear;
 end;
@@ -727,7 +733,6 @@ begin
   FBackgroundColor := clBtnFace;
 
   FTitle := 'Chart';
-  FTitleFontName := 'default';
   FTitleFontColor := clBlack;
   FTitleFontHeight := 0;
   FTitleFontStyle := [fsBold];
@@ -735,7 +740,6 @@ begin
   FXAxisLabel := 'X Axis';
 
   FXAxisLabelColor := clGray;
-  FXAxisFontName := 'default';
   FXAxisFontColor := clBlack;
   FXAxisFontHeight := 0;
   FXAxisFontStyle := [fsBold];
@@ -749,7 +753,6 @@ begin
   FYAxisLabel := 'Y';
   FYAxisLabelLength := 0;
   FYAxisLabelColor := clGray;
-  FYAxisFontName := 'default';
   FYAxisFontColor := clBlack;
   FYAxisFontHeight := 0;
   FYAxisFontStyle := [fsBold];
@@ -763,13 +766,12 @@ begin
   FLegendLineLength := 16;
   FLegendEnabled := True;
 
-  FCurrentFontName := 'default';
   FCurrentFontHeight := 0;
   FCurrentFontColor := clRed;
   FCurrentFontStyle := [fsBold];
   FCurrentPenColor := clRed;
   FCurrentPenStyle := psSolid;
-  FCurrentFontQuality := fqSystemClearType;
+  FCurrentFontQuality := fqFineAntialiasing;
 
   FCurrentPenWidth := 1.0;
   FCurrentTextureColor := clRed;
@@ -822,7 +824,7 @@ begin
     Item.FPoints[I] := APoints[I];
 
   Item.FCaption    := ACaption;
-  Item.FFontName   := FCurrentFontName;
+  Item.FFontName   := DefaultFontName;
   Item.FFontHeight := FCurrentFontHeight;
   Item.FFontColor  := FCurrentFontColor;
   Item.FFontStyle  := FCurrentFontStyle;
@@ -844,7 +846,7 @@ begin
     Item.FPoints[I] := APoints[I];
 
   Item.FCaption                := ACaption;
-  Item.FFontName               := FCurrentFontName;
+  Item.FFontName               := DefaultFontName;
   Item.FFontHeight             := FCurrentFontHeight;
   Item.FFontColor              := FCurrentFontColor;
   Item.FFontStyle              := FCurrentFontStyle;
@@ -866,7 +868,7 @@ var
 begin
   Item := TChartLabelItem.Create;
   Item.FCaption    := ACaption;
-  Item.FFontName   := FCurrentFontName;
+  Item.FFontName   := DefaultFontName;
   Item.FFontHeight := FCurrentFontHeight;
   Item.FFontColor  := FCurrentFontColor;
   Item.FFontStyle  := FCurrentFontStyle;
@@ -897,7 +899,7 @@ var
 begin
   Item                         := TChartDotLabelItem.Create;
   Item.FCaption                := ACaption;
-  Item.FFontName               := FCurrentFontName;
+  Item.FFontName               := DefaultFontName;
   Item.FFontHeight             := FCurrentFontHeight;
   Item.FFontColor              := FCurrentFontColor;
   Item.FFontStyle              := FCurrentFontStyle;
@@ -983,7 +985,7 @@ begin
 
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FTitleFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FTitleFontStyle);
   SetCurrentFontHeight(Trunc(FTitleFontHeight * FScale));
   result := GetTextSize(FTitle);
@@ -1039,7 +1041,7 @@ var
 begin
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FXAxisFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FXAxisFontStyle);
   SetCurrentFontHeight(Trunc(FXAxisFontHeight * FScale));
 
@@ -1062,7 +1064,7 @@ function TChart.GetXAxisLabelSize(const ALabel: string): TSize;
 begin
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FXAxisFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FXAxisFontStyle);
   SetCurrentFontHeight(Trunc(FXAxisFontHeight * FScale));
 
@@ -1075,7 +1077,7 @@ var
 begin
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FYAxisFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FYAxisFontStyle);
   SetCurrentFontHeight(Trunc(FYAxisFontHeight * FScale));
 
@@ -1100,7 +1102,7 @@ function TChart.GetYAxisLabelSize(const ALabel: string): TSize;
 begin
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FYAxisFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FYAxisFontStyle);
   SetCurrentFontHeight(Trunc(FYAxisFontHeight * FScale));
 
@@ -1174,7 +1176,7 @@ begin
   // Draw Y secondary axis and X labels
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FXAxisFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FXAxisFontStyle);
   SetCurrentFontColor(FXAxisFontColor);
   SetCurrentFontHeight(Trunc(FXAxisFontHeight * FScale));
@@ -1198,7 +1200,7 @@ begin
   // Draw X secondary axis and Y labels
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FYAxisFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FYAxisFontStyle);
   SetCurrentFontColor(FYAxisFontColor);
   SetCurrentFontHeight(Trunc(FYAxisFontHeight * FScale));
@@ -1222,7 +1224,7 @@ begin
   // Draw Chart Title
   SetCurrentFontAntialias(False);
   SetCurrentFontQuality(FCurrentFontQuality);
-  SetCurrentFontName(FTitleFontName);
+  SetCurrentFontName(DefaultFontName);
   SetCurrentFontStyle(FTitleFontStyle);
   SetCurrentFontColor(FTitleFontColor);
   SetCurrentFontHeight(Trunc(FTitleFontHeight * FScale));
