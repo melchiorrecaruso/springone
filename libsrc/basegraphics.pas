@@ -522,25 +522,21 @@ type
     property Scale: single read FScale write FScale;
   end;
 
-
-procedure InitFont(const AFontName, AFontFileName: string);
 procedure DrawLogo(ABitmap: TBGRABitmap; aWidth, aHeight: longint);
 
 const
   DefaultSpacer = 16;
 
 var
-  DefaultFontName: string = 'DejaVu Sans';
+  DefaultFontName: string = '';
+  DefaultFontFileName: string = '';
 
 implementation
 
-uses ADim, Math;
+uses ADim, Math, SyncObjs;
 
-procedure InitFont(const AFontName, AFontFileName: string);
-begin
-  FontCollection.AddFile(AFontFileName);
-  DefaultFontName := AFontName;
-end;
+var
+  ChartTextLock: TCriticalSection;
 
 // Initialize
 
@@ -713,7 +709,11 @@ constructor TChart.Create;
 begin
   inherited Create;
   FBit := TBGRABitmap.Create;
-  FBit.FontRenderer := TBGRAFreeTypeFontRenderer.Create;
+  if (DefaultFontName <> '') and FileExists(DefaultFontFileName) then
+  begin
+    FontCollection.AddFile(DefaultFontFileName);
+    FBit.FontRenderer := TBGRAFreeTypeFontRenderer.Create;
+  end;
   FItems := TList.Create;
   Clear;
 end;
@@ -967,7 +967,12 @@ end;
 
 function TChart.GetTextSize(const AText: string): TSize;
 begin
-  result := FBit.TextSize(AText);
+  ChartTextLock.Enter;
+  try
+    result := FBit.TextSize(AText);
+  finally
+    ChartTextLock.Leave;
+  end;
 end;
 
 function TChart.GetDrawingRect: TRect;
@@ -1264,12 +1269,15 @@ begin
     taVerticalCenter: ShiftY := + TxtSize.Height / 2;
   end;
 
-  FBit.TextOut(
-    XToCanvas(X + ShiftX),
-    YToCanvas(Y + ShiftY),
-    AText,
-    ATextColor,
-    taLeftJustify);
+  ChartTextLock.Enter;
+  try
+    FBit.TextOut(
+      XToCanvas(X + ShiftX),
+      YToCanvas(Y + ShiftY),
+      AText, ATextColor, taLeftJustify);
+  finally
+    ChartTextLock.Leave;
+  end;
 end;
 
 procedure TChart.DrawLegend;
@@ -2520,5 +2528,11 @@ begin
   ABitmap.PutImage(0, 0, Bit, dmSet);
   Bit.Destroy;
 end;
+
+initialization
+  ChartTextLock := TCriticalSection.Create;
+
+finalization
+  ChartTextLock.Free;
 
 end.
