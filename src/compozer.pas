@@ -804,11 +804,11 @@ begin
 end;
 
 function TCompozer.CreateLoadF1Chart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15 * K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
 
@@ -837,11 +837,11 @@ begin
 end;
 
 function TCompozer.CreateLoadF2Chart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15 * K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
 
@@ -871,11 +871,11 @@ begin
 end;
 
 function TCompozer.CreateShearModulusChart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15 * K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Shear Modulus G-Temperature Chart';
@@ -901,11 +901,11 @@ begin
 end;
 
 function TCompozer.CreateYoungModulusChart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FID: KelvinId; FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15 * K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Young Modulus G-Temperature Chart';

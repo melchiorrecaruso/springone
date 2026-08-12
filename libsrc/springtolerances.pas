@@ -32,22 +32,22 @@ type
 
   TEN15800 = class
   private
-    fAD: TQuantity;
-    fAF1: TQuantity;
-    fAF2: TQuantity;
-    fAL0: TQuantity;
-    fFactorAlphaF: TQuantity;
-    fWireDiameter:  TQuantity;
-    fCoilDiameterDm: TQuantity;
-    fLoadF1:  TQuantity;
-    fLoadF2:  TQuantity;
-    fE1: TQuantity;
-    fE2: TQuantity;
+    fAD: TRealQuantity;
+    fAF1: TRealQuantity;
+    fAF2: TRealQuantity;
+    fAL0: TRealQuantity;
+    fFactorAlphaF: TRealQuantity;
+    fWireDiameter:  TRealQuantity;
+    fCoilDiameterDm: TRealQuantity;
+    fLoadF1:  TRealQuantity;
+    fLoadF2:  TRealQuantity;
+    fE1: TRealQuantity;
+    fE2: TRealQuantity;
     fFactorKF: double;
-    fLengthL0: TQuantity;
+    fLengthL0: TRealQuantity;
     fActiveCoils: double;
     fSpringIndexW: double;
-    fSpringRateR: TQuantity;
+    fSpringRateR: TRealQuantity;
     fQualityGradeOnDm: TQualityGrade;
     fQualityGradeOnL0: TQualityGrade;
     fQualityGradeOnF1: TQualityGrade;
@@ -55,9 +55,9 @@ type
     fQualityGradeOnE1: TQualityGrade;
     fQualityGradeOnE2: TQualityGrade;
 
-    procedure SetWireDiameter(const AValue: TQuantity);
-    procedure SetCoilDiameter(const AValue: TQuantity);
-    procedure SetFreeBodyLength(const AValue: TQuantity);
+    procedure SetWireDiameter(const AValue: TRealQuantity);
+    procedure SetCoilDiameter(const AValue: TRealQuantity);
+    procedure SetFreeBodyLength(const AValue: TRealQuantity);
     procedure SetNumActiveCoils(const AValue: double);
     procedure SetSpringIndex(const AValue: double);
   public
@@ -66,14 +66,14 @@ type
     procedure Solve;
     procedure Clear;
   public
-    property WireDiameter: TQuantity read fWireDiameter write SetWireDiameter;
-    property CoilDiameter: TQuantity read fCoilDiameterDm write SetCoilDiameter;
-    property Load1: TQuantity read fLoadF1 write fLoadF1;
-    property Load2: TQuantity read fLoadF2 write fLoadF2;
-    property FreeBodyLength: TQuantity read fLengthL0 write SetFreeBodyLength;
+    property WireDiameter: TRealQuantity read fWireDiameter write SetWireDiameter;
+    property CoilDiameter: TRealQuantity read fCoilDiameterDm write SetCoilDiameter;
+    property Load1: TRealQuantity read fLoadF1 write fLoadF1;
+    property Load2: TRealQuantity read fLoadF2 write fLoadF2;
+    property FreeBodyLength: TRealQuantity read fLengthL0 write SetFreeBodyLength;
     property NumActiveCoils: double read fActiveCoils write SetNumActiveCoils;
     property SpringIndex: double read fSpringIndexW write fSpringIndexW;
-    property SpringRate: TQuantity read fSpringRateR write fSpringRateR;
+    property SpringRate: TRealQuantity read fSpringRateR write fSpringRateR;
 
     property QualityGradeOnCoilDiameter: TQualityGrade read fQualityGradeOnDm write fQualityGradeOnDm;
     property QualityGradeOnFreeBodyLength: TQualityGrade read fQualityGradeOnL0 write fQualityGradeOnL0;
@@ -82,27 +82,27 @@ type
     property QualityGradeOnPerpendicularity: TQualityGrade read fQualityGradeOnE1 write fQualityGradeOnE1;
     property QualityGradeOnParallelism: TQualityGrade read fQualityGradeOnE2 write fQualityGradeOnE2;
 
-    property ToleranceOnCoilDiameter: TQuantity read fAD;
-    property ToleranceOnLoad1: TQuantity read fAF1;
-    property ToleranceOnLoad2: TQuantity read fAF2;
-    property ToleranceFreeBodyLength: TQuantity read fAL0;
-    property ToleranceOnPerpendicularity: TQuantity read fE1;
-    property ToleranceOnParallelism: TQuantity read fE2;
+    property ToleranceOnCoilDiameter: TRealQuantity read fAD;
+    property ToleranceOnLoad1: TRealQuantity read fAF1;
+    property ToleranceOnLoad2: TRealQuantity read fAF2;
+    property ToleranceFreeBodyLength: TRealQuantity read fAL0;
+    property ToleranceOnPerpendicularity: TRealQuantity read fE1;
+    property ToleranceOnParallelism: TRealQuantity read fE2;
   end;
 
   TDIN2194 = class
   private
     fMaterialID: string;
-    fWireDiameter: TQuantity;
-    fCoilDiameter: TQuantity;
+    fWireDiameter: TRealQuantity;
+    fCoilDiameter: TRealQuantity;
     fActiveCoils: double;
     fSpringIndex: double;
 
-    fLegLength1: TQuantity;
-    fLegLength2: TQuantity;
+    fLegLength1: TRealQuantity;
+    fLegLength2: TRealQuantity;
 
-    fBendRadius1: TQuantity;
-    fBendRadius2: TQuantity;
+    fBendRadius1: TRealQuantity;
+    fBendRadius2: TRealQuantity;
 
     fQualityGradeOnDm: TQualityGrade;
     fQualityGradeOnTorqueT1: TQualityGrade;
@@ -113,21 +113,21 @@ type
     fQualityGradeOnBendRadii: TQualityGrade;
     fQualityGradeOnAnglesOfBendOnLegs: TQualityGrade;
 
-    fToleranceOnCoilDiameter: TQuantity;
-    fToleranceOnTorque1: TQuantity;
-    fToleranceOnTorque2: TQuantity;
-    fToleranceOnRelativeEndAngle: TQuantity;
-    fToleranceOnFreeBodyLength: TQuantity;
+    fToleranceOnCoilDiameter: TRealQuantity;
+    fToleranceOnTorque1: TRealQuantity;
+    fToleranceOnTorque2: TRealQuantity;
+    fToleranceOnRelativeEndAngle: TRealQuantity;
+    fToleranceOnFreeBodyLength: TRealQuantity;
 
-    fToleranceOnLegLength1: TQuantity;
-    fToleranceOnLegLength2: TQuantity;
-    fToleranceOnBendRadius1: TQuantity;
-    fToleranceOnBendRadius2: TQuantity;
+    fToleranceOnLegLength1: TRealQuantity;
+    fToleranceOnLegLength2: TRealQuantity;
+    fToleranceOnBendRadius1: TRealQuantity;
+    fToleranceOnBendRadius2: TRealQuantity;
 
-    fToleranceOnBendAngle1: TQuantity;
-    fToleranceOnBendAngle2: TQuantity;
+    fToleranceOnBendAngle1: TRealQuantity;
+    fToleranceOnBendAngle2: TRealQuantity;
 
-    function LegLengthCoefficent(LegLength: TQuantity): double;
+    function LegLengthCoefficent(LegLength: TRealQuantity): double;
     function QualityFactor(AQualityGrade: TQualityGrade): double;
   public
     constructor Create;
@@ -137,15 +137,15 @@ type
   public
     property MaterialID: string read fMaterialID write fMaterialID;
     property ActiveCoils: double read fActiveCoils write fActiveCoils;
-    property WireDiameter: TQuantity read fWireDiameter write fWireDiameter;
-    property MeanCoilDiameter: TQuantity read fCoilDiameter write fCoilDiameter;
+    property WireDiameter: TRealQuantity read fWireDiameter write fWireDiameter;
+    property MeanCoilDiameter: TRealQuantity read fCoilDiameter write fCoilDiameter;
 
 
-    property BendRadius1: TQuantity read fBendRadius1 write fBendRadius1;
-    property BendRadius2: TQuantity read fBendRadius2 write fBendRadius2;
+    property BendRadius1: TRealQuantity read fBendRadius1 write fBendRadius1;
+    property BendRadius2: TRealQuantity read fBendRadius2 write fBendRadius2;
 
-    property LegLength1: TQuantity read fLegLength1 write fLegLength1;
-    property LegLength2: TQuantity read fLegLength2 write fLegLength2;
+    property LegLength1: TRealQuantity read fLegLength1 write fLegLength1;
+    property LegLength2: TRealQuantity read fLegLength2 write fLegLength2;
 
     property SpringIndex: double read fSpringIndex;
 
@@ -158,22 +158,22 @@ type
     property QualityGradeOnBendRadii: TQualityGrade read fQualityGradeOnBendRadii write fQualityGradeOnBendRadii;
     property QualityGradeOnAnglesOfBendOnLegs: TQualityGrade read fQualityGradeOnAnglesOfBendOnLegs write fQualityGradeOnAnglesOfBendOnLegs;
 
-    property ToleranceOnCoilDiameter: TQuantity read fToleranceOnCoilDiameter;
-    property ToleranceOnFreeBodyLength: TQuantity read fToleranceOnFreeBodyLength;
-    property ToleranceOnTorque1: TQuantity read fToleranceOnTorque1;
-    property ToleranceOnTorque2: TQuantity read fToleranceOnTorque2;
-    property ToleranceOnRelativeEndAngle: TQuantity read fToleranceOnRelativeEndAngle;
+    property ToleranceOnCoilDiameter: TRealQuantity read fToleranceOnCoilDiameter;
+    property ToleranceOnFreeBodyLength: TRealQuantity read fToleranceOnFreeBodyLength;
+    property ToleranceOnTorque1: TRealQuantity read fToleranceOnTorque1;
+    property ToleranceOnTorque2: TRealQuantity read fToleranceOnTorque2;
+    property ToleranceOnRelativeEndAngle: TRealQuantity read fToleranceOnRelativeEndAngle;
 
-    property ToleranceOnLegLength1: TQuantity read fToleranceOnLegLength1;
-    property ToleranceOnLegLength2: TQuantity read fToleranceOnLegLength2;
-    property ToleranceOnBendRadius1: TQuantity read fToleranceOnBendRadius1;
-    property ToleranceOnBendRadius2: TQuantity read fToleranceOnBendRadius2;
-    property ToleranceOnBendAngle1: TQuantity read fToleranceOnBendAngle1;
-    property ToleranceOnBendAngle2: TQuantity read fToleranceOnBendAngle2;
+    property ToleranceOnLegLength1: TRealQuantity read fToleranceOnLegLength1;
+    property ToleranceOnLegLength2: TRealQuantity read fToleranceOnLegLength2;
+    property ToleranceOnBendRadius1: TRealQuantity read fToleranceOnBendRadius1;
+    property ToleranceOnBendRadius2: TRealQuantity read fToleranceOnBendRadius2;
+    property ToleranceOnBendAngle1: TRealQuantity read fToleranceOnBendAngle1;
+    property ToleranceOnBendAngle2: TRealQuantity read fToleranceOnBendAngle2;
   end;
 
 
-  function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TQuantity): TQuantity;
+  function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TRealQuantity): TRealQuantity;
 
 
 implementation
@@ -201,12 +201,14 @@ const
     (DmMin:125.0; DmMax:160.0; Q1W48:0.90; Q1W814:1.20; Q1W1420:1.40; Q2W48:1.80; Q2W814:2.30; Q2W1420:2.70; Q3W48:3.50; Q3W814:4.60; Q3W1420:5.40),
     (DmMin:160.0; DmMax:200.0; Q1W48:1.20; Q1W814:1.50; Q1W1420:1.70; Q2W48:2.10; Q2W814:2.90; Q2W1420:3.30; Q3W48:4.20; Q3W814:5.70; Q3W1420:6.60));
 
+var
+  MinWireDiameter : TRealQuantity;
+  MaxWireDiameter : TRealQuantity;
+  MinCoilDiameter : TRealQuantity;
+  MaxCoilDiameter : TRealQuantity;
+  MaxFreeLength   : TRealQuantity;
+
 const
-  MinWireDiameter : TQuantity = ({$IFNDEF ADIMOFF} FID: MeterId; FValue: 0.07/1000 {$ELSE} 0.07/1000 {$ENDIF});
-  MaxWireDiameter : TQuantity = ({$IFNDEF ADIMOFF} FID: MeterId; FValue:   16/1000 {$ELSE}   16/1000 {$ENDIF});
-  MinCoilDiameter : TQuantity = ({$IFNDEF ADIMOFF} FID: MeterId; FValue: 0.63/1000 {$ELSE} 0.63/1000 {$ENDIF});
-  MaxCoilDiameter : TQuantity = ({$IFNDEF ADIMOFF} FID: MeterId; FValue:  200/1000 {$ELSE}  200/1000 {$ENDIF});
-  MaxFreeLength   : TQuantity = ({$IFNDEF ADIMOFF} FID: MeterId; FValue:  630/1000 {$ELSE}  630/1000 {$ENDIF});
   MinActiveCoils  =  2;
   MinSpringIndex  =  4;
   MaxSpringIndex  = 20;
@@ -283,7 +285,7 @@ begin
   fQualityGradeOnE2 := QualityGrade2;
 end;
 
-procedure TEN15800.SetWireDiameter(const AValue: TQuantity);
+procedure TEN15800.SetWireDiameter(const AValue: TRealQuantity);
 begin
   if AValue < MinWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter < %s.', [MeterUnit.ToString(MinWireDiameter, 5, 5, [pMilli])]));
   if AValue > MaxWireDiameter then WarningMessage.Add(Format('EN15800: Wire diameter > %s.', [Meterunit.ToString(MaxWireDiameter, 5, 5, [pMilli])]));
@@ -291,7 +293,7 @@ begin
   fWireDiameter := Max(Min(AValue, MaxWireDiameter), MinWireDiameter);
 end;
 
-procedure TEN15800.SetCoilDiameter(const AValue: TQuantity);
+procedure TEN15800.SetCoilDiameter(const AValue: TRealQuantity);
 begin
   if AValue < MinCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter < %s.', [MeterUnit.ToString(MinCoilDiameter, 5, 5, [pMilli])]));
   if AValue > MaxCoilDiameter then WarningMessage.Add(Format('EN15800: Mean coil diameter > %s.', [MeterUnit.ToString(MaxCoilDiameter, 5, 5, [pMilli])]));
@@ -299,7 +301,7 @@ begin
   fCoilDiameterDm := Max(Min(AValue, MaxCoilDiameter), MinCoilDiameter);
 end;
 
-procedure TEN15800.SetFreeBodyLength(const AValue: TQuantity);
+procedure TEN15800.SetFreeBodyLength(const AValue: TRealQuantity);
 begin
   if AValue > MaxFreeLength then WarningMessage.Add(Format('EN15800: Length of unloaded spring > %s.', [MeterUnit.ToString(MaxFreeLength, 5, 5, [pMilli])]));
 
@@ -420,7 +422,7 @@ end;
 
 // TWireTolerance
 
-function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TQuantity): TQuantity;
+function WireTolerance(const aWireRegulation: TRegulation; const aWireDiameter: TRealQuantity): TRealQuantity;
 var
   I: longint;
 begin
@@ -558,7 +560,7 @@ begin
   if fToleranceOnFreeBodyLength > (630*mm) then ErrorMessage.Add('Free body length Lk > 630 mm.');
 end;
 
-function TDIN2194.LegLengthCoefficent(LegLength: TQuantity): double;
+function TDIN2194.LegLengthCoefficent(LegLength: TRealQuantity): double;
 var
   LegLen: double;
 begin
@@ -578,6 +580,13 @@ begin
     QualityGrade3: Result := 1.60;
   end;
 end;
+
+initialization
+  MinWireDiameter := 0.07 * mm;
+  MaxWireDiameter := 16.0 * mm;
+  MinCoilDiameter := 0.63 * mm;
+  MaxCoilDiameter := 200.0 * mm;
+  MaxFreeLength := 630.0 * mm;
 
 end.
 
