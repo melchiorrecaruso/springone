@@ -31,41 +31,41 @@ type
     FName: string;
     fGrade: TGrade;
     fRegulation: TRegulation;
-    fTensileStrengthRm: TQuantity;
-    fYoungModulusE20: TQuantity;
-    fYoungModulusE: TQuantity;
-    fShearModulusG20: TQuantity;
-    fShearModulusG: TQuantity;
+    fTensileStrengthRm: TRealQuantity;
+    fYoungModulusE20: TRealQuantity;
+    fYoungModulusE: TRealQuantity;
+    fShearModulusG20: TRealQuantity;
+    fShearModulusG: TRealQuantity;
     fPoissonRatio: double;
-    fWireDiameter: TQuantity;
-    fDensityRho: TQuantity;
-    fTemperature: TQuantity;
-    fTemperatureMin: TQuantity;
-    fTemperatureMax: TQuantity;
+    fWireDiameter: TRealQuantity;
+    fDensityRho: TRealQuantity;
+    fTemperature: TRealQuantity;
+    fTemperatureMin: TRealQuantity;
+    fTemperatureMax: TRealQuantity;
     fTreatment: string;
-    fFatigueFactorA: TQuantity;
+    fFatigueFactorA: TRealQuantity;
     fFatigueFactorB: double;
-    fTorsionalStressTauStar: TQuantity;
-    fTorsionalStressTauUT: TQuantity;
-    fTorsionalStressTauYield: TQuantity;
-    fTorsionalStressTauOE7: TQuantity;
-    fTorsionalStressTauOE6: TQuantity;
-    fTorsionalStressTauOE5: TQuantity;
-    fTorsionalStressTauOE3: TQuantity;
-    fTorsionalStressTauUE7: TQuantity;
-    fTorsionalStressTauUE6: TQuantity;
-    fTorsionalStressTauUE5: TQuantity;
+    fTorsionalStressTauStar: TRealQuantity;
+    fTorsionalStressTauUT: TRealQuantity;
+    fTorsionalStressTauYield: TRealQuantity;
+    fTorsionalStressTauOE7: TRealQuantity;
+    fTorsionalStressTauOE6: TRealQuantity;
+    fTorsionalStressTauOE5: TRealQuantity;
+    fTorsionalStressTauOE3: TRealQuantity;
+    fTorsionalStressTauUE7: TRealQuantity;
+    fTorsionalStressTauUE6: TRealQuantity;
+    fTorsionalStressTauUE5: TRealQuantity;
 
-    fBendingStressSigmaStar: TQuantity;
-    fBendingStressSigmaUT: TQuantity;
-    fBendingStressSigmaYield: TQuantity;
-    fBendingStressSigmaOE7: TQuantity;
-    fBendingStressSigmaOE6: TQuantity;
-    fBendingStressSigmaOE5: TQuantity;
-    fBendingStressSigmaOE3: TQuantity;
-    fBendingStressSigmaUE7: TQuantity;
-    fBendingStressSigmaUE6: TQuantity;
-    fBendingStressSigmaUE5: TQuantity;
+    fBendingStressSigmaStar: TRealQuantity;
+    fBendingStressSigmaUT: TRealQuantity;
+    fBendingStressSigmaYield: TRealQuantity;
+    fBendingStressSigmaOE7: TRealQuantity;
+    fBendingStressSigmaOE6: TRealQuantity;
+    fBendingStressSigmaOE5: TRealQuantity;
+    fBendingStressSigmaOE3: TRealQuantity;
+    fBendingStressSigmaUE7: TRealQuantity;
+    fBendingStressSigmaUE6: TRealQuantity;
+    fBendingStressSigmaUE5: TRealQuantity;
 
     fNumOfCyclesE7: double;
     fNumOfCyclesE6: double;
@@ -76,49 +76,49 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GetG(const aTemperature: TQuantity): TQuantity;
-    function GetE(const aTemperature: TQuantity): TQuantity;
-    procedure Load(const aName: string; const aWireDiameter: TQuantity; const aTemperature: TQuantity; const aTreatment: string);
+    function GetG(const aTemperature: TRealQuantity): TRealQuantity;
+    function GetE(const aTemperature: TRealQuantity): TRealQuantity;
+    procedure Load(const aName: string; const aWireDiameter: TRealQuantity; const aTemperature: TRealQuantity; const aTreatment: string);
     procedure Clear;
   public
     property Name: string read FName;
     property Grade: TGrade read fGrade;
     property Regulation: TRegulation read fRegulation;
-    property Temperature: TQuantity read fTemperature;
-    property TemperatureMin: TQuantity read fTemperatureMin;
-    property TemperatureMax: TQuantity read fTemperatureMax;
+    property Temperature: TRealQuantity read fTemperature;
+    property TemperatureMin: TRealQuantity read fTemperatureMin;
+    property TemperatureMax: TRealQuantity read fTemperatureMax;
     property Treatment: string read FTreatment;
-    property TensileStrengthRm: TQuantity read fTensileStrengthRm;
-    property YoungModulusE20: TQuantity read fYoungModulusE20;
-    property YoungModulusE: TQuantity read fYoungModulusE;
-    property ShearModulusG20: TQuantity read fShearModulusG20;
-    property ShearModulusG: TQuantity read fShearModulusG;
-    property WireDiameter: TQuantity read fWireDiameter;
+    property TensileStrengthRm: TRealQuantity read fTensileStrengthRm;
+    property YoungModulusE20: TRealQuantity read fYoungModulusE20;
+    property YoungModulusE: TRealQuantity read fYoungModulusE;
+    property ShearModulusG20: TRealQuantity read fShearModulusG20;
+    property ShearModulusG: TRealQuantity read fShearModulusG;
+    property WireDiameter: TRealQuantity read fWireDiameter;
     property PoissonRatio: double read fPoissonRatio;
-    property DensityRho: TQuantity read fDensityRho;
-    property FatigueFactorA: TQuantity read fFatigueFactorA;
+    property DensityRho: TRealQuantity read fDensityRho;
+    property FatigueFactorA: TRealQuantity read fFatigueFactorA;
     property FatigueFactorB: double read fFatigueFactorB;
-    property TorsionalStressTauStar: TQuantity read fTorsionalStressTauStar;
-    property TorsionalStressTauUT: TQuantity read fTorsionalStressTauUT;
-    property TorsionalStressTauYield: TQuantity read fTorsionalStressTauYield;
-    property TorsionalStressTauOE7: TQuantity read fTorsionalStressTauOE7;
-    property TorsionalStressTauOE6: TQuantity read fTorsionalStressTauOE6;
-    property TorsionalStressTauOE5: TQuantity read fTorsionalStressTauOE5;
-    property TorsionalStressTauOE3: TQuantity read fTorsionalStressTauOE3;
-    property TorsionalStressTauUE7: TQuantity read fTorsionalStressTauUE7;
-    property TorsionalStressTauUE6: TQuantity read fTorsionalStressTauUE6;
-    property TorsionalStressTauUE5: TQuantity read fTorsionalStressTauUE5;
+    property TorsionalStressTauStar: TRealQuantity read fTorsionalStressTauStar;
+    property TorsionalStressTauUT: TRealQuantity read fTorsionalStressTauUT;
+    property TorsionalStressTauYield: TRealQuantity read fTorsionalStressTauYield;
+    property TorsionalStressTauOE7: TRealQuantity read fTorsionalStressTauOE7;
+    property TorsionalStressTauOE6: TRealQuantity read fTorsionalStressTauOE6;
+    property TorsionalStressTauOE5: TRealQuantity read fTorsionalStressTauOE5;
+    property TorsionalStressTauOE3: TRealQuantity read fTorsionalStressTauOE3;
+    property TorsionalStressTauUE7: TRealQuantity read fTorsionalStressTauUE7;
+    property TorsionalStressTauUE6: TRealQuantity read fTorsionalStressTauUE6;
+    property TorsionalStressTauUE5: TRealQuantity read fTorsionalStressTauUE5;
 
-    property BendingStressSigmaStar: TQuantity read fBendingStressSigmaStar;
-    property BendingStressSigmaUT: TQuantity read fBendingStressSigmaUT;
-    property BendingStressSigmaYield: TQuantity read fBendingStressSigmaYield;
-    property BendingStressSigmaOE7: TQuantity read fBendingStressSigmaOE7;
-    property BendingStressSigmaOE6: TQuantity read fBendingStressSigmaOE6;
-    property BendingStressSigmaOE5: TQuantity read fBendingStressSigmaOE5;
-    property BendingStressSigmaOE3: TQuantity read fBendingStressSigmaOE3;
-    property BendingStressSigmaUE7: TQuantity read fBendingStressSigmaUE7;
-    property BendingStressSigmaUE6: TQuantity read fBendingStressSigmaUE6;
-    property BendingStressSigmaUE5: TQuantity read fBendingStressSigmaUE5;
+    property BendingStressSigmaStar: TRealQuantity read fBendingStressSigmaStar;
+    property BendingStressSigmaUT: TRealQuantity read fBendingStressSigmaUT;
+    property BendingStressSigmaYield: TRealQuantity read fBendingStressSigmaYield;
+    property BendingStressSigmaOE7: TRealQuantity read fBendingStressSigmaOE7;
+    property BendingStressSigmaOE6: TRealQuantity read fBendingStressSigmaOE6;
+    property BendingStressSigmaOE5: TRealQuantity read fBendingStressSigmaOE5;
+    property BendingStressSigmaOE3: TRealQuantity read fBendingStressSigmaOE3;
+    property BendingStressSigmaUE7: TRealQuantity read fBendingStressSigmaUE7;
+    property BendingStressSigmaUE6: TRealQuantity read fBendingStressSigmaUE6;
+    property BendingStressSigmaUE5: TRealQuantity read fBendingStressSigmaUE5;
 
     property NumOfCyclesE7: double read fNumOfCyclesE7;
     property NumOfCyclesE6: double read fNumOfCyclesE6;
@@ -188,7 +188,7 @@ begin
   Result := WIRESPECS_TABLE[Index].Name;
 end;
 
-function TMaterial.GetG(const aTemperature: TQuantity): TQuantity;
+function TMaterial.GetG(const aTemperature: TRealQuantity): TRealQuantity;
 var
   Ratio: double;
 begin
@@ -205,16 +205,16 @@ begin
   Result := Result * (1 - Ratio*(degC.ToFloat(aTemperature) - 20));
 end;
 
-function TMaterial.GetE(const aTemperature: TQuantity): TQuantity;
+function TMaterial.GetE(const aTemperature: TRealQuantity): TRealQuantity;
 begin
   Result := GetG(aTemperature) * (2*(1 + fPoissonRatio));
 end;
 
-procedure TMaterial.Load(const aName: string; const aWireDiameter: TQuantity; const aTemperature: TQuantity; const aTreatment: string);
+procedure TMaterial.Load(const aName: string; const aWireDiameter: TRealQuantity; const aTemperature: TRealQuantity; const aTreatment: string);
 var
-  TO0, DTO0, TO1, DTO1, TU1, DTU1: TQuantity;
-  RM0, DRM, RMMAX: TQuantity;
-  DR0, DT0: TQuantity;
+  TO0, DTO0, TO1, DTO1, TU1, DTU1: TRealQuantity;
+  RM0, DRM, RMMAX: TRealQuantity;
+  DR0, DT0: TRealQuantity;
   I: longint;
 begin
   Clear;

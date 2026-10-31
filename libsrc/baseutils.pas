@@ -34,55 +34,55 @@ type
 
 function GetString(const AValue: double): string;
 
-function GetLengthSymbol(const AQuantity: TQuantity): string;
-function GetLengthValue (const AQuantity: TQuantity): double;
-function GetLengthString(const AQuantity: TQuantity): string;
-function GetLengthString(const AQuantity, ATol: TQuantity): string;
+function GetLengthSymbol(const AQuantity: TRealQuantity): string;
+function GetLengthValue (const AQuantity: TRealQuantity): double;
+function GetLengthString(const AQuantity: TRealQuantity): string;
+function GetLengthString(const AQuantity, ATol: TRealQuantity): string;
 
-function GetForceSymbol(const AQuantity: TQuantity): string;
-function GetForceValue (const AQuantity: TQuantity): double;
-function GetForceString(const AQuantity: TQuantity): string;
-function GetForceString(const AQuantity, ATol: TQuantity): string;
+function GetForceSymbol(const AQuantity: TRealQuantity): string;
+function GetForceValue (const AQuantity: TRealQuantity): double;
+function GetForceString(const AQuantity: TRealQuantity): string;
+function GetForceString(const AQuantity, ATol: TRealQuantity): string;
 
-function GetPressureSymbol(const AQuantity: TQuantity): string;
-function GetPressureValue (const AQuantity: TQuantity): double;
-function GetPressureString(const AQuantity: TQuantity): string;
+function GetPressureSymbol(const AQuantity: TRealQuantity): string;
+function GetPressureValue (const AQuantity: TRealQuantity): double;
+function GetPressureString(const AQuantity: TRealQuantity): string;
 
-function GetStiffnessSymbol(const AQuantity: TQuantity): string;
-function GetStiffnessValue (const AQuantity: TQuantity): double;
-function GetStiffnessString(const AQuantity: TQuantity): string;
+function GetStiffnessSymbol(const AQuantity: TRealQuantity): string;
+function GetStiffnessValue (const AQuantity: TRealQuantity): double;
+function GetStiffnessString(const AQuantity: TRealQuantity): string;
 
-function GetAngularStiffnessSymbol(const AQuantity: TQuantity): string;
-function GetAngularStiffnessValue (const AQuantity: TQuantity): double;
-function GetAngularStiffnessString(const AQuantity: TQuantity): string;
+function GetAngularStiffnessSymbol(const AQuantity: TRealQuantity): string;
+function GetAngularStiffnessValue (const AQuantity: TRealQuantity): double;
+function GetAngularStiffnessString(const AQuantity: TRealQuantity): string;
 
-function GetMassSymbol(const AQuantity: TQuantity): string;
-function GetMassValue (const AQuantity: TQuantity): double;
-function GetMassString(const AQuantity: TQuantity): string;
+function GetMassSymbol(const AQuantity: TRealQuantity): string;
+function GetMassValue (const AQuantity: TRealQuantity): double;
+function GetMassString(const AQuantity: TRealQuantity): string;
 
-function GetEnergySymbol(const AQuantity: TQuantity): string;
-function GetEnergyValue (const AQuantity: TQuantity): double;
-function GetEnergyString(const AQuantity: TQuantity): string;
+function GetEnergySymbol(const AQuantity: TRealQuantity): string;
+function GetEnergyValue (const AQuantity: TRealQuantity): double;
+function GetEnergyString(const AQuantity: TRealQuantity): string;
 
-function GetFrequencySymbol(const AQuantity: TQuantity): string;
-function GetFrequencyValue (const AQuantity: TQuantity): double;
-function GetFrequencyString(const AQuantity: TQuantity): string;
+function GetFrequencySymbol(const AQuantity: TRealQuantity): string;
+function GetFrequencyValue (const AQuantity: TRealQuantity): double;
+function GetFrequencyString(const AQuantity: TRealQuantity): string;
 
-function GetDensitySymbol(const AQuantity: TQuantity): string;
-function GetDensityValue (const AQuantity: TQuantity): double;
-function GetDensityString(const AQuantity: TQuantity): string;
+function GetDensitySymbol(const AQuantity: TRealQuantity): string;
+function GetDensityValue (const AQuantity: TRealQuantity): double;
+function GetDensityString(const AQuantity: TRealQuantity): string;
 
-function GetAngleSymbol(const AQuantity: TQuantity): string;
-function GetAngleValue (const AQuantity: TQuantity): double;
-function GetAngleString(const AQuantity: TQuantity): string;
+function GetAngleSymbol(const AQuantity: TRealQuantity): string;
+function GetAngleValue (const AQuantity: TRealQuantity): double;
+function GetAngleString(const AQuantity: TRealQuantity): string;
 
-function GetTorqueSymbol(const AQuantity: TQuantity): string;
-function GetTorqueValue (const AQuantity: TQuantity): double;
-function GetTorqueString(const AQuantity: TQuantity): string;
+function GetTorqueSymbol(const AQuantity: TRealQuantity): string;
+function GetTorqueValue (const AQuantity: TRealQuantity): double;
+function GetTorqueString(const AQuantity: TRealQuantity): string;
 
-function GetTemperatureSymbol(const AQuantity: TQuantity): string;
-function GetTemperatureValue (const AQuantity: TQuantity): double;
-function GetTemperatureString(const AQuantity: TQuantity): string;
+function GetTemperatureSymbol(const AQuantity: TRealQuantity): string;
+function GetTemperatureValue (const AQuantity: TRealQuantity): double;
+function GetTemperatureString(const AQuantity: TRealQuantity): string;
 
 const
   DefaultDigits    = 5;
@@ -112,7 +112,7 @@ begin
       Result := FloatToStrF(AValue, ffGeneral, 4, 0);
 end;
 
-function GetLengthSymbol(const AQuantity: TQuantity): string;
+function GetLengthSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := InchUnit.GetSymbol([]);
@@ -120,7 +120,7 @@ begin
   end;
 end;
 
-function GetLengthValue(const AQuantity: TQuantity): double;
+function GetLengthValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := InchUnit.ToFloat(AQuantity);
@@ -128,7 +128,7 @@ begin
   end;
 end;
 
-function GetLengthString(const AQuantity: TQuantity): string;
+function GetLengthString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -139,7 +139,7 @@ begin
     result := '---';
 end;
 
-function GetLengthString(const AQuantity, ATol: TQuantity): string;
+function GetLengthString(const AQuantity, ATol: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -150,7 +150,7 @@ begin
     result := '---';
 end;
 
-function GetForceSymbol(const AQuantity: TQuantity): string;
+function GetForceSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundForceUnit.GetSymbol([]);
@@ -158,7 +158,7 @@ begin
   end;
 end;
 
-function GetForceValue(const AQuantity: TQuantity): double;
+function GetForceValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundForceUnit.ToFloat(AQuantity);
@@ -166,7 +166,7 @@ begin
   end;
 end;
 
-function GetForceString(const AQuantity: TQuantity): string;
+function GetForceString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -177,7 +177,7 @@ begin
     result := '---';
 end;
 
-function GetForceString(const AQuantity, ATol: TQuantity): string;
+function GetForceString(const AQuantity, ATol: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -188,7 +188,7 @@ begin
     result := '---';
 end;
 
-function GetPressureSymbol(const AQuantity: TQuantity): string;
+function GetPressureSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundPerSquareInchUnit.GetSymbol([pKilo]);
@@ -196,7 +196,7 @@ begin
   end;
 end;
 
-function GetPressureValue(const AQuantity: TQuantity): double;
+function GetPressureValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundPerSquareInchUnit.ToFloat(AQuantity, [pKilo]);
@@ -204,7 +204,7 @@ begin
   end;
 end;
 
-function GetPressureString(const AQuantity: TQuantity): string;
+function GetPressureString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -215,7 +215,7 @@ begin
     Result := '---';
 end;
 
-function GetStiffnessSymbol(const AQuantity: TQuantity): string;
+function GetStiffnessSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundForcePerInchUnit.GetSymbol([]);
@@ -223,7 +223,7 @@ begin
   end;
 end;
 
-function GetStiffnessValue(const AQuantity: TQuantity): double;
+function GetStiffnessValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundForcePerInchUnit.ToFloat(AQuantity);
@@ -231,7 +231,7 @@ begin
   end;
 end;
 
-function GetStiffnessString(const AQuantity: TQuantity): string;
+function GetStiffnessString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -242,7 +242,7 @@ begin
     Result := '---';
 end;
 
-function GetAngularStiffnessSymbol(const AQuantity: TQuantity): string;
+function GetAngularStiffnessSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundForceInchUnit.GetSymbol([]);
@@ -250,7 +250,7 @@ begin
   end;
 end;
 
-function GetAngularStiffnessValue (const AQuantity: TQuantity): double;
+function GetAngularStiffnessValue (const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundForceInchUnit.ToFloat(AQuantity);
@@ -258,7 +258,7 @@ begin
   end;
 end;
 
-function GetAngularStiffnessString(const AQuantity: TQuantity): string;
+function GetAngularStiffnessString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -269,7 +269,7 @@ begin
     Result := '---';
 end;
 
-function GetMassSymbol(const AQuantity: TQuantity): string;
+function GetMassSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundUnit.GetSymbol([]);
@@ -277,7 +277,7 @@ begin
   end;
 end;
 
-function GetMassValue(const AQuantity: TQuantity): double;
+function GetMassValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundUnit.ToFloat(AQuantity);
@@ -285,7 +285,7 @@ begin
   end;
 end;
 
-function GetMassString(const AQuantity: TQuantity): string;
+function GetMassString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -296,7 +296,7 @@ begin
     Result := '---';
 end;
 
-function GetEnergySymbol(const AQuantity: TQuantity): string;
+function GetEnergySymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundForceInchUnit.GetSymbol([]);
@@ -304,7 +304,7 @@ begin
   end;
 end;
 
-function GetEnergyValue(const AQuantity: TQuantity): double;
+function GetEnergyValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundForceInchUnit.ToFloat(AQuantity);
@@ -312,7 +312,7 @@ begin
   end;
 end;
 
-function GetEnergyString(const AQuantity: TQuantity): string;
+function GetEnergyString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -323,17 +323,17 @@ begin
     Result := '---';
 end;
 
-function GetFrequencySymbol(const AQuantity: TQuantity): string;
+function GetFrequencySymbol(const AQuantity: TRealQuantity): string;
 begin
   result := HertzUnit.GetSymbol([pNone]);
 end;
 
-function GetFrequencyValue(const AQuantity: TQuantity): double;
+function GetFrequencyValue(const AQuantity: TRealQuantity): double;
 begin
  result := HertzUnit.ToFloat(AQuantity);
 end;
 
-function GetFrequencyString(const AQuantity: TQuantity): string;
+function GetFrequencyString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
   begin
@@ -342,7 +342,7 @@ begin
     Result := '---';
 end;
 
-function GetDensitySymbol(const AQuantity: TQuantity): string;
+function GetDensitySymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundPerCubicInchUnit.GetSymbol([pNone, pNone]);
@@ -350,7 +350,7 @@ begin
   end;
 end;
 
-function GetDensityValue(const AQuantity: TQuantity): double;
+function GetDensityValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundPerCubicInchUnit.ToFloat(AQuantity);
@@ -358,7 +358,7 @@ begin
   end;
 end;
 
-function GetDensityString(const AQuantity: TQuantity): string;
+function GetDensityString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -369,22 +369,22 @@ begin
     result := '---';
 end;
 
-function GetAngleSymbol(const AQuantity: TQuantity): string;
+function GetAngleSymbol(const AQuantity: TRealQuantity): string;
 begin
   result := DegreeUnit.GetSymbol([]);
 end;
 
-function GetAngleValue(const AQuantity: TQuantity): double;
+function GetAngleValue(const AQuantity: TRealQuantity): double;
 begin
   result := DegreeUnit.ToFloat(AQuantity);
 end;
 
-function GetAngleString(const AQuantity: TQuantity): string;
+function GetAngleString(const AQuantity: TRealQuantity): string;
 begin
   result := DegreeUnit.ToString(AQuantity, DefaultPrecision, DefaultDigits, []);
 end;
 
-function GetTorqueSymbol(const AQuantity: TQuantity): string;
+function GetTorqueSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := PoundForceInchUnit.GetSymbol([]);
@@ -392,7 +392,7 @@ begin
   end;
 end;
 
-function GetTorqueValue(const AQuantity: TQuantity): double;
+function GetTorqueValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := PoundForceInchUnit.ToFloat(AQuantity);
@@ -400,7 +400,7 @@ begin
   end;
 end;
 
-function GetTorqueString(const AQuantity: TQuantity): string;
+function GetTorqueString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of
@@ -411,7 +411,7 @@ begin
     Result := '---';
 end;
 
-function GetTemperatureSymbol(const AQuantity: TQuantity): string;
+function GetTemperatureSymbol(const AQuantity: TRealQuantity): string;
 begin
   case UseImperialSystem of
     True:  result := degF.GetSymbol([]);
@@ -419,7 +419,7 @@ begin
   end;
 end;
 
-function GetTemperatureValue(const AQuantity: TQuantity): double;
+function GetTemperatureValue(const AQuantity: TRealQuantity): double;
 begin
   case UseImperialSystem of
     True:  result := degF.ToFloat(AQuantity);
@@ -427,7 +427,7 @@ begin
   end;
 end;
 
-function GetTemperatureString(const AQuantity: TQuantity): string;
+function GetTemperatureString(const AQuantity: TRealQuantity): string;
 begin
   if not EqualToZero(AQuantity) then
     case UseImperialSystem of

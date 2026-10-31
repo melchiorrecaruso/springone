@@ -34,70 +34,70 @@ type
     FCheck: boolean;
     FClosedEnds: boolean;
     FColdCoiled: boolean;
-    FCycleFrequency: TQuantity;
-    Fd: TQuantity;
-    FdTolerance: TQuantity;
-    FDe: TQuantity;
-    FDeMax: TQuantity;
-    FDi: TQuantity;
-    FDiMin: TQuantity;
-    FDm: TQuantity;
-    FDeltaDe: TQuantity;
+    FCycleFrequency: TRealQuantity;
+    Fd: TRealQuantity;
+    FdTolerance: TRealQuantity;
+    FDe: TRealQuantity;
+    FDeMax: TRealQuantity;
+    FDi: TRealQuantity;
+    FDiMin: TRealQuantity;
+    FDm: TRealQuantity;
+    FDeltaDe: TRealQuantity;
     FDynamicLoad: boolean;
-    FDynamicSafetyFactor: TQuantity;
-    FLoadF1: TQuantity;
-    FLoadF2: TQuantity;
-    FLoadFn: TQuantity;
-    FLoadFc: TQuantity;
-    FE: TQuantity;
-    Fe1: TQuantity;
-    Fe2: TQuantity;
-    FG: TQuantity;
+    FDynamicSafetyFactor: TRealQuantity;
+    FLoadF1: TRealQuantity;
+    FLoadF2: TRealQuantity;
+    FLoadFn: TRealQuantity;
+    FLoadFc: TRealQuantity;
+    FE: TRealQuantity;
+    Fe1: TRealQuantity;
+    Fe2: TRealQuantity;
+    FG: TRealQuantity;
     FGroundEnds: boolean;
     Fk: double;
-    FLengthL0: TQuantity;
-    FLengthL1: TQuantity;
-    FLengthL2: TQuantity;
-    FLengthLc: TQuantity;
-    FLengthLn: TQuantity;
-    FMass: TQuantity;
+    FLengthL0: TRealQuantity;
+    FLengthL1: TRealQuantity;
+    FLengthL2: TRealQuantity;
+    FLengthLc: TRealQuantity;
+    FLengthLn: TRealQuantity;
+    FMass: TRealQuantity;
     Fn: double;
-    FNaturalFrequency: TQuantity;
-    FNumOfCycles: TQuantity;
+    FNaturalFrequency: TRealQuantity;
+    FNumOfCycles: TRealQuantity;
     Fnt: double;
     Fnu: double;
-    fPitch: TQuantity;
-    fPitchRatio: TQuantity;
-    fR: TQuantity;
-    fRho: TQuantity;
-    fRm: TQuantity;
-    FStrokeS1: TQuantity;
-    FStrokeS2: TQuantity;
-    FStrokeSh: TQuantity;
-    FStrokeSc: TQuantity;
-    FStrokeSn: TQuantity;
-    FSa: TQuantity;
+    fPitch: TRealQuantity;
+    fPitchRatio: TRealQuantity;
+    fR: TRealQuantity;
+    fRho: TRealQuantity;
+    fRm: TRealQuantity;
+    FStrokeS1: TRealQuantity;
+    FStrokeS2: TRealQuantity;
+    FStrokeSh: TRealQuantity;
+    FStrokeSc: TRealQuantity;
+    FStrokeSn: TRealQuantity;
+    FSa: TRealQuantity;
     FStaticSafetyFactor: double;
-    FSk: TQuantity;
+    FSk: TRealQuantity;
     FBucklingStability: boolean;
-    FTau1: TQuantity;
-    FTau2: TQuantity;
-    FTauh: TQuantity;
-    FTauc: TQuantity;
-    FTaun: TQuantity;
-    FTauk1: TQuantity;
-    FTauk2: TQuantity;
-    FTaukh: TQuantity;
-    FTaukc: TQuantity;
-    FTaukn: TQuantity;
-    FTauhz: TQuantity;
-    FTauoz: TQuantity;
-    FTauz: TQuantity;
-    FTemperature: TQuantity;
+    FTau1: TRealQuantity;
+    FTau2: TRealQuantity;
+    FTauh: TRealQuantity;
+    FTauc: TRealQuantity;
+    FTaun: TRealQuantity;
+    FTauk1: TRealQuantity;
+    FTauk2: TRealQuantity;
+    FTaukh: TRealQuantity;
+    FTaukc: TRealQuantity;
+    FTaukn: TRealQuantity;
+    FTauhz: TRealQuantity;
+    FTauoz: TRealQuantity;
+    FTauz: TRealQuantity;
+    FTemperature: TRealQuantity;
     Fw: double;
-    FW0n: TQuantity;
-    FW12: TQuantity;
-    FWireLength: TQuantity;
+    FW0n: TRealQuantity;
+    FW12: TRealQuantity;
+    FWireLength: TRealQuantity;
     procedure PreCheck;
     procedure PostCheck(ASpringTolerance: TEN15800);
   public
@@ -105,170 +105,170 @@ type
     destructor Destroy; override;
     procedure Solve(ASpringTolerance: TEN15800);
     procedure Clear;
-    function GetR(const aTemperature: TQuantity): TQuantity;
-    function GetF1(const aTemperature: TQuantity): TQuantity;
-    function GetF2(const aTemperature: TQuantity): TQuantity;
-    function GetTau(const aLoadF: TQuantity): TQuantity;
-    function GetTauk(const aLoadF: TQuantity): TQuantity;
+    function GetR(const aTemperature: TRealQuantity): TRealQuantity;
+    function GetF1(const aTemperature: TRealQuantity): TRealQuantity;
+    function GetF2(const aTemperature: TRealQuantity): TRealQuantity;
+    function GetTau(const aLoadF: TRealQuantity): TRealQuantity;
+    function GetTauk(const aLoadF: TRealQuantity): TRealQuantity;
     procedure GetBucklingCurve(var aPoints: ArrayOfTPointF);
   public
-    property AdmDynamicTorsionalStressRangeTauhz: TQuantity read fTauhz;
-    property AdmDynamicTorsionalStressTauoz: TQuantity read fTauoz;
-    property AdmStaticTorsionalStressTauz: TQuantity read fTauz;
+    property AdmDynamicTorsionalStressRangeTauhz: TRealQuantity read fTauhz;
+    property AdmDynamicTorsionalStressTauoz: TRealQuantity read fTauoz;
+    property AdmStaticTorsionalStressTauz: TRealQuantity read fTauz;
     property ActiveColis: double read fn write fn;
     property Check: boolean read fCheck;
     property ClosedEnds: boolean read fClosedEnds write fClosedEnds;
     property ColdCoiled: boolean read FColdCoiled write FColdCoiled;
-    property CycleFrequency:TQuantity read FCycleFrequency write FCycleFrequency;
-    property De: TQuantity read FDe;
-    property DeMax: TQuantity read FDeMax;
-    property StrokeS1: TQuantity read FStrokeS1;
-    property StrokeS2: TQuantity read FStrokeS2;
-    property StrokeSh: TQuantity read FStrokeSh;
-    property StrokeSc: TQuantity read FStrokeSc;
-    property StrokeSn: TQuantity read FStrokeSn;
-    property DeflectionSk: TQuantity read fSk;
-    property DeltaDe: TQuantity read FDeltaDe;
+    property CycleFrequency:TRealQuantity read FCycleFrequency write FCycleFrequency;
+    property De: TRealQuantity read FDe;
+    property DeMax: TRealQuantity read FDeMax;
+    property StrokeS1: TRealQuantity read FStrokeS1;
+    property StrokeS2: TRealQuantity read FStrokeS2;
+    property StrokeSh: TRealQuantity read FStrokeSh;
+    property StrokeSc: TRealQuantity read FStrokeSc;
+    property StrokeSn: TRealQuantity read FStrokeSn;
+    property DeflectionSk: TRealQuantity read fSk;
+    property DeltaDe: TRealQuantity read FDeltaDe;
 
-    property Di: TQuantity read FDi;
-    property DiMin: TQuantity read FDiMin;
-    property Dm: TQuantity read FDm write FDm;
+    property Di: TRealQuantity read FDi;
+    property DiMin: TRealQuantity read FDiMin;
+    property Dm: TRealQuantity read FDm write FDm;
     property DynamicLoad: boolean read fDynamicLoad write fDynamicLoad;
-    property DynamicSafetyFactor: TQuantity read fDynamicSafetyFactor;
-    property LoadF1: TQuantity read FLoadF1;
-    property LoadF2: TQuantity read FLoadF2;
-    property LoadFc: TQuantity read FLoadFc;
-    property LoadFn: TQuantity read FLoadFn;
-    property EccentricityE1: TQuantity read fe1;
-    property EccentricityE2: TQuantity read fe2;
+    property DynamicSafetyFactor: TRealQuantity read fDynamicSafetyFactor;
+    property LoadF1: TRealQuantity read FLoadF1;
+    property LoadF2: TRealQuantity read FLoadF2;
+    property LoadFc: TRealQuantity read FLoadFc;
+    property LoadFn: TRealQuantity read FLoadFn;
+    property EccentricityE1: TRealQuantity read fe1;
+    property EccentricityE2: TRealQuantity read fe2;
     property GroundEnds: boolean read fGroundEnds write fGroundEnds;
     property CorrectionFactorK: double read fk;
-    property LengthL0: TQuantity read FLengthL0 write FLengthL0;
-    property LengthL1: TQuantity read FLengthL1 write FLengthL1;
-    property LengthL2: TQuantity read FLengthL2 write FLengthL2;
-    property LengthLc: TQuantity read FLengthLc;
-    property LengthLn: TQuantity read FLengthLn;
-    property Mass: TQuantity read fMass;
-    property MaterialDensity: TQuantity read fRho write fRho;
-    property NaturalFrequency: TQuantity read fNaturalFrequency;
-    property NumOfCycles: TQuantity read fNumOfCycles;
-    property Pitch: TQuantity read fPitch;
-    property PitchRatio: TQuantity read fPitchRatio;
+    property LengthL0: TRealQuantity read FLengthL0 write FLengthL0;
+    property LengthL1: TRealQuantity read FLengthL1 write FLengthL1;
+    property LengthL2: TRealQuantity read FLengthL2 write FLengthL2;
+    property LengthLc: TRealQuantity read FLengthLc;
+    property LengthLn: TRealQuantity read FLengthLn;
+    property Mass: TRealQuantity read fMass;
+    property MaterialDensity: TRealQuantity read fRho write fRho;
+    property NaturalFrequency: TRealQuantity read fNaturalFrequency;
+    property NumOfCycles: TRealQuantity read fNumOfCycles;
+    property Pitch: TRealQuantity read fPitch;
+    property PitchRatio: TRealQuantity read fPitchRatio;
     property SeatingCoefficent: double read fnu write fnu;
-    property ShearModulus: TQuantity read fG write fG;
+    property ShearModulus: TRealQuantity read fG write fG;
     property SpringIndexW: double read fw;
-    property SpringRateR: TQuantity read fR;
-    property SpringWorkW0n: TQuantity read fW0n;
-    property SpringWorkW12: TQuantity read fW12;
+    property SpringRateR: TRealQuantity read fR;
+    property SpringWorkW0n: TRealQuantity read fW0n;
+    property SpringWorkW12: TRealQuantity read fW12;
     property StaticSafetyFactor: double read fStaticSafetyFactor;
-    property SumOfMinimumGapsSa: TQuantity read fSa;
-    property TensileStrengthRm: TQuantity read fRm write fRm;
-    property TorsionalStressTau1: TQuantity read fTau1;
-    property TorsionalStressTau2: TQuantity read fTau2;
-    property TorsionalStressTauc: TQuantity read fTauc;
-    property TorsionalStressTauh: TQuantity read fTauh;
-    property TorsionalStressTaun: TQuantity read fTaun;
-    property TorsionalStressTauk1: TQuantity read fTauk1;
-    property TorsionalStressTauk2: TQuantity read fTauk2;
-    property TorsionalStressTaukc: TQuantity read fTaukc;
-    property TorsionalStressTaukh: TQuantity read fTaukh;
-    property TorsionalStressTaukn: TQuantity read fTaukn;
+    property SumOfMinimumGapsSa: TRealQuantity read fSa;
+    property TensileStrengthRm: TRealQuantity read fRm write fRm;
+    property TorsionalStressTau1: TRealQuantity read fTau1;
+    property TorsionalStressTau2: TRealQuantity read fTau2;
+    property TorsionalStressTauc: TRealQuantity read fTauc;
+    property TorsionalStressTauh: TRealQuantity read fTauh;
+    property TorsionalStressTaun: TRealQuantity read fTaun;
+    property TorsionalStressTauk1: TRealQuantity read fTauk1;
+    property TorsionalStressTauk2: TRealQuantity read fTauk2;
+    property TorsionalStressTaukc: TRealQuantity read fTaukc;
+    property TorsionalStressTaukh: TRealQuantity read fTaukh;
+    property TorsionalStressTaukn: TRealQuantity read fTaukn;
     property TotalCoils: double read fnt write fnt;
-    property Temperature: TQuantity read fTemperature write fTemperature;
-    property YoungModulus: TQuantity read fE write fE;
-    property WireDiameter: TQuantity read Fd write Fd;
-    property WireDiameterTolerance: TQuantity read FdTolerance write FdTolerance;
-    property WireLength: TQuantity read fWireLength;
+    property Temperature: TRealQuantity read fTemperature write fTemperature;
+    property YoungModulus: TRealQuantity read fE write fE;
+    property WireDiameter: TRealQuantity read Fd write Fd;
+    property WireDiameterTolerance: TRealQuantity read FdTolerance write FdTolerance;
+    property WireLength: TRealQuantity read fWireLength;
   end;
 
   TTorsionSpringSolver = class
   private
-    fa: TQuantity;
-    falpha1: TQuantity;
-    falpha2: TQuantity;
-    falphan: TQuantity;
+    fa: TRealQuantity;
+    falpha1: TRealQuantity;
+    falpha2: TRealQuantity;
+    falphan: TRealQuantity;
 
-    falpha1coil: TQuantity;
-    falpha2coil: TQuantity;
-    falphancoil: TQuantity;
-    fBendRadiusLegA: TQuantity;
-    fBendRadiusLegB: TQuantity;
+    falpha1coil: TRealQuantity;
+    falpha2coil: TRealQuantity;
+    falphancoil: TRealQuantity;
+    fBendRadiusLegA: TRealQuantity;
+    fBendRadiusLegB: TRealQuantity;
     fBentLegA: boolean;
     fBentLegB: boolean;
 
-    fbeta1: TQuantity;
-    fbeta2: TQuantity;
-    fbetan: TQuantity;
+    fbeta1: TRealQuantity;
+    fbeta2: TRealQuantity;
+    fbetan: TRealQuantity;
 
-    fcA, fcB: TQuantity;
+    fcA, fcB: TRealQuantity;
     fCheck: boolean;
 
     fClosedCoils: boolean;
     fColdCoiled: boolean;
-    fd: TQuantity;
-    fdTolerance: TQuantity;
+    fd: TRealQuantity;
+    fdTolerance: TRealQuantity;
 
-    fDe: TQuantity;
-    fDi: TQuantity;
-    fDm: TQuantity;
+    fDe: TRealQuantity;
+    fDi: TRealQuantity;
+    fDm: TRealQuantity;
 
     fDynamicLoad: boolean;
-    fDynamicSafetyFactor: TQuantity;
+    fDynamicSafetyFactor: TRealQuantity;
 
-    fE: TQuantity;
+    fE: TRealQuantity;
     fFixedEndA: boolean;
     fFixedEndB: boolean;
-    fForceA1: TQuantity;
-    fForceA2: TQuantity;
-    fForceB1: TQuantity;
-    fForceB2: TQuantity;
+    fForceA1: TRealQuantity;
+    fForceA2: TRealQuantity;
+    fForceB1: TRealQuantity;
+    fForceB2: TRealQuantity;
 
-    fG: TQuantity;
-    fLengthLegA: TQuantity;
-    fLengthLegB: TQuantity;
-    fLengthArmLegA: TQuantity;
-    fLengthArmLegB: TQuantity;
+    fG: TRealQuantity;
+    fLengthLegA: TRealQuantity;
+    fLengthLegB: TRealQuantity;
+    fLengthArmLegA: TRealQuantity;
+    fLengthArmLegB: TRealQuantity;
 
-    fMass: TQuantity;
-    fNaturalFrequency: TQuantity;
-    fNumOfCycles: TQuantity;
+    fMass: TRealQuantity;
+    fNaturalFrequency: TRealQuantity;
+    fNumOfCycles: TRealQuantity;
     fn: double;
     fq: double;
 
-    fRho: TQuantity;
-    fRm: TQuantity;
-    fRMR: TQuantity;
+    fRho: TRealQuantity;
+    fRm: TRealQuantity;
+    fRMR: TRealQuantity;
 
     fStaticSafetyFactor: double;
     fStressInCoilingDirection: boolean;
 
-    fSigma1: TQuantity;
-    fSigma2: TQuantity;
-    fSigman: TQuantity;
+    fSigma1: TRealQuantity;
+    fSigma2: TRealQuantity;
+    fSigman: TRealQuantity;
 
-    fSigmaq1: TQuantity;
-    fSigmaq2: TQuantity;
-    fSigmaqn: TQuantity;
+    fSigmaq1: TRealQuantity;
+    fSigmaq2: TRealQuantity;
+    fSigmaqn: TRealQuantity;
 
-    fSigmaqh: TQuantity;
+    fSigmaqh: TRealQuantity;
 
 
-    fSigmaz: TQuantity;
-    fSigmaoz: TQuantity;
-    fSigmahz: TQuantity;
+    fSigmaz: TRealQuantity;
+    fSigmaoz: TRealQuantity;
+    fSigmahz: TRealQuantity;
 
-    fTorqueT1: TQuantity;
-    fTorqueT2: TQuantity;
-    fTorqueTn: TQuantity;
+    fTorqueT1: TRealQuantity;
+    fTorqueT2: TRealQuantity;
+    fTorqueTn: TRealQuantity;
 
     fw: double;
-    fWireLength: TQuantity;
+    fWireLength: TRealQuantity;
 
     fW0n,
-    fW12: TQuantity;
+    fW12: TRealQuantity;
 
-    function CalcRadialEndFlex(ArmLength: TQuantity): TQuantity;
-    function CalcTangentialEndFlex(ArmLength: TQuantity): TQuantity;
+    function CalcRadialEndFlex(ArmLength: TRealQuantity): TRealQuantity;
+    function CalcTangentialEndFlex(ArmLength: TRealQuantity): TRealQuantity;
     procedure PreCheck;
   public
     constructor Create;
@@ -276,84 +276,84 @@ type
     procedure Clear;
     procedure Solve(ASpringTolerance: TDIN2194);
 
-    function AlphaCoil(const Alpha: TQuantity): TQuantity;
-    function Lk(const Alpha: TQuantity): TQuantity;
-    function InnerCoilDiameter(const Alpha: TQuantity): TQuantity;
+    function AlphaCoil(const Alpha: TRealQuantity): TRealQuantity;
+    function Lk(const Alpha: TRealQuantity): TRealQuantity;
+    function InnerCoilDiameter(const Alpha: TRealQuantity): TRealQuantity;
 
 
-    function GetSigma (const aTorque: TQuantity): TQuantity;
-    function GetSigmaq(const aTorque: TQuantity): TQuantity;
+    function GetSigma (const aTorque: TRealQuantity): TRealQuantity;
+    function GetSigmaq(const aTorque: TRealQuantity): TRealQuantity;
 
   public
     property ActiveColis: double read fn write fn;
-    property AdmDynamicBendingStressRangeSigmahz: TQuantity read fSigmahz;
-    property AdmDynamicBendingStressSigmaoz: TQuantity read fSigmaoz;
-    property AdmStaticBendingStressSigmaz: TQuantity read fSigmaz;
+    property AdmDynamicBendingStressRangeSigmahz: TRealQuantity read fSigmahz;
+    property AdmDynamicBendingStressSigmaoz: TRealQuantity read fSigmaoz;
+    property AdmStaticBendingStressSigmaz: TRealQuantity read fSigmaz;
 
-    property Alpha1: TQuantity read fAlpha1 write fAlpha1;
-    property Alpha2: TQuantity read fAlpha2 write fAlpha2;
-    property Alphan: TQuantity read fAlphan;
+    property Alpha1: TRealQuantity read fAlpha1 write fAlpha1;
+    property Alpha2: TRealQuantity read fAlpha2 write fAlpha2;
+    property Alphan: TRealQuantity read fAlphan;
 
-    property BendRadiusLegA: TQuantity read fBendRadiusLegA write fBendRadiusLegA;
-    property BendRadiusLegB: TQuantity read fBendRadiusLegB write fBendRadiusLegB;
+    property BendRadiusLegA: TRealQuantity read fBendRadiusLegA write fBendRadiusLegA;
+    property BendRadiusLegB: TRealQuantity read fBendRadiusLegB write fBendRadiusLegB;
     property BentLegA: boolean read fBentLegA write fBentLegA;
     property BentLegB: boolean read fBentLegB write fBentLegB;
 
     property Check: boolean read fCheck;
     property ColdCoiled: boolean read fColdCoiled write fColdCoiled;
 
-    property De: TQuantity read fDe;
-    property Di: TQuantity read fDi;
-    property Dm: TQuantity read fDm write fDm;
+    property De: TRealQuantity read fDe;
+    property Di: TRealQuantity read fDi;
+    property Dm: TRealQuantity read fDm write fDm;
 
     property DynamicLoad: boolean read fDynamicLoad write fDynamicLoad;
-    property DynamicSafetyFactor: TQuantity read fDynamicSafetyFactor;
+    property DynamicSafetyFactor: TRealQuantity read fDynamicSafetyFactor;
 
     property FixedEndA: boolean read fFixedEndA write fFixedEndA;
     property FixedEndB: boolean read fFixedEndB write fFixedEndB;
 
 
-    property LengthLegA: TQuantity read fLengthLegA write fLengthLegA;
-    property LengthLegB: TQuantity read fLengthLegB write fLengthLegB;
+    property LengthLegA: TRealQuantity read fLengthLegA write fLengthLegA;
+    property LengthLegB: TRealQuantity read fLengthLegB write fLengthLegB;
 
-    property LengthArmLegA: TQuantity read fLengthArmLegA write fLengthArmLegA;
-    property LengthArmLegB: TQuantity read fLengthArmLegB write fLengthArmLegB;
+    property LengthArmLegA: TRealQuantity read fLengthArmLegA write fLengthArmLegA;
+    property LengthArmLegB: TRealQuantity read fLengthArmLegB write fLengthArmLegB;
 
-    property Mass: TQuantity read FMass;
-    property MaterialDensity: TQuantity read fRho write fRho;
-    property NaturalFrequency: TQuantity read fNaturalFrequency;
+    property Mass: TRealQuantity read FMass;
+    property MaterialDensity: TRealQuantity read fRho write fRho;
+    property NaturalFrequency: TRealQuantity read fNaturalFrequency;
 
-    property CoilsGap: TQuantity read fa write fa;
+    property CoilsGap: TRealQuantity read fa write fa;
     property CorrectionFactorQ: double read fq;
 
-    property ShearModulus: TQuantity read fG write fG;
+    property ShearModulus: TRealQuantity read fG write fG;
     property StaticSafetyFactor: double read fStaticSafetyFactor;
 
     property StressInCoilingDirection: boolean read fStressInCoilingDirection write fStressInCoilingDirection;
 
-    property TorqueT1: TQuantity read fTorqueT1;
-    property TorqueT2: TQuantity read fTorqueT2;
-    property TorqueTn: TQuantity read fTorqueTn;
-    property SpringRateRMR: TQuantity read fRMR;
-    property SpringWorkW0n: TQuantity read fW0n;
-    property SpringWorkW12: TQuantity read fW12;
+    property TorqueT1: TRealQuantity read fTorqueT1;
+    property TorqueT2: TRealQuantity read fTorqueT2;
+    property TorqueTn: TRealQuantity read fTorqueTn;
+    property SpringRateRMR: TRealQuantity read fRMR;
+    property SpringWorkW0n: TRealQuantity read fW0n;
+    property SpringWorkW12: TRealQuantity read fW12;
 
-    property TensileStrengthRm: TQuantity read fRm write fRm;
-    property BendingStressSigma1: TQuantity read fSigma1;
-    property BendingStressSigma2: TQuantity read fSigma2;
-    property BendingStressSigman: TQuantity read fSigman;
+    property TensileStrengthRm: TRealQuantity read fRm write fRm;
+    property BendingStressSigma1: TRealQuantity read fSigma1;
+    property BendingStressSigma2: TRealQuantity read fSigma2;
+    property BendingStressSigman: TRealQuantity read fSigman;
 
-    property BendingStressSigmaq1: TQuantity read fSigmaq1;
-    property BendingStressSigmaq2: TQuantity read fSigmaq2;
-    property BendingStressSigmaqn: TQuantity read fSigmaqn;
+    property BendingStressSigmaq1: TRealQuantity read fSigmaq1;
+    property BendingStressSigmaq2: TRealQuantity read fSigmaq2;
+    property BendingStressSigmaqn: TRealQuantity read fSigmaqn;
 
-    property BendingStressSigmaqH: TQuantity read fSigmaqh;
+    property BendingStressSigmaqH: TRealQuantity read fSigmaqh;
 
-    property YoungModulus: TQuantity read fE write fE;
-    property WireDiameter: TQuantity read fd write fd;
-    property WireDiameterTolerance: TQuantity read FdTolerance write FdTolerance;
+    property YoungModulus: TRealQuantity read fE write fE;
+    property WireDiameter: TRealQuantity read fd write fd;
+    property WireDiameterTolerance: TRealQuantity read FdTolerance write FdTolerance;
 
-    property WireLength: TQuantity read fWireLength;
+    property WireLength: TRealQuantity read fWireLength;
   end;
 
 implementation
@@ -512,10 +512,10 @@ end;
 
 procedure TCompressionSpringSolver.Solve(ASpringTolerance: TEN15800);
 var
-  mDe: TQuantity;
-  mSk: TQuantity;
-  mTau: TQuantity;
-  Tauh7, Tauh6, Tauh5: TQuantity;
+  mDe: TRealQuantity;
+  mSk: TRealQuantity;
+  mTau: TRealQuantity;
+  Tauh7, Tauh6, Tauh5: TRealQuantity;
 begin
   PreCheck;
   // Calcolo molla a compressione ad elica cilindrica fabbricate con filo sezione circolare.
@@ -847,7 +847,7 @@ begin
   PostCheck(ASpringTolerance);
 end;
 
-function TCompressionSpringSolver.GetR(const aTemperature: TQuantity): TQuantity;
+function TCompressionSpringSolver.GetR(const aTemperature: TRealQuantity): TRealQuantity;
 begin
   if fCheck then
     Result := MAT.GetG(aTemperature) * (QuarticPower(Fd)/ (8*fn*CubicPower(FDm)))
@@ -855,7 +855,7 @@ begin
     Result := 0*N/m;
 end;
 
-function TCompressionSpringSolver.GetF1(const aTemperature: TQuantity): TQuantity;
+function TCompressionSpringSolver.GetF1(const aTemperature: TRealQuantity): TRealQuantity;
 begin
   if fCheck then
     Result := GetR(aTemperature) * FStrokeS1
@@ -863,7 +863,7 @@ begin
     Result := 0*N;
 end;
 
-function TCompressionSpringSolver.GetF2(const aTemperature: TQuantity): TQuantity;
+function TCompressionSpringSolver.GetF2(const aTemperature: TRealQuantity): TRealQuantity;
 begin
   if fCheck then
     Result := GetR(aTemperature) * FStrokeS2
@@ -871,7 +871,7 @@ begin
     Result := 0*N;
 end;
 
-function TCompressionSpringSolver.GetTau(const aLoadF: TQuantity): TQuantity;
+function TCompressionSpringSolver.GetTau(const aLoadF: TRealQuantity): TRealQuantity;
 begin
   if NotEqualToZero(Fd) then
     Result := 8 * (aLoadF)/(Fd*Fd*Pi) * (FDm/Fd)
@@ -879,16 +879,16 @@ begin
     Result := 0*Pa;
 end;
 
-function TCompressionSpringSolver.GetTauk(const aLoadF: TQuantity): TQuantity;
+function TCompressionSpringSolver.GetTauk(const aLoadF: TRealQuantity): TRealQuantity;
 begin
   Result := GetTau(aLoadF) * fk;
 end;
 
 procedure TCompressionSpringSolver.GetBucklingCurve(var aPoints: ArrayOfTPointF);
 var
-  Value: TQuantity;
-  Y, DY: TQuantity;
-  C1, C2: TQuantity;
+  Value: TRealQuantity;
+  Y, DY: TRealQuantity;
+  C1, C2: TRealQuantity;
 begin
   C1 := fE/(2*(fE-fG));
   C2 := (2*Pi*Pi*(fE-fG)/(2*fG+fE));
@@ -1009,22 +1009,22 @@ begin
   end;
 end;
 
-function TTorsionSpringSolver.CalcRadialEndFlex(ArmLength: TQuantity): TQuantity;
+function TTorsionSpringSolver.CalcRadialEndFlex(ArmLength: TRealQuantity): TRealQuantity;
 begin
   Result := Power(2*ArmLength/fDm -1, 3)/(24*pi*fn*Power(ArmLength/fDm, 2));
 end;
 
-function TTorsionSpringSolver.CalcTangentialEndFlex(ArmLength: TQuantity): TQuantity;
+function TTorsionSpringSolver.CalcTangentialEndFlex(ArmLength: TRealQuantity): TRealQuantity;
 begin
   Result := (4*Power(ArmLength/fDm, 2) -1)/(12*pi*fn*(ArmLength/fDm));
 end;
 
 procedure TTorsionSpringSolver.Solve(ASpringTolerance: TDIN2194);
 var
-  mSigma: TQuantity;
-  Sigmah7, Sigmah6, Sigmah5: TQuantity;
-  MassCoil, MassLegA, MassLegB: TQuantity;
-  Js: TQuantity;
+  mSigma: TRealQuantity;
+  Sigmah7, Sigmah6, Sigmah5: TRealQuantity;
+  MassCoil, MassLegA, MassLegB: TRealQuantity;
+  Js: TRealQuantity;
 begin
   PreCheck;
   if fCheck then
@@ -1275,7 +1275,7 @@ begin
   end;
 end;
 
-function TTorsionSpringSolver.AlphaCoil(const Alpha: TQuantity): TQuantity;
+function TTorsionSpringSolver.AlphaCoil(const Alpha: TRealQuantity): TRealQuantity;
 begin
   Result := 0*rad;
   if fCheck then
@@ -1284,9 +1284,9 @@ begin
   end;
 end;
 
-function TTorsionSpringSolver.Lk(const Alpha: TQuantity): TQuantity;
+function TTorsionSpringSolver.Lk(const Alpha: TRealQuantity): TRealQuantity;
 var
-  fdMax: TQuantity;
+  fdMax: TRealQuantity;
 begin
   Result := 0*m;
   if fCheck then
@@ -1300,17 +1300,17 @@ begin
   end;
 end;
 
-function TTorsionSpringSolver.InnerCoilDiameter(const Alpha: TQuantity): TQuantity;
+function TTorsionSpringSolver.InnerCoilDiameter(const Alpha: TRealQuantity): TRealQuantity;
 begin
   result := fDm*fn/(fn + Alpha/2/pi) - fd;
 end;
 
-function TTorsionSpringSolver.GetSigma(const aTorque: TQuantity): TQuantity;
+function TTorsionSpringSolver.GetSigma(const aTorque: TRealQuantity): TRealQuantity;
 begin
   Result := (32*aTorque)/(pi*CubicPower(fd));
 end;
 
-function TTorsionSpringSolver.GetSigmaq(const aTorque: TQuantity): TQuantity;
+function TTorsionSpringSolver.GetSigmaq(const aTorque: TRealQuantity): TRealQuantity;
 begin
   Result := GetSigma(aTorque)*fq;
 end;

@@ -1402,7 +1402,7 @@ end;
 
 function TMainForm.CreateProductionDrawing(const Tx: string; aSetting: TIniFile): string;
 var
-  Ls: TQuantity;
+  Ls: TRealQuantity;
 begin
   {$IFDEF MODULE1}
   Result := Tx;

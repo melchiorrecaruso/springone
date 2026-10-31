@@ -122,13 +122,11 @@ end;
 procedure TCompozer.LoadChart1(Chart: TChart; const ASection: string);
 begin
   // Title
-  Chart.TitleFontName := FSetting.ReadString(ASection, 'TitleFontName', 'default');
   Chart.TitleFontHeight := FSetting.ReadFloat(ASection, 'TitleFontHeight', 14);
   Chart.TitleFontStyle := LoadFontStyle(ASection, 'TitleFontStyle');
   Chart.TitleFontColor.FromString(FSetting.ReadString(ASection,
     'TitleFontColor', 'Black'));
   // X Axis
-  Chart.XAxisFontName := FSetting.ReadString(ASection, 'XAxisFontName', 'default');
   Chart.XAxisFontHeight := FSetting.ReadFloat(ASection, 'XAxisFontHeight', 13);
   Chart.XAxisFontStyle := LoadFontStyle(ASection, 'XAxisFontStyle');
   Chart.XAxisFontColor.FromString(FSetting.ReadString(ASection,
@@ -142,7 +140,6 @@ begin
   Chart.XAxisLineStyle := LoadPenStyle(ASection, 'XAxisLineStyle');
   Chart.XGridLineStyle := LoadPenStyle(ASection, 'XGridLineStyle');
   // Y Axis
-  Chart.YAxisFontName := FSetting.ReadString(ASection, 'YAxisFontName', 'default');
   Chart.YAxisFontHeight := FSetting.ReadFloat(ASection, 'YAxisFontHeight', 13);
   Chart.YAxisFontStyle := LoadFontStyle(ASection, 'YAxisFontStyle');
   Chart.YAxisFontColor.FromString(FSetting.ReadString(ASection,
@@ -163,7 +160,6 @@ end;
 
 procedure TCompozer.LoadChart2(Chart: TChart; const ASection, AIdent: string);
 begin
-  Chart.FontName := FSetting.ReadString(ASection, AIdent + '.FontName', 'default');
   Chart.FontHeight := FSetting.ReadFloat(ASection, AIdent + '.FontHeight', 12);
   Chart.FontStyle := LoadFontStyle(ASection, AIdent + '.FontStyle');
   Chart.FontColor.FromString(FSetting.ReadString(ASection, AIdent +
@@ -805,11 +801,11 @@ begin
 end;
 
 function TCompozer.CreateLoadF1Chart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15*K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
 
@@ -838,11 +834,11 @@ begin
 end;
 
 function TCompozer.CreateLoadF2Chart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15*K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
 
@@ -872,11 +868,11 @@ begin
 end;
 
 function TCompozer.CreateShearModulusChart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15*K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Shear Modulus G-Temperature Chart';
@@ -902,11 +898,11 @@ begin
 end;
 
 function TCompozer.CreateYoungModulusChart(const AScreenScale: double): TChart;
-const
-  DeltaTemp : TQuantity = ({$IFNDEF ADIMOFF} FDim: (FKilogram: 0; FMeter: 0; FSecond: 0; FAmpere: 0; FKelvin: 60; FMole: 0; FCandela: 0; FSteradian: 0); FValue: 323.15 {$ELSE} 323.15 {$ENDIF});
 var
+  DeltaTemp: TRealQuantity;
   Points: ArrayOfTPointF = nil;
 begin
+  DeltaTemp := 323.15*K;
   Result := TChart.Create;
   Result.LegendEnabled := False;
   Result.Title := 'Young Modulus G-Temperature Chart';
